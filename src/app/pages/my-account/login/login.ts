@@ -6,8 +6,6 @@ import { UserData } from '../../../providers/user-data';
 
 import { UserOptions } from '../../../interfaces/user-options';
 
-
-
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -27,7 +25,7 @@ export class LoginPage {
 
     if (form.valid) {
       this.userData.login(this.login.username);
-      this.router.navigateByUrl('/app/tabs/schedule');
+      this.router.navigateByUrl('/account/profile');
     }
   }
 
