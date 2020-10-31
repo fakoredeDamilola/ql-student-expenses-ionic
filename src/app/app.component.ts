@@ -18,21 +18,46 @@ import { UserData } from './providers/user-data';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
-  appPages = [
+  appAdminPages = [
     {
-      title: 'Schedule',
-      url: '/app/tabs/schedule',
-      icon: 'calendar'
-    },
-    {
-      title: 'Speakers',
-      url: '/app/tabs/speakers',
+      title: 'Accounts',
+      url: '/app/admin/accounts',
       icon: 'people'
     },
     {
-      title: 'Map',
+      title: 'Properties',
+      url: '/app/admin/properties',
+      icon: 'home'
+    },
+    {
+      title: 'Pets',
+      url: '/app/admin/pets',
+      icon: 'checkmark'
+    },
+    {
+      title: 'About',
+      url: '/app/admin/about',
+      icon: 'information-circle'
+    }
+  ];
+
+  appPropertyManagerPages = [
+    {
+      title: 'Properties',
+      url: '/app/tabs/speakers',
+      icon: 'home'
+    },
+
+    {
+      title: 'Pet Owners',
+      url: '/app/tabs/schedule',
+      icon: 'people'
+    },
+
+    {
+      title: 'Pets',
       url: '/app/tabs/map',
-      icon: 'map'
+      icon: 'checkmark'
     },
     {
       title: 'About',
@@ -40,6 +65,33 @@ export class AppComponent implements OnInit {
       icon: 'information-circle'
     }
   ];
+
+  appPetOwnerPages = [
+    {
+      title: 'Properties',
+      url: '/app/tabs/speakers',
+      icon: 'home'
+    },
+
+    {
+      title: 'Pet Owners',
+      url: '/app/tabs/schedule',
+      icon: 'people'
+    },
+
+    {
+      title: 'Pets',
+      url: '/app/tabs/map',
+      icon: 'checkmark'
+    },
+    {
+      title: 'About',
+      url: '/app/tabs/about',
+      icon: 'information-circle'
+    }
+  ];
+
+
   loggedIn = false;
   dark = false;
 

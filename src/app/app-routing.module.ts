@@ -9,24 +9,24 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'account',
-    loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule)
+    path: 'profile',
+    loadChildren: () => import('./pages/my-account/profile/profile.module').then(m => m.ProfileModule)
   },
   {
     path: 'support',
-    loadChildren: () => import('./pages/support/support.module').then(m => m.SupportModule)
+    loadChildren: () => import('./pages/my-account/support/support.module').then(m => m.SupportModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./pages/my-account/login/login.module').then(m => m.LoginModule)
   },
   {
     path: 'signup',
-    loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignUpModule)
+    loadChildren: () => import('./pages/my-account/signup/signup.module').then(m => m.SignUpModule)
   },
   {
     path: 'app',
-    loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m => m.TabsModule)
+    loadChildren: () => import('./pages/admin/tabs-page-admin/tabs-page.module').then(m => m.TabsModule)
   },
   {
     path: 'tutorial',

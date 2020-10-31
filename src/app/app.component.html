@@ -1,13 +1,47 @@
+<!-- Side Menu
+  *** Admin Section
+      -All Accounts
+      -All Properties
+      -All Pets
+  ***Property Manager Section
+      -Properties they manage
+      -Pet Owners on their properties
+      -All pets on their property
+  ***My Account Section
+      -Profile
+      -Pets
+      -Support for issues they might have???
+  *** Tutorial/Walkthrough
+-->
 <ion-app [class.dark-theme]="dark">
   <ion-split-pane contentId="main-content">
-
     <ion-menu contentId="main-content">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title text-align-left margin-vertical size="large">Pet <span>&#10003;</span></ion-title>
+      </ion-toolbar>
+      </ion-header>
       <ion-content>
         <ion-list lines="none">
           <ion-list-header>
-            Conference
+            Admin
           </ion-list-header>
-          <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
+          <ion-menu-toggle autoHide="false" *ngFor="let p of appAdminPages; let i = index">
+            <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="root" detail="false">
+              <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+
+          </ion-menu-toggle>
+        </ion-list>
+
+        <ion-list lines="none">
+          <ion-list-header>
+            Property Manager
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false" *ngFor="let p of appPropertyManagerPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="root" detail="false">
               <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
               <ion-label>
@@ -20,23 +54,22 @@
 
         <ion-list *ngIf="loggedIn" lines="none">
           <ion-list-header>
-            Account
+            My Account
           </ion-list-header>
-
           <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/account" routerLinkActive="active" routerDirection="root" detail="false">
+            <ion-item routerLink="/profile" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" name="person"></ion-icon>
               <ion-label>
-                Account
+                Profile
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="help"></ion-icon>
+            <ion-item routerLink="/pets" routerLinkActive="active" routerDirection="root" detail="false">
+              <ion-icon slot="start" name="checkmark"></ion-icon>
               <ion-label>
-                Support
+                Pets
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -54,7 +87,7 @@
 
         <ion-list *ngIf="!loggedIn" lines="none">
           <ion-list-header>
-            Account
+            My Account
           </ion-list-header>
 
           <ion-menu-toggle autoHide="false">
@@ -67,19 +100,19 @@
           </ion-menu-toggle>
 
           <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="help"></ion-icon>
+            <ion-item routerLink="/signup" routerLinkActive="active" routerDirection="root" detail="false">
+              <ion-icon slot="start" name="person-add"></ion-icon>
               <ion-label>
-                Support
+                Signup
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/signup" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="person-add"></ion-icon>
+            <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
+              <ion-icon slot="start" name="help"></ion-icon>
               <ion-label>
-                Signup
+                Support
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
