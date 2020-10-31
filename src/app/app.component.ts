@@ -44,19 +44,19 @@ export class AppComponent implements OnInit {
   appPropertyManagerPages = [
     {
       title: 'Properties',
-      url: '/app/tabs/speakers',
+      url: '/app/property-manager/properties',
       icon: 'home'
     },
 
     {
       title: 'Pet Owners',
-      url: '/app/tabs/schedule',
+      url: '/app/property-manager/pet-owners',
       icon: 'people'
     },
 
     {
       title: 'Pets',
-      url: '/app/tabs/map',
+      url: '/app/property-manager/pets',
       icon: 'checkmark'
     },
     {
@@ -66,30 +66,6 @@ export class AppComponent implements OnInit {
     }
   ];
 
-  appPetOwnerPages = [
-    {
-      title: 'Properties',
-      url: '/app/tabs/speakers',
-      icon: 'home'
-    },
-
-    {
-      title: 'Pet Owners',
-      url: '/app/tabs/schedule',
-      icon: 'people'
-    },
-
-    {
-      title: 'Pets',
-      url: '/app/tabs/map',
-      icon: 'checkmark'
-    },
-    {
-      title: 'About',
-      url: '/app/tabs/about',
-      icon: 'information-circle'
-    }
-  ];
 
 
   loggedIn = false;
@@ -141,10 +117,9 @@ export class AppComponent implements OnInit {
     });
   }
 
-  checkLoginStatus() {
-    return this.userData.isLoggedIn().then(loggedIn => {
-      return this.updateLoggedInStatus(loggedIn);
-    });
+  async checkLoginStatus() {
+    const loggedIn = await this.userData.isLoggedIn();
+    return this.updateLoggedInStatus(loggedIn);
   }
 
   updateLoggedInStatus(loggedIn: boolean) {
@@ -169,7 +144,7 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.userData.logout().then(() => {
-      return this.router.navigateByUrl('/app/tabs/schedule');
+      return this.router.navigateByUrl('/login');
     });
   }
 

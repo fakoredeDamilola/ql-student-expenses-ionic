@@ -1,0 +1,38 @@
+﻿<h1>Pets Management</h1>
+<p>All pets from secure (admin only) api end point:</p>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Create Pet</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width:15%">Pet Id</th>
+            <th style="width:15%">Owner Id</th>
+            <th style="width:15%">Pet Name</th>
+            <th style="width:15%">Species</th>
+            <th style="width:15%">Breed</th>
+            <th style="width:15%">Rating</th>
+            <th style="width:10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pet of pets">
+            <td>{{pet.id}}</td>
+            <td>{{pet.ownerId}}</td>
+            <td>{{pet.petName}}</td>
+            <td>{{pet.species}}</td>
+            <td>{{pet.breed}}</td>
+            <td>{{pet.rating}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{pet.id}}" class="btn btn-sm btn-primary mr-1">View/Edit</a>
+                <button (click)="deletePet(pet.id)" class="btn btn-sm btn-danger btn-delete-pet" [disabled]="pet.isDeleting">
+                    <span *ngIf="pet.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!pet.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!pets">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

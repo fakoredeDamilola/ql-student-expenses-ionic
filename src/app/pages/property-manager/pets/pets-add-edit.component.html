@@ -1,0 +1,50 @@
+﻿<h1 *ngIf="isAddMode">Create Pet</h1>
+<h1 *ngIf="!isAddMode">Edit Pet</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group col-7">
+            <label>Owner Id</label>
+            <input type="text" formControlName="ownerId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ownerId.errors }" />
+            <div *ngIf="submitted && f.ownerId.errors" class="invalid-feedback">
+                <div *ngIf="f.ownerId.errors.required">Owner Id is required</div>
+            </div>
+        </div>
+        <div class="form-group col-7">
+            <label>Pet Name</label>
+            <input type="text" formControlName="petName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.petName.errors }" />
+            <div *ngIf="submitted && f.petName.errors" class="invalid-feedback">
+                <div *ngIf="f.petName.errors.required">PetName is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-7">
+            <label>Species</label>
+            <input type="text" formControlName="species" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.species.errors }" />
+            <div *ngIf="submitted && f.species.errors" class="invalid-feedback">
+                <div *ngIf="f.species.errors.required">Species is required</div>
+            </div>
+        </div>
+        <div class="form-group col-7">
+            <label>Breed</label>
+            <input type="text" formControlName="breed" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.breed.errors }" />
+            <div *ngIf="submitted && f.breed.errors" class="invalid-feedback">
+                <div *ngIf="f.breed.errors.required">Breed is required</div>
+            </div>
+        </div>
+        <div class="form-group col-7">
+            <label>Rating</label>
+            <input type="text" formControlName="rating" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rating.errors }" />
+            <div *ngIf="submitted && f.rating.errors" class="invalid-feedback">
+                <div *ngIf="f.rating.errors.required">Rating is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="/admin/pets" class="btn btn-link">Cancel</a>
+    </div>
+</form>

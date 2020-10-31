@@ -1,6 +1,6 @@
 {
-  "name": "ionic-conference-app",
-  "version": "0.0.0",
+  "name": "pet-check-ionic-app",
+  "version": "1.0.1",
   "description": "Ionic Conference App",
   "author": "Ionic Team <hi@ionicframework.com>",
   "license": "Apache-2.0",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/ionic-conference-app.git"
+    "url": "git+https://github.com/ionic-team/ionic-conference-app.git"
   },
   "private": true,
   "dependencies": {
@@ -90,5 +90,10 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-ionic-keyboard": {}
     }
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic-conference-app/issues"
+  },
+  "homepage": "https://github.com/ionic-team/ionic-conference-app#readme",
+  "main": "generate-h2-push.js"
 }

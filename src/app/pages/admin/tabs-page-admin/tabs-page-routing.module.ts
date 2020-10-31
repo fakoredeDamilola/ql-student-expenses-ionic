@@ -23,20 +23,16 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'speakers',
+        path: 'properties',
         children: [
           {
             path: '',
-           // loadChildren: () => import('../speaker-list/speaker-list.module').then(m => m.SpeakerListModule)
+           loadChildren: () => import('../properties/properties.module').then(m => m.PropertiesModule)
           },
-          {
-            path: 'session/:sessionId',
-           // loadChildren: () => import('../session-detail/session-detail.module').then(m => m.SessionDetailModule)
-          },
-          {
-            path: 'speaker-details/:speakerId',
-           // loadChildren: () => import('../speaker-detail/speaker-detail.module').then(m => m.SpeakerDetailModule)
-          }
+         /* {
+            path: 'property/:sessionId',
+            loadChildren: () => import('../properties/properties.module').then(m => m.PropertiesModule)
+          }*/
         ]
       },
       {
