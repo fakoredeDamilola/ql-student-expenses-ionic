@@ -10,19 +10,19 @@ const routes: Routes = [
   },
   {
     path: 'account/profile',
-    loadChildren: () => import('./pages/my-account/profile/profile.module').then(m => m.ProfileModule)
+    loadChildren: () => import('./pages/account/profile/profile.module').then(m => m.ProfileModule)
   },
   {
     path: 'support',
-    loadChildren: () => import('./pages/my-account/support/support.module').then(m => m.SupportModule)
+    loadChildren: () => import('./pages/account/support/support.module').then(m => m.SupportModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/my-account/login/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./pages/account/login/login.module').then(m => m.LoginModule)
   },
   {
     path: 'signup',
-    loadChildren: () => import('./pages/my-account/signup/signup.module').then(m => m.SignUpModule)
+    loadChildren: () => import('./pages/account/signup/signup.module').then(m => m.SignUpModule)
   },
   {
     path: 'app',
