@@ -88,25 +88,6 @@
     No Sessions Found
   </ion-list-header>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" #fab>
-    <ion-fab-button>
-      <ion-icon name="share-social"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="vimeo" (click)="openSocial('Vimeo', fab)">
-        <ion-icon name="logo-vimeo"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="instagram" (click)="openSocial('Instagram', fab)">
-        <ion-icon name="logo-instagram"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="twitter" (click)="openSocial('Twitter', fab)">
-        <ion-icon name="logo-twitter"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="facebook" (click)="openSocial('Facebook', fab)">
-        <ion-icon name="logo-facebook"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
 </ion-content>
 
 
@@ -115,49 +96,3 @@
 
 
 
-
-
-
-<h1>Properties Management (Admin)</h1>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Create Property</a>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width:10%">Prop. Id</th>
-            <th style="width:10%">Prop. Name</th>
-            <th style="width:10%">P.M Id</th>
-            <th style="width:10%">P.O Id</th>
-            <th style="width:10%">Address</th>
-            <th style="width:10%">City</th>
-            <th style="width:10%">State</th>
-            <th style="width:10%">Zip</th>
-            <th style="width:10%">Pet Count</th>
-            <th style="width:10%"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let property of properties">
-            <td>{{property.id}}</td>
-            <td>{{property.propertyName}}</td>
-            <td>{{property.propertyManagerId}}</td>
-            <td>{{property.petOwnerId}}</td>
-            <td>{{property.houseUnitNumber}} {{property.street}}</td>
-            <td>{{property.city}}</td>
-            <td>{{property.state}}</td>
-            <td>{{property.zip}}</td>
-            <td>{{property.petCount}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{property.id}}" class="btn btn-sm btn-primary mr-1">View/Edit</a>
-                <button (click)="deleteProperty(property.id)" class="btn btn-sm btn-danger btn-delete-property" [disabled]="property.isDeleting">
-                    <span *ngIf="property.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!property.isDeleting">Delete</span>
-                </button>
-            </td>
-        </tr>
-        <tr *ngIf="!properties">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
-            </td>
-        </tr>
-    </tbody>
-</table>

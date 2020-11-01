@@ -21,22 +21,22 @@ export class AppComponent implements OnInit {
   appAdminPages = [
     {
       title: 'Accounts',
-      url: '/app/admin/accounts',
+      url: '/admin/accounts',
       icon: 'people'
     },
     {
       title: 'Properties',
-      url: '/app/admin/properties',
+      url: '/admin/properties',
       icon: 'home'
     },
     {
       title: 'Pets',
-      url: '/app/admin/pets',
+      url: '/admin/pets',
       icon: 'checkmark'
     },
     {
       title: 'About',
-      url: '/app/admin/about',
+      url: '/admin/about',
       icon: 'information-circle'
     }
   ];

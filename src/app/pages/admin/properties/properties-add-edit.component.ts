@@ -72,11 +72,11 @@ export class PropertiesAddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Property created successfully', { keepAfterRouteChange: true });
+                    //this.alertService.success('Property created successfully', { keepAfterRouteChange: true });
                     this.router.navigate(['../'], { relativeTo: this.route });
                 },
                 error: error => {
-                    this.alertService.error(error);
+                  //  this.alertService.error(error);
                     this.loading = false;
                 }
             });
@@ -87,11 +87,11 @@ export class PropertiesAddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Update successful', { keepAfterRouteChange: true });
+                 //   this.alertService.success('Update successful', { keepAfterRouteChange: true });
                     this.router.navigate(['../../'], { relativeTo: this.route });
                 },
                 error: error => {
-                    this.alertService.error(error);
+                    //this.alertService.error(error);
                     this.loading = false;
                 }
             });

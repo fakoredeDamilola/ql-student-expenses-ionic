@@ -6,7 +6,7 @@ import { AccountsPage } from '../accounts/accounts';
 
 const routes: Routes = [
   {
-    path: 'admin',
+    path: '',
     component: TabsPage,
     children: [
       {
