@@ -7,7 +7,7 @@ import { PropertiesAddEditComponent } from './properties-add-edit.component';
 const routes: Routes = [
     { path: '', component: PropertiesListComponent },
     { path: 'add', component: PropertiesAddEditComponent },
-    { path: 'edit/:id', component: PropertiesAddEditComponent }
+    { path: 'property/:id', component: PropertiesAddEditComponent }
 ];
 
 @NgModule({
