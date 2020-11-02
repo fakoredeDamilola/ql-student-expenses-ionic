@@ -37,7 +37,7 @@ export class UserData {
     return window.dispatchEvent(new CustomEvent('user:login'));
   }
 
-  signup(email: string): Promise<any> {
+  async signup(email: string): Promise<any> {
     return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
       this.setUsername(email);
       return window.dispatchEvent(new CustomEvent('user:signup'));
@@ -55,20 +55,20 @@ export class UserData {
     return this.storage.set('email', email);
   }
 
-  getUsername(): Promise<string> {
-    return this.storage.get('email').then((value) => {
+  async getUsername(): Promise<string> {
+    return await this.storage.get('email').then((value) => {
       return value;
     });
   }
 
-  isLoggedIn(): Promise<boolean> {
-    return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
+  async isLoggedIn(): Promise<boolean> {
+    return await this.storage.get(this.HAS_LOGGED_IN).then((value) => {
       return value === true;
     });
   }
 
-  checkHasSeenTutorial(): Promise<string> {
-    return this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {
+  async checkHasSeenTutorial(): Promise<string> {
+    return await this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {
       return value;
     });
   }

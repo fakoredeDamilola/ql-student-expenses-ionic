@@ -1,4 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -8,6 +9,8 @@ import { Alert, AlertType } from '../_models';
 export class AlertService {
     private subject = new Subject<Alert>();
     private defaultId = 'default-alert';
+
+    constructor(private toastCtrl: ToastController){}
 
     // enable subscribing to alerts observable
     onAlert(id = this.defaultId): Observable<Alert> {
@@ -42,4 +45,24 @@ export class AlertService {
     clear(id = this.defaultId) {
         this.subject.next(new Alert({ id }));
     }
+
+
+
+    async createToastAlert(messageParam: string) {
+      const toast = await this.toastCtrl.create({
+        message: messageParam,
+        position: "bottom",
+        buttons: [
+          {
+            role: "cancel",
+            text: "Ok",
+          },
+        ],
+      });
+      await toast.present();
+      toast.onDidDismiss();
+    }
+
+
+
 }
