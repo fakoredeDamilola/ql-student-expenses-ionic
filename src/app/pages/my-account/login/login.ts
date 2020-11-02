@@ -18,7 +18,7 @@ export class LoginPage {
   loading = false;
   submitted = false;
 
-  login: UserOptions = { username: '', password: '' };
+  login: UserOptions = { email: '', password: '' };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,14 +55,14 @@ export class LoginPage {
 
 
     this.loading = true;
-    this.accountService.login(this.login.username, this.login.password)
+    this.accountService.login(this.login.email, this.login.password)
         .pipe(first())
         .subscribe({
             next: () => {
                 // get return url from query parameters or default to home page
-                this.userData.login(this.login.username);
-                const returnUrl = '/admin/accounts';
-                this.router.navigateByUrl(returnUrl);
+                this.userData.login(this.login.email);
+                // redirect to home page when you login
+                this.router.navigateByUrl('/home');
             },
             error: error => {
                 //this.alertService.error(error);
