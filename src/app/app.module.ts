@@ -12,8 +12,8 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { appInitializer, JwtInterceptor, ErrorInterceptor } from './_helpers';
-import { AccountService, PetService } from './_services';
+import { appInitializer, JwtInterceptor, ErrorInterceptor } from '@app/_helpers';
+import { AccountService, PetService } from '@app/_services';
 
 @NgModule({
   imports: [

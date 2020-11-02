@@ -22,7 +22,7 @@
       </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list lines="none">
+        <ion-list lines="none" [hidden]="!account || account.role != 'Admin'">
           <ion-list-header>
             Admin
           </ion-list-header>
@@ -37,7 +37,7 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list lines="none">
+        <ion-list lines="none" [hidden]="!account">
           <ion-list-header>
             Property Manager
           </ion-list-header>
@@ -87,7 +87,7 @@
 
         <ion-list *ngIf="!loggedIn" lines="none">
           <ion-list-header>
-            My Account
+            Account
           </ion-list-header>
 
           <ion-menu-toggle autoHide="false">

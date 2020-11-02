@@ -38,14 +38,14 @@ export class PropertiesListComponent implements OnInit {
       ) {}
 
     ngOnInit() {
-      this.updateSchedule();
 
       this.ios = this.config.get('mode') === 'ios';
-
         this.propertyService.getAll()
             .pipe(first())
             .subscribe(properties => this.properties = properties);
     }
+
+
 
     deleteProperty(id: string) {
         const property = this.properties.find(x => x.id === id);

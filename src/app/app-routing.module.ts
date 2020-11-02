@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { VerifyEmailComponent } from './pages/my-account/verify-email/verify-email.component';
 import { CheckTutorial } from './providers/check-tutorial.service';
 import { AuthGuard } from './_helpers';
+import { Role } from './_models';
+
 
 
 const routes: Routes = [
@@ -11,10 +14,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', loadChildren: () => import('././pages/home/home.module').then(x => x.HomePageModule)},
-  { path: 'admin', loadChildren: () => import('./pages/admin/tabs-page-admin/tabs-page.module').then(m => m.AdminTabsModule),canActivate: [AuthGuard]},
+  { path: 'admin', loadChildren: () => import('./pages/admin/tabs-page-admin/tabs-page.module').then(m => m.AdminTabsModule),canActivate: [AuthGuard],data: { roles: [Role.Admin] } },
   { path: 'account/profile', loadChildren: () => import('./pages/my-account/profile/profile.module').then(m => m.ProfileModule),canActivate: [AuthGuard] },
   { path: 'login', loadChildren: () => import('./pages/my-account/login/login.module').then(m => m.LoginModule)},
   { path: 'signup', loadChildren: () => import('./pages/my-account/signup/signup.module').then(m => m.SignUpModule)},
+  { path: 'account/verify-email', component: VerifyEmailComponent },
   { path: 'support', loadChildren: () => import('./pages/my-account/support/support.module').then(m => m.SupportModule)},
   { path: 'tutorial', loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),canLoad: [CheckTutorial]}
 ];

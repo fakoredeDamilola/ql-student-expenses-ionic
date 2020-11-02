@@ -20,7 +20,12 @@ import { Account, Role } from './_models';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+  Role = Role;
   account: Account;
+
+
+
+
   appAdminPages = [
     {
       title: 'Accounts',
@@ -140,7 +145,6 @@ export class AppComponent implements OnInit {
   logout() {
     this.userData.logout().then(() => {
       this.accountService.logout();
-      return this.router.navigateByUrl('/login');
     });
   }
 
