@@ -1,7 +1,9 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from '@app/_services';
 
 import { AlertController } from '@ionic/angular';
+import { first } from 'rxjs/operators';
 
 import { UserData } from '../../../providers/user-data';
 
@@ -11,18 +13,22 @@ import { UserData } from '../../../providers/user-data';
   templateUrl: 'profile.html',
   styleUrls: ['./profile.scss'],
 })
-export class ProfilePage implements AfterViewInit {
-  username: string;
+export class ProfilePage implements OnInit {
+  // Get currently logged in accounts values
+  account = this.accountService.accountValue;
 
   constructor(
     public alertCtrl: AlertController,
     public router: Router,
-    public userData: UserData
+    public userData: UserData,
+    public accountService: AccountService
   ) { }
 
-  ngAfterViewInit() {
-    this.getUsername();
+  ngOnInit(){
+
   }
+
+
 
   updatePicture() {
     console.log('Clicked to update picture');
@@ -48,7 +54,7 @@ export class ProfilePage implements AfterViewInit {
         {
           type: 'text',
           name: 'username',
-          value: this.username,
+         // value: this.username,
           placeholder: 'username'
         }
       ]
@@ -57,9 +63,9 @@ export class ProfilePage implements AfterViewInit {
   }
 
   getUsername() {
-    this.userData.getUsername().then((username) => {
+   /* this.userData.getUsername().then((username) => {
       this.username = username;
-    });
+    });*/
   }
 
   changePassword() {
@@ -67,8 +73,10 @@ export class ProfilePage implements AfterViewInit {
   }
 
   logout() {
+    this.accountService.logout();
     this.userData.logout();
     this.router.navigateByUrl('/login');
+    location.reload();
   }
 
   support() {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AccountService } from '@app/_services';
 import { Storage } from '@ionic/storage';
 
 
@@ -11,7 +12,8 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
   constructor(
-    public storage: Storage
+    public storage: Storage,
+    public account: AccountService
   ) { }
 
   hasFavorite(sessionName: string): boolean {
@@ -45,6 +47,8 @@ export class UserData {
 
   logout(): Promise<any> {
     return this.storage.remove(this.HAS_LOGGED_IN).then(() => {
+      this.account.logout;
+
       return this.storage.remove('email');
     }).then(() => {
       window.dispatchEvent(new CustomEvent('user:logout'));

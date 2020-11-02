@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserData } from '../../../providers/user-data';
 
@@ -24,6 +24,7 @@ export class LoginPage {
     private formBuilder: FormBuilder,
     public userData: UserData,
     public router: Router,
+    private route: ActivatedRoute,
     private accountService: AccountService
   ) { }
 
@@ -62,7 +63,7 @@ export class LoginPage {
                 // get return url from query parameters or default to home page
                 this.userData.login(this.login.email);
                 // redirect to home page when you login
-                this.router.navigateByUrl('/home');
+                this.router.navigateByUrl("/home");
             },
             error: error => {
                 //this.alertService.error(error);
