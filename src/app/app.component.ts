@@ -145,8 +145,10 @@ export class AppComponent implements OnInit {
   logout() {
     this.userData.logout().then(() => {
       this.accountService.logout();
-    });
-  }
+      this.router.navigateByUrl('/login');
+      location.reload();
+  });
+}
 
 
 
