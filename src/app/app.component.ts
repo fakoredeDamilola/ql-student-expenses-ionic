@@ -23,9 +23,6 @@ export class AppComponent implements OnInit {
   Role = Role;
   account: Account;
 
-
-
-
   appAdminPages = [
     {
       title: 'Accounts',
