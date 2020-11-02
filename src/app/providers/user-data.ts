@@ -31,11 +31,10 @@ export class UserData {
     }
   }
 
-  login(email: string): Promise<any> {
-    return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-      this.setUsername(email);
-      return window.dispatchEvent(new CustomEvent('user:login'));
-    });
+  async login(email: string): Promise<any> {
+    await this.storage.set(this.HAS_LOGGED_IN, true);
+    this.setUsername(email);
+    return window.dispatchEvent(new CustomEvent('user:login'));
   }
 
   signup(email: string): Promise<any> {
@@ -45,14 +44,11 @@ export class UserData {
     });
   }
 
-  logout(): Promise<any> {
-    return this.storage.remove(this.HAS_LOGGED_IN).then(() => {
-      this.account.logout;
-
-      return this.storage.remove('email');
-    }).then(() => {
-      window.dispatchEvent(new CustomEvent('user:logout'));
-    });
+  async logout(): Promise<any> {
+    await this.storage.remove(this.HAS_LOGGED_IN);
+    this.account.logout;
+    await this.storage.remove('email');
+    window.dispatchEvent(new CustomEvent('user:logout'));
   }
 
   setUsername(email: string): Promise<any> {

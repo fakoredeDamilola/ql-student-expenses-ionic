@@ -44,19 +44,17 @@ export class AppComponent implements OnInit {
   appPropertyManagerPages = [
     {
       title: 'Properties',
-      url: '/app/property-manager/properties',
+      url: '/property-manager/properties',
       icon: 'home'
     },
-
     {
       title: 'Pet Owners',
-      url: '/app/property-manager/pet-owners',
+      url: '/property-manager/pet-owners',
       icon: 'people'
     },
-
     {
       title: 'Pets',
-      url: '/app/property-manager/pets',
+      url: '/property-manager/pets',
       icon: 'checkmark'
     }
   ];
@@ -146,8 +144,6 @@ export class AppComponent implements OnInit {
       location.reload();
   });
 }
-
-
 
   openTutorial() {
     this.menu.enable(false);
