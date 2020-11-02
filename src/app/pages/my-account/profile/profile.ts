@@ -68,10 +68,7 @@ export class ProfilePage implements OnInit {
   }
 
   logout() {
-    this.accountService.logout();
     this.userData.logout();
-    this.router.navigateByUrl("/login");
-    location.reload();
   }
 
   support() {

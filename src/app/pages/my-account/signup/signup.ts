@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { UserData } from "@app/providers/user-data";
 
 import { UserOptions } from "@app/interfaces/user-options";
-import { AccountService } from "@app/_services";
+import { AccountService, AlertService } from "@app/_services";
 import { first } from "rxjs/operators";
 
 @Component({
@@ -29,7 +29,8 @@ export class SignupPage {
   constructor(
     public router: Router,
     public userData: UserData,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private toastAlert: AlertService
   ) {}
 
   onSignup(form: NgForm) {
@@ -49,7 +50,7 @@ export class SignupPage {
       .subscribe({
         next: () => {
           //TODO Replace with toast alert
-          //this.alertService.success('Registration successful, please check your email for verification instructions', { keepAfterRouteChange: true });
+          this.toastAlert.createToastAlert('Registration successful, please check your email for verification instructions');
           this.userData.signup(this.signup.email);
           this.router.navigateByUrl("/login");
         },

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { UserData } from "../../../providers/user-data";
 
 import { UserOptions } from "../../../interfaces/user-options";
-import { AccountService } from "@app/_services";
+import { AccountService, AlertService } from "@app/_services";
 import { first } from "rxjs/operators";
 
 @Component({
@@ -25,7 +25,8 @@ export class LoginPage {
     public userData: UserData,
     public router: Router,
     private route: ActivatedRoute,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private alertService:AlertService
   ) {}
 
   ngOnInit() {
@@ -63,7 +64,7 @@ export class LoginPage {
             this.router.navigateByUrl("/home");
           },
           error: (error) => {
-            //this.alertService.error(error);
+            this.alertService.createToastAlert("Log In Failed, Please Check That Your Email & Password Is Correct.");
             this.loading = false;
             return;
           },

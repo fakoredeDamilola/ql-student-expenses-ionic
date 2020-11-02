@@ -46,9 +46,10 @@ export class UserData {
 
   async logout(): Promise<any> {
     await this.storage.remove(this.HAS_LOGGED_IN);
-    this.account.logout;
+    this.account.logout();
     await this.storage.remove('email');
     window.dispatchEvent(new CustomEvent('user:logout'));
+    location.reload();
   }
 
   setUsername(email: string): Promise<any> {

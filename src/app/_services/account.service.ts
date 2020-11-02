@@ -4,8 +4,8 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map, finalize } from "rxjs/operators";
 
-import { environment } from "../../environments/environment";
-import { Account } from "../_models";
+import { environment } from "@environments/environment";
+import { Account } from "@app/_models";
 
 const baseUrl = `${environment.apiUrl}/accounts`;
 
@@ -39,13 +39,14 @@ export class AccountService {
       );
   }
 
-  logout() {
+  async logout() {
     this.http
       .post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true })
       .subscribe();
     this.stopRefreshTokenTimer();
     this.accountSubject.next(null);
-    this.router.navigateByUrl("/login");
+    await this.router.navigateByUrl("/login");
+    location.reload();
   }
 
   refreshToken() {

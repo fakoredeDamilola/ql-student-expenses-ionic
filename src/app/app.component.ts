@@ -1,23 +1,23 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { SwUpdate } from '@angular/service-worker';
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Router } from "@angular/router";
+import { SwUpdate } from "@angular/service-worker";
 
-import { MenuController, Platform, ToastController } from '@ionic/angular';
+import { MenuController, Platform, ToastController } from "@ionic/angular";
 
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
 
-import { Storage } from '@ionic/storage';
+import { Storage } from "@ionic/storage";
 
-import { UserData } from './providers/user-data';
-import { AccountService } from './_services';
-import { Account, Role } from './_models';
+import { UserData } from "./providers/user-data";
+import { AccountService } from "./_services";
+import { Account, Role } from "./_models";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
   Role = Role;
@@ -25,41 +25,39 @@ export class AppComponent implements OnInit {
 
   appAdminPages = [
     {
-      title: 'Accounts',
-      url: '/admin/accounts',
-      icon: 'people'
+      title: "Accounts",
+      url: "/admin/accounts",
+      icon: "people",
     },
     {
-      title: 'Properties',
-      url: '/admin/properties',
-      icon: 'home'
+      title: "Properties",
+      url: "/admin/properties",
+      icon: "home",
     },
     {
-      title: 'Pets',
-      url: '/admin/pets',
-      icon: 'checkmark'
-    }
+      title: "Pets",
+      url: "/admin/pets",
+      icon: "checkmark",
+    },
   ];
 
   appPropertyManagerPages = [
     {
-      title: 'Properties',
-      url: '/property-manager/properties',
-      icon: 'home'
+      title: "Properties",
+      url: "/property-manager/properties",
+      icon: "home",
     },
     {
-      title: 'Pet Owners',
-      url: '/property-manager/pet-owners',
-      icon: 'people'
+      title: "Pet Owners",
+      url: "/property-manager/pet-owners",
+      icon: "people",
     },
     {
-      title: 'Pets',
-      url: '/property-manager/pets',
-      icon: 'checkmark'
-    }
+      title: "Pets",
+      url: "/property-manager/pets",
+      icon: "checkmark",
+    },
   ];
-
-
 
   loggedIn = false;
   dark = false;
@@ -76,7 +74,7 @@ export class AppComponent implements OnInit {
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController
   ) {
-    this.accountService.account.subscribe(x => this.account = x);
+    this.accountService.account.subscribe((x) => (this.account = x));
     this.initializeApp();
   }
 
@@ -84,16 +82,16 @@ export class AppComponent implements OnInit {
     this.checkLoginStatus();
     this.listenForLoginEvents();
 
-    this.swUpdate.available.subscribe(async res => {
+    this.swUpdate.available.subscribe(async (res) => {
       const toast = await this.toastCtrl.create({
-        message: 'Update available!',
-        position: 'bottom',
+        message: "Update available!",
+        position: "bottom",
         buttons: [
           {
-            role: 'cancel',
-            text: 'Reload'
-          }
-        ]
+            role: "cancel",
+            text: "Reload",
+          },
+        ],
       });
 
       await toast.present();
@@ -124,30 +122,26 @@ export class AppComponent implements OnInit {
   }
 
   listenForLoginEvents() {
-    window.addEventListener('user:login', () => {
+    window.addEventListener("user:login", () => {
       this.updateLoggedInStatus(true);
     });
 
-    window.addEventListener('user:signup', () => {
+    window.addEventListener("user:signup", () => {
       this.updateLoggedInStatus(true);
     });
 
-    window.addEventListener('user:logout', () => {
+    window.addEventListener("user:logout", () => {
       this.updateLoggedInStatus(false);
     });
   }
 
   logout() {
-    this.userData.logout().then(() => {
-      this.accountService.logout();
-      location.reload();
-      this.router.navigateByUrl('/login');
-  });
-}
+    this.userData.logout();
+  }
 
   openTutorial() {
     this.menu.enable(false);
-    this.storage.set('ion_did_tutorial', false);
-    this.router.navigateByUrl('/tutorial');
+    this.storage.set("ion_did_tutorial", false);
+    this.router.navigateByUrl("/tutorial");
   }
 }
