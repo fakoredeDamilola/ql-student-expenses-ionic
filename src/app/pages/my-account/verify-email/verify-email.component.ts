@@ -33,7 +33,7 @@ export class VerifyEmailComponent implements OnInit {
       .subscribe({
         next: () => {
           this.router.navigateByUrl("/login");
-          //this.alertEmailVerefied();
+          // Toast notification that email was verefied!!!
           this.toastAlert.createToastAlert("Email Verefied Successfully, You May Now Log In To Pet Check");
         },
         error: () => {
