@@ -19,7 +19,6 @@ export class VerifyEmailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private toastCtrl: ToastController,
     private toastAlert:AlertService
   ) //private alertService: AlertService
   {}
@@ -43,19 +42,4 @@ export class VerifyEmailComponent implements OnInit {
       });
   }
 
-  // TODO want to move this to alert service....
-  async alertEmailVerefied() {
-    const toast = await this.toastCtrl.create({
-      message: "Email Verefied Successfully, You May Now Log In To Pet Check",
-      position: "bottom",
-      buttons: [
-        {
-          role: "cancel",
-          text: "Ok",
-        },
-      ],
-    });
-    await toast.present();
-    toast.onDidDismiss();
-  }
 }
