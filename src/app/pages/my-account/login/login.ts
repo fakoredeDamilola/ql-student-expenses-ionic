@@ -51,7 +51,7 @@ export class LoginPage {
 
 
     if (form.valid) {
-      this.userData.login(this.login.username);
+
 
 
     this.loading = true;
@@ -60,12 +60,14 @@ export class LoginPage {
         .subscribe({
             next: () => {
                 // get return url from query parameters or default to home page
+                this.userData.login(this.login.username);
                 const returnUrl = '/admin/accounts';
                 this.router.navigateByUrl(returnUrl);
             },
             error: error => {
                 //this.alertService.error(error);
                 this.loading = false;
+                return;
             }
         });
 }
