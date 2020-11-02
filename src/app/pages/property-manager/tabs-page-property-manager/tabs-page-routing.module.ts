@@ -35,12 +35,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'about',
-        children: [
-
-        ]
-      },
-      {
         path: '',
         redirectTo: '/app/tabs/schedule',
         pathMatch: 'full'

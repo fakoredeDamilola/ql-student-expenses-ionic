@@ -36,15 +36,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'about',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../../about/about.module').then(m => m.AboutModule)
-          }
-        ]
-      },
-      {
         path: '',
         redirectTo: '/app/admin/accounts',
         pathMatch: 'full'

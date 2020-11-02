@@ -36,11 +36,6 @@ export class AppComponent implements OnInit {
       title: 'Pets',
       url: '/admin/pets',
       icon: 'checkmark'
-    },
-    {
-      title: 'About',
-      url: '/admin/about',
-      icon: 'information-circle'
     }
   ];
 
@@ -61,11 +56,6 @@ export class AppComponent implements OnInit {
       title: 'Pets',
       url: '/app/property-manager/pets',
       icon: 'checkmark'
-    },
-    {
-      title: 'About',
-      url: '/app/tabs/about',
-      icon: 'information-circle'
     }
   ];
 
