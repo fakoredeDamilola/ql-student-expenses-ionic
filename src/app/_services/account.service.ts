@@ -53,10 +53,10 @@ export class AccountService {
     return this.http
       .post<any>(`${baseUrl}/refresh-token`, {}, { withCredentials: true })
       .pipe(
-        map((account) => {
+        map(async (account) => {
           this.accountSubject.next(account);
           this.startRefreshTokenTimer();
-          return account;
+          return await account;
         })
       );
   }
@@ -124,20 +124,20 @@ export class AccountService {
 
   private refreshTokenTimeout: any;
 
-  private startRefreshTokenTimer() {
+  private async startRefreshTokenTimer() {
     // parse json object from base64 encoded jwt token
-    const jwtToken = JSON.parse(atob(this.accountValue.jwtToken.split(".")[1]));
+    const jwtToken = await JSON.parse(atob(this.accountValue.jwtToken.split(".")[1]));
 
     // set a timeout to refresh the token a minute before it expires
     const expires = new Date(jwtToken.exp * 1000);
     const timeout = expires.getTime() - Date.now() - 60 * 1000;
     this.refreshTokenTimeout = setTimeout(
-      () => this.refreshToken().subscribe(),
+      async () => this.refreshToken().subscribe(),
       timeout
     );
   }
 
-  private stopRefreshTokenTimer() {
+  private async stopRefreshTokenTimer() {
     clearTimeout(this.refreshTokenTimeout);
   }
 }
