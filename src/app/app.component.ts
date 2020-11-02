@@ -10,6 +10,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 
 import { UserData } from './providers/user-data';
+import { AccountService } from './_services';
+import { Account, Role } from './_models';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ import { UserData } from './providers/user-data';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+  account: Account;
   appAdminPages = [
     {
       title: 'Accounts',
@@ -72,6 +75,7 @@ export class AppComponent implements OnInit {
   dark = false;
 
   constructor(
+    private accountService: AccountService,
     private menu: MenuController,
     private platform: Platform,
     private router: Router,
@@ -80,8 +84,9 @@ export class AppComponent implements OnInit {
     private storage: Storage,
     private userData: UserData,
     private swUpdate: SwUpdate,
-    private toastCtrl: ToastController,
+    private toastCtrl: ToastController
   ) {
+    this.accountService.account.subscribe(x => this.account = x);
     this.initializeApp();
   }
 
@@ -144,9 +149,12 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.userData.logout().then(() => {
+      this.accountService.logout();
       return this.router.navigateByUrl('/login');
     });
   }
+
+
 
   openTutorial() {
     this.menu.enable(false);
