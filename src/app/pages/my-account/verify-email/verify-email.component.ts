@@ -23,20 +23,20 @@ export class VerifyEmailComponent implements OnInit {
   ) //private alertService: AlertService
   {}
 
-  ngOnInit() {
-    const token = this.route.snapshot.queryParams["token"];
+  async ngOnInit() {
+    const token = await this.route.snapshot.queryParams["token"];
     // remove token from url to prevent http referer leakage
-    this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
-    this.accountService
-      .verifyEmail(token)
+    await this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
+    (await this.accountService
+      .verifyEmail(await token))
       .pipe(first())
       .subscribe({
-        next: () => {
-          this.router.navigateByUrl("/login");
+        next: async () => {
+          await this.router.navigateByUrl("/login");
           // Toast notification that email was verefied!!!
-          this.toastAlert.createToastAlert("Email Verefied Successfully, You May Now Log In To Pet Check");
+          await this.toastAlert.createToastAlert("Email Verefied Successfully, You May Now Log In To Pet Check");
         },
-        error: () => {
+        error: async () => {
           this.emailStatus = EmailStatus.Failed;
         },
       });

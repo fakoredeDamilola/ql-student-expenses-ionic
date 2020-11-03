@@ -61,23 +61,23 @@ export class AccountService {
       );
   }
 
-  register(account: Account) {
+  async register(account: Account) {
     return this.http.post(`${baseUrl}/register`, account);
   }
 
-  verifyEmail(token: string) {
+  async verifyEmail(token: string) {
     return this.http.post(`${baseUrl}/verify-email`, { token });
   }
 
-  forgotPassword(email: string) {
+  async forgotPassword(email: string) {
     return this.http.post(`${baseUrl}/forgot-password`, { email });
   }
 
-  validateResetToken(token: string) {
+  async validateResetToken(token: string) {
     return this.http.post(`${baseUrl}/validate-reset-token`, { token });
   }
 
-  resetPassword(token: string, password: string, confirmPassword: string) {
+  async resetPassword(token: string, password: string, confirmPassword: string) {
     return this.http.post(`${baseUrl}/reset-password`, {
       token,
       password,
@@ -85,28 +85,28 @@ export class AccountService {
     });
   }
 
-  getAll() {
+  async getAll() {
     return this.http.get<Account[]>(baseUrl);
   }
 
-  getById(id: string) {
+  async getById(id: string) {
     return this.http.get<Account>(`${baseUrl}/${id}`);
   }
 
-  create(params: any) {
+  async create(params: any) {
     return this.http.post(baseUrl, params);
   }
 
-  update(id: string, params: any) {
+  async update(id: string, params: any) {
     return this.http.put(`${baseUrl}/${id}`, params).pipe(
-      map((account: any) => {
+      map(async (account: any) => {
         // update the current account if it was updated
         if (account.id === this.accountValue.id) {
           // publish updated account to subscribers
           account = { ...this.accountValue, ...account };
-          this.accountSubject.next(account);
+          this.accountSubject.next(await account);
         }
-        return account;
+        return await account;
       })
     );
   }

@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -10,7 +11,7 @@ export class AlertService {
     private subject = new Subject<Alert>();
     private defaultId = 'default-alert';
 
-    constructor(private toastCtrl: ToastController){}
+    constructor(private toastCtrl: ToastController, private loadingController: LoadingController){}
 
     // enable subscribing to alerts observable
     onAlert(id = this.defaultId): Observable<Alert> {
@@ -48,10 +49,12 @@ export class AlertService {
 
 
 
-    async createToastAlert(messageParam: string) {
+    async createToastAlert(messageParam: string, colorParam?: 'primary'|'warning'|'danger'|'success',durationParam?:number) {
       const toast = await this.toastCtrl.create({
         message: messageParam,
         position: "bottom",
+        duration:durationParam,
+        color:colorParam,
         buttons: [
           {
             role: "cancel",
@@ -61,6 +64,18 @@ export class AlertService {
       });
       await toast.present();
       toast.onDidDismiss();
+    }
+
+
+    async presentLoading(messageParam: string, durationParam: number) {
+      const loading = await this.loadingController.create({
+        message: messageParam,
+        duration: durationParam
+      });
+      await loading.present();
+
+      const { role, data } = await loading.onDidDismiss();
+      console.log('Loading dismissed!');
     }
 
 

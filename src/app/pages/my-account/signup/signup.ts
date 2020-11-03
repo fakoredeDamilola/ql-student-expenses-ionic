@@ -33,29 +33,26 @@ export class SignupPage {
     private toastAlert: AlertService
   ) {}
 
-  onSignup(form: NgForm) {
+  async onSignup(form: NgForm) {
     this.submitted = true;
 
     // stop here if form is invalid
     if (form.invalid) {
       return;
     }
-
     this.loading = true;
-    console.log(form.value);
-    console.log(this.signup);
-    this.accountService
-      .register(form.value)
+    (await this.accountService
+      .register(form.value))
       .pipe(first())
       .subscribe({
-        next: () => {
+        next: async () => {
           //TODO Replace with toast alert
-          this.toastAlert.createToastAlert('Registration successful, please check your email for verification instructions');
-          this.userData.signup(this.signup.email);
-          this.router.navigateByUrl("/login");
+          await this.toastAlert.createToastAlert('Registration successful, please check your email for verification instructions',"success",5000);
+          await this.userData.signup(this.signup.email);
+          await this.router.navigateByUrl("/login");
         },
-        error: (error) => {
-          //TODO this.alertService.error(error);
+        error: async (error) => {
+          await this.toastAlert.createToastAlert('Registration Failed!',"danger",5000);
           this.loading = false;
         },
       });

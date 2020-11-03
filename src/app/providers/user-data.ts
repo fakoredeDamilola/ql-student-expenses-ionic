@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AccountService } from "@app/_services";
+import { AccountService, AlertService } from "@app/_services";
 import { Storage } from "@ionic/storage";
 
 @Injectable({
@@ -10,7 +10,10 @@ export class UserData {
   HAS_LOGGED_IN = "hasLoggedIn";
   HAS_SEEN_TUTORIAL = "hasSeenTutorial";
 
-  constructor(public storage: Storage, public account: AccountService) {}
+  constructor(public storage: Storage,
+     public account: AccountService,
+     private toastAlert: AlertService
+     ) {}
 
   hasFavorite(sessionName: string): boolean {
     return this.favorites.indexOf(sessionName) > -1;
@@ -34,9 +37,9 @@ export class UserData {
   }
 
   async signup(email: string): Promise<any> {
-    return this.storage.set(this.HAS_LOGGED_IN, true).then(async () => {
+    (async () => {
       await this.setUsername(email);
-      return window.dispatchEvent(new CustomEvent("user:signup"));
+      return;
     });
   }
 
@@ -46,6 +49,7 @@ export class UserData {
     await this.storage.remove("email");
     window.dispatchEvent(new CustomEvent("user:logout"));
     location.reload();
+    return this.toastAlert.createToastAlert("Logout Successful","primary",4000);
   }
 
   async setUsername(email: string): Promise<any> {

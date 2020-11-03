@@ -10,7 +10,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { Storage } from "@ionic/storage";
 
 import { UserData } from "./providers/user-data";
-import { AccountService } from "./_services";
+import { AccountService, AlertService } from "./_services";
 import { Account, Role } from "./_models";
 
 @Component({
@@ -72,15 +72,17 @@ export class AppComponent implements OnInit {
     private storage: Storage,
     private userData: UserData,
     private swUpdate: SwUpdate,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private alertService: AlertService
   ) {
     this.accountService.account.subscribe((x) => (this.account = x));
     this.initializeApp();
   }
 
   async ngOnInit() {
-    this.checkLoginStatus();
-    this.listenForLoginEvents();
+    this.alertService.presentLoading("Welcome To Pet Check...",500);
+    await this.checkLoginStatus();
+    await this.listenForLoginEvents();
 
     this.swUpdate.available.subscribe(async (res) => {
       const toast = await this.toastCtrl.create({
@@ -96,15 +98,15 @@ export class AppComponent implements OnInit {
 
       await toast.present();
 
-      toast
+      await toast
         .onDidDismiss()
-        .then(() => this.swUpdate.activateUpdate())
-        .then(() => window.location.reload());
+        .then(async() => await this.swUpdate.activateUpdate())
+        .then(async() => window.location.reload());
     });
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
+  async initializeApp() {
+    await this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
@@ -112,36 +114,37 @@ export class AppComponent implements OnInit {
 
   async checkLoginStatus() {
     const loggedIn = await this.userData.isLoggedIn();
-    return this.updateLoggedInStatus(loggedIn);
+    return await this.updateLoggedInStatus(loggedIn);
   }
 
-  updateLoggedInStatus(loggedIn: boolean) {
-    setTimeout(() => {
+  async updateLoggedInStatus(loggedIn: boolean) {
+    setTimeout(async () => {
       this.loggedIn = loggedIn;
     }, 300);
   }
 
-  listenForLoginEvents() {
-    window.addEventListener("user:login", () => {
-      this.updateLoggedInStatus(true);
+  async listenForLoginEvents() {
+    window.addEventListener("user:login", async () => {
+      await this.updateLoggedInStatus(true);
     });
 
-    window.addEventListener("user:signup", () => {
-      this.updateLoggedInStatus(true);
+    window.addEventListener("user:signup", async() => {
+      await this.updateLoggedInStatus(true);
     });
 
-    window.addEventListener("user:logout", () => {
-      this.updateLoggedInStatus(false);
+    window.addEventListener("user:logout", async () => {
+      await this.updateLoggedInStatus(false);
     });
   }
 
-  logout() {
-    this.userData.logout();
+  async logout() {
+    await this.alertService.presentLoading("Logging Out...",2000);
+    await this.userData.logout();
   }
 
-  openTutorial() {
-    this.menu.enable(false);
-    this.storage.set("ion_did_tutorial", false);
-    this.router.navigateByUrl("/tutorial");
+  async openTutorial() {
+    await this.menu.enable(false);
+    await this.storage.set("ion_did_tutorial", false);
+    await this.router.navigateByUrl("/tutorial");
   }
 }

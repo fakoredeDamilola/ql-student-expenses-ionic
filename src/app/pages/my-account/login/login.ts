@@ -29,7 +29,7 @@ export class LoginPage {
     private alertService:AlertService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.form = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],
@@ -41,15 +41,12 @@ export class LoginPage {
     return this.form.controls;
   }
 
-  onSignup() {
-    this.router.navigateByUrl("/signup");
+  async onSignup() {
+    await this.router.navigateByUrl("/signup");
   }
 
-  onLogin(form: NgForm) {
+  async onLogin(form: NgForm) {
     this.submitted = true;
-
-    // reset alerts on submit
-    // this.alertService.clear();
 
     if (form.valid) {
       this.loading = true;
@@ -57,14 +54,15 @@ export class LoginPage {
         .login(this.login.email, this.login.password)
         .pipe(first())
         .subscribe({
-          next: () => {
+          next:async () => {
             // get return url from query parameters or default to home page
-            this.userData.login(this.login.email);
+            await this.userData.login(this.login.email);
             // redirect to home page when you login
-            this.router.navigateByUrl("/home");
+            await this.router.navigateByUrl("/home");
+            await this.alertService.createToastAlert("Log In Sucessful","success",2000);
           },
-          error: (error) => {
-            this.alertService.createToastAlert("Log In Failed, Please Check That Your Email & Password Is Correct.");
+          error:async (error) => {
+            await this.alertService.createToastAlert("Log In Failed, Please Check That Your Email & Password Is Correct.","danger",3000);
             this.loading = false;
             return;
           },

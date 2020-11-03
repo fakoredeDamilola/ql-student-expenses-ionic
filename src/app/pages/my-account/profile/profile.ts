@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AccountService } from "@app/_services";
+import { AccountService, AlertService } from "@app/_services";
 
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
@@ -20,7 +20,8 @@ export class ProfilePage implements OnInit {
     public alertCtrl: AlertController,
     public router: Router,
     public userData: UserData,
-    public accountService: AccountService
+    public accountService: AccountService,
+    public alertService: AlertService
   ) {}
 
   ngOnInit() {}
@@ -67,8 +68,9 @@ export class ProfilePage implements OnInit {
     console.log("Clicked to change password");
   }
 
-  logout() {
-    this.userData.logout();
+  async logout() {
+    await this.alertService.presentLoading("Logging Out...",2000);
+    await this.userData.logout();
   }
 
   support() {
