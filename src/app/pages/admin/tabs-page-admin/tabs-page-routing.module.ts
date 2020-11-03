@@ -36,6 +36,19 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'pets',
+        children: [
+          {
+            path: '',
+           loadChildren: () => import('../pets/pets.module').then(m => m.PetsModule)
+          },
+         /* {
+            path: 'property/:sessionId',
+            loadChildren: () => import('../properties/properties.module').then(m => m.PropertiesModule)
+          }*/
+        ]
+      },
+      {
         path: '',
         redirectTo: '/app/admin/accounts',
         pathMatch: 'full'

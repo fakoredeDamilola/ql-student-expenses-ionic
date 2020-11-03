@@ -11,8 +11,8 @@ import {
 } from "@ionic/angular";
 
 import { AccountsFilterPage } from "./accounts-filter/accounts-filter";
-import { ConferenceData } from "../../../providers/conference-data";
-import { UserData } from "../../../providers/user-data";
+import { ConferenceData } from "@app/providers/conference-data";
+import { UserData } from "@app/providers/user-data";
 
 @Component({
   selector: "page-schedule",

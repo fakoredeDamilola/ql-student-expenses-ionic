@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AccountDetailPage } from './property-detail';
-import { AccountDetailPageRoutingModule } from './property-detail-routing.module';
+import { PropertyDetailPage } from './property-detail';
+import { PropertyDetailPageRoutingModule } from './property-detail-routing.module';
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    AccountDetailPageRoutingModule
+    PropertyDetailPageRoutingModule
   ],
   declarations: [
-    AccountDetailPage,
+    PropertyDetailPage,
   ]
 })
-export class AccountDetailModule { }
+export class PropertyDetailModule { }

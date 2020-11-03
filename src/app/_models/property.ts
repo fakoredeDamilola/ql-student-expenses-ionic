@@ -1,3 +1,5 @@
+import { Pet } from "@app/_models"
+
 export class Property {
     id: string; //<-- The Id of the property
     propertyManagerId:string; //<-- The Account Id of the property manager
@@ -8,6 +10,6 @@ export class Property {
     city: string;
     state: string;
     zip: string;
-    //ownerCount:number;
     petCount: number;
+    pets:[Pet];
 }

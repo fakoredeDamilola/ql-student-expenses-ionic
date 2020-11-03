@@ -1,15 +1,23 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-import { IonicModule } from "@ionic/angular";
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
-import { PetsPage } from "./pets";
-import { PetsFilterPage } from "./pets-filter/pets-filter";
-import { PetsPageRoutingModule } from "./pets-routing.module";
+import { PetsRoutingModule } from './pets-routing.module';
+import { PetsListComponent } from './pets-list.component';
+import { PetsAddEditComponent } from './pets-add-edit.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, PetsPageRoutingModule],
-  declarations: [PetsPage, PetsFilterPage],
-  entryComponents: [PetsFilterPage],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        IonicModule,
+        PetsRoutingModule
+    ],
+    declarations: [
+        PetsListComponent,
+        PetsAddEditComponent
+    ]
 })
-export class PetsModule {}
+export class PetsModule { }

@@ -1,67 +1,105 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { ConferenceData } from '../../../../providers/conference-data';
-import { ActivatedRoute } from '@angular/router';
-import { UserData } from '../../../../providers/user-data';
+import { ActivatedRoute, Router } from "@angular/router";
+import { UserData } from "@app/providers/user-data";
+import { AlertService, PropertyService } from "@app/_services";
+import { first, mapTo } from "rxjs/operators";
+import { Property } from "@app/_models";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'page-session-detail',
-  styleUrls: ['./account-detail.scss'],
-  templateUrl: 'account-detail.html'
+  selector: "page-property-detail",
+  styleUrls: ["./property-detail.scss"],
+  templateUrl: "property-detail.html",
 })
-export class AccountDetailPage {
-  session: any;
-  isFavorite = false;
+export class PropertyDetailPage implements OnInit {
+  form: FormGroup;
+  id: string;
+  isAddMode: boolean;
+  loading = false;
+  submitted = false;
   defaultHref = '';
 
+  property : Property;
+
   constructor(
-    private dataProvider: ConferenceData,
-    private userProvider: UserData,
-    private route: ActivatedRoute
-  ) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private propertyService: PropertyService,
+    private alertService: AlertService
+  ) {}
 
-  ionViewWillEnter() {
-    this.dataProvider.load().subscribe((data: any) => {
-      if (data && data.schedule && data.schedule[0] && data.schedule[0].groups) {
-        const sessionId = this.route.snapshot.paramMap.get('sessionId');
-        for (const group of data.schedule[0].groups) {
-          if (group && group.sessions) {
-            for (const session of group.sessions) {
-              if (session && session.id === sessionId) {
-                this.session = session;
+  ngOnInit() {
+    this.id = this.route.snapshot.params["id"];
+    this.isAddMode = !this.id;
 
-                this.isFavorite = this.userProvider.hasFavorite(
-                  this.session.name
-                );
+   this.propertyService.getById(this.id).forEach((prop)=>{
 
-                break;
-              }
-            }
-          }
-        }
-      }
-    });
+   })
+
   }
 
+
+
+  // convenience getter for easy access to form fields
+  get objectId() {
+    return this.id;
+  }
+  get f() {
+    return this.form.controls;
+  }
   ionViewDidEnter() {
-    this.defaultHref = `/app/tabs/schedule`;
+    this.defaultHref = `/admin/properties/property-test`;
   }
+  onSubmit() {
+    this.submitted = true;
 
-  sessionClick(item: string) {
-    console.log('Clicked', item);
-  }
+    // reset alerts on submit
+    this.alertService.clear();
 
-  toggleFavorite() {
-    if (this.userProvider.hasFavorite(this.session.name)) {
-      this.userProvider.removeFavorite(this.session.name);
-      this.isFavorite = false;
+    // stop here if form is invalid
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    if (this.isAddMode) {
+      this.createProperty();
     } else {
-      this.userProvider.addFavorite(this.session.name);
-      this.isFavorite = true;
+      this.updateProperty();
     }
   }
 
-  shareSession() {
-    console.log('Clicked share session');
+  private createProperty() {
+    this.propertyService
+      .create(this.form.value)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          //this.alertService.success('Property created successfully', { keepAfterRouteChange: true });
+          this.router.navigate(["../"], { relativeTo: this.route });
+        },
+        error: (error) => {
+          //  this.alertService.error(error);
+          this.loading = false;
+        },
+      });
+  }
+
+  private updateProperty() {
+    this.propertyService
+      .update(this.id, this.form.value)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          //   this.alertService.success('Update successful', { keepAfterRouteChange: true });
+          this.router.navigate(["../../"], { relativeTo: this.route });
+        },
+        error: (error) => {
+          //this.alertService.error(error);
+          this.loading = false;
+        },
+      });
   }
 }
