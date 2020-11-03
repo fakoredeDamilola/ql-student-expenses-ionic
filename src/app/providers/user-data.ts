@@ -1,30 +1,26 @@
-import { Injectable } from '@angular/core';
-import { AccountService } from '@app/_services';
-import { Storage } from '@ionic/storage';
-
+import { Injectable } from "@angular/core";
+import { AccountService } from "@app/_services";
+import { Storage } from "@ionic/storage";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class UserData {
   favorites: string[] = [];
-  HAS_LOGGED_IN = 'hasLoggedIn';
-  HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
+  HAS_LOGGED_IN = "hasLoggedIn";
+  HAS_SEEN_TUTORIAL = "hasSeenTutorial";
 
-  constructor(
-    public storage: Storage,
-    public account: AccountService
-  ) { }
+  constructor(public storage: Storage, public account: AccountService) {}
 
   hasFavorite(sessionName: string): boolean {
-    return (this.favorites.indexOf(sessionName) > -1);
+    return this.favorites.indexOf(sessionName) > -1;
   }
 
-  addFavorite(sessionName: string): void {
+  async addFavorite(sessionName: string): Promise<any> {
     this.favorites.push(sessionName);
   }
 
-  removeFavorite(sessionName: string): void {
+  async removeFavorite(sessionName: string): Promise<any> {
     const index = this.favorites.indexOf(sessionName);
     if (index > -1) {
       this.favorites.splice(index, 1);
@@ -33,44 +29,46 @@ export class UserData {
 
   async login(email: string): Promise<any> {
     await this.storage.set(this.HAS_LOGGED_IN, true);
-    this.setUsername(email);
-    return window.dispatchEvent(new CustomEvent('user:login'));
+    await this.setUsername(email);
+    return window.dispatchEvent(new CustomEvent("user:login"));
   }
 
   async signup(email: string): Promise<any> {
-    return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-      this.setUsername(email);
-      return window.dispatchEvent(new CustomEvent('user:signup'));
+    return this.storage.set(this.HAS_LOGGED_IN, true).then(async () => {
+      await this.setUsername(email);
+      return window.dispatchEvent(new CustomEvent("user:signup"));
     });
   }
 
   async logout(): Promise<any> {
     await this.storage.remove(this.HAS_LOGGED_IN);
-    this.account.logout();
-    await this.storage.remove('email');
-    window.dispatchEvent(new CustomEvent('user:logout'));
+    await this.account.logout();
+    await this.storage.remove("email");
+    window.dispatchEvent(new CustomEvent("user:logout"));
     location.reload();
   }
 
-  setUsername(email: string): Promise<any> {
-    return this.storage.set('email', email);
+  async setUsername(email: string): Promise<any> {
+    return await this.storage.set("email", email);
   }
 
   async getUsername(): Promise<string> {
-    return await this.storage.get('email').then((value) => {
-      return value;
+    return await this.storage.get("email").then(async (value) => {
+      return await value;
     });
   }
 
   async isLoggedIn(): Promise<boolean> {
-    return await this.storage.get(this.HAS_LOGGED_IN).then((value) => {
-      return value === true;
+    return await this.storage.get(this.HAS_LOGGED_IN).then(async (value) => {
+      return (await value) === true;
     });
   }
 
   async checkHasSeenTutorial(): Promise<string> {
-    return await this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {
-      return value;
-    });
+    return await this.storage
+      .get(this.HAS_SEEN_TUTORIAL)
+      .then(async (value) => {
+        return await value;
+      });
   }
 }

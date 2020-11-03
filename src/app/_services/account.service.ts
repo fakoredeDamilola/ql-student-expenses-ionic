@@ -54,8 +54,8 @@ export class AccountService {
       .post<any>(`${baseUrl}/refresh-token`, {}, { withCredentials: true })
       .pipe(
         map(async (account) => {
-          this.accountSubject.next(account);
-          this.startRefreshTokenTimer();
+          this.accountSubject.next(await account);
+          await this.startRefreshTokenTimer();
           return await account;
         })
       );
