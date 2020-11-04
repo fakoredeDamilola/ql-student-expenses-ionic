@@ -46,6 +46,7 @@ export class LoginPage {
   }
 
   async onLogin(form: NgForm) {
+    await this.alertService.presentLoading("Logging In...",1000);
     this.submitted = true;
 
     if (form.valid) {
