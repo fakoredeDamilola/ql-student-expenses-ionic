@@ -37,7 +37,7 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list lines="none" [hidden]="!account || account.role =='User' || account.role == 'Admin'">
+        <ion-list lines="none" [hidden]="!account || account.role =='User' || account.role != 'Admin'">
           <ion-list-header>
             Property Manager
           </ion-list-header>

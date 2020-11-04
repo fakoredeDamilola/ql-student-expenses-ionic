@@ -140,6 +140,7 @@ export class AppComponent implements OnInit {
   async logout() {
     await this.alertService.presentLoading("Logging Out...",2000);
     await this.userData.logout();
+    //await this.accountService.logout();
   }
 
   async openTutorial() {
