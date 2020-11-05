@@ -104,7 +104,7 @@ export class AccountService {
         // update the current account if it was updated
         if (account.id === this.accountValue.id) {
           // publish updated account to subscribers
-          account = { ...this.accountValue, ...account };
+          account = await { ...this.accountValue, ...account };
           this.accountSubject.next(await account);
         }
         return await account;
