@@ -2,9 +2,9 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { UserData } from "../../../providers/user-data";
+import { UserData } from "@app/providers/user-data";
 
-import { UserOptions } from "../../../interfaces/user-options";
+import { UserOptions } from "@app/interfaces/user-options";
 import { AccountService, AlertService } from "@app/_services";
 import { first } from "rxjs/operators";
 
