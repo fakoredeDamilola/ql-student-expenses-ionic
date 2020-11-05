@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { first } from "rxjs/operators";
 
 import { AccountService, AlertService } from "@app/_services";
-import { ToastController } from "@ionic/angular";
 
 enum EmailStatus {
   Verifying,

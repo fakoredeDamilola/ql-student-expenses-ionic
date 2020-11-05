@@ -10,8 +10,8 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { Storage } from "@ionic/storage";
 
 import { UserData } from "./providers/user-data";
-import { AccountService, AlertService } from "./_services";
-import { Account, Role } from "./_models";
+import { AccountService, AlertService } from "@app/_services";
+import { Account, Role } from "@app/_models";
 
 @Component({
   selector: "app-root",

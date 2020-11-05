@@ -4,8 +4,8 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map, finalize } from "rxjs/operators";
 
-import { environment } from "../../environments/environment";
-import { Pet } from "../_models";
+import { environment } from "@environments/environment";
+import { Pet } from "@app/_models";
 
 const baseUrl = `${environment.apiUrl}/pets`;
 

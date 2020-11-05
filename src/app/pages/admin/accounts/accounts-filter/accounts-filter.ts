@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Config, ModalController, NavParams } from '@ionic/angular';
 
-import { ConferenceData } from '../../../../providers/conference-data';
+import { ConferenceData } from '@app/providers/conference-data';
 
 
 @Component({

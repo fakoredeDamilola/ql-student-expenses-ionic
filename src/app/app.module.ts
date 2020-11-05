@@ -10,10 +10,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { environment } from '@environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appInitializer, JwtInterceptor, ErrorInterceptor } from '@app/_helpers';
-import { AccountService, PetService } from '@app/_services';
+import { AccountService } from '@app/_services';
 
 @NgModule({
   imports: [

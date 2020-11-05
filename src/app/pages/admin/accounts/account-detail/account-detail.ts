@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { ConferenceData } from '../../../../providers/conference-data';
+import { ConferenceData } from '@app/providers/conference-data';
 import { ActivatedRoute } from '@angular/router';
-import { UserData } from '../../../../providers/user-data';
+import { UserData } from '@app/providers/user-data';
 
 @Component({
   selector: 'page-session-detail',

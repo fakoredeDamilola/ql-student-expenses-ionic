@@ -5,7 +5,7 @@ import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 
-import { UserData } from "../../../providers/user-data";
+import { UserData } from "@app/providers/user-data";
 
 @Component({
   selector: "page-account",

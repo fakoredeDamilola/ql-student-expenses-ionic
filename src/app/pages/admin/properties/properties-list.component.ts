@@ -2,10 +2,10 @@
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, IonRouterOutlet, ToastController, IonList, Config } from '@ionic/angular';
 import { first } from 'rxjs/operators';
-import { ConferenceData } from '../../../providers/conference-data';
-import { UserData } from '../../../providers/user-data';
+import { ConferenceData } from '@app/providers/conference-data';
+import { UserData } from '@app/providers/user-data';
 
-import { PropertyService } from '../../../_services/';
+import { PropertyService } from '@app/_services/';
 import { AccountsFilterPage } from '../accounts/accounts-filter/accounts-filter';
 
 @Component({ templateUrl: 'properties-list.component.html' })

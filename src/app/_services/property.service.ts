@@ -6,7 +6,6 @@ import { map, finalize } from "rxjs/operators";
 
 import { environment } from "@environments/environment";
 import { Property } from "@app/_models";
-import { stringify } from '@angular/compiler/src/util';
 
 const baseUrl = `${environment.apiUrl}/properties`;
 
