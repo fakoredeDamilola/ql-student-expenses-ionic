@@ -24,7 +24,7 @@ export class PropertyService {
     return this.propertySubject.value;
   }
 
-  getAll() {
+  async getAll() {
     return this.http.get<Property[]>(baseUrl);
   }
 
