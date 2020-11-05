@@ -4,8 +4,8 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map, finalize } from "rxjs/operators";
 
-import { environment } from "../../environments/environment";
-import { Property } from "../_models";
+import { environment } from "@environments/environment";
+import { Property } from "@app/_models";
 import { stringify } from '@angular/compiler/src/util';
 
 const baseUrl = `${environment.apiUrl}/properties`;
@@ -24,7 +24,7 @@ export class PropertyService {
     return this.propertySubject.value;
   }
 
-  async getAll() {
+  getAll() {
     return this.http.get<Property[]>(baseUrl);
   }
 
