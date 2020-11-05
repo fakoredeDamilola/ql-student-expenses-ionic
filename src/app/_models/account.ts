@@ -1,5 +1,6 @@
 ﻿import { Role } from './role';
 import { Pet } from './pet'
+import { Property } from './property';
 
 export class Account {
     id: string;
@@ -9,6 +10,8 @@ export class Account {
     lastName: string;
     email: string;
     role: Role;
+    properties?:[Property];
+    petOwners?:[Account];
     pets?:[Pet];
     jwtToken?: string;
 
