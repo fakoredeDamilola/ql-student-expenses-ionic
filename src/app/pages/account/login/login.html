@@ -3,22 +3,21 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-text-center">
-    <img src="assets/img/petcheck-logo.png" alt="Ionic logo">
+    <img src="assets/img/petcheck-logo.png" alt="Ionic logo" />
   </div>
 
   <form #loginForm="ngForm" novalidate>
     <ion-list>
       <ion-item>
         <ion-label position="stacked" color="primary">Email</ion-label>
-        <ion-input [(ngModel)]="login.email" name="email" type="text" #email="ngModel" spellcheck="false" autocapitalize="off"
-          required>
+        <ion-input [(ngModel)]="login.email" name="email" type="text" #email="ngModel" spellcheck="false"
+          autocapitalize="off" required>
         </ion-input>
       </ion-item>
 
@@ -49,6 +48,10 @@
         <ion-button (click)="onSignup()" color="light" expand="block">Signup</ion-button>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col style="text-align: center">
+        <a href="#" style="text-align: center">Forgot Password?</a>
+      </ion-col>
+    </ion-row>
   </form>
-
 </ion-content>
