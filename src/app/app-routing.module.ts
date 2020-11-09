@@ -4,6 +4,7 @@ import { VerifyEmailComponent } from "@app/pages/account/verify-email/verify-ema
 import { CheckTutorial } from "@app/providers/check-tutorial.service";
 import { AuthGuard } from "@app/_helpers";
 import { Role } from "@app/_models";
+import { ResetPasswordComponent } from '@app/pages/account/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/tutorial", pathMatch: "full" },
@@ -22,7 +23,7 @@ const routes: Routes = [
   {
     path: "account/profile",
     loadChildren: () =>
-      import("@app/pages/account/profile/profile.module").then(
+      import("@app/pages/profile/profile.module").then(
         (m) => m.ProfileModule
       ),
     canActivate: [AuthGuard],
@@ -41,13 +42,19 @@ const routes: Routes = [
         (m) => m.SignUpModule
       ),
   },
+  {
+    path: "forgot-password",
+    loadChildren: () =>
+      import("@app/pages/account/forgot-password/forgot-password.module").then(
+        (m) => m.ForgotPasswordModule
+      ),
+  },
   { path: "account/verify-email", component: VerifyEmailComponent },
+  { path: "account/reset-password", component: ResetPasswordComponent },
   {
     path: "support",
     loadChildren: () =>
-      import("@app/pages/support/support.module").then(
-        (m) => m.SupportModule
-      ),
+      import("@app/pages/support/support.module").then((m) => m.SupportModule),
   },
   {
     path: "tutorial",

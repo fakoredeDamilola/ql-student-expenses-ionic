@@ -1,86 +1,84 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+﻿import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { NgForm} from "@angular/forms";
+import { first } from "rxjs/operators";
 
-import { AccountService, AlertService } from '@app/_services';
-import { MustMatch } from '@app/_helpers';
+import { AccountService, AlertService } from "@app/_services";
+import { UserOptions } from "@app/interfaces/user-options";
 
 enum TokenStatus {
-    Validating,
-    Valid,
-    Invalid
+  Validating,
+  Valid,
+  Invalid,
 }
 
-@Component({ templateUrl: 'reset-password.component.html' })
+@Component({ templateUrl: "reset-password.component.html" })
 export class ResetPasswordComponent implements OnInit {
-    TokenStatus = TokenStatus;
-    tokenStatus = TokenStatus.Validating;
-    token = null;
-    form: FormGroup;
-    loading = false;
-    submitted = false;
+  resetPassword: UserOptions = { password: "" };
+  TokenStatus = TokenStatus;
+  tokenStatus = TokenStatus.Validating;
+  token = null;
+  loading = false;
+  submitted = false;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
-        private accountService: AccountService,
-        private alertService: AlertService
-    ) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private accountService: AccountService,
+    private alertService: AlertService
+  ) {}
 
-    async ngOnInit() {
-        this.form = this.formBuilder.group({
-            password: ['', [Validators.required, Validators.minLength(6)]],
-            confirmPassword: ['', Validators.required],
-        }, {
-            validator: MustMatch('password', 'confirmPassword')
-        });
+  async ngOnInit() {
 
-        const token = this.route.snapshot.queryParams['token'];
+    await console.log(" I DID GET HERE!!!!!")
+    const token = await this.route.snapshot.queryParams["token"];
 
-        // remove token from url to prevent http referer leakage
-        this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
+    // remove token from url to prevent http referer leakage
+    await this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
 
-        (await this.accountService.validateResetToken(token))
-            .pipe(first())
-            .subscribe({
-                next: () => {
-                    this.token = token;
-                    this.tokenStatus = TokenStatus.Valid;
-                },
-                error: () => {
-                    this.tokenStatus = TokenStatus.Invalid;
-                }
-            });
+    (await this.accountService.validateResetToken(token))
+      .pipe(first())
+      .subscribe({
+        next: async () => {
+          this.token = await token;
+          this.tokenStatus = TokenStatus.Valid;
+        },
+        error: () => {
+          this.tokenStatus = TokenStatus.Invalid;
+        },
+      });
+  }
+
+  async onSubmit(form: NgForm) {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (form.invalid) {
+      return;
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.form.controls; }
-
-    async onSubmit() {
-        this.submitted = true;
-
-        // reset alerts on submit
-        this.alertService.clear();
-
-        // stop here if form is invalid
-        if (this.form.invalid) {
-            return;
-        }
-
-        this.loading = true;
-        (await this.accountService.resetPassword(this.token, this.f.password.value, this.f.confirmPassword.value))
-            .pipe(first())
-            .subscribe({
-                next: () => {
-                    this.alertService.success('Password reset successful, you can now login', { keepAfterRouteChange: true });
-                    this.router.navigate(['../login'], { relativeTo: this.route });
-                },
-                error: error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                }
-            });
-    }
+    this.loading = true;
+    (
+      await this.accountService.resetPassword(
+        this.token,
+        form.value.password,
+        form.value.password
+      )
+    )
+      .pipe(first())
+      .subscribe({
+        next: async () => {
+          await this.alertService.createToastAlert(
+            "Password reset successful, you can now login",
+            "success",
+            3000
+          );
+          await this.router.navigateByUrl("/login");
+        },
+        error: async (error) => {
+          await this.alertService.createToastAlert(error, "warning", 5000);
+          this.loading = false;
+        },
+      });
+  }
 }

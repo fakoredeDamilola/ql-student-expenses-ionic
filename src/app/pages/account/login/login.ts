@@ -45,8 +45,12 @@ export class LoginPage {
     await this.router.navigateByUrl("/signup");
   }
 
+  async onForgotPassword() {
+    await this.router.navigateByUrl("/forgot-password");
+  }
+
   async onLogin(form: NgForm) {
-    await this.alertService.presentLoading("Logging In...",1000);
+    this.alertService.presentLoading("Logging In...",1500);
     this.submitted = true;
 
     if (form.valid) {

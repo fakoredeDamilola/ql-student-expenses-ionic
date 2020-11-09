@@ -19,7 +19,7 @@ export class VerifyEmailComponent implements OnInit {
     private router: Router,
     private accountService: AccountService,
     private toastAlert:AlertService
-  ) //private alertService: AlertService
+  )
   {}
 
   async ngOnInit() {
