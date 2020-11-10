@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, HostListener } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 
@@ -27,7 +27,7 @@ export class ForgotPasswordPage {
     private alertService: AlertService
   ) {}
 
-  async onForgotPassword(form: NgForm) {
+  async onForgotPassword(form?: NgForm) {
     this.submitted = true;
     // stop here if form is invalid
     if (form.invalid) {

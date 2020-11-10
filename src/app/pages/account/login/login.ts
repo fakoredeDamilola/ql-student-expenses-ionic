@@ -15,11 +15,6 @@ import { first } from "rxjs/operators";
 })
 export class LoginPage {
   // Event listener for enter button for easy login!!!
-  @HostListener("document:keydown.enter", ["$event"]) async onKeydownHandler(
-    evt: KeyboardEvent
-  ) {
-    await this.onLogin();
-  }
   loading = false;
   submitted = false;
   login: UserOptions = { email: "", password: "" };

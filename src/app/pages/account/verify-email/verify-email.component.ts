@@ -33,7 +33,7 @@ export class VerifyEmailComponent implements OnInit {
         next: async () => {
           await this.router.navigateByUrl("/login");
           // Toast notification that email was verefied!!!
-          await this.toastAlert.createToastAlert("Email Verefied Successfully, You May Now Log In To Pet Check");
+          await this.toastAlert.createToastAlert("Email Verefied Successfully, You May Now Log Into Pet Check","success",5000);
         },
         error: async () => {
           this.emailStatus = EmailStatus.Failed;
