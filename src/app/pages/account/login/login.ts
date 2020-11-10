@@ -33,7 +33,7 @@ export class LoginPage {
   }
 
   async onLogin() {
-    await this.alertService.presentLoading("Logging In...", 1500);
+    this.alertService.presentLoading("Logging In...", 1500);
     this.submitted = true;
 
     this.loading = true;
@@ -45,7 +45,7 @@ export class LoginPage {
           // get return url from query parameters or default to home page
           await this.userData.login(this.login.email);
           // redirect to home page when you login
-          await this.router.navigateByUrl("/home");
+          this.router.navigateByUrl("/home");
           await this.alertService.createToastAlert(
             "Log In Sucessful",
             "success",
