@@ -14,7 +14,6 @@ import { first } from "rxjs/operators";
   styleUrls: ["./login.scss"],
 })
 export class LoginPage {
-  // Event listener for enter button for easy login!!!
   loading = false;
   submitted = false;
   login: UserOptions = { email: "", password: "" };
