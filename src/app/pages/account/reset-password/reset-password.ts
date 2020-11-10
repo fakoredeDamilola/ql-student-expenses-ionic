@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { NgForm} from "@angular/forms";
+import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
 
 import { AccountService, AlertService } from "@app/_services";
@@ -12,8 +12,8 @@ enum TokenStatus {
   Invalid,
 }
 
-@Component({ templateUrl: "reset-password.component.html" })
-export class ResetPasswordComponent implements OnInit {
+@Component({ templateUrl: "reset-password.html" })
+export class ResetPasswordPage implements OnInit {
   resetPassword: UserOptions = { password: "" };
   TokenStatus = TokenStatus;
   tokenStatus = TokenStatus.Validating;
@@ -29,13 +29,12 @@ export class ResetPasswordComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-
-    await console.log(" I DID GET HERE!!!!!")
     const token = await this.route.snapshot.queryParams["token"];
-
     // remove token from url to prevent http referer leakage
-    await this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
-
+    await this.router.navigate([], {
+      relativeTo: this.route,
+      replaceUrl: true,
+    });
     (await this.accountService.validateResetToken(token))
       .pipe(first())
       .subscribe({
