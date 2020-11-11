@@ -10,10 +10,10 @@ export enum DogBreed {
     AlapahaBlueBloodBulldog = 'Alapaha Blue Blood Bulldog',
     AlaskanHusky = 'Alaskan Husky',
     AlaskanKleeKai = 'Alaskan Klee Kai',
-    AlaskanMalamute ='Alaskan Malamute'
-  /*  Alopekis
-    Alpine Dachsbracke[10]
-    American Bulldog[11]
+    AlaskanMalamute ='Alaskan Malamute',
+    Alopekis = 'lopekis',
+    AlpineDachsbracke = 'Alpine Dachsbracke',
+    /*American Bulldog[11]
     American Bully
     American Cocker Spaniel[12]
     American English Coonhound[13]
