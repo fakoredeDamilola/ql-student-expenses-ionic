@@ -28,6 +28,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: "account/pets",
+    loadChildren: () =>
+      import("@app/pages/account/pets/pets-list/pets-list.module").then(
+        (m) => m.PetsListModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: "login",
     loadChildren: () =>
       import("@app/pages/account/login/login.module").then(
