@@ -28,12 +28,17 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: "account/pets",
-    loadChildren: () =>
-      import("@app/pages/account/pets/pets-list/pets-list.module").then(
-        (m) => m.PetsListModule
-      ),
-    canActivate: [AuthGuard],
+    path: 'account/pets',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import("@app/pages/account/pets/pets-list/pets-list.module").then(m => m.PetsListModule)
+      },
+      {
+        path: 'pet-details/:petId',
+        loadChildren: () => import('@app/pages/account/pets/pet-details/pet-details.module').then(m => m.PetDetailsModule)
+      }
+    ]
   },
   {
     path: "login",

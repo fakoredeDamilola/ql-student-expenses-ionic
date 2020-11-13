@@ -5,11 +5,11 @@ import { ActionSheetController } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
-  selector: 'page-pet-detail',
-  templateUrl: 'pet-detail.html',
-  styleUrls: ['./pet-detail.scss'],
+  selector: 'page-pet-details',
+  templateUrl: 'pet-details.html',
+  styleUrls: ['./pet-details.scss'],
 })
-export class PetDetailPage {
+export class PetDetailsPage {
   speaker: any;
 
   constructor(
@@ -22,7 +22,7 @@ export class PetDetailPage {
 
   ionViewWillEnter() {
     this.dataProvider.load().subscribe((data: any) => {
-      const speakerId = this.route.snapshot.paramMap.get('speakerId');
+      const speakerId = this.route.snapshot.paramMap.get('petId');
       if (data && data.speakers) {
         for (const speaker of data.speakers) {
           if (speaker && speaker.id === speakerId) {
