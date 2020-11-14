@@ -22,27 +22,34 @@ const routes: Routes = [
   {
     path: "account/profile",
     loadChildren: () =>
-      import("@app/pages/profile/profile.module").then(
-        (m) => m.ProfileModule
-      ),
+      import("@app/pages/profile/profile.module").then((m) => m.ProfileModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'account/pets',
+    path: "account/pets",
     children: [
       {
-        path: '',
-        loadChildren: () => import("@app/pages/account/pets/pets-list/pets-list.module").then(m => m.PetsListModule)
+        path: "",
+        loadChildren: () =>
+          import("@app/pages/account/pets/pets-list/pets-list.module").then(
+            (m) => m.PetsListModule
+          ),
       },
       {
-        path: 'pet-details/:petId',
-        loadChildren: () => import('@app/pages/account/pets/pet-details/pet-details.module').then(m => m.PetDetailsModule)
+        path: "pet-details/:petId",
+        loadChildren: () =>
+          import("@app/pages/account/pets/pet-details/pet-details.module").then(
+            (m) => m.PetDetailsModule
+          ),
       },
       {
-        path: 'add',
-        loadChildren: () => import('@app/pages/account/pets/pet-add/pet-add.module').then(m => m.PetAddModule)
-      }
-    ]
+        path: "add",
+        loadChildren: () =>
+          import("@app/pages/account/pets/pet-add/pet-add.module").then(
+            (m) => m.PetAddModule
+          ),
+      },
+    ],
   },
   {
     path: "login",
@@ -66,11 +73,13 @@ const routes: Routes = [
       ),
   },
   { path: "account/verify-email", component: VerifyEmailComponent },
-  { path: "account/reset-password", loadChildren: () =>
-  import("@app/pages/account/reset-password/reset-password.module").then(
-    (m) => m.ResetPasswordModule
-  ),
-},
+  {
+    path: "account/reset-password",
+    loadChildren: () =>
+      import("@app/pages/account/reset-password/reset-password.module").then(
+        (m) => m.ResetPasswordModule
+      ),
+  },
   {
     path: "support",
     loadChildren: () =>
@@ -87,7 +96,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
