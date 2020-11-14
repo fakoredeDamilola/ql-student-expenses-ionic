@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConferenceData } from '@app/providers/conference-data';
 import { ActionSheetController } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { AccountService } from '@app/_services';
+import { AccountService, AlertService } from '@app/_services';
 import { NgForm } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { PetOptions } from '@app/interfaces/pet-options';
@@ -18,9 +18,7 @@ export class PetAddPage {
   account = this.accountService.accountValue;
   submitted: boolean = false;
   loading: boolean;
-  toastAlert: any;
   userData: any;
-  router: any;
 
   addPet: PetOptions = {
     petName: "",
@@ -31,10 +29,11 @@ export class PetAddPage {
   constructor(
     private accountService:AccountService,
     private dataProvider: ConferenceData,
-    private route: ActivatedRoute,
+    private router: Router,
     public actionSheetCtrl: ActionSheetController,
     public confData: ConferenceData,
     public inAppBrowser: InAppBrowser,
+    public toastAlert:AlertService
   ) {}
 
   ionViewWillEnter() {
@@ -55,21 +54,26 @@ export class PetAddPage {
     if (form.invalid) {
       return;
     }
+
+    console.log(form.value,"The form i want to append po id to")
+
+    form.value.petOwnerId = this.account.id;
+
     this.loading = true;
-    (await this.accountService.register(form.value)).pipe(first()).subscribe({
+    (await this.accountService.pushPetToAccount(this.account.id,form.value)).pipe(first()).subscribe({
       next: async () => {
         //TODO Replace with toast alert
         await this.toastAlert.createToastAlert(
-          "Registration successful, please check your email for verification instructions",
+          "Added Pet To Account!",
           "success",
           5000
         );
         //await this.userData.signup(this.signup.email);
-        await this.router.navigateByUrl("/login");
+        await this.router.navigateByUrl("/account/pets");
       },
       error: async (error) => {
         await this.toastAlert.createToastAlert(
-          "Registration Failed!",
+          "Add to pets failed.....!",
           "danger",
           5000
         );

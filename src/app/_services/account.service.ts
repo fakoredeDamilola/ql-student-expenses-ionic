@@ -98,6 +98,20 @@ export class AccountService {
     return this.http.post(baseUrl, params);
   }
 
+  async pushPetToAccount(accountId:any,params: any) {
+    return this.http.put(`${baseUrl}/${accountId}/pets`, params).pipe(
+      map(async (account: any) => {
+        // update the current account if it was updated
+        if (account.id === this.accountValue.id) {
+          // publish updated account to subscribers
+          account = await { ...this.accountValue, ...account };
+          this.accountSubject.next(await account);
+        }
+        return await account;
+      })
+    );
+  }
+
   async update(id: string, params: any) {
     return this.http.put(`${baseUrl}/${id}`, params).pipe(
       map(async (account: any) => {
