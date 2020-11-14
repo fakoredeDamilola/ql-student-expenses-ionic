@@ -14,7 +14,7 @@ import { UserData } from "@app/providers/user-data";
 })
 export class ProfilePage implements OnInit {
   // Get currently logged in accounts values
-  account = this.accountService.accountValue
+  account = this.accountService.accountValue;
   constructor(
     public alertCtrl: AlertController,
     public router: Router,

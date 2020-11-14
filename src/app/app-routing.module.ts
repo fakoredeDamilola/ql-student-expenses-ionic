@@ -37,6 +37,10 @@ const routes: Routes = [
       {
         path: 'pet-details/:petId',
         loadChildren: () => import('@app/pages/account/pets/pet-details/pet-details.module').then(m => m.PetDetailsModule)
+      },
+      {
+        path: 'add',
+        loadChildren: () => import('@app/pages/account/pets/pet-add/pet-add.module').then(m => m.PetAddModule)
       }
     ]
   },
