@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ConferenceData } from '@app/providers/conference-data';
+import { AccountService, PetService } from '@app/_services';
 
 @Component({
   selector: 'page-pets-list',
@@ -9,11 +10,20 @@ import { ConferenceData } from '@app/providers/conference-data';
 export class PetsListPage {
   speakers: any[] = [];
 
-  constructor(public confData: ConferenceData) {}
+  petsList: any[] = [];
+
+  constructor(
+    public confData: ConferenceData,
+    public account: AccountService
+    ) {}
 
   ionViewDidEnter() {
     this.confData.getSpeakers().subscribe((speakers: any[]) => {
       this.speakers = speakers;
+      this.petsList = this.account.accountValue.pets;
+
+      //console.log(this.petsList,"<---here???")
+
     });
   }
 }
