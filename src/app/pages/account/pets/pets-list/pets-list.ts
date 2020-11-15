@@ -8,8 +8,6 @@ import { AccountService, PetService } from '@app/_services';
   styleUrls: ['./pets-list.scss'],
 })
 export class PetsListPage {
-  speakers: any[] = [];
-
   petsList: any[] = [];
 
   constructor(
@@ -18,12 +16,6 @@ export class PetsListPage {
     ) {}
 
   ionViewDidEnter() {
-    this.confData.getSpeakers().subscribe((speakers: any[]) => {
-      this.speakers = speakers;
       this.petsList = this.account.accountValue.pets;
-
-      //console.log(this.petsList,"<---here???")
-
-    });
   }
 }

@@ -1,106 +1,123 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ConferenceData } from '@app/providers/conference-data';
-import { ActionSheetController } from '@ionic/angular';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Component } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { AccountService, AlertService, PetService } from "@app/_services";
+import { AlertController } from "@ionic/angular";
+import { first } from "rxjs/operators";
 
 @Component({
-  selector: 'page-pet-details',
-  templateUrl: 'pet-details.html',
-  styleUrls: ['./pet-details.scss'],
+  selector: "page-pet-details",
+  templateUrl: "pet-details.html",
+  styleUrls: ["./pet-details.scss"],
 })
 export class PetDetailsPage {
-  speaker: any;
+  accountId: any;
+  petId: any;
+  petName: any;
+  species: any;
+  breed: any;
 
   constructor(
-    private dataProvider: ConferenceData,
     private route: ActivatedRoute,
-    public actionSheetCtrl: ActionSheetController,
-    public confData: ConferenceData,
+    private router: Router,
     public inAppBrowser: InAppBrowser,
+    private petService: PetService,
+    public alertCtrl: AlertController,
+    private alertService: AlertService,
+    private accountService: AccountService
   ) {}
 
   ionViewWillEnter() {
-    this.dataProvider.load().subscribe((data: any) => {
-      const speakerId = this.route.snapshot.paramMap.get('petId');
-      if (data && data.speakers) {
-        for (const speaker of data.speakers) {
-          if (speaker && speaker.id === speakerId) {
-            this.speaker = speaker;
-            break;
-          }
-        }
-      }
+    this.accountId = this.accountService.accountValue.id;
+    this.petId = this.route.snapshot.paramMap.get("petId");
+    this.petService.getById(this.petId).forEach((Element) => {
+      this.petName = Element.petName;
+      this.breed = Element.breed;
+      this.species = Element.species;
     });
   }
 
   openExternalUrl(url: string) {
-    this.inAppBrowser.create(
-      url,
-      '_blank'
+    this.inAppBrowser.create(url, "_blank");
+  }
+  async editPetName() {
+    const alert = await this.alertCtrl.create({
+      header: "Change Pet Name",
+      buttons: [
+        "Cancel",
+        {
+          text: "Ok",
+          handler: async (data: any) => {
+            await this.updatePet(data);
+            await this.createTempObject(data);
+            await this.petName;
+          },
+        },
+      ],
+      inputs: [
+        {
+          type: "text",
+          name: "petName",
+          value: this.petName,
+          placeholder: "us",
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  private async updatePet(contextParamValue) {
+    this.petService
+      .update(this.petId, contextParamValue)
+      .pipe(first())
+      .subscribe({
+        next: async () => {
+          this.ionViewWillEnter();
+        },
+        error: (error) => {},
+      });
+  }
+  //used to search the accounts pet array...
+  private searchArray(nameKey, myArray) {
+    for (var i = 0; i < myArray.length; i++) {
+      if (myArray[i]._id == nameKey) {
+        return i;
+      }
+    }
+  }
+
+  private async updateAccount(newModifiedObject) {
+    (await this.accountService.update(this.accountId, newModifiedObject))
+      .pipe(first())
+      .subscribe({
+        next: async () => {
+          await this.alertService.presentLoading("Saving Pet...", 500);
+          this.alertService.createToastAlert(
+            "Update to Pet successful",
+            "success",
+            5000
+          );
+        },
+        error: async (error) => {
+          await this.alertService.createToastAlert(
+            "Update to pet Failed...",
+            "warning",
+            5000
+          );
+        },
+      });
+  }
+
+  private async createTempObject(newParamValue) {
+    let NewAccount: any;
+    (await this.accountService.getById(this.accountId)).forEach(
+      async (Element) => {
+        NewAccount = Element;
+        const petsArray = Element.pets;
+        const petToUpdateIndex = this.searchArray(this.petId, petsArray);
+        NewAccount.pets[petToUpdateIndex].petName = await newParamValue.petName;
+        await this.updateAccount(NewAccount);
+      }
     );
-  }
-
-  async openSpeakerShare(speaker: any) {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Share ' + speaker.name,
-      buttons: [
-        {
-          text: 'Copy Link',
-          handler: () => {
-            console.log(
-              'Copy link clicked on https://twitter.com/' + speaker.twitter
-            );
-            if (
-              (window as any).cordova &&
-              (window as any).cordova.plugins.clipboard
-            ) {
-              (window as any).cordova.plugins.clipboard.copy(
-                'https://twitter.com/' + speaker.twitter
-              );
-            }
-          }
-        },
-        {
-          text: 'Share via ...'
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        }
-      ]
-    });
-
-    await actionSheet.present();
-  }
-
-  async openContact(speaker: any) {
-    const mode = 'ios'; // this.config.get('mode');
-
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Contact ' + speaker.name,
-      buttons: [
-        {
-          text: `Email ( ${speaker.email} )`,
-          icon: mode !== 'ios' ? 'mail' : null,
-          handler: () => {
-            window.open('mailto:' + speaker.email);
-          }
-        },
-        {
-          text: `Call ( ${speaker.phone} )`,
-          icon: mode !== 'ios' ? 'call' : null,
-          handler: () => {
-            window.open('tel:' + speaker.phone);
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        }
-      ]
-    });
-
-    await actionSheet.present();
   }
 }

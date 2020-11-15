@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.alertService.presentLoading("Welcome To Pet Check...",500);
+    this.alertService.presentLoading("Pet Check &#10003;",500);
     await this.checkLoginStatus();
     await this.listenForLoginEvents();
 

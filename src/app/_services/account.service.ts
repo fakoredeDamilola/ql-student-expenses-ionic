@@ -113,6 +113,7 @@ export class AccountService {
   }
 
   async update(id: string, params: any) {
+    //console.log(params,"HERE IN THE SERVICE HERES THE PARAMS??")
     return this.http.put(`${baseUrl}/${id}`, params).pipe(
       map(async (account: any) => {
         // update the current account if it was updated
