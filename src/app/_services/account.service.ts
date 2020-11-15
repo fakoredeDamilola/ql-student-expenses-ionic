@@ -99,13 +99,14 @@ export class AccountService {
   }
 
   async pushPetToAccount(accountId:any,params: any) {
+    console.log(params);
     return this.http.put(`${baseUrl}/${accountId}/pets`, params).pipe(
       map(async (account: any) => {
         // update the current account if it was updated
         if (account.id === this.accountValue.id) {
           // publish updated account to subscribers
           account = await { ...this.accountValue, ...account };
-          this.accountSubject.next(await account);
+          this.accountSubject.next(account);
         }
         return await account;
       })
