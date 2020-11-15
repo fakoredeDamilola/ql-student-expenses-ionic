@@ -44,7 +44,7 @@ export class AccountService {
       .post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true })
       .subscribe();
     await this.stopRefreshTokenTimer();
-    await this.accountSubject.next(null);
+    this.accountSubject.next(null);
     this.accountSubject = null;
     await this.router.navigateByUrl("/login");
     //location.reload();
@@ -78,7 +78,11 @@ export class AccountService {
     return this.http.post(`${baseUrl}/validate-reset-token`, { token });
   }
 
-  async resetPassword(token: string, password: string, confirmPassword: string) {
+  async resetPassword(
+    token: string,
+    password: string,
+    confirmPassword: string
+  ) {
     return this.http.post(`${baseUrl}/reset-password`, {
       token,
       password,
@@ -98,7 +102,7 @@ export class AccountService {
     return this.http.post(baseUrl, params);
   }
 
-  async pushPetToAccount(accountId:any,params: any) {
+  async pushPetToAccount(accountId: any, params: any) {
     console.log(params);
     return this.http.put(`${baseUrl}/${accountId}/pets`, params).pipe(
       map(async (account: any) => {
@@ -113,15 +117,14 @@ export class AccountService {
     );
   }
 
-  async update(id: string, params: any) {
-    //console.log(params,"HERE IN THE SERVICE HERES THE PARAMS??")
-    return this.http.put(`${baseUrl}/${id}`, params).pipe(
+  async update(accountId: string, params: any) {
+    return this.http.put(`${baseUrl}/${accountId}`, params).pipe(
       map(async (account: any) => {
         // update the current account if it was updated
         if (account.id === this.accountValue.id) {
           // publish updated account to subscribers
           account = await { ...this.accountValue, ...account };
-          this.accountSubject.next(await account);
+          this.accountSubject.next(account);
         }
         return await account;
       })
@@ -143,7 +146,9 @@ export class AccountService {
 
   private async startRefreshTokenTimer() {
     // parse json object from base64 encoded jwt token
-    const jwtToken = await JSON.parse(atob(this.accountValue.jwtToken.split(".")[1]));
+    const jwtToken = await JSON.parse(
+      atob(this.accountValue.jwtToken.split(".")[1])
+    );
 
     // set a timeout to refresh the token a minute before it expires
     const expires = new Date(jwtToken.exp * 1000);
