@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PetAddPage } from './pet-add';
+import { PropertyAddPage } from './property-add';
+import { PropertyAddPageRoutingModule } from './property-add-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { PetAddPageRoutingModule } from './pet-add-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PetAddPageRoutingModule
+    PropertyAddPageRoutingModule
   ],
   declarations: [
-    PetAddPage,
+    PropertyAddPage,
   ]
 })
-export class PetAddModule { }
+export class PropertyAddModule { }

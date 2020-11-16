@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ConferenceData } from '@app/providers/conference-data';
-import { AccountService, PetService } from '@app/_services';
+import { AccountService } from '@app/_services';
 
 @Component({
   selector: 'page-pets-list',
@@ -10,8 +9,8 @@ import { AccountService, PetService } from '@app/_services';
 export class PetsListPage {
   petsList: any[] = [];
 
+
   constructor(
-    public confData: ConferenceData,
     public account: AccountService
     ) {}
 

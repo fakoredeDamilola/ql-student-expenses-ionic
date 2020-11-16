@@ -4,6 +4,7 @@ import { VerifyEmailComponent } from "@app/pages/account/verify-email/verify-ema
 import { CheckTutorial } from "@app/providers/check-tutorial.service";
 import { AuthGuard } from "@app/_helpers";
 import { Role } from "@app/_models";
+import { PropertyManagerModule } from './pages/property-manager/property-manager.module';
 
 const routes: Routes = [
   { path: "", redirectTo: "/tutorial", pathMatch: "full" },
@@ -27,29 +28,11 @@ const routes: Routes = [
   },
   {
     path: "account/pets",
-    children: [
-      {
-        path: "",
-        loadChildren: () =>
-          import("@app/pages/account/pets/pets-list/pets-list.module").then(
-            (m) => m.PetsListModule
-          ),
-      },
-      {
-        path: "pet-details/:petId",
-        loadChildren: () =>
-          import("@app/pages/account/pets/pet-details/pet-details.module").then(
-            (m) => m.PetDetailsModule
-          ),
-      },
-      {
-        path: "add",
-        loadChildren: () =>
-          import("@app/pages/account/pets/pet-add/pet-add.module").then(
-            (m) => m.PetAddModule
-          ),
-      },
-    ],
+    loadChildren: () =>
+      import("@app/pages/account/pets/pets-list.module").then(
+        (m) => m.PetsListModule
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: "login",
@@ -73,7 +56,12 @@ const routes: Routes = [
       ),
   },
   { path: "account/verify-email", component: VerifyEmailComponent },
-  {
+  { path: "property-manager",
+  loadChildren: () =>
+  import("@app/pages/property-manager/property-manager.module").then(
+    (m) => m.PropertyManagerModule
+  ),
+},{
     path: "account/reset-password",
     loadChildren: () =>
       import("@app/pages/account/reset-password/reset-password.module").then(

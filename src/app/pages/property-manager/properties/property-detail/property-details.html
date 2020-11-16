@@ -1,0 +1,21 @@
+<ion-content class="speaker-detail">
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/property-manager/properties"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="speaker-background">
+
+  </div>
+
+<h3>Click to edit property details</h3>
+<ion-list inset>
+  <ion-item (click)="editPropertyName()">Property Name: {{propertyName}}</ion-item>
+  <ion-item >House / Unit Number: {{houseUnitNumber}}</ion-item>
+  <ion-item >Street: {{street}}</ion-item>
+</ion-list>
+
+</ion-content>

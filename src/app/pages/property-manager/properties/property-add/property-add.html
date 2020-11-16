@@ -1,0 +1,73 @@
+<ion-content class="speaker-detail">
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/property-manager/properties"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="speaker-background">
+    <h2>The Logged In Persons ID that im adding property to:{{account.id}}</h2>
+  </div>
+
+  <div class="ion-padding speaker-detail">
+    <p>Easily Add Your Property Here!</p>
+  </div>
+
+  <form #addPropertyForm="ngForm" novalidate>
+    <ion-list lines="none">
+      <!-- <ion-item>
+        <ion-label position="floating" color="primary">Pet Image</ion-label><br>
+        <ion-input [(ngModel)]="addPet.petImage" name="petImage" type="file" #petImage="ngModel">
+        </ion-input>
+      </ion-item>-->
+
+      <ion-item>
+        <ion-label position="floating" color="primary">Property Name</ion-label>
+        <ion-input [(ngModel)]="addProperty.propertyName" name="propertyName" type="text" #propertyName="ngModel"
+          required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="propertyName.valid || submitted == false" class="ion-padding-start">
+          Property Name is required
+        </p>
+      </ion-text>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">House / Unit Number</ion-label>
+            <ion-input [(ngModel)]="addProperty.houseUnitNumber" name="houseUnitNumber" type="text"
+              #houseUnitNumber="ngModel" required>
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger">
+            <p [hidden]="houseUnitNumber.valid || submitted == false" class="ion-padding-start">
+              House / Unit Number is required
+            </p>
+          </ion-text>
+        </ion-col>
+
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Street Name</ion-label>
+            <ion-input [(ngModel)]="addProperty.street" name="street" type="text" #street="ngModel" required>
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger">
+            <p [hidden]="street.valid || submitted == false" class="ion-padding-start">
+              Street Name is required
+            </p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button (click)="onAddProperty(addPropertyForm)" type="submit" expand="block">Add Property</ion-button>
+    </div>
+  </form>
+</ion-content>

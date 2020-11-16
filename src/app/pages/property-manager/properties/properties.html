@@ -3,10 +3,10 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title text-align-center size="large" >My Pets</ion-title>
+    <ion-title text-align-center size="large" >My Properties</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/account/pets/add">
-        Add Pet
+      <ion-button routerLink="/property-manager/properties/add">
+        Add Property
       </ion-button>
 
     </ion-buttons>
@@ -16,23 +16,23 @@
 <ion-content fullscreen="true">
   <ion-header collapse="condense">
     <ion-toolbar color="secondary">
-      <ion-title text-align-center size="large">My Pets</ion-title>
+      <ion-title text-align-center size="large">My Properties</ion-title>
     </ion-toolbar>
   </ion-header>
 <ion-content>
 
   <ion-grid fixed>
     <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let pet of petsList">
+      <ion-col size="12" size-md="6" *ngFor="let property of propertiesList">
         <ion-card class="speaker-card">
           <ion-card-header>
-            <ion-item detail="false" lines="none" class="speaker-item" routerLink="/account/pets/pet-details/{{pet._id}}">
+            <ion-item detail="false" lines="none" class="speaker-item" routerLink="/property-manager/properties/property-details/{{property._id}}">
               <ion-avatar slot="start">
                 <!--<img [src]="speaker.profilePic" [alt]="speaker.name + ' profile picture'">-->
               </ion-avatar>
               <ion-label>
-                <h2>{{pet.petName}}</h2>
-                <p>{{pet.species}}</p>
+                <h2>{{property.propertyName}}</h2>
+                <p>{{property.houseUnitNumber}}</p>
               </ion-label>
             </ion-item>
           </ion-card-header>
@@ -41,7 +41,7 @@
             <ion-list lines="none">
               <ion-item>
                 <ion-label>
-                  <h3>{{pet.breed}}</h3>
+                  <h3>{{property.street}}</h3>
                 </ion-label>
               </ion-item>
             </ion-list>
