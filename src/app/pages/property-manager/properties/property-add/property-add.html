@@ -64,6 +64,48 @@
         </ion-col>
       </ion-row>
 
+      <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating" color="primary">City</ion-label>
+          <ion-input [(ngModel)]="addProperty.city" name="city" type="text"
+            #city="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <ion-text color="danger">
+          <p [hidden]="city.valid || submitted == false" class="ion-padding-start">
+            City is required
+          </p>
+        </ion-text>
+      </ion-col>
+
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating" color="primary">State</ion-label>
+          <ion-input [(ngModel)]="addProperty.state" name="state" type="text" #state="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <ion-text color="danger">
+          <p [hidden]="state.valid || submitted == false" class="ion-padding-start">
+            State is required
+          </p>
+        </ion-text>
+      </ion-col>
+
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating" color="primary">Zip Code</ion-label>
+          <ion-input [(ngModel)]="addProperty.zip" name="zip" type="text" #zip="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <ion-text color="danger">
+          <p [hidden]="zip.valid || submitted == false" class="ion-padding-start">
+            Zip Code is required
+          </p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
     </ion-list>
 
     <div class="ion-padding">

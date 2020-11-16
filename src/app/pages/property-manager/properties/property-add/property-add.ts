@@ -48,7 +48,7 @@ export class PropertyAddPage {
       return;
     }
 
-    form.value.petOwnerId = this.account.id;
+    form.value.propertyManagerId = this.account.id;
 
     this.loading = true;
     (await this.accountService.pushPropertyToAccount(this.account.id, form.value))

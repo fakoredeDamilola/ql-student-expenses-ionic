@@ -7,13 +7,13 @@ const routes: Routes = [
     path: '',
     component: PropertiesListPage
   },
- /* {
+ {
     path: "property-details/:propertyId",
     loadChildren: () =>
       import("@app/pages/property-manager/properties/property-detail/property-details.module").then(
         (m) => m.PropertyDetailsModule
       ),
-  },*/
+  },
   {
     path: "add",
     loadChildren: () =>
