@@ -144,7 +144,7 @@ export class PropertyDetailsPage {
     const propertyToUpdateIndex = await this.searchArray(this.propertyId, propertiesArray);
     accountToModify.properties[
       propertyToUpdateIndex
-    ].propertyName = await this.value;
-    await this.updateAccountProperty(accountToModify);
+    ].propertyName = this.value;
+    this.updateAccountProperty(accountToModify);
   }
 }

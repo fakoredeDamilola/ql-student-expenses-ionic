@@ -117,7 +117,7 @@ export class AccountService {
   }
 
   async pushPropertyToAccount(accountId: any, params: any) {
-    console.log(params);
+    //console.log(params);
     return this.http.put(`${baseUrl}/${accountId}/properties`, params).pipe(
       map(async (account: any) => {
         // update the current account if it was updated
@@ -132,7 +132,7 @@ export class AccountService {
   }
 
   async update(accountId: string, params: any) {
-    console.log(params);
+    //console.log(params);
     return this.http.put(`${baseUrl}/${accountId}`, params).pipe(
       map(async (account: any) => {
         // update the current account if it was updated
@@ -164,7 +164,6 @@ export class AccountService {
     const jwtToken = await JSON.parse(
       atob(this.accountValue.jwtToken.split(".")[1])
     );
-
     // set a timeout to refresh the token a minute before it expires
     const expires = new Date(jwtToken.exp * 1000);
     const timeout = expires.getTime() - Date.now() - 60 * 1000;
