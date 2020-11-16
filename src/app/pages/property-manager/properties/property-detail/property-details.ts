@@ -49,14 +49,14 @@ export class PropertyDetailsPage {
   }
   async editPropertyName() {
     let alert = await this.alertCtrl.create({
-      header: "Change Pet Name",
+      header: "Change Property Name",
       buttons: [
         "Cancel",
         {
           text: "Ok",
           handler: async (data: any) => {
             await this.createTempObject(data);
-            await this.updatePetMasterList(data);
+            await this.updatePropertyMasterList(data);
             this.propertyName;
           },
         },
@@ -73,7 +73,7 @@ export class PropertyDetailsPage {
     await alert.present();
   }
 
-  private async updatePetMasterList(contextParamValue) {
+  private async updatePropertyMasterList(contextParamValue) {
     this.propertyService
       .update(this.propertyId, contextParamValue)
       .pipe(first())
