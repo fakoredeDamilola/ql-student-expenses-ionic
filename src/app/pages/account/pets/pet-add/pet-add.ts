@@ -21,7 +21,7 @@ export class PetAddPage {
   userData: any;
 
   addPet: PetOptions = {
-    petImage:"",
+    petImage: "",
     petName: "",
     species: "",
     breed: "",
@@ -34,14 +34,14 @@ export class PetAddPage {
     public actionSheetCtrl: ActionSheetController,
     public confData: ConferenceData,
     public inAppBrowser: InAppBrowser,
-    public toastAlert: AlertService
+    public alertService: AlertService
   ) {}
 
   ionViewWillEnter() {}
 
   async onAddPet(form?: NgForm) {
     this.submitted = true;
-
+    this.alertService.presentLoading("Saving Pet...", 1200);
     // stop here if form is invalid
     if (form.invalid) {
       return;
@@ -55,16 +55,16 @@ export class PetAddPage {
       .subscribe({
         next: async () => {
           //TODO Replace with toast alert
-          this.toastAlert.createToastAlert(
+          this.alertService.createToastAlert(
             "Added Pet To Account Successfully!",
             "success",
             5000
           );
           //await this.userData.signup(this.signup.email);
-          await this.router.navigateByUrl("/account/pets");
+          this.router.navigateByUrl("/account/pets");
         },
         error: async (error) => {
-          await this.toastAlert.createToastAlert(
+          this.alertService.createToastAlert(
             "Add to pets failed.....!",
             "danger",
             5000

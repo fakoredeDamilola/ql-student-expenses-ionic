@@ -47,9 +47,9 @@ export class PetDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            await this.createTempObject(data);
-            await this.updatePetMasterList(data);
-            await this.petName;
+            this.alertService.presentLoading("Saving Pet...", 1000);
+            this.createTempObject(data);
+            this.updatePetMasterList(data);
           },
         },
       ],
@@ -71,25 +71,23 @@ export class PetDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
-          await this.alertService.presentLoading("Saving Pet...", 500);
           this.alertService.createToastAlert(
-            "Update to Pet To Master List successful",
+            "Update To Pet Master List Successful!",
             "success",
-            5000
+            8000
           );
-          await this.ionViewWillEnter();
         },
         error: async (error) => {
-          await this.alertService.createToastAlert(
-            "Update to pet Master List Failed...",
+          this.alertService.createToastAlert(
+            "Update To Pet Master List Failed...",
             "warning",
-            5000
+            8000
           );
         },
       });
   }
   //used to search the accounts pet array...
-  private searchArray(nameKey, myArray) {
+  private async searchArray(nameKey, myArray) {
     for (let i = 0; i < myArray.length; i++) {
       if (myArray[i]._id == nameKey) {
         return i;
@@ -102,19 +100,18 @@ export class PetDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
-          await this.alertService.presentLoading("Saving Pet...", 500);
           this.alertService.createToastAlert(
-            "Update to Pet To Account successful",
+            "Update To Pet On Account Successful",
             "success",
-            5000
+            8000
           );
-          await this.ionViewWillEnter();
+          this.ionViewWillEnter();
         },
         error: async (error) => {
-          await this.alertService.createToastAlert(
-            "Update to pet To Account Failed...",
+          this.alertService.createToastAlert(
+            "Update To Pet On Account Failed...",
             "warning",
-            5000
+            8000
           );
         },
       });
@@ -123,7 +120,7 @@ export class PetDetailsPage {
   private async createTempObject(newParamValue) {
     let accountToModify = this.accountService.accountValue;
     let petsArray = accountToModify.pets;
-    const petToUpdateIndex = this.searchArray(this.petId, petsArray);
+    const petToUpdateIndex = await this.searchArray(this.petId, petsArray);
     accountToModify.pets[
       petToUpdateIndex
     ].petName = await newParamValue.petName;

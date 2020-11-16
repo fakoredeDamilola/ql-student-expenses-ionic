@@ -20,6 +20,11 @@ export class PropertyDetailsPage {
   state:string;
   zip:string;
   petCount:number;
+  //Test
+  key:any;
+  value:any;
+  saving:boolean=true;
+
 
   constructor(
     public route: ActivatedRoute,
@@ -55,9 +60,14 @@ export class PropertyDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            await this.createTempObject(data);
-            await this.updatePropertyMasterList(data);
-            this.propertyName;
+          // this takes data and splits into key value
+          Object.keys(data).forEach((key) => {
+              this.key = key
+              this.value=data[key];
+          });
+            this.alertService.presentLoading("Saving Property...", 1200);
+            this.createTempObject(data);
+            this.updatePropertyMasterList(data);
           },
         },
       ],
@@ -79,25 +89,25 @@ export class PropertyDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
-          await this.alertService.presentLoading("Saving Pet...", 500);
           this.alertService.createToastAlert(
             "Update to Property To Master List successful",
             "success",
-            5000
+            8000
           );
-          await this.ionViewWillEnter();
+            this.saving = false;
+          this.ionViewWillEnter();
         },
         error: async (error) => {
-          await this.alertService.createToastAlert(
+            this.alertService.createToastAlert(
             "Update to Property Master List Failed...",
             "warning",
-            5000
+            8000
           );
         },
       });
   }
   //used to search the accounts pet array...
-  private searchArray(nameKey, myArray) {
+  private async searchArray(nameKey, myArray) {
     for (let i = 0; i < myArray.length; i++) {
       if (myArray[i]._id == nameKey) {
         return i;
@@ -110,19 +120,19 @@ export class PropertyDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
-          await this.alertService.presentLoading("Saving Property...", 500);
+          //await this.alertService.presentLoading("Saving Property...", 500);
           this.alertService.createToastAlert(
             "Update To Property On Account successful",
             "success",
-            5000
+            8000
           );
-          await this.ionViewWillEnter();
+          this.ionViewWillEnter();
         },
         error: async (error) => {
-          await this.alertService.createToastAlert(
+             this.alertService.createToastAlert(
             "Update To Property On Account Failed...",
             "warning",
-            5000
+            8000
           );
         },
       });
@@ -131,10 +141,10 @@ export class PropertyDetailsPage {
   private async createTempObject(newParamValue) {
     let accountToModify = this.accountService.accountValue;
     let propertiesArray = accountToModify.properties;
-    const petToUpdateIndex = this.searchArray(this.propertyId, propertiesArray);
-    accountToModify.pets[
-      petToUpdateIndex
-    ].petName = await newParamValue.petName;
+    const propertyToUpdateIndex = await this.searchArray(this.propertyId, propertiesArray);
+    accountToModify.properties[
+      propertyToUpdateIndex
+    ].propertyName = await this.value;
     await this.updateAccountProperty(accountToModify);
   }
 }

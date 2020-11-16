@@ -35,7 +35,7 @@ export class PropertyAddPage {
     public actionSheetCtrl: ActionSheetController,
     public confData: ConferenceData,
     public inAppBrowser: InAppBrowser,
-    public toastAlert: AlertService
+    public alertService: AlertService
   ) {}
 
   ionViewWillEnter() {}
@@ -47,7 +47,7 @@ export class PropertyAddPage {
     if (form.invalid) {
       return;
     }
-
+    this.alertService.presentLoading("Saving Property...", 1200);
     form.value.propertyManagerId = this.account.id;
 
     this.loading = true;
@@ -56,7 +56,8 @@ export class PropertyAddPage {
       .subscribe({
         next: async () => {
           //TODO Replace with toast alert
-          this.toastAlert.createToastAlert(
+
+          this.alertService.createToastAlert(
             "Property Added Successfully!",
             "success",
             5000
@@ -65,7 +66,7 @@ export class PropertyAddPage {
           await this.router.navigateByUrl("/property-manager/properties");
         },
         error: async (error) => {
-          await this.toastAlert.createToastAlert(
+          await this.alertService.createToastAlert(
             "Add to properties failed.....!",
             "danger",
             5000
