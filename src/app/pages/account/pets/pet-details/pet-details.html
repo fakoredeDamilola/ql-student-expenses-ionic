@@ -13,9 +13,19 @@
 
 <h3>Click to edit pet details</h3>
 <ion-list inset>
-  <ion-item (click)="editPetName()">Pet Name: {{petName}}</ion-item>
-  <ion-item >Species: {{species}}</ion-item>
-  <ion-item >Breed: {{breed}}</ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-item (click)="editPetName()"><b>Pet Name:&nbsp;</b>{{petName}}</ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col >
+      <ion-item ><b>Species:&nbsp;</b>{{species}}</ion-item>
+   </ion-col>
+   <ion-col>
+    <ion-item ><b>Breed:&nbsp;</b>{{breed}}</ion-item>
+   </ion-col>
+</ion-row>
 </ion-list>
 
 </ion-content>

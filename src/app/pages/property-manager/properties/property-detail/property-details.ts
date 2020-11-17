@@ -67,7 +67,7 @@ export class PropertyDetailsPage {
           });
             this.alertService.presentLoading("Saving Property...", 1200);
             this.createTempObject();
-            this.updatePropertyMasterList();
+            this.updatePropertyMasterList(data);
           },
         },
       ],
@@ -83,9 +83,9 @@ export class PropertyDetailsPage {
     alert.present();
   }
 
-  private async updatePropertyMasterList() {
+  private async updatePropertyMasterList(contextParamValue) {
     this.propertyService
-      .update(this.propertyId, this.value)
+      .update(this.propertyId, contextParamValue)
       .pipe(first())
       .subscribe({
         next: async () => {
@@ -140,11 +140,12 @@ export class PropertyDetailsPage {
   // used to create a new object from current account object, and inserting the modified account object
   private async createTempObject() {
     let accountToModify = this.accountService.accountValue;
-    let propertiesArray = accountToModify.properties;
+    const propertiesArray = accountToModify.properties;
     const propertyToUpdateIndex = await this.searchArray(this.propertyId, propertiesArray);
     accountToModify.properties[
       propertyToUpdateIndex
     ].propertyName = this.value;
+    //console.log(accountToModify,"This should have the new value????")
     this.updateAccountProperty(accountToModify);
   }
 }

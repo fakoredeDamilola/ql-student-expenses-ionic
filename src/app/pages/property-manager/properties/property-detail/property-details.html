@@ -10,15 +10,35 @@
   <div class="speaker-background">
 
   </div>
-
-<h3>Click to edit property details</h3>
+<ion-row>
+  <ion-col><h3>Click to edit property details</h3></ion-col>
+  <ion-col><ion-button>Add Pet Owner</ion-button><ion-button class="ion-text-right" color="danger">Delete Property</ion-button></ion-col>
+</ion-row>
 <ion-list inset>
-  <ion-item (click)="editPropertyName()">Property Name: {{propertyName}}</ion-item>
-  <ion-item >House / Unit Number: {{houseUnitNumber}}</ion-item>
-  <ion-item >Street: {{street}}</ion-item>
-  <ion-item >City: {{city}}</ion-item>
-  <ion-item >State: {{state}}</ion-item>
-  <ion-item >Zip Code: {{zip}}</ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-item (click)="editPropertyName()"><b>Property Name:&nbsp; </b>  {{propertyName}}</ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item ><b>House / Unit Number: &nbsp;</b>{{houseUnitNumber}}</ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item ><b>Street: &nbsp;</b>{{street}}</ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item ><b>City:&nbsp;</b>{{city}}</ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item ><b>State: &nbsp;</b>{{state}}</ion-item>
+    </ion-col>
+    <ion-col>
+       <ion-item ><b>Zip Code: &nbsp;</b>{{zip}}</ion-item>
+    </ion-col>
+  </ion-row>
 </ion-list>
 
 </ion-content>
