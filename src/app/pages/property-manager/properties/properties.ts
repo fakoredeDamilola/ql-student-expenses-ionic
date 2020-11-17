@@ -10,7 +10,7 @@ export class PropertiesListPage {
   propertiesList: any[] = [];
 
   constructor(
-    public account: AccountService
+    private account: AccountService
     ) {}
 
   ionViewDidEnter() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AccountService } from '@app/_services';
+import { AccountService, AlertService } from '@app/_services';
 
 @Component({
   selector: 'page-pets-list',
@@ -11,10 +11,11 @@ export class PetsListPage {
 
 
   constructor(
-    public account: AccountService
+    private account: AccountService,
+    private alertService: AlertService
     ) {}
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
       this.petsList = this.account.accountValue.pets;
   }
 }

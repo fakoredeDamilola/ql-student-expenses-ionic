@@ -24,14 +24,14 @@
       </ion-item>-->
 
       <ion-item>
-        <ion-label position="floating" color="primary">Property Name</ion-label>
+        <ion-label position="floating" style="font-size: larger;" color="primary">Property Name</ion-label>
         <ion-input [(ngModel)]="addProperty.propertyName" name="propertyName" type="text" #propertyName="ngModel"
-          required>
+          placeholder="Property Nick Name (Optional)">
         </ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="propertyName.valid || submitted == false" class="ion-padding-start">
-          Property Name is required
+          Property Nick-Name is required
         </p>
       </ion-text>
 
@@ -40,7 +40,7 @@
           <ion-item>
             <ion-label position="floating" color="primary">House / Unit Number</ion-label>
             <ion-input [(ngModel)]="addProperty.houseUnitNumber" name="houseUnitNumber" type="text"
-              #houseUnitNumber="ngModel" required>
+              #houseUnitNumber="ngModel" required placeholder="1234 / Apt 55">
             </ion-input>
           </ion-item>
           <ion-text color="danger">
@@ -53,7 +53,7 @@
         <ion-col>
           <ion-item>
             <ion-label position="floating" color="primary">Street Name</ion-label>
-            <ion-input [(ngModel)]="addProperty.street" name="street" type="text" #street="ngModel" required>
+            <ion-input [(ngModel)]="addProperty.street" name="street" type="text" #street="ngModel" required placeholder="Ronald McDoncald Rd.">
             </ion-input>
           </ion-item>
           <ion-text color="danger">
@@ -69,7 +69,7 @@
         <ion-item>
           <ion-label position="floating" color="primary">City</ion-label>
           <ion-input [(ngModel)]="addProperty.city" name="city" type="text"
-            #city="ngModel" required>
+            #city="ngModel" required placeholder="Some City Name">
           </ion-input>
         </ion-item>
         <ion-text color="danger">
@@ -82,7 +82,7 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating" color="primary">State</ion-label>
-          <ion-input [(ngModel)]="addProperty.state" name="state" type="text" #state="ngModel" required>
+          <ion-input [(ngModel)]="addProperty.state" name="state" type="text" #state="ngModel" required placeholder="CA">
           </ion-input>
         </ion-item>
         <ion-text color="danger">
@@ -95,7 +95,7 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating" color="primary">Zip Code</ion-label>
-          <ion-input [(ngModel)]="addProperty.zip" name="zip" type="text" #zip="ngModel" required>
+          <ion-input [(ngModel)]="addProperty.zip" name="zip" type="text" #zip="ngModel" required placeholder="90210">
           </ion-input>
         </ion-item>
         <ion-text color="danger">

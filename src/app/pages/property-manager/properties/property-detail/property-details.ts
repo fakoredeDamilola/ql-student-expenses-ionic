@@ -20,7 +20,7 @@ export class PropertyDetailsPage {
   state:string;
   zip:string;
   petCount:number;
-  //Test
+  // key value for the edit input
   key:any;
   value:any;
   saving:boolean=true;
@@ -66,8 +66,8 @@ export class PropertyDetailsPage {
               this.value=data[key];
           });
             this.alertService.presentLoading("Saving Property...", 1200);
-            this.createTempObject(data);
-            this.updatePropertyMasterList(data);
+            this.createTempObject();
+            this.updatePropertyMasterList();
           },
         },
       ],
@@ -80,12 +80,12 @@ export class PropertyDetailsPage {
         },
       ],
     });
-    await alert.present();
+    alert.present();
   }
 
-  private async updatePropertyMasterList(contextParamValue) {
+  private async updatePropertyMasterList() {
     this.propertyService
-      .update(this.propertyId, contextParamValue)
+      .update(this.propertyId, this.value)
       .pipe(first())
       .subscribe({
         next: async () => {
@@ -137,8 +137,8 @@ export class PropertyDetailsPage {
         },
       });
   }
-
-  private async createTempObject(newParamValue) {
+  // used to create a new object from current account object, and inserting the modified account object
+  private async createTempObject() {
     let accountToModify = this.accountService.accountValue;
     let propertiesArray = accountToModify.properties;
     const propertyToUpdateIndex = await this.searchArray(this.propertyId, propertiesArray);

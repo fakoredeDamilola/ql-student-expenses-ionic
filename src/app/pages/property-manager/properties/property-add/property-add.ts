@@ -17,7 +17,6 @@ export class PropertyAddPage {
   account = this.accountService.accountValue;
   submitted: boolean = false;
   loading: boolean;
-  userData: any;
 
   addProperty: PropertyOptions = {
     propertyName: "",
@@ -33,7 +32,6 @@ export class PropertyAddPage {
     private accountService: AccountService,
     private router: Router,
     public actionSheetCtrl: ActionSheetController,
-    public confData: ConferenceData,
     public inAppBrowser: InAppBrowser,
     public alertService: AlertService
   ) {}
@@ -45,12 +43,16 @@ export class PropertyAddPage {
 
     // stop here if form is invalid
     if (form.invalid) {
+      this.alertService.createToastAlert(
+        "Add to properties failed, fields are invalid.....!",
+        "danger",
+        8000
+      );
       return;
     }
     this.alertService.presentLoading("Saving Property...", 1200);
     form.value.propertyManagerId = this.account.id;
 
-    this.loading = true;
     (await this.accountService.pushPropertyToAccount(this.account.id, form.value))
       .pipe(first())
       .subscribe({
@@ -60,16 +62,16 @@ export class PropertyAddPage {
           this.alertService.createToastAlert(
             "Property Added Successfully!",
             "success",
-            5000
+            8000
           );
           //await this.userData.signup(this.signup.email);
-          await this.router.navigateByUrl("/property-manager/properties");
+          this.router.navigateByUrl("/property-manager/properties");
         },
         error: async (error) => {
-          await this.alertService.createToastAlert(
+          this.alertService.createToastAlert(
             "Add to properties failed.....!",
             "danger",
-            5000
+            8000
           );
           this.loading = false;
         },

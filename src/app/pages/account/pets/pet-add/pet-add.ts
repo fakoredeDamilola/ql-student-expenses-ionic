@@ -29,7 +29,6 @@ export class PetAddPage {
 
   constructor(
     private accountService: AccountService,
-    private dataProvider: ConferenceData,
     private router: Router,
     public actionSheetCtrl: ActionSheetController,
     public confData: ConferenceData,
@@ -37,13 +36,20 @@ export class PetAddPage {
     public alertService: AlertService
   ) {}
 
-  ionViewWillEnter() {}
+  async ionViewWillEnter() {
+
+  }
 
   async onAddPet(form?: NgForm) {
     this.submitted = true;
     this.alertService.presentLoading("Saving Pet...", 1200);
     // stop here if form is invalid
     if (form.invalid) {
+      this.alertService.createToastAlert(
+        "Add To Pets failed, fields are invalid.....!",
+        "danger",
+        8000
+      );
       return;
     }
 

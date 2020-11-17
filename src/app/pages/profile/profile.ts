@@ -12,7 +12,7 @@ import { UserData } from "@app/providers/user-data";
   templateUrl: "profile.html",
   styleUrls: ["./profile.scss"],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
   // Get currently logged in accounts values
   account = this.accountService.accountValue;
   constructor(
@@ -23,7 +23,8 @@ export class ProfilePage implements OnInit {
     public alertService: AlertService
   ) {}
 
-  ngOnInit() {
+  async ionViewWillEnter() {
+
   }
 
   updatePicture() {

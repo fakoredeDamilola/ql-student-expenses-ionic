@@ -28,7 +28,7 @@
 
       <ion-item>
         <ion-label position="floating" color="primary">Pet Name</ion-label>
-        <ion-input [(ngModel)]="addPet.petName" name="petName" type="text" #petName="ngModel" required>
+        <ion-input [(ngModel)]="addPet.petName" name="petName" type="text" #petName="ngModel" required placeholder="Enter The Pets Name">
         </ion-input>
       </ion-item>
       <ion-text color="danger">
@@ -39,7 +39,7 @@
 
       <ion-item>
         <ion-label position="floating" color="primary">Species</ion-label>
-        <ion-select [(ngModel)]="addPet.species" name="species" #species="ngModel" required>
+        <ion-select [(ngModel)]="addPet.species" name="species" #species="ngModel" required placeholder="Select Species">
           <ion-select-option>Dog</ion-select-option>
           <ion-select-option>Cat</ion-select-option>
           </ion-select>
@@ -52,7 +52,7 @@
 
       <ion-item>
         <ion-label position="floating" color="primary">Breed</ion-label>
-        <ion-select [(ngModel)]="addPet.breed" name="breed" #breed="ngModel" required>
+        <ion-select [(ngModel)]="addPet.breed" name="breed" #breed="ngModel" required placeholder="Select The Breed">
           <ion-select-option>Husky</ion-select-option>
           <ion-select-option>Golden Retriever</ion-select-option>
           </ion-select>
