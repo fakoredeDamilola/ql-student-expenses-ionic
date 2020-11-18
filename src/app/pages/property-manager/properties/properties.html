@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title text-align-center size="large">My Properties</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/property-manager/properties/add">
+      <ion-button routerLink="/property-manager/properties/add" shape="round" fill="outline">
         Add Property
       </ion-button>
 
@@ -27,9 +27,9 @@
           <ion-card class="speaker-card">
             <ion-card-header>
               <ion-item detail="false" lines="none" class="speaker-item"
-                routerLink="/property-manager/properties/property-details/{{property.id}}">
+                routerLink="/property-manager/properties/property-details/{{property._id}}">
                 <ion-avatar slot="start">
-                  <img src="../../../../assets/img/speakers/elephant.jpg" [alt]="' property picture'">
+                  <img src="../../../../assets/img/about/home.jpg" [alt]="' property picture'">
                 </ion-avatar>
                 <ion-label>
                   <h2>{{property.propertyName}}</h2>

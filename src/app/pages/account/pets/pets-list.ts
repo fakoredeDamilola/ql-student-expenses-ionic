@@ -12,7 +12,6 @@ export class PetsListPage {
 
   constructor(
     private account: AccountService,
-    private alertService: AlertService
     ) {}
 
   async ionViewDidEnter() {

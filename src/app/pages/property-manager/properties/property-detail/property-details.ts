@@ -109,7 +109,7 @@ export class PropertyDetailsPage {
   //used to search the accounts pet array...
   private async searchArray(nameKey, myArray) {
     for (let i = 0; i < myArray.length; i++) {
-      if (myArray[i].id == nameKey) {
+      if (myArray[i]._id == nameKey) {
         return i;
       }
     }
