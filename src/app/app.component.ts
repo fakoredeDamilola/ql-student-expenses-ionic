@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.alertService.presentLoading("Pet Check &#10003;",500);
+    this.alertService.presentLoading("Pet Check &#10003;", 500);
     await this.checkLoginStatus();
     await this.listenForLoginEvents();
 
@@ -95,13 +95,11 @@ export class AppComponent implements OnInit {
           },
         ],
       });
-
       await toast.present();
-
       await toast
         .onDidDismiss()
-        .then(async() => await this.swUpdate.activateUpdate())
-        .then(async() => window.location.reload());
+        .then(async () => await this.swUpdate.activateUpdate())
+        .then(async () => window.location.reload());
     });
   }
 
@@ -128,7 +126,7 @@ export class AppComponent implements OnInit {
       await this.updateLoggedInStatus(true);
     });
 
-    window.addEventListener("user:signup", async() => {
+    window.addEventListener("user:signup", async () => {
       await this.updateLoggedInStatus(true);
     });
 
@@ -138,7 +136,7 @@ export class AppComponent implements OnInit {
   }
 
   async logout() {
-    await this.alertService.presentLoading("Logging Out...",2000);
+    await this.alertService.presentLoading("Logging Out...", 2000);
     await this.userData.logout();
     //await this.accountService.logout();
   }
