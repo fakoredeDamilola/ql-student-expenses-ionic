@@ -76,7 +76,7 @@ export class PropertyDetailsPage {
           type: "text",
           name: "propertyName",
           value: this.propertyName,
-          placeholder: "us",
+          placeholder: "Property Name (optional)",
         },
       ],
     });
@@ -109,7 +109,7 @@ export class PropertyDetailsPage {
   //used to search the accounts pet array...
   private async searchArray(nameKey, myArray) {
     for (let i = 0; i < myArray.length; i++) {
-      if (myArray[i]._id == nameKey) {
+      if (myArray[i].id == nameKey) {
         return i;
       }
     }

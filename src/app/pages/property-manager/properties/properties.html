@@ -27,7 +27,7 @@
           <ion-card class="speaker-card">
             <ion-card-header>
               <ion-item detail="false" lines="none" class="speaker-item"
-                routerLink="/property-manager/properties/property-details/{{property._id}}">
+                routerLink="/property-manager/properties/property-details/{{property.id}}">
                 <ion-avatar slot="start">
                   <img src="../../../../assets/img/speakers/elephant.jpg" [alt]="' property picture'">
                 </ion-avatar>
@@ -44,10 +44,10 @@
                     <h3>{{property.houseUnitNumber}} {{property.street}}</h3>
                     <h3>{{property.city}}, {{property.state}}, {{property.zip}}</h3>
                     <br>
-                    <div *ngIf="property.petOwnerId==undefined">
+                    <div *ngIf="property.petOwnerId=='None'">
                       <h3>No Pet Owners or Pets</h3>
                     </div>
-                    <div *ngIf="property.petOwnerId!=undefined">
+                    <div *ngIf="property.petOwnerId!='None'">
                       <h3>Pet Count: {{property.petCount}}</h3>
                       <h3>Pet Owner: {{property.petOwnerId}}</h3>
                     </div>
