@@ -29,6 +29,9 @@ export class PetDetailsPage {
   async ionViewWillEnter() {
     this.accountId = this.accountService.accountValue.id;
     this.petId = this.route.snapshot.paramMap.get("petId");
+     // get id out of the url
+     window.history.replaceState({}, document.title, "/" + "account/pets/pet-details");
+
     this.petService.getById(this.petId).forEach(async (Element) => {
       this.petName = Element.petName;
       this.breed = Element.breed;

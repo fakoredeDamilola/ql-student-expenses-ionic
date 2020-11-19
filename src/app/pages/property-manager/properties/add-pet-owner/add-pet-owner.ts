@@ -48,6 +48,8 @@ export class AddPetOwnerPage {
   async ionViewWillEnter() {
     this.accountId = this.accountService.accountValue.id;//<-- The Property Manager ID! also currently logged in persons ID
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
+    // get id out of the url
+    window.history.replaceState({}, document.title, "/" + "property-manager/properties/property-details/pet-owner/add");
   }
 
   async onAddPetOwner(form?: NgForm){

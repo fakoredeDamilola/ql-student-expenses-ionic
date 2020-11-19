@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
@@ -28,6 +28,7 @@ export class PropertyDetailsPage {
 
   constructor(
     public route: ActivatedRoute,
+    private router: Router,
     public inAppBrowser: InAppBrowser,
     public propertyService: PropertyService,
     public alertCtrl: AlertController,
@@ -38,6 +39,8 @@ export class PropertyDetailsPage {
   async ionViewWillEnter() {
     this.accountId = this.accountService.accountValue.id;
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
+    // get id out of url
+    window.history.replaceState({}, document.title, "/" + "property-manager/properties/property-details");
     this.propertyService.getById(this.propertyId).forEach(async (Element) => {
       this.propertyName = Element.propertyName;
       this.houseUnitNumber = Element.houseUnitNumber;
