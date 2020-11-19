@@ -63,8 +63,10 @@ export class AccountService {
   }
 
   async register(account: Account) {
+    console.log(account,"<--Account for regular register")
     return this.http.post(`${baseUrl}/register`, account);
   }
+
 
   async verifyEmail(token: string) {
     return this.http.post(`${baseUrl}/verify-email`, { token });

@@ -41,6 +41,8 @@ export class SignupPage {
       return;
     }
     this.loading = true;
+    console.log(form.value,"The Form Value");
+    form.value.confirmPassword = await form.value.password;
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {
         //TODO Replace with toast alert

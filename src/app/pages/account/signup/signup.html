@@ -76,17 +76,6 @@
       </ion-text>
 
       <ion-item>
-        <ion-label position="floating" color="primary">Confirm Password</ion-label>
-        <ion-input [(ngModel)]="signup.password" name="confirmPassword" type="password" #confirmPassword="ngModel" required>
-        </ion-input>
-      </ion-item>
-      <ion-text color="danger">
-        <p [hidden]="confirmPassword.valid || submitted == false" class="ion-padding-start">
-          Password's must match
-        </p>
-      </ion-text>
-
-      <ion-item>
         <ion-label position="floating" color="primary">Accept Terms & Conditions</ion-label>
         <ion-checkbox [(ngModel)]="signup.acceptTerms" name="acceptTerms" #acceptTerms="ngModel" requiredTrue></ion-checkbox>
       </ion-item>

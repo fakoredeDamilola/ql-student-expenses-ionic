@@ -7,6 +7,7 @@ import { UserOptions } from "@app/interfaces/user-options";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { Route } from '@angular/compiler/src/core';
 import { first } from 'rxjs/operators';
+import { UserData } from '@app/providers/user-data';
 
 @Component({
   selector: "page-add-pet-owner",
@@ -19,6 +20,11 @@ export class AddPetOwnerPage {
     firstName: "",
     lastName: "",
     email: "",
+    acceptTerms: false,
+    propertyId:"",
+    propertyManagerId:"",
+    password:"",
+    confirmPassword:""
   };
   submitted = false;
   loading = false;
@@ -35,7 +41,8 @@ export class AddPetOwnerPage {
     public route: ActivatedRoute,
     private router: Router,
     public alertService: AlertService,
-    public accountService: AccountService
+    public accountService: AccountService,
+    private userData: UserData
   ) {}
 
   async ionViewWillEnter() {
@@ -50,21 +57,31 @@ export class AddPetOwnerPage {
     if (form.invalid) {
       return;
     }
+    // creating variables for default account
+    form.value.propertyManagerId = this.accountId;
+    form.value.propertyId = this.propertyId;
+    form.value.password = "PetCheck123";
+    form.value.confirmPassword = "PetCheck123"
+
+    if(!form.value.title){
+      form.value.title = "N/A"
+    }
+
+    //console.log("the form for add pet owner...", form.value)
     this.loading = true;
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {
         //TODO Replace with toast alert
         await this.alertService.createToastAlert(
-          "Registration successful, please check your email for verification instructions",
+          "Invite Email Sent Successfully",
           "success",
           5000
         );
         await this.userData.signup(this.signup.email);
-        await this.router.navigateByUrl("/login");
       },
       error: async (error) => {
         await this.alertService.createToastAlert(
-          "Registration Failed!",
+          "Invite Email Sent Failed!",
           "danger",
           5000
         );

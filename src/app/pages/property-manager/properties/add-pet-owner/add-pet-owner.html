@@ -58,6 +58,16 @@
           </p>
         </ion-text>
 
+        <ion-item>
+          <ion-label position="floating" color="primary">Accept Terms & Conditions</ion-label>
+          <ion-checkbox [(ngModel)]="signup.acceptTerms" name="acceptTerms" #acceptTerms="ngModel" requiredTrue></ion-checkbox>
+        </ion-item>
+        <ion-text color="danger">
+          <p [hidden]="acceptTerms.valid || submitted == false" class="ion-padding-start">
+            Accepting the T&C's is required
+          </p>
+        </ion-text>
+
       </ion-list>
 
       <div class="ion-padding">

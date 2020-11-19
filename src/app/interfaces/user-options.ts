@@ -2,6 +2,7 @@ import { Pet, Role } from '@app/_models';
 
 export interface UserOptions {
   propertyId?:string;
+  propertyManagerId?:string;
   email?: string;
   password?: string;
   confirmPassword?:string;
