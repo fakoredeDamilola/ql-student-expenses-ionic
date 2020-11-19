@@ -15,6 +15,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "property-details/:propertyId/pet-owner/add",
+    loadChildren: () =>
+      import("@app/pages/property-manager/properties/add-pet-owner/add-pet-owner.module").then(
+        (m) => m.AddPetOwnerModule
+      ),
+  },
+  {
     path: "add",
     loadChildren: () =>
       import("@app/pages/property-manager/properties/property-add/property-add.module").then(

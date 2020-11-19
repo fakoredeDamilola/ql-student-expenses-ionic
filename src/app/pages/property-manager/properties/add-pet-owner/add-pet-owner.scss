@@ -2,7 +2,7 @@
  * Speaker Background
  */
 
-ion-toolbar {
+ ion-toolbar {
   position: absolute;
 
   top: 0;
@@ -33,7 +33,7 @@ ion-toolbar ion-menu-button {
 
   height: calc(250px + var(--ion-safe-area-top));
 
-  background: center / cover url(/assets/img/about/home.jpg) no-repeat;
+  background: center / cover url(./../../../../../assets/img/petOwner2.jpg) no-repeat;
 }
 
 .speaker-background img {
