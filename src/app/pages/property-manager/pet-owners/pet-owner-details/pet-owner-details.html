@@ -5,9 +5,6 @@
         <ion-back-button defaultHref="/property-manager/pet-owners"></ion-back-button>
       </ion-buttons>
       <ion-buttons slot="end">
-          <ion-button color="white" size="large" shape="round" fill="outline" routerLink="/property-manager/properties/property-details/{{propertyId}}/pet-owner/add">
-            Add Pet Owner
-          </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -17,21 +14,35 @@
   </div>
 
 <ion-row>
-  <ion-col><h3>Click to edit property details</h3>
+  <ion-col><h3>This is the pet owner details page</h3>
   </ion-col>
 </ion-row>
 <ion-list inset>
+  <ion-row>
+    <ion-col>
+      <b>Name:</b> {{firstName}} {{lastName}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <b>Email:</b> {{email}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <b>Account Created:</b> {{created}}
+    </ion-col>
+  </ion-row>
 
 </ion-list>
 <ion-row>
   <ion-col>
-    <ion-button shape="block" color="primary">View Pet Owner</ion-button>
-  </ion-col>
-  <ion-col>
     <ion-button shape="block" color="secondary">View Pets</ion-button>
   </ion-col>
   <ion-col>
-    <ion-button shape="block" color="danger">Delete Property</ion-button>
+    <ion-button shape="block" color="danger">Remove Pet Owner</ion-button>
   </ion-col>
 </ion-row>
 </ion-content>

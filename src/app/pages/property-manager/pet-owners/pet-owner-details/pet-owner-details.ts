@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
-import { AccountService, AlertService, PropertyService } from "@app/_services";
+import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 
@@ -12,6 +12,13 @@ import { first } from "rxjs/operators";
 })
 export class PetOwnerDetailsPage {
   petOwnerId: any;
+  //
+  firstName:string;
+  lastName:string;
+  email:string;
+  created: any;
+
+  options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   // key value for the edit input
   key:any;
@@ -32,7 +39,11 @@ export class PetOwnerDetailsPage {
     // get id out of url
     window.history.replaceState({}, document.title, "/" + "property-manager/pet-owners/pet-owner-details");
     (await this.accountService.getById(this.petOwnerId)).forEach(async (Element) => {
-    console.log(await Element)
+      this.firstName = Element.firstName;
+      this.lastName = Element.lastName;
+      this.email = Element.email;
+      this.created = Element.created;
+      console.log(Element)
     });
   }
 

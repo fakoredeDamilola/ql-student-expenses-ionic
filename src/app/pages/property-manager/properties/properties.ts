@@ -15,9 +15,10 @@ export class PropertiesListPage {
     ) {}
 
   async ionViewDidEnter() {
+    //TODO USE PROPERTY get by propertyManagerId and load virtuals
     this.userId = this.accountService.accountValue.id;
     (await this.accountService.getById(this.userId)).forEach(async (Element)=>{
-      console.log(Element.propertyManagerProperties);
+      //console.log(Element.propertyManagerProperties);
       this.propertiesList = Element.propertyManagerProperties;
     });
   }

@@ -47,7 +47,7 @@ export class PropertyDetailsPage {
       document.title,
       "/" + "property-manager/properties/property-details"
     );
-    await (await this.propertyService
+    (await this.propertyService
       .getById(this.propertyId))
       .forEach(async (Element) => {
         //console.log(Element,"here")
