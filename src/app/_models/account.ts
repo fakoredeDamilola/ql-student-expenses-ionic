@@ -12,6 +12,7 @@ export class Account {
     email: string;
     role: Role;
     petOwnerPets?:[Pet];
+    petOwnerPetsCount?:number;
     jwtToken?: string;
     propertyManagerPetOwnersCount?:number;
     propertyManagerPetsCount?:number;

@@ -30,11 +30,11 @@ export class PropertyDetailPage implements OnInit {
     private alertService: AlertService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.id = this.route.snapshot.params["id"];
     this.isAddMode = !this.id;
 
-   this.propertyService.getById(this.id).forEach((prop)=>{
+   (await this.propertyService.getById(this.id)).forEach((prop)=>{
 
    })
 
@@ -87,9 +87,9 @@ export class PropertyDetailPage implements OnInit {
       });
   }
 
-  private updateProperty() {
-    this.propertyService
-      .update(this.id, this.form.value)
+  private async updateProperty() {
+    (await this.propertyService
+      .update(this.id, this.form.value))
       .pipe(first())
       .subscribe({
         next: () => {

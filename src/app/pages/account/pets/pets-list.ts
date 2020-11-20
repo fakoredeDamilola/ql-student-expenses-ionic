@@ -19,6 +19,7 @@ export class PetsListPage {
     //console.log(this.userId);
     this.userAccount = (await this.accountService.getById(this.userId)).forEach(
       async (Element) => {
+        console.log(Element)
         this.petsList = Element.petOwnerPets;
       }
     );

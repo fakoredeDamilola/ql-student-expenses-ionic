@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Account } from '@app/_models';
 import { AccountService } from '@app/_services';
 
 @Component({
@@ -8,12 +9,17 @@ import { AccountService } from '@app/_services';
 })
 export class PetOwnersListPage {
   petOwnersList: any[] = [];
+  userId : any;
 
   constructor(
     private account: AccountService
     ) {}
 
-  ionViewDidEnter() {
-      this.petOwnersList = this.account.accountValue.properties;
+  async ionViewDidEnter() {
+      this.userId = this.account.accountValue.id;
+      (await this.account.getAllPetOwnersInProperties(this.userId)).forEach(async (element) => {
+        await this.petOwnersList.push(element);
+      });
+      console.log(await this.petOwnersList)
   }
 }

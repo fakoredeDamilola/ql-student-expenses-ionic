@@ -100,6 +100,10 @@ export class AccountService {
     return this.http.get<Account>(`${baseUrl}/${accountId}`);
   }
 
+  async getAllPetOwnersInProperties(accountId: string) {
+    return this.http.get<Account>(`${baseUrl}/${accountId}/pet-owners`);
+  }
+
   async create(params: any) {
     return this.http.post(baseUrl, params);
   }

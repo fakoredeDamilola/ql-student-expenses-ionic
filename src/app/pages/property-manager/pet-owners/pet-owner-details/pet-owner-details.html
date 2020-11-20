@@ -2,7 +2,7 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/property-manager/properties"></ion-back-button>
+        <ion-back-button defaultHref="/property-manager/pet-owners"></ion-back-button>
       </ion-buttons>
       <ion-buttons slot="end">
           <ion-button color="white" size="large" shape="round" fill="outline" routerLink="/property-manager/properties/property-details/{{propertyId}}/pet-owner/add">
@@ -21,41 +21,7 @@
   </ion-col>
 </ion-row>
 <ion-list inset>
-  <ion-row>
-    <ion-col>
-       <ion-item ><b>Number Of Pets:&nbsp;</b>{{petCount}}</ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item (click)="editPropertyName()"><b>Property Name:&nbsp; </b>  {{propertyName}}</ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item ><b>House / Unit Number: &nbsp;</b>{{houseUnitNumber}}</ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item ><b>Street: &nbsp;</b>{{street}}</ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item ><b>City:&nbsp;</b>{{city}}</ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item ><b>State:&nbsp;</b>{{state}}</ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-       <ion-item ><b>Zip Code:&nbsp;</b>{{zip}}</ion-item>
-    </ion-col>
-  </ion-row>
+
 </ion-list>
 <ion-row>
   <ion-col>

@@ -42,7 +42,8 @@ export class AddPetOwnerPage {
     private router: Router,
     public alertService: AlertService,
     public accountService: AccountService,
-    private userData: UserData
+    private userData: UserData,
+    private propertyService : PropertyService
   ) {}
 
   async ionViewWillEnter() {
@@ -64,6 +65,8 @@ export class AddPetOwnerPage {
     form.value.propertyId = this.propertyId;
     form.value.password = "PetCheck123";
     form.value.confirmPassword = "PetCheck123"
+
+    // TODO add the newly created accounts ID to this propertys Owner ID
 
     if(!form.value.title){
       form.value.title = "N/A"

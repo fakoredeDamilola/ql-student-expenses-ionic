@@ -98,6 +98,7 @@ export class PropertyDetailsPage {
   }
 
   private async updatePropertyMasterList(contextParamValue) {
+    //console.log(contextParamValue,"what is this??");
     (await this.propertyService
       .update(this.propertyId, contextParamValue))
       .pipe(first())

@@ -21,7 +21,7 @@ export class PropertiesAddEditComponent implements OnInit {
         private alertService: AlertService
     ) {}
 
-    ngOnInit() {
+    async ngOnInit() {
         this.id = this.route.snapshot.params['id'];
         this.isAddMode = !this.id;
 
@@ -38,7 +38,7 @@ export class PropertiesAddEditComponent implements OnInit {
         });
 
         if (!this.isAddMode) {
-            this.propertyService.getById(this.id)
+            (await this.propertyService.getById(this.id))
                 .pipe(first())
                 .subscribe(x => this.form.patchValue(x));
         }
@@ -82,8 +82,8 @@ export class PropertiesAddEditComponent implements OnInit {
             });
     }
 
-    private updateProperty() {
-        this.propertyService.update(this.id, this.form.value)
+    private async updateProperty() {
+        (await this.propertyService.update(this.id, this.form.value))
             .pipe(first())
             .subscribe({
                 next: () => {
