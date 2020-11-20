@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { map, finalize } from "rxjs/operators";
 
 import { environment } from "@environments/environment";
-import { Account, Property } from "@app/_models";
+import { Account, Pet, Property } from "@app/_models";
 
 const baseUrl = `${environment.apiUrl}/accounts`;
 
@@ -109,6 +109,10 @@ export class AccountService {
   }
   async getAllPetsInProperties(propertyManagerId:string){
     return this.http.get<Property>(`${baseUrl}/${propertyManagerId}/properties-pets`);
+  }
+
+  async getAllPetsOnAccount(accountId:string){
+    return this.http.get<Pet>(`${baseUrl}/${accountId}/pets`);
   }
 
   async create(params: any) {

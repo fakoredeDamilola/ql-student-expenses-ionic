@@ -25,7 +25,7 @@
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let pet of petsList">
         <ion-card class="speaker-card">
-          <ion-card-header>
+          <!--<ion-card-header>-->
             <ion-item detail="false" lines="none" class="speaker-item" routerLink='/account/pets/pet-details/{{pet.id}}'>
               <ion-avatar slot="start" *ngIf="pet.species=='Dog'" >
                 <img src="../../../../assets/img/speakers/puppy.jpg" [alt]="pet.petName + ' profile picture'">
@@ -36,21 +36,21 @@
               <ion-label>
                 <h2>{{pet.petName}}</h2>
                 <p>{{pet.species}}</p>
+                <p>{{pet.breed}}</p>
               </ion-label>
               <ion-rating rate='4.5' readonly="false" size="default">
               </ion-rating>
             </ion-item>
-          </ion-card-header>
+         <!-- </ion-card-header>-->
 
-          <ion-card-content>
+          <!--<ion-card-content>
             <ion-list lines="none">
               <ion-item>
                 <ion-label>
-                  <h3>Breed: {{pet.breed}}</h3>
                 </ion-label>
               </ion-item>
             </ion-list>
-          </ion-card-content>
+          </ion-card-content>-->
         </ion-card>
       </ion-col>
     </ion-row>

@@ -18,8 +18,9 @@ export class PetOwnersListPage {
     (await this.account.getAllPetOwnersInProperties(this.userId)).forEach(
       async (element) => {
         this.petOwnersList = element;
+        console.log(this.petOwnersList)
       }
     );
-    //console.log(await this.petOwnersList)
+
   }
 }

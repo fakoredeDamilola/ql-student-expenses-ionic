@@ -7,8 +7,7 @@ import { AccountService } from "@app/_services";
   styleUrls: ["./pets-list.scss"],
 })
 export class PetsListPage {
-  petsList: any[] = [];
-  userAccount: any;
+  petsList: any;
   userId: string;
 
   constructor(private accountService: AccountService) {}
@@ -16,10 +15,10 @@ export class PetsListPage {
   async ionViewDidEnter() {
     this.userId = this.accountService.accountValue.id;
     //console.log(this.userId);
-    this.userAccount = (await this.accountService.getById(this.userId)).forEach(
+      (await this.accountService.getAllPetsOnAccount(this.userId)).forEach(
       async (Element) => {
         console.log(Element)
-        this.petsList = Element.petOwnerPets;
+        this.petsList = Element;
       }
     );
   }

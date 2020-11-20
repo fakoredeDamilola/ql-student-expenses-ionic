@@ -29,6 +29,7 @@
                 </ion-avatar>
                 <ion-label>
                   <h2>{{petOwner.firstName}} {{petOwner.lastName}}</h2>
+                  <h3>Pets:{{petOwner.petOwnerPetsCount}}</h3>
                 </ion-label>
               </ion-item>
             </ion-card-header>
@@ -39,16 +40,8 @@
                   <ion-label>
                     <h3 *ngIf="petOwner.isVerified==true" style="color:green"><b>EMAIL VERIFIED: {{petOwner.email}}</b></h3>
                     <h3 *ngIf="petOwner.isVerified==false" style="color: firebrick;"><b>EMAIL NOT VERIFIED: {{petOwner.email}}</b></h3>
-                    <h3>Pets:{{petOwner.petOwnerPetsCount}}</h3>
-                    <h3></h3>
-                    <br>
-                    <!--<div *ngIf="property.petOwnerId=='None'">
-                      <h3>No Pet Owners or Pets</h3>
-                    </div>
-                    <div *ngIf="property.petOwnerId!='None'">
-                      <h3></h3>
-                      <h3></h3>
-                    </div>-->
+                    <p>{{petOwner.petOwnerProperty.houseUnitNumber}} {{petOwner.petOwnerProperty.street}}</p>
+                    <p>{{petOwner.petOwnerProperty.city}} {{petOwner.petOwnerProperty.state}},{{petOwner.petOwnerProperty.zip}} </p>
                   </ion-label>
                 </ion-item>
               </ion-list>
