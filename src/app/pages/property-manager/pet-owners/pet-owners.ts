@@ -8,7 +8,7 @@ import { AccountService } from "@app/_services";
   styleUrls: ["./pet-owners.scss"],
 })
 export class PetOwnersListPage {
-  petOwnersList: any[] = [];
+  petOwnersList: any;
   userId: any;
 
   constructor(private account: AccountService) {}
@@ -17,7 +17,7 @@ export class PetOwnersListPage {
     this.userId = this.account.accountValue.id;
     (await this.account.getAllPetOwnersInProperties(this.userId)).forEach(
       async (element) => {
-        this.petOwnersList.push(element);
+        this.petOwnersList = element;
       }
     );
     //console.log(await this.petOwnersList)

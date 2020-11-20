@@ -20,5 +20,4 @@ export class Account {
     propertyManagerPets?:[Pet];
     propertyManagerProperties?:[Property];
     created?: Date;
-
 }

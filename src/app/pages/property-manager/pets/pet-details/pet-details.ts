@@ -1,36 +1,26 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
-import { AccountService, AlertService, PropertyService } from "@app/_services";
+import { AccountService, AlertService, PetService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 
 @Component({
-  selector: "page-property-details",
-  templateUrl: "property-details.html",
-  styleUrls: ["./property-details.scss"],
+  selector: "page-pet-details",
+  templateUrl: "pet-details.html",
+  styleUrls: ["./pet-details.scss"],
 })
-export class PropertyDetailsPage {
-  accountId: string;
-  propertyId: any;
-  propertyName: string;
-  houseUnitNumber: string;
-  street: string;
-  city:string;
-  state:string;
-  zip:string;
-  petCount:number;
-  // key value for the edit input
-  key:any;
-  value:any;
-  saving:boolean=true;
-
+export class PetDetailsPage {
+  accountId: any;
+  petId: any;
+  petName: any;
+  species: any;
+  breed: any;
 
   constructor(
     public route: ActivatedRoute,
-    private router: Router,
     public inAppBrowser: InAppBrowser,
-    public propertyService: PropertyService,
+    public petService: PetService,
     public alertCtrl: AlertController,
     public alertService: AlertService,
     public accountService: AccountService
@@ -38,70 +28,65 @@ export class PropertyDetailsPage {
 
   async ionViewWillEnter() {
     this.accountId = this.accountService.accountValue.id;
-    this.propertyId = this.route.snapshot.paramMap.get("propertyId");
-    // get id out of url
-    window.history.replaceState({}, document.title, "/" + "property-manager/properties/property-details");
-    (await this.propertyService.getById(this.propertyId)).forEach(async (Element) => {
-      this.propertyName = Element.propertyName;
-      this.houseUnitNumber = Element.houseUnitNumber;
-      this.street = Element.street;
-      this.city = Element.city;
-      this.state = Element.state;
-      this.zip = Element.zip;
-      this.petCount = Element.propertyPetsCount;
+    this.petId = this.route.snapshot.paramMap.get("petId");
+    // get id out of the url
+    window.history.replaceState(
+      {},
+      document.title,
+      "/" + "property-manager/pets/pet-details"
+    );
+
+    this.petService.getById(this.petId).forEach(async (Element) => {
+      this.petName = Element.petName;
+      this.breed = Element.breed;
+      this.species = Element.species;
     });
   }
 
   openExternalUrl(url: string) {
     this.inAppBrowser.create(url, "_blank");
   }
-  async editPropertyName() {
+  async editPetName() {
     let alert = await this.alertCtrl.create({
-      header: "Change Property Name",
+      header: "Change Pet Name",
       buttons: [
         "Cancel",
         {
           text: "Ok",
           handler: async (data: any) => {
-          // this takes data and splits into key value
-          Object.keys(data).forEach((key) => {
-              this.key = key
-              this.value=data[key];
-          });
-            this.alertService.presentLoading("Saving Property...", 1200);
-            this.updatePropertyMasterList(data);
+            this.alertService.presentLoading("Saving Pet...", 1000);
+            this.updatePetMasterList(data);
           },
         },
       ],
       inputs: [
         {
           type: "text",
-          name: "propertyName",
-          value: this.propertyName,
-          placeholder: "Property Name (optional)",
+          name: "petName",
+          value: this.petName,
+          placeholder: "us",
         },
       ],
     });
-    alert.present();
+    await alert.present();
   }
 
-  private async updatePropertyMasterList(contextParamValue) {
-    (await this.propertyService
-      .update(this.propertyId, contextParamValue))
+  private async updatePetMasterList(contextParamValue) {
+    this.petService
+      .update(this.petId, contextParamValue)
       .pipe(first())
       .subscribe({
         next: async () => {
           this.alertService.createToastAlert(
-            "Update to Property To Master List successful",
+            "Update To Pet Successful!",
             "success",
             8000
           );
-            this.saving = false;
           this.ionViewWillEnter();
         },
         error: async (error) => {
-            this.alertService.createToastAlert(
-            "Update to Property Master List Failed...",
+          this.alertService.createToastAlert(
+            "Update To Pet Failed...",
             "warning",
             8000
           );

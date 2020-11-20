@@ -44,12 +44,12 @@
                     <h3>{{property.houseUnitNumber}} {{property.street}}</h3>
                     <h3>{{property.city}}, {{property.state}}, {{property.zip}}</h3>
                     <br>
-                    <div *ngIf="property.petOwnerId=='None'">
-                      <h3>No Pet Owners or Pets</h3>
+                    <div *ngIf="property.propertyPetOwnerCount==0">
+                      <h3>No Pet Owners</h3>
                     </div>
                     <div *ngIf="property.propertyPetOwnerCount!=0">
-                      <h3>Pet Count: {{property.propertyPetsCount}}</h3>
-                      <h3>Pet Owner: {{property.petOwnerId}}</h3>
+                      <h2><b>Pet Owner:</b> {{property.propertyPetOwner.firstName}} {{property.propertyPetOwner.lastName}}</h2>
+                      <h2><b>Number Of Pets:</b> {{property.propertyPetsCount}}</h2>
                     </div>
                   </ion-label>
                 </ion-item>

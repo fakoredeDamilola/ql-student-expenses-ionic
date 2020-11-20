@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PropertyDetailsPage } from './pet-details';
-import { PropertyDetailsPageRoutingModule } from './pet-details-routing.module';
+import { PetDetailsPage } from './pet-details';
+import { PetDetailsPageRoutingModule } from './pet-details-routing.module';
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    PropertyDetailsPageRoutingModule
+    PetDetailsPageRoutingModule
   ],
   declarations: [
-    PropertyDetailsPage,
+    PetDetailsPage,
   ]
 })
-export class PropertyDetailsModule { }
+export class PetDetailsModule { }

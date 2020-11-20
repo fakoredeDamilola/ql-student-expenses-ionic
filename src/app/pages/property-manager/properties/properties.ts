@@ -7,8 +7,8 @@ import { AccountService } from '@app/_services';
   styleUrls: ['./properties.scss'],
 })
 export class PropertiesListPage {
-  propertiesList: any[] = [];
-  userId: any;
+  propertiesList: any;
+  propertyManagerId: any;
 
   constructor(
     private accountService: AccountService
@@ -16,10 +16,11 @@ export class PropertiesListPage {
 
   async ionViewDidEnter() {
     //TODO USE PROPERTY get by propertyManagerId and load virtuals
-    this.userId = this.accountService.accountValue.id;
-    (await this.accountService.getById(this.userId)).forEach(async (Element)=>{
+    this.propertyManagerId = this.accountService.accountValue.id;
+    (await this.accountService.getAllPropertiesOnAccount(this.propertyManagerId)).forEach(async (Element)=>{
       //console.log(Element.propertyManagerProperties);
-      this.propertiesList = Element.propertyManagerProperties;
+      this.propertiesList = Element;
+      console.log(Element)
     });
   }
 }

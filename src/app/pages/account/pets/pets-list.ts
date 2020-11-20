@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-import { AccountService, AlertService } from "@app/_services";
-import { Account } from "@app/_models";
+import { AccountService } from "@app/_services";
 
 @Component({
   selector: "page-pets-list",
