@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PropertyDetailsPage } from './property-details';
+import { PropertyDetailsPage } from './pet-details';
 
 const routes: Routes = [
   {
@@ -14,13 +14,6 @@ const routes: Routes = [
       import(
         "@app/pages/property-manager/pet-owners/add-pet-owner/add-pet-owner.module"
       ).then((m) => m.AddPetOwnerModule),
-  },
-  {
-    path: "pet-owner/details",
-    loadChildren: () =>
-      import(
-        "@app/pages/property-manager/pet-owners/pet-owner-details/pet-owner-details.module"
-      ).then((m) => m.PetOwnerDetailsModule),
   },
 
 ];

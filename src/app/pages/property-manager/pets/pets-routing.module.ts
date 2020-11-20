@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { PropertiesListPage } from "./properties";
+import { PetsListPage } from "./pets";
 const routes: Routes = [
   {
     path: "",
-    component: PropertiesListPage,
+    component: PetsListPage,
   },
   {
     path: "add",
@@ -15,7 +15,7 @@ const routes: Routes = [
       ).then((m) => m.AddPropertyModule),
   },
   {
-    path: "property-details/:propertyId",
+    path: "pet-details/:petId",
     loadChildren: () =>
       import(
         "@app/pages/property-manager/properties/property-details/property-details.module"
@@ -27,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PropertiesListPageRoutingModule {}
+export class PetsListPageRoutingModule {}

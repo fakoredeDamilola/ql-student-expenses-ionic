@@ -1,4 +1,4 @@
-import { Pet, Role } from '@app/_models';
+import { Pet, Property, Role } from '@app/_models';
 
 export interface UserOptions {
   propertyId?:string;
@@ -11,6 +11,11 @@ export interface UserOptions {
   title?: string;
   acceptTerms?: Boolean;
   role?: Role;
-  pets?:[Pet];
+  petOwnerPets?:[Pet];
   jwtToken?: string;
+  propertyManagerPetOwnersCount?:number;
+  propertyManagerPetsCount?:number;
+  propertyManagerPetOwners?:[Account];
+  propertyManagerPets?:[Pet];
+  propertyManagerProperties?:[Property];
 }

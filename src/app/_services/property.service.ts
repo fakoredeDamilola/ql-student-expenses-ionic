@@ -27,24 +27,30 @@ export class PropertyService {
     return this.http.get<Property[]>(baseUrl);
   }
 
-  getById(id: string) {
+  async getById(id: string) {
     return this.http.get<Property>(`${baseUrl}/${id}`);
+  }
+
+  getPetOwnerByPropertyId(propertyId: string) {
+    const petOwner = this.http.get<Property>(`${baseUrl}/${propertyId}/pet-owner`);
+    console.log(petOwner,"????")
+    return petOwner;
   }
 
   create(params: any) {
     return this.http.post(baseUrl, params);
   }
 
-  update(id: string, params: any) {
+  async update(id: string, params: any) {
     return this.http.put(`${baseUrl}/${id}`, params).pipe(
-      map((property: any) => {
+      map(async (property: any) => {
         // update the current property if it was updated
         // if (property.id === this.propertyValue.id) {
         // publish updated property to subscribers
         //    property = { ...this.propertyValue, ...property };
         //    this.propertySubject.next(property);
         // }
-        return property;
+        return await property;
       })
     );
   }

@@ -96,8 +96,8 @@ export class AccountService {
     return this.http.get<Account[]>(baseUrl);
   }
 
-  async getById(id: string) {
-    return this.http.get<Account>(`${baseUrl}/${id}`);
+  async getById(accountId: string) {
+    return this.http.get<Account>(`${baseUrl}/${accountId}`);
   }
 
   async create(params: any) {

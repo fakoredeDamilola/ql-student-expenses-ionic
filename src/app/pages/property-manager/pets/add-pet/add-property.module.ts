@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PropertyAddPage } from './property-add';
-import { PropertyAddPageRoutingModule } from './property-add-routing.module';
+import { AddPropertyPage } from './add-property';
+import { AddPropertyPageRoutingModule } from './add-property-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
@@ -11,10 +11,10 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     IonicModule,
-    PropertyAddPageRoutingModule
+    AddPropertyPageRoutingModule
   ],
   declarations: [
-    PropertyAddPage,
+    AddPropertyPage,
   ]
 })
-export class PropertyAddModule { }
+export class AddPropertyModule { }

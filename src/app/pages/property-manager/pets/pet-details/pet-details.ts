@@ -4,7 +4,6 @@ import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Account } from "@app/_models/account";
 
 @Component({
   selector: "page-property-details",
@@ -17,16 +16,15 @@ export class PropertyDetailsPage {
   propertyName: string;
   houseUnitNumber: string;
   street: string;
-  city: string;
-  state: string;
-  zip: string;
-  petCount: number;
-  petOwner: any;
-  petOwnerCount: number;
+  city:string;
+  state:string;
+  zip:string;
+  petCount:number;
   // key value for the edit input
-  key: any;
-  value: any;
-  saving: boolean = true;
+  key:any;
+  value:any;
+  saving:boolean=true;
+
 
   constructor(
     public route: ActivatedRoute,
@@ -42,25 +40,16 @@ export class PropertyDetailsPage {
     this.accountId = this.accountService.accountValue.id;
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
     // get id out of url
-    window.history.replaceState(
-      {},
-      document.title,
-      "/" + "property-manager/properties/property-details"
-    );
-    await (await this.propertyService
-      .getById(this.propertyId))
-      .forEach(async (Element) => {
-        //console.log(Element,"here")
-        this.propertyName = Element.propertyName;
-        this.houseUnitNumber = Element.houseUnitNumber;
-        this.street = Element.street;
-        this.city = Element.city;
-        this.state = Element.state;
-        this.zip = Element.zip;
-        this.petCount = Element.propertyPetsCount;
-        this.petOwner = Element.propertyPetOwner;
-        this.petOwnerCount = Element.propertyPetOwnerCount;
-      });
+    window.history.replaceState({}, document.title, "/" + "property-manager/properties/property-details");
+    (await this.propertyService.getById(this.propertyId)).forEach(async (Element) => {
+      this.propertyName = Element.propertyName;
+      this.houseUnitNumber = Element.houseUnitNumber;
+      this.street = Element.street;
+      this.city = Element.city;
+      this.state = Element.state;
+      this.zip = Element.zip;
+      this.petCount = Element.propertyPetsCount;
+    });
   }
 
   openExternalUrl(url: string) {
@@ -74,13 +63,12 @@ export class PropertyDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            // this takes data and splits into key value
-            Object.keys(data).forEach((key) => {
-              this.key = key;
-              this.value = data[key];
-            });
+          // this takes data and splits into key value
+          Object.keys(data).forEach((key) => {
+              this.key = key
+              this.value=data[key];
+          });
             this.alertService.presentLoading("Saving Property...", 1200);
-            //this.createTempObject();
             this.updatePropertyMasterList(data);
           },
         },
@@ -108,11 +96,11 @@ export class PropertyDetailsPage {
             "success",
             8000
           );
-          this.saving = false;
+            this.saving = false;
           this.ionViewWillEnter();
         },
         error: async (error) => {
-          this.alertService.createToastAlert(
+            this.alertService.createToastAlert(
             "Update to Property Master List Failed...",
             "warning",
             8000

@@ -1,19 +1,19 @@
 import { Component } from "@angular/core";
-import {  Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { ConferenceData } from "@app/providers/conference-data";
 import { ActionSheetController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
-import { PropertyOptions } from '@app/interfaces/property-options';
+import { PropertyOptions } from "@app/interfaces/property-options";
 
 @Component({
   selector: "page-property-add",
-  templateUrl: "property-add.html",
-  styleUrls: ["./property-add.scss"],
+  templateUrl: "add-property.html",
+  styleUrls: ["./add-property.scss"],
 })
-export class PropertyAddPage {
+export class AddPropertyPage {
   account = this.accountService.accountValue;
   submitted: boolean = false;
   loading: boolean;
@@ -22,10 +22,10 @@ export class PropertyAddPage {
     propertyName: "",
     houseUnitNumber: "",
     street: "",
-    city:"",
-    state:"",
-    zip:"",
-    petCount:0
+    city: "",
+    state: "",
+    zip: "",
+    petCount: 0,
   };
 
   constructor(
@@ -53,7 +53,12 @@ export class PropertyAddPage {
     this.alertService.presentLoading("Saving Property...", 1200);
     form.value.propertyManagerId = this.account.id;
 
-    (await this.accountService.pushPropertyToAccount(this.account.id, form.value))
+    (
+      await this.accountService.pushPropertyToAccount(
+        this.account.id,
+        form.value
+      )
+    )
       .pipe(first())
       .subscribe({
         next: async () => {

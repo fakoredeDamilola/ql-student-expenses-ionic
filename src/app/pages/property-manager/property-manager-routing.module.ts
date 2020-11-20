@@ -11,8 +11,22 @@ const routes: Routes = [
       {
         path: "properties",
             loadChildren: () =>
-              import("../property-manager/properties/properties.module").then(
+              import("@app/pages/property-manager/properties/properties.module").then(
                 (m) => m.PropertiesListModule
+              ),
+      },
+      {
+        path: "pet-owners",
+            loadChildren: () =>
+              import("@app/pages/property-manager/pet-owners/pet-owners.module").then(
+                (m) => m.PetOwnersListModule
+              ),
+      },
+      {
+        path: "pets",
+            loadChildren: () =>
+              import("@app/pages/property-manager/pets/pets.module").then(
+                (m) => m.PetsListModule
               ),
       },
     ]
