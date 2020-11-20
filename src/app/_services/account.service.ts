@@ -63,10 +63,9 @@ export class AccountService {
   }
 
   async register(account: Account) {
-    console.log(account,"<--Account for regular register")
+    console.log(account, "<--Account for regular register");
     return this.http.post(`${baseUrl}/register`, account);
   }
-
 
   async verifyEmail(token: string) {
     return this.http.post(`${baseUrl}/verify-email`, { token });
@@ -104,14 +103,18 @@ export class AccountService {
     return this.http.get<Account>(`${baseUrl}/${propertyManagerId}/pet-owners`);
   }
 
-  async getAllPropertiesOnAccount(propertyManagerId:string){
-    return this.http.get<Property>(`${baseUrl}/${propertyManagerId}/properties`);
+  async getAllPropertiesOnAccount(propertyManagerId: string) {
+    return this.http.get<Property>(
+      `${baseUrl}/${propertyManagerId}/properties`
+    );
   }
-  async getAllPetsInProperties(propertyManagerId:string){
-    return this.http.get<Property>(`${baseUrl}/${propertyManagerId}/properties-pets`);
+  async getAllPetsInProperties(propertyManagerId: string) {
+    return this.http.get<Property>(
+      `${baseUrl}/${propertyManagerId}/properties-pets`
+    );
   }
 
-  async getAllPetsOnAccount(accountId:string){
+  async getAllPetsOnAccount(accountId: string) {
     return this.http.get<Pet>(`${baseUrl}/${accountId}/pets`);
   }
 
