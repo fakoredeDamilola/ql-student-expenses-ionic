@@ -27,7 +27,6 @@ export class AddPetOwnerPage {
     confirmPassword:""
   };
   submitted = false;
-  loading = false;
 
   accountId: string;
   propertyId: any;
@@ -35,6 +34,8 @@ export class AddPetOwnerPage {
   key:any;
   value:any;
   saving:boolean=true;
+  loading: Promise<HTMLIonLoadingElement>;
+  addingPetOwner: Promise<HTMLIonLoadingElement>;
 
 
   constructor(
@@ -44,20 +45,30 @@ export class AddPetOwnerPage {
     public accountService: AccountService,
     private userData: UserData,
     private propertyService : PropertyService
-  ) {}
+  ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    this.addingPetOwner = this.alertService.presentLoading("Adding Pet Owner &#10003;");
+  }
 
   async ionViewWillEnter() {
+    (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;//<-- The Property Manager ID! also currently logged in persons ID
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
     // get id out of the url
     window.history.replaceState({}, document.title, "/" + "property-manager/properties/property-details/pet-owner/add");
   }
 
+  async ionViewDidEnter(){
+    (await this.loading).dismiss();
+  }
+
   async onAddPetOwner(form?: NgForm){
+    (await this.addingPetOwner).present();
     this.submitted = true;
 
     // stop here if form is invalid
     if (form.invalid) {
+      (await this.addingPetOwner).dismiss();
       return;
     }
     // creating variables for default account
@@ -73,7 +84,7 @@ export class AddPetOwnerPage {
     }
 
     //console.log("the form for add pet owner...", form.value)
-    this.loading = true;
+
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {
         //TODO Replace with toast alert
@@ -83,6 +94,7 @@ export class AddPetOwnerPage {
           5000
         );
         await this.userData.signup(this.signup.email);
+        (await this.addingPetOwner).dismiss();
       },
       error: async (error) => {
         await this.alertService.createToastAlert(
@@ -90,7 +102,7 @@ export class AddPetOwnerPage {
           "danger",
           5000
         );
-        this.loading = false;
+        (await this.addingPetOwner).dismiss();
       },
     });
   }
