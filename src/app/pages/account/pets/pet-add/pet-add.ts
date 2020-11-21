@@ -17,15 +17,15 @@ import { PetOptions } from "@app/interfaces/pet-options";
 export class PetAddPage {
   account = this.accountService.accountValue;
   submitted: boolean = false;
-  loading: boolean;
   userData: any;
-
   addPet: PetOptions = {
     petImage: "",
     petName: "",
     species: "",
     breed: "",
   };
+  loading: Promise<HTMLIonLoadingElement>;
+  savingPet: Promise<HTMLIonLoadingElement>;
 
   constructor(
     private accountService: AccountService,
@@ -35,13 +35,22 @@ export class PetAddPage {
     public confData: ConferenceData,
     public inAppBrowser: InAppBrowser,
     public alertService: AlertService
-  ) {}
+  ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    this.savingPet = this.alertService.presentLoading("Saving Pet...");
+  }
 
-  async ionViewWillEnter() {}
+  async ionViewWillEnter() {
+    (await (this.loading)).present();
+  }
+
+  async ionViewDidEnter(){
+    (await (this.loading)).dismiss();
+  }
 
   async onAddPet(form?: NgForm) {
+    (await (this.savingPet)).present();
     this.submitted = true;
-    this.alertService.presentLoading("Saving Pet...", 1200);
     // stop here if form is invalid
     if (form.invalid) {
       this.alertService.createToastAlert(
@@ -49,6 +58,7 @@ export class PetAddPage {
         "danger",
         8000
       );
+      (await (this.savingPet)).dismiss();
       return;
     }
 
@@ -56,12 +66,12 @@ export class PetAddPage {
     form.value.propertyId = this.account.propertyId;
     form.value.propertyManagerId = this.account.propertyManagerId;
 
-    this.loading = true;
     this.petService
       .create(form.value)
       .pipe(first())
       .subscribe({
         next: async () => {
+          (await (this.savingPet)).dismiss();
           //TODO Replace with toast alert
           this.alertService.createToastAlert(
             "Added Pet To Account Successfully!",
@@ -72,12 +82,12 @@ export class PetAddPage {
           this.router.navigateByUrl("/account/pets");
         },
         error: async (error) => {
+          (await (this.savingPet)).dismiss();
           this.alertService.createToastAlert(
             "Add to pets failed.....!",
             "danger",
             5000
           );
-          this.loading = false;
         },
       });
   }

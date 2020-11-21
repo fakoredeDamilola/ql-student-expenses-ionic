@@ -6,6 +6,7 @@ import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 
 import { UserData } from "@app/providers/user-data";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "page-account",
@@ -22,14 +23,24 @@ export class ProfilePage {
   password:string;
   confirmPassword:string;
   accountID: any;
+  loading: any;
+  loggingOut:any;
+  savingAccount:any
+
 
   constructor(
     public alertCtrl: AlertController,
     public router: Router,
     public userData: UserData,
     public accountService: AccountService,
-    public alertService: AlertService
-  ) {}
+    public alertService: AlertService,
+    public loadingController : LoadingController
+  ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    this.loggingOut = this.alertService.presentLoading("Logging Out Pet Check &#10003;");
+    this.savingAccount = this.alertService.presentLoading("Saving...");
+
+  }
 
   async ionViewDidEnter() {
     this.accountID = this.accountService.accountValue.id;
@@ -38,7 +49,15 @@ export class ProfilePage {
     this.lastName = this.accountService.accountValue.lastName;
     this.email = this.accountService.accountValue.email;
     this.role = this.accountService.accountValue.role;
+    (await (this.loading)).dismiss();
   }
+
+  async ionViewWillEnter(){
+      (await (this.loading)).present();
+  }
+
+
+
 
   updatePicture() {
     console.log("Clicked to update picture");
@@ -48,28 +67,7 @@ export class ProfilePage {
   // clicking OK will update the username and display it
   // clicking Cancel will close the alert and do nothing
   async changeUsername() {
-    const alert = await this.alertCtrl.create({
-      header: "Change Username",
-      buttons: [
-        "Cancel",
-        {
-          text: "Ok",
-          handler: (data: any) => {
-            this.userData.setUsername(data.username);
-            this.getUsername();
-          },
-        },
-      ],
-      inputs: [
-        {
-          type: "text",
-          name: "username",
-          // value: this.username,
-          placeholder: "username",
-        },
-      ],
-    });
-    await alert.present();
+
   }
 
   getUsername() {
@@ -86,7 +84,8 @@ export class ProfilePage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            console.log(data);
+            //console.log(data);
+            ( await (this.savingAccount)).present();
             await this.updateAccountPassword(data)
           },
         },
@@ -103,7 +102,7 @@ export class ProfilePage {
   }
 
   async logout() {
-    await this.alertService.presentLoading("Logging Out...",2000);
+    ( await (this.loggingOut)).present();
     await this.userData.logout();
   }
 
@@ -122,6 +121,7 @@ export class ProfilePage {
       .pipe(first())
       .subscribe({
         next: async () => {
+          ( await (this.savingAccount)).dismiss();
           this.alertService.createToastAlert(
             "Update to Password Successful",
             "success",
@@ -130,6 +130,7 @@ export class ProfilePage {
           this.ionViewDidEnter();
         },
         error: async (error) => {
+          ( await (this.savingAccount)).dismiss();
           this.alertService.createToastAlert(
             "Update to Property Master List Failed...",
             "warning",

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { ConferenceData } from "@app/providers/conference-data";
-import { ActionSheetController } from "@ionic/angular";
+import { ActionSheetController, LoadingController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { NgForm } from "@angular/forms";
@@ -16,7 +16,7 @@ import { PropertyOptions } from "@app/interfaces/property-options";
 export class AddPropertyPage {
   account = this.accountService.accountValue;
   submitted: boolean = false;
-  loading: boolean;
+  loading: any;
 
   addProperty: PropertyOptions = {
     propertyName: "",
@@ -33,12 +33,22 @@ export class AddPropertyPage {
     private propertyService: PropertyService,
     private router: Router,
     public actionSheetCtrl: ActionSheetController,
-    public alertService: AlertService
-  ) {}
+    public alertService: AlertService,
+    private loadingController: LoadingController
+  ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+  }
 
-  ionViewWillEnter() {}
+  async ionViewDidEnter(){
+    ( await (this.loading)).dismiss();
+  }
+
+  async ionViewWillEnter() {
+    ( await (this.loading)).present();
+  }
 
   async onAddProperty(form?: NgForm) {
+    ( await (this.loading)).present();
     this.submitted = true;
 
     // stop here if form is invalid
@@ -50,7 +60,6 @@ export class AddPropertyPage {
       );
       return;
     }
-    this.alertService.presentLoading("Saving Property...", 1200);
     form.value.propertyManagerId = this.account.id;
 
     (
@@ -62,7 +71,7 @@ export class AddPropertyPage {
       .subscribe({
         next: async () => {
           //TODO Replace with toast alert
-
+          ( await (this.loading)).dismiss();
           this.alertService.createToastAlert(
             "Property Added Successfully!",
             "success",

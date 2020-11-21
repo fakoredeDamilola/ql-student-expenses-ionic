@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { AccountService } from "@app/_services";
+import { AccountService, AlertService } from "@app/_services";
 
 @Component({
   selector: "page-pets-list",
@@ -9,17 +9,29 @@ import { AccountService } from "@app/_services";
 export class PetsListPage {
   petsList: any;
   userId: string;
+  loading: Promise<HTMLIonLoadingElement>;
 
-  constructor(private accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private alertService: AlertService
+    ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+  }
 
   async ionViewDidEnter() {
     this.userId = this.accountService.accountValue.id;
     //console.log(this.userId);
       (await this.accountService.getAllPetsOnAccount(this.userId)).forEach(
       async (Element) => {
-        console.log(Element)
+        //console.log(Element)
         this.petsList = Element;
       }
+
     );
+    (await (this.loading)).dismiss();
   }
+  async ionViewWillEnter(){
+    (await (this.loading)).present();
+  }
+
 }

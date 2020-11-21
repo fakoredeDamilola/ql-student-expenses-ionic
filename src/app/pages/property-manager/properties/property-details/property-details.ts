@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
-import { AlertController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Account } from "@app/_models/account";
 
@@ -27,6 +27,7 @@ export class PropertyDetailsPage {
   key: any;
   value: any;
   saving: boolean = true;
+  loading: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -35,8 +36,11 @@ export class PropertyDetailsPage {
     public propertyService: PropertyService,
     public alertCtrl: AlertController,
     public alertService: AlertService,
-    public accountService: AccountService
-  ) {}
+    public accountService: AccountService,
+    private loadingController: LoadingController
+  ) {
+    this.loading = this.alertService.presentLoading("Saving Property...")
+  }
 
   async ionViewWillEnter() {
     this.accountId = this.accountService.accountValue.id;
@@ -63,6 +67,7 @@ export class PropertyDetailsPage {
       });
   }
 
+
   openExternalUrl(url: string) {
     this.inAppBrowser.create(url, "_blank");
   }
@@ -74,12 +79,12 @@ export class PropertyDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
+            ( await (this.loading)).present();
             // this takes data and splits into key value
             Object.keys(data).forEach((key) => {
               this.key = key;
               this.value = data[key];
             });
-            this.alertService.presentLoading("Saving Property...", 1200);
             //this.createTempObject();
             this.updatePropertyMasterList(data);
           },
@@ -104,8 +109,9 @@ export class PropertyDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
+          ( await (this.loading)).dismiss();
           this.alertService.createToastAlert(
-            "Update to Property To Master List successful",
+            "Update To Property Successful",
             "success",
             8000
           );

@@ -16,6 +16,8 @@ export class PetDetailsPage {
   petName: any;
   species: any;
   breed: any;
+  savingPet: Promise<HTMLIonLoadingElement>;
+  loading: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public route: ActivatedRoute,
@@ -24,9 +26,13 @@ export class PetDetailsPage {
     public alertCtrl: AlertController,
     public alertService: AlertService,
     public accountService: AccountService
-  ) {}
+  ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    this.savingPet = this.alertService.presentLoading("Saving Pet...");
+  }
 
   async ionViewWillEnter() {
+    (await (this.loading)).present();
     this.accountId = this.accountService.accountValue.id;
     this.petId = this.route.snapshot.paramMap.get("petId");
     // get id out of the url
@@ -43,6 +49,10 @@ export class PetDetailsPage {
     });
   }
 
+  async ionViewDidEnter(){
+    (await (this.loading)).dismiss();
+  }
+
   openExternalUrl(url: string) {
     this.inAppBrowser.create(url, "_blank");
   }
@@ -54,7 +64,7 @@ export class PetDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            this.alertService.presentLoading("Saving Pet...", 1000);
+            ( await (this.savingPet)).present();
             this.updatePetMasterList(data);
           },
         },
@@ -77,6 +87,7 @@ export class PetDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
+          ( await (this.savingPet)).dismiss();
           this.alertService.createToastAlert(
             "Update To Pet Successful!",
             "success",
@@ -85,6 +96,7 @@ export class PetDetailsPage {
           this.ionViewWillEnter();
         },
         error: async (error) => {
+          ( await (this.savingPet)).dismiss();
           this.alertService.createToastAlert(
             "Update To Pet Failed...",
             "warning",

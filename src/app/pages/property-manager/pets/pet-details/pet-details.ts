@@ -46,30 +46,7 @@ export class PetDetailsPage {
   openExternalUrl(url: string) {
     this.inAppBrowser.create(url, "_blank");
   }
-  async editPetName() {
-    let alert = await this.alertCtrl.create({
-      header: "Change Pet Name",
-      buttons: [
-        "Cancel",
-        {
-          text: "Ok",
-          handler: async (data: any) => {
-            this.alertService.presentLoading("Saving Pet...", 1000);
-            this.updatePetMasterList(data);
-          },
-        },
-      ],
-      inputs: [
-        {
-          type: "text",
-          name: "petName",
-          value: this.petName,
-          placeholder: "us",
-        },
-      ],
-    });
-    await alert.present();
-  }
+
 
   private async updatePetMasterList(contextParamValue) {
     this.petService

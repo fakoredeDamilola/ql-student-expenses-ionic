@@ -1,32 +1,46 @@
-import { Component } from '@angular/core';
-import { AccountService } from '@app/_services';
+import { Component } from "@angular/core";
+import { AccountService, AlertService } from "@app/_services";
 
-import { PopoverController } from '@ionic/angular';
+import { PopoverController } from "@ionic/angular";
 
-import { HomePopoverPage } from './home-popover/home-popover';
+import { HomePopoverPage } from "./home-popover/home-popover";
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
-  styleUrls: ['./home.scss'],
+  selector: "page-home",
+  templateUrl: "home.html",
+  styleUrls: ["./home.scss"],
 })
 export class HomePage {
   // All the logged in users account information!!!
   account = this.accountService.accountValue;
-  location = 'madison';
-  conferenceDate = '2047-05-17';
+  location = "madison";
+  conferenceDate = "2047-05-17";
 
   selectOptions = {
-    header: 'Select a Location'
+    header: "Select a Location",
   };
+  loading: Promise<HTMLIonLoadingElement>;
 
-  constructor(public popoverCtrl: PopoverController,private accountService: AccountService) { }
+  constructor(
+    public popoverCtrl: PopoverController,
+    private accountService: AccountService,
+    public alertService: AlertService
+  ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+  }
 
   async presentPopover(event: Event) {
     const popover = await this.popoverCtrl.create({
       component: HomePopoverPage,
-      event
+      event,
     });
     await popover.present();
+  }
+
+  async ionViewWillEnter(){
+    (await (this.loading)).present();
+  }
+  async ionViewDidEnter(){
+    (await (this.loading)).dismiss();
   }
 }

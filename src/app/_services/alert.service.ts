@@ -71,12 +71,10 @@ export class AlertService {
     toast.onDidDismiss();
   }
 
-  async presentLoading(messageParam: string, durationParam: number) {
+  async presentLoading(messageParam: string) {
     const loading = await this.loadingController.create({
       message: messageParam,
-      duration: durationParam,
     });
-    await loading.present();
-    const { role, data } = await loading.onDidDismiss();
+      return loading;
   }
 }
