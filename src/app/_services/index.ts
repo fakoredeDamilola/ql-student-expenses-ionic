@@ -2,4 +2,3 @@
 export * from './pet.service';
 export * from './property.service';
 export * from './alert.service';
-export * from './crud-all.service';

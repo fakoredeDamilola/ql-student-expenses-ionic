@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
 
@@ -14,7 +14,15 @@ import { UserData } from "@app/providers/user-data";
 })
 export class ProfilePage {
   // Get currently logged in accounts values
-  account = this.accountService.accountValue;
+  title:string;
+  firstName:string;
+  lastName:string;
+  email:string;
+  role:string;
+  password:string;
+  confirmPassword:string;
+  accountID: any;
+
   constructor(
     public alertCtrl: AlertController,
     public router: Router,
@@ -23,8 +31,13 @@ export class ProfilePage {
     public alertService: AlertService
   ) {}
 
-  async ionViewWillEnter() {
-
+  async ionViewDidEnter() {
+    this.accountID = this.accountService.accountValue.id;
+    this.title = this.accountService.accountValue.title;
+    this.firstName = this.accountService.accountValue.firstName;
+    this.lastName = this.accountService.accountValue.lastName;
+    this.email = this.accountService.accountValue.email;
+    this.role = this.accountService.accountValue.role;
   }
 
   updatePicture() {
@@ -65,8 +78,28 @@ export class ProfilePage {
     });*/
   }
 
-  changePassword() {
-    console.log("Clicked to change password");
+  async changePassword() {
+    const alert = await this.alertCtrl.create({
+      header: "Change Password",
+      buttons: [
+        "Cancel",
+        {
+          text: "Ok",
+          handler: async (data: any) => {
+            console.log(data);
+            await this.updateAccountPassword(data)
+          },
+        },
+      ],
+      inputs: [
+        {
+          type: "text",
+          name: "password",
+          placeholder: "password",
+        },
+      ],
+    });
+    await alert.present();
   }
 
   async logout() {
@@ -76,5 +109,33 @@ export class ProfilePage {
 
   support() {
     this.router.navigateByUrl("/support");
+  }
+
+
+
+
+ private async updateAccountPassword(contextParamValue) {
+    //console.log(contextParamValue,"what is this??");
+
+    (await this.accountService
+      .update(this.accountID, contextParamValue))
+      .pipe(first())
+      .subscribe({
+        next: async () => {
+          this.alertService.createToastAlert(
+            "Update to Password Successful",
+            "success",
+            8000
+          );
+          this.ionViewDidEnter();
+        },
+        error: async (error) => {
+          this.alertService.createToastAlert(
+            "Update to Property Master List Failed...",
+            "warning",
+            8000
+          );
+        },
+      });
   }
 }
