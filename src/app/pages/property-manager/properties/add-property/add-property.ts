@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { ConferenceData } from "@app/providers/conference-data";
 import { ActionSheetController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
-import { AccountService, AlertService } from "@app/_services";
+import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { PropertyOptions } from "@app/interfaces/property-options";
@@ -30,9 +30,9 @@ export class AddPropertyPage {
 
   constructor(
     private accountService: AccountService,
+    private propertyService: PropertyService,
     private router: Router,
     public actionSheetCtrl: ActionSheetController,
-    public inAppBrowser: InAppBrowser,
     public alertService: AlertService
   ) {}
 
@@ -54,8 +54,7 @@ export class AddPropertyPage {
     form.value.propertyManagerId = this.account.id;
 
     (
-      await this.accountService.pushPropertyToAccount(
-        this.account.id,
+      this.propertyService.create(
         form.value
       )
     )
