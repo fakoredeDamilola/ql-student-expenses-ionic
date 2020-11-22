@@ -18,6 +18,7 @@ export class PetDetailsPage {
   breed: any;
   savingPet: Promise<HTMLIonLoadingElement>;
   loading: Promise<HTMLIonLoadingElement>;
+  rating: number;
 
   constructor(
     public route: ActivatedRoute,
@@ -51,6 +52,7 @@ export class PetDetailsPage {
         this.petName = Element.petName;
         this.breed = Element.breed;
         this.species = Element.species;
+        this.rating = Element.rating;
       })
       .then(async () => {
         (await this.loading).dismiss();

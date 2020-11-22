@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { PetDetailsPage } from './pet-details';
 import { PetDetailsPageRoutingModule } from './pet-details-routing.module';
 import { IonicModule } from '@ionic/angular';
+import { IonicRatingModule } from 'ionic-rating';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    PetDetailsPageRoutingModule
+    PetDetailsPageRoutingModule,
+    IonicRatingModule
   ],
   declarations: [
     PetDetailsPage,

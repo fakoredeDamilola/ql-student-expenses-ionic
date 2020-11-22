@@ -102,9 +102,12 @@ export class ProfilePage {
   }
 
   async logout() {
-    ( await (this.loggingOut)).present();
+    (await (this.loggingOut)).present();
     await this.userData.logout();
+    (await (this.loggingOut)).dismiss();
+    //await this.accountService.logout();
   }
+
 
   support() {
     this.router.navigateByUrl("/support");

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicRatingModule } from 'ionic-rating';
 
 import { PetDetailsPage } from './pet-details';
 import { IonicModule } from '@ionic/angular';
@@ -9,7 +10,8 @@ import { PetDetailsPageRoutingModule } from '@app/pages/account/pets/pet-details
   imports: [
     CommonModule,
     IonicModule,
-    PetDetailsPageRoutingModule
+    PetDetailsPageRoutingModule,
+    IonicRatingModule
   ],
   declarations: [
     PetDetailsPage,

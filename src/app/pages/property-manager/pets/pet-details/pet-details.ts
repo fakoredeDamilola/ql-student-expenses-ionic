@@ -17,6 +17,7 @@ export class PetDetailsPage {
   species: any;
   breed: any;
   loading: any;
+  rating: number;
 
   constructor(
     public route: ActivatedRoute,
@@ -44,6 +45,7 @@ export class PetDetailsPage {
       this.petName = Element.petName;
       this.breed = Element.breed;
       this.species = Element.species;
+      this.rating = Element.rating;
     })
     .then(async () => {
       (await this.loading).dismiss();
