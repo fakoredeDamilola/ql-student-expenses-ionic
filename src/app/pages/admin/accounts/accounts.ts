@@ -39,7 +39,6 @@ export class AccountsPage implements OnInit {
   petOwnerCondition:string =''
   propertyManagerCondition:string =''
 
-  filterConditional:string;
 
   constructor(
     public alertCtrl: AlertController,
@@ -58,8 +57,6 @@ export class AccountsPage implements OnInit {
 
 
   async ngOnInit() {
-
-
     this.adminsIsChecked=true;
     this.petOwnersIsChecked=true;
     this.propertyManagersIsChecked=true;
@@ -76,9 +73,8 @@ export class AccountsPage implements OnInit {
   }
 
   // Updates mani view from filter...very cool
-  updateSchedule() {
-    // Close any open sliding items when the schedule updates
-
+  async updateView() {
+    // TODO make this a switch case statement
     if(this.adminsIsChecked==false){
       this.adminCondition='Admin';
     }
@@ -97,6 +93,7 @@ export class AccountsPage implements OnInit {
     if(this.propertyManagersIsChecked==true){
       this.propertyManagerCondition='';
     }
+
 
     /*this.confData
       .getTimeline(
@@ -131,7 +128,7 @@ export class AccountsPage implements OnInit {
       this.adminsIsChecked = await data.adminsIsChecked;
       this.petOwnersIsChecked = await data.petOwnersIsChecked;
       this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
-      this.updateSchedule();
+      this.updateView();
     }
   }
 
@@ -189,7 +186,7 @@ export class AccountsPage implements OnInit {
           handler: () => {
             // they want to remove this session from their favorites
             this.user.removeFavorite(sessionData.name);
-            this.updateSchedule();
+            this.updateView();
 
             // close the sliding item and hide the option buttons
             slidingItem.close();

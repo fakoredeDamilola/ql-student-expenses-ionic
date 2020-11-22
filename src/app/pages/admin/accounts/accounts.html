@@ -46,7 +46,7 @@
       <ion-title text-align-center size="large">Accounts (Admin)</ion-title>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="queryText" placeholder="Search" (ionChange)="updateView()"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
 
@@ -55,26 +55,36 @@
 
     </ion-item-divider>
     <ion-grid fixed *ngIf="segment=='all'">
-      <ion-row >
-        <ion-col size="12" size-md="6" *ngFor="let account of allAccounts" [hidden]=" account.role==propertyManagerCondition || account.role==adminCondition || account.role==petOwnerCondition" >
+      <ion-row>
+        <ion-col size="12" size-md="6" *ngFor="let account of allAccounts"
+          [hidden]="account.role==propertyManagerCondition || account.role==adminCondition || account.role==petOwnerCondition || ((account.firstName.indexOf(queryText)==-1 && account.lastName.indexOf(queryText)==-1 && account.email.indexOf(queryText)==-1)  && queryText)">
           <ion-card class="speaker-card">
             <ion-card-header>
               <ion-item detail="false" lines="none" class="speaker-item">
                 <ion-label>
                   <div>
-                  <ion-avatar style="text-align: center;">
-                    <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
-                  </ion-avatar>
-                  <h2 *ngIf="account.role=='PropertyManager'">Property Manager</h2>
-                  <h2 *ngIf="account.role=='User'">Pet Owner</h2>
-                  <h2 *ngIf="account.role=='Admin'">&nbsp;&nbsp;Admin</h2>
-                </div>
+                    <ion-avatar style="text-align: center;">
+                      <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
+                    </ion-avatar>
+                    <h2 *ngIf="account.role=='PropertyManager'">Property Manager</h2>
+                    <h2 *ngIf="account.role=='User'">Pet Owner</h2>
+                    <h2 *ngIf="account.role=='Admin'">&nbsp;&nbsp;Admin</h2>
+                  </div>
                 </ion-label>
                 <ion-label>
-                  <p><ion-button fill="clear" routerLink="/admin/accounts/account-details/{{account.id}}">{{account.firstName}} {{account.lastName}}</ion-button></p>
-                  <p><ion-button fill="clear">Pets ({{account.petOwnerPetsCount}})</ion-button></p>
-                  <p *ngIf="account.propertyManagerPropertiesCount>0"><ion-button fill="clear">Properties ({{account.propertyManagerPropertiesCount}})</ion-button></p>
-                  <p *ngIf="account.propertyManagerPropertiesCount==0"><ion-button fill="clear" disabled></ion-button></p>
+                  <p>
+                    <ion-button fill="clear" routerLink="/admin/accounts/account-details/{{account.id}}">
+                      {{account.firstName}} {{account.lastName}}</ion-button>
+                  </p>
+                  <p>
+                    <ion-button fill="clear">Pets ({{account.petOwnerPetsCount}})</ion-button>
+                  </p>
+                  <p *ngIf="account.propertyManagerPropertiesCount>0">
+                    <ion-button fill="clear">Properties ({{account.propertyManagerPropertiesCount}})</ion-button>
+                  </p>
+                  <p *ngIf="account.propertyManagerPropertiesCount==0">
+                    <ion-button fill="clear" disabled></ion-button>
+                  </p>
                 </ion-label>
               </ion-item>
             </ion-card-header>
@@ -82,14 +92,14 @@
             <ion-card-content>
               <ion-list lines="none">
 
-                  <ion-label>
-                    <h3 *ngIf="account.isVerified==true" style="color:green"><b>VERIFIED: {{account.email}}</b></h3>
-                    <h3 *ngIf="account.isVerified==false" style="color: firebrick;"><b>NOT VERIFIED:
-                        {{account.email}}</b></h3>
-                    <p>Created:&nbsp;{{account.created}}</p>
-                    <!--<p>{{account.accountProperty.houseUnitNumber}} {{account.accountProperty.street}}</p>
+                <ion-label>
+                  <h3 *ngIf="account.isVerified==true" style="color:green"><b>VERIFIED: {{account.email}}</b></h3>
+                  <h3 *ngIf="account.isVerified==false" style="color: firebrick;"><b>NOT VERIFIED:
+                      {{account.email}}</b></h3>
+                  <p>Created:&nbsp;{{account.created}}</p>
+                  <!--<p>{{account.accountProperty.houseUnitNumber}} {{account.accountProperty.street}}</p>
                     <p>{{account.accountProperty.city}} {{account.accountProperty.state}},{{account.accountProperty.zip}} </p>-->
-                  </ion-label>
+                </ion-label>
 
               </ion-list>
             </ion-card-content>
