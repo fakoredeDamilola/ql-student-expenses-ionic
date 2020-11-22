@@ -11,10 +11,8 @@ import {
 } from "@ionic/angular";
 
 import { AccountsFilterPage } from "./accounts-filter/accounts-filter";
-import { ConferenceData } from "@app/providers/conference-data";
 import { UserData } from "@app/providers/user-data";
 import { AccountService, AlertService } from '@app/_services';
-import { first } from 'rxjs/operators';
 import { Account } from '@app/_models';
 
 @Component({
@@ -32,6 +30,16 @@ export class AccountsPage implements OnInit {
   showSearchbar: boolean;
   loading: any;
   allAccounts: any|[Account];
+  adminsIsChecked:boolean;
+  petOwnersIsChecked:boolean
+  propertyManagersIsChecked:boolean;
+  filtersList:any;
+
+  adminCondition:string ='';
+  petOwnerCondition:string =''
+  propertyManagerCondition:string =''
+
+  filterConditional:string;
 
   constructor(
     public alertCtrl: AlertController,
@@ -50,6 +58,12 @@ export class AccountsPage implements OnInit {
 
 
   async ngOnInit() {
+
+
+    this.adminsIsChecked=true;
+    this.petOwnersIsChecked=true;
+    this.propertyManagersIsChecked=true;
+
     (await this.loading).present();
     //this.updateSchedule();
     this.ios = await this.config.get("mode") === "ios";
@@ -61,10 +75,27 @@ export class AccountsPage implements OnInit {
     });
   }
 
+  // Updates mani view from filter...very cool
   updateSchedule() {
     // Close any open sliding items when the schedule updates
-    if (this.allAccountsList) {
-      this.allAccountsList.closeSlidingItems();
+
+    if(this.adminsIsChecked==false){
+      this.adminCondition='Admin';
+    }
+    if(this.adminsIsChecked==true){
+      this.adminCondition='';
+    }
+    if(this.petOwnersIsChecked==false){
+      this.petOwnerCondition='User';
+    }
+    if(this.petOwnersIsChecked==true){
+      this.petOwnerCondition='';
+    }
+    if(this.propertyManagersIsChecked==false){
+      this.propertyManagerCondition='PropertyManager';
+    }
+    if(this.propertyManagersIsChecked==true){
+      this.propertyManagerCondition='';
     }
 
     /*this.confData
@@ -81,17 +112,25 @@ export class AccountsPage implements OnInit {
   }
 
   async presentFilter() {
+    this.filtersList= {
+      'adminsIsChecked':this.adminsIsChecked,
+      'petOwnersIsChecked':this.petOwnersIsChecked,
+      'propertyManagersIsChecked':this.propertyManagersIsChecked
+    }
+
     const modal = await this.modalCtrl.create({
       component: AccountsFilterPage,
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
-      /*componentProps: { excludedTracks: this.excludeTracks },*/
+      componentProps: { filtersList: await this.filtersList }
     });
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
     if (data) {
-      /*this.excludeTracks = data;*/
+      this.adminsIsChecked = await data.adminsIsChecked;
+      this.petOwnersIsChecked = await data.petOwnersIsChecked;
+      this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
       this.updateSchedule();
     }
   }

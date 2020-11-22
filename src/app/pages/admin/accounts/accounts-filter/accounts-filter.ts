@@ -12,12 +12,15 @@ import { ConferenceData } from '@app/providers/conference-data';
 export class AccountsFilterPage {
   ios: boolean;
 
-  adminsIsChecked: boolean;
-  petOwnersIsChecked: boolean;
-  propertyManagersIsChecked: boolean;
+  //adminsIsChecked: boolean=true;
+  adminsIsChecked:boolean;
+  petOwnersIsChecked:boolean;
+  propertyManagersIsChecked:boolean;
+
+  filtersList:any;
+
 
   constructor(
-    public confData: ConferenceData,
     private config: Config,
     public modalCtrl: ModalController,
     public navParams: NavParams
@@ -26,9 +29,14 @@ export class AccountsFilterPage {
   ionViewWillEnter() {
     this.ios = this.config.get('mode') === `ios`;
 
-    // passed in array of track names that should be excluded (unchecked)
-    const excludedTrackNames = this.navParams.get('excludedTracks');
+    const filtersListComingIn = this.navParams.get('filtersList');
 
+    this.adminsIsChecked = filtersListComingIn.adminsIsChecked;
+    this.petOwnersIsChecked = filtersListComingIn.petOwnersIsChecked;
+    this.propertyManagersIsChecked = filtersListComingIn.propertyManagersIsChecked;
+
+
+    //console.log(filtersListComingIn,"yo Filters List Coming In");
   }
 
   selectAll(check: boolean) {
@@ -37,13 +45,18 @@ export class AccountsFilterPage {
 
   applyFilters() {
     // Pass back a new array of track names to exclude
-    /*const excludedTrackNames = this.tracks.filter(c => !c.isChecked).map(c => c.name);
-    this.dismiss(excludedTrackNames);*/
+    this.filtersList={
+      'adminsIsChecked':this.adminsIsChecked,
+      'petOwnersIsChecked':this.petOwnersIsChecked,
+      'propertyManagersIsChecked':this.propertyManagersIsChecked
+    }
+    this.dismiss(this.filtersList);
   }
 
   dismiss(data?: any) {
     // using the injected ModalController this page
     // can "dismiss" itself and pass back data
+    //console.log("filters list after done with modal",data)
     this.modalCtrl.dismiss(data);
   }
 }
