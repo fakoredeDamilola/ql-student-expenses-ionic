@@ -7,6 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component: AccountsPage
+  },
+  {
+    path: "account-details/:accountId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/accounts/account-details/account-details.module"
+      ).then((m) => m.AccountDetailsModule),
   }
 ];
 

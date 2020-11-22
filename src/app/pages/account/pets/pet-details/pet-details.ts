@@ -32,27 +32,30 @@ export class PetDetailsPage {
   }
 
   async ionViewWillEnter() {
-    (await (this.loading)).present();
+    (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.petId = this.route.snapshot.paramMap.get("petId");
+
     // get id out of the url
+    if(this.accountService.accountValue.role!='Admin'){
     window.history.replaceState(
       {},
       document.title,
       "/" + "account/pets/pet-details"
     );
-
-    this.petService.getById(this.petId).forEach(async (Element) => {
-      this.petName = Element.petName;
-      this.breed = Element.breed;
-      this.species = Element.species;
-    });
   }
 
-  async ionViewDidEnter(){
-    (await (this.loading)).dismiss();
+    this.petService
+      .getById(this.petId)
+      .forEach(async (Element) => {
+        this.petName = Element.petName;
+        this.breed = Element.breed;
+        this.species = Element.species;
+      })
+      .then(async () => {
+        (await this.loading).dismiss();
+      });
   }
-
   openExternalUrl(url: string) {
     this.inAppBrowser.create(url, "_blank");
   }
@@ -64,7 +67,7 @@ export class PetDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            ( await (this.savingPet)).present();
+            (await this.savingPet).present();
             this.updatePetMasterList(data);
           },
         },
@@ -87,7 +90,7 @@ export class PetDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
-          ( await (this.savingPet)).dismiss();
+          (await this.savingPet).dismiss();
           this.alertService.createToastAlert(
             "Update To Pet Successful!",
             "success",
@@ -96,7 +99,7 @@ export class PetDetailsPage {
           this.ionViewWillEnter();
         },
         error: async (error) => {
-          ( await (this.savingPet)).dismiss();
+          (await this.savingPet).dismiss();
           this.alertService.createToastAlert(
             "Update To Pet Failed...",
             "warning",

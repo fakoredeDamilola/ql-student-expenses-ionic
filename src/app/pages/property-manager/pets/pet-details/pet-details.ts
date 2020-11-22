@@ -16,6 +16,7 @@ export class PetDetailsPage {
   petName: any;
   species: any;
   breed: any;
+  loading: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -24,9 +25,12 @@ export class PetDetailsPage {
     public alertCtrl: AlertController,
     public alertService: AlertService,
     public accountService: AccountService
-  ) {}
+  ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+  }
 
   async ionViewWillEnter() {
+    (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.petId = this.route.snapshot.paramMap.get("petId");
     // get id out of the url
@@ -40,6 +44,9 @@ export class PetDetailsPage {
       this.petName = Element.petName;
       this.breed = Element.breed;
       this.species = Element.species;
+    })
+    .then(async () => {
+      (await this.loading).dismiss();
     });
   }
 

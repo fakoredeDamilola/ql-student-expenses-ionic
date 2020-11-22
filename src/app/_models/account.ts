@@ -19,5 +19,8 @@ export class Account {
     propertyManagerPetOwners?:[Account];
     propertyManagerPets?:[Pet];
     propertyManagerProperties?:[Property];
-    created?: Date;
+    created: string;
+    isVerified: boolean;
+    updated: string;
+   petOwnerProperty: Property;
 }

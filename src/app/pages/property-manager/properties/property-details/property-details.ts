@@ -28,6 +28,7 @@ export class PropertyDetailsPage {
   value: any;
   saving: boolean = true;
   loading: any;
+  savingProperty: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public route: ActivatedRoute,
@@ -39,10 +40,12 @@ export class PropertyDetailsPage {
     public accountService: AccountService,
     private loadingController: LoadingController
   ) {
-    this.loading = this.alertService.presentLoading("Saving Property...")
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    this.savingProperty = this.alertService.presentLoading("Saving Property...")
   }
 
   async ionViewWillEnter() {
+    (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
     // get id out of url
@@ -64,6 +67,9 @@ export class PropertyDetailsPage {
         this.petCount = Element.propertyPetsCount;
         this.petOwner = Element.propertyPetOwner;
         this.petOwnerCount = Element.propertyPetOwnerCount;
+      })
+      .then(async () => {
+        (await this.loading).dismiss();
       });
   }
 
@@ -79,7 +85,7 @@ export class PropertyDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            ( await (this.loading)).present();
+            ( await (this.savingProperty)).present();
             // this takes data and splits into key value
             Object.keys(data).forEach((key) => {
               this.key = key;
@@ -109,7 +115,7 @@ export class PropertyDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
-          ( await (this.loading)).dismiss();
+          ( await (this.savingProperty)).dismiss();
           this.alertService.createToastAlert(
             "Update To Property Successful",
             "success",
@@ -119,6 +125,7 @@ export class PropertyDetailsPage {
           this.ionViewWillEnter();
         },
         error: async (error) => {
+          ( await (this.savingProperty)).dismiss();
           this.alertService.createToastAlert(
             "Update to Property Master List Failed...",
             "warning",

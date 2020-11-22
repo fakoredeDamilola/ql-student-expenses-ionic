@@ -1,4 +1,6 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
 import { Account } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
 
@@ -14,13 +16,21 @@ export class PetOwnersListPage {
 
   constructor(
     private account: AccountService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private route: ActivatedRoute
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }
 
   async ionViewDidEnter() {
     this.userId = this.account.accountValue.id;
+    if(this.account.accountValue.role=='Admin'){
+      this.userId =this.route.snapshot.paramMap.get("accountId");
+      if(this.route.snapshot.paramMap.get("accountId")==null){
+        this.userId = this.account.accountValue.id;
+      }
+
+    }
     (await this.account.getAllPetOwnersInProperties(this.userId))
       .forEach(async (element) => {
         this.petOwnersList = element;

@@ -10,16 +10,10 @@ const routes: Routes = [
     children: [
       {
         path: "accounts",
-        children: [
-          { path: "", component: AccountsPage },
-          {
-            path: "account/:sessionId",
             loadChildren: () =>
-              import("./accounts/account-detail/account-detail.module").then(
-                (m) => m.AccountDetailModule
+              import("@app/pages/admin/accounts/accounts.module").then(
+                (m) => m.AccountsModule
               ),
-          },
-        ],
       },
       {
         path: "properties",
@@ -27,12 +21,6 @@ const routes: Routes = [
           import("./properties/properties.module").then(
             (m) => m.PropertiesModule
           ),
-      },
-      ,
-      {
-        path: "pets",
-        loadChildren: () =>
-          import("./pets/pets.module").then((m) => m.PetsModule),
       },
       { path: "", redirectTo: "/admin/accounts", pathMatch: "full" },
     ],

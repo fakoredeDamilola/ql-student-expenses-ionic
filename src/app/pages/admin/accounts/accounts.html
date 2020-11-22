@@ -3,19 +3,19 @@
     <ion-buttons *ngIf="!showSearchbar" slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-segment *ngIf="ios" [(ngModel)]="segment" (ionChange)="updateSchedule()">
+    <ion-segment *ngIf="ios" [(ngModel)]="segment">
       <ion-segment-button value="all">
         All
       </ion-segment-button>
       <ion-segment-button value="property-managers">
-        P.M's
+        Favorites
       </ion-segment-button>
-      <ion-segment-button value="pet-owners">
-        P.O's
-      </ion-segment-button>
+
     </ion-segment>
-    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Accounts Management (Admin)</ion-title>
-    <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText" (ionChange)="updateSchedule()" (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
+    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Accounts Management
+      (Admin)</ion-title>
+    <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
+      (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
       <ion-button *ngIf="!ios && !showSearchbar" (click)="showSearchbar = true">
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -29,15 +29,12 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar *ngIf="!ios">
-    <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
+    <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="all">
         All
       </ion-segment-button>
       <ion-segment-button value="favorites">
-        Property Managers
-      </ion-segment-button>
-      <ion-segment-button value="pet_owners">
-        Pet Owners
+        Favorites
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -49,43 +46,58 @@
       <ion-title text-align-center size="large">Accounts (Admin)</ion-title>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-searchbar [(ngModel)]="queryText" (ionChange)="updateSchedule()" placeholder="Search"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
 
-  <ion-list #scheduleList [hidden]="shownSessions === 0">
-    <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
-      <ion-item-divider sticky>
-        <ion-label>
-          {{group.time}}
-        </ion-label>
-      </ion-item-divider>
+  <ion-list #allAccountsList>
+    <ion-item-divider sticky>
 
-      <ion-item-sliding *ngFor="let session of group.sessions" #slidingItem [attr.track]="session.tracks[0] | lowercase"
-        [hidden]="session.hide">
-        <ion-item routerLink="/admin/accounts/account/{{session.id}}">
-          <ion-label>
-            <h3>{{session.name}}</h3>
-            <p>
-              {{session.timeStart}} &mdash; {{session.timeEnd}}: {{session.location}}
-            </p>
-          </ion-label>
-        </ion-item>
-        <ion-item-options>
-          <ion-item-option color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
-            Favorite
-          </ion-item-option>
-          <ion-item-option color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')"
-            *ngIf="segment === 'favorites'">
-            Remove
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-item-group>
+    </ion-item-divider>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12" size-md="6" *ngFor="let account of allAccounts">
+          <ion-card class="speaker-card">
+            <ion-card-header>
+              <ion-item detail="false" lines="none" class="speaker-item">
+                <ion-label>
+                  <div>
+                  <ion-avatar style="text-align: center;">
+                    <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
+                  </ion-avatar>
+                  <h2 *ngIf="account.role=='PropertyManager'">Property Manager</h2>
+                  <h2 *ngIf="account.role=='User'">Pet Owner</h2>
+                  <h2 *ngIf="account.role=='Admin'">&nbsp;&nbsp;Admin</h2>
+                </div>
+                </ion-label>
+                <ion-label>
+                  <p><ion-button fill="clear" routerLink="/admin/accounts/account-details/{{account.id}}">{{account.firstName}} {{account.lastName}}</ion-button></p>
+                  <p><ion-button fill="clear">Pets ({{account.petOwnerPetsCount}})</ion-button></p>
+                  <p *ngIf="account.propertyManagerPropertiesCount>0"><ion-button fill="clear">Properties ({{account.propertyManagerPropertiesCount}})</ion-button></p>
+                  <p *ngIf="account.propertyManagerPropertiesCount==0"><ion-button fill="clear" disabled></ion-button></p>
+                </ion-label>
+              </ion-item>
+            </ion-card-header>
+
+            <ion-card-content>
+              <ion-list lines="none">
+
+                  <ion-label>
+                    <h3 *ngIf="account.isVerified==true" style="color:green"><b>VERIFIED: {{account.email}}</b></h3>
+                    <h3 *ngIf="account.isVerified==false" style="color: firebrick;"><b>NOT VERIFIED:
+                        {{account.email}}</b></h3>
+                    <p>Created:&nbsp;{{account.created}}</p>
+                    <!--<p>{{account.accountProperty.houseUnitNumber}} {{account.accountProperty.street}}</p>
+                    <p>{{account.accountProperty.city}} {{account.accountProperty.state}},{{account.accountProperty.zip}} </p>-->
+                  </ion-label>
+
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-list>
 
-  <ion-list-header [hidden]="shownSessions > 0">
-    No Sessions Found
-  </ion-list-header>
 
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ConferenceData } from "@app/providers/conference-data";
 import { ActionSheetController, LoadingController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
@@ -34,7 +34,7 @@ export class AddPropertyPage {
     private router: Router,
     public actionSheetCtrl: ActionSheetController,
     public alertService: AlertService,
-    private loadingController: LoadingController
+    private route : ActivatedRoute
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }
@@ -61,6 +61,15 @@ export class AddPropertyPage {
       return;
     }
     form.value.propertyManagerId = this.account.id;
+
+    if((this.accountService.accountValue.role=='Admin')){
+      console.log(this.route.snapshot.paramMap.get("accountId"));
+      form.value.propertyManagerId = this.route.snapshot.paramMap.get("accountId");
+
+      if(this.route.snapshot.paramMap.get("accountId")==null){
+        form.value.propertyManagerId = this.account.id;
+      }
+    }
 
     (
       this.propertyService.create(

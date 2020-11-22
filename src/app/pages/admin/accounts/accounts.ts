@@ -13,6 +13,9 @@ import {
 import { AccountsFilterPage } from "./accounts-filter/accounts-filter";
 import { ConferenceData } from "@app/providers/conference-data";
 import { UserData } from "@app/providers/user-data";
+import { AccountService, AlertService } from '@app/_services';
+import { first } from 'rxjs/operators';
+import { Account } from '@app/_models';
 
 @Component({
   selector: "page-schedule",
@@ -21,43 +24,50 @@ import { UserData } from "@app/providers/user-data";
 })
 export class AccountsPage implements OnInit {
   // Gets a reference to the list element
-  @ViewChild("scheduleList", { static: true }) scheduleList: IonList;
+  @ViewChild("allAccountsList", { static: true }) allAccountsList: IonList;
 
   ios: boolean;
-  dayIndex = 0;
   queryText = "";
   segment = "all";
-  excludeTracks: any = [];
-  shownSessions: any = [];
-  groups: any = [];
-  confDate: string;
   showSearchbar: boolean;
+  loading: any;
+  allAccounts: any|[Account];
 
   constructor(
     public alertCtrl: AlertController,
-    public confData: ConferenceData,
+    private alertService: AlertService,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public router: Router,
     public routerOutlet: IonRouterOutlet,
     public toastCtrl: ToastController,
     public user: UserData,
-    public config: Config
-  ) {}
+    public config: Config,
+    private acountService: AccountService
+  ) {
+    this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
+  }
 
-  ngOnInit() {
-    this.updateSchedule();
 
-    this.ios = this.config.get("mode") === "ios";
+  async ngOnInit() {
+    (await this.loading).present();
+    //this.updateSchedule();
+    this.ios = await this.config.get("mode") === "ios";
+   (await this.acountService.getAll()).forEach(async Element=>{
+      this.allAccounts = Element;
+      console.log(this.allAccounts,"right here")
+    }).then(async ()=>{
+      (await this.loading).dismiss();
+    });
   }
 
   updateSchedule() {
     // Close any open sliding items when the schedule updates
-    if (this.scheduleList) {
-      this.scheduleList.closeSlidingItems();
+    if (this.allAccountsList) {
+      this.allAccountsList.closeSlidingItems();
     }
 
-    this.confData
+    /*this.confData
       .getTimeline(
         this.dayIndex,
         this.queryText,
@@ -67,7 +77,7 @@ export class AccountsPage implements OnInit {
       .subscribe((data: any) => {
         this.shownSessions = data.shownSessions;
         this.groups = data.groups;
-      });
+      });*/
   }
 
   async presentFilter() {
@@ -75,13 +85,13 @@ export class AccountsPage implements OnInit {
       component: AccountsFilterPage,
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
-      componentProps: { excludedTracks: this.excludeTracks },
+      /*componentProps: { excludedTracks: this.excludeTracks },*/
     });
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
     if (data) {
-      this.excludeTracks = data;
+      /*this.excludeTracks = data;*/
       this.updateSchedule();
     }
   }

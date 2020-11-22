@@ -6,7 +6,7 @@
     </ion-buttons>
 
     <ion-title>
-      Filter Sessions
+      Filter Accounts
     </ion-title>
 
     <ion-buttons slot="end">
@@ -17,14 +17,19 @@
 
 <ion-content>
   <ion-list [lines]="ios ? 'inset' : 'full'">
-    <ion-list-header>Tracks</ion-list-header>
-
-    <ion-item *ngFor="let track of tracks" [attr.track]="track.name | lowercase">
-      <ion-icon *ngIf="ios" slot="start" [name]="track.icon" color="medium"></ion-icon>
-      <ion-label>{{track.name}}</ion-label>
-      <ion-checkbox [(ngModel)]="track.isChecked"></ion-checkbox>
+    <ion-list-header>Account Types</ion-list-header>
+    <ion-item>
+      <ion-label>Admins&nbsp;</ion-label>
+      <ion-checkbox [(ngModel)]="adminsIsChecked"></ion-checkbox>
     </ion-item>
-
+    <ion-item>
+      <ion-label>Property Managers&nbsp;</ion-label>
+      <ion-checkbox [(ngModel)]="propertyManagersIsChecked"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Pet Owners&nbsp;</ion-label>
+      <ion-checkbox [(ngModel)]="petOwnersIsChecked"></ion-checkbox>
+    </ion-item>
   </ion-list>
 
 </ion-content>
