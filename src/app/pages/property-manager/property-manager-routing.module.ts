@@ -23,7 +23,7 @@ const routes: Routes = [
               ),
       },
       {
-        path: "pets",
+        path: "properties-pets",
             loadChildren: () =>
               import("@app/pages/property-manager/pets/pets.module").then(
                 (m) => m.PetsListModule

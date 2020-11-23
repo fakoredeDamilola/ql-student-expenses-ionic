@@ -35,6 +35,7 @@ export class PetDetailsPage {
     this.accountId = this.accountService.accountValue.id;
     this.petId = this.route.snapshot.paramMap.get("petId");
     // get id out of the url
+    if(this.accountService.accountValue.role!='Admin')
     window.history.replaceState(
       {},
       document.title,

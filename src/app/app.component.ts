@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: "Pets",
-      url: "/property-manager/pets",
+      url: "/property-manager/properties-pets",
       icon: "checkmark",
     },
   ];

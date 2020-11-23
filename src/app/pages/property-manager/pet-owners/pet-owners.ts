@@ -1,6 +1,6 @@
 import { Route } from '@angular/compiler/src/core';
 import { Component } from "@angular/core";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
 
@@ -13,11 +13,13 @@ export class PetOwnersListPage {
   petOwnersList: any;
   userId: any;
   loading: Promise<HTMLIonLoadingElement>;
+  currentRoute: string = this.router.url;
 
   constructor(
     private account: AccountService,
     private alertService: AlertService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }

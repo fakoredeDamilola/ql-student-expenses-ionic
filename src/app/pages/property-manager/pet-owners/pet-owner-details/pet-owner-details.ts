@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
@@ -25,13 +25,15 @@ export class PetOwnerDetailsPage {
   value: any;
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
+  currentRoute: string = this.router.url;
 
   constructor(
     public route: ActivatedRoute,
     public inAppBrowser: InAppBrowser,
     public accountService: AccountService,
     public alertCtrl: AlertController,
-    public alertService: AlertService
+    public alertService: AlertService,
+    private router: Router
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }
@@ -40,11 +42,14 @@ export class PetOwnerDetailsPage {
     (await this.loading).present();
     this.petOwnerId = this.route.snapshot.paramMap.get("petOwnerId");
     // get id out of url
-    window.history.replaceState(
-      {},
-      document.title,
-      "/" + "property-manager/pet-owners/pet-owner-details"
-    );
+    if(this.accountService.accountValue.role!='Admin'){
+      window.history.replaceState(
+        {},
+        document.title,
+        "/" + "property-manager/pet-owners/pet-owner-details"
+      );
+    }
+
     (await this.accountService.getById(this.petOwnerId))
       .forEach(async (Element) => {
         this.firstName = Element.firstName;
