@@ -5,7 +5,7 @@
         <ion-back-button defaultHref="/property-manager/properties"></ion-back-button>
       </ion-buttons>
       <ion-buttons slot="end" *ngIf="petOwnerCount==0">
-          <ion-button color="white" size="large" shape="round" fill="outline" routerLink="/property-manager/properties/property-details/{{propertyId}}/pet-owner/add">
+          <ion-button color="white" size="large" shape="round" fill="outline" routerLink="{{currentRoute}}/pet-owner/add">
             <ion-icon name="add-outline"></ion-icon>Add Pet Owner
           </ion-button>
       </ion-buttons>

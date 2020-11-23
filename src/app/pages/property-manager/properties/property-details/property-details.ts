@@ -29,6 +29,7 @@ export class PropertyDetailsPage {
   saving: boolean = true;
   loading: any;
   savingProperty: Promise<HTMLIonLoadingElement>;
+  currentRoute: string = this.router.url;
 
   constructor(
     public route: ActivatedRoute,
@@ -49,11 +50,15 @@ export class PropertyDetailsPage {
     this.accountId = this.accountService.accountValue.id;
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
     // get id out of url
-    window.history.replaceState(
-      {},
-      document.title,
-      "/" + "property-manager/properties/property-details"
-    );
+
+    if(this.accountService.accountValue.role!='Admin'){
+      window.history.replaceState(
+        {},
+        document.title,
+        "/" + "property-manager/properties/property-details"
+      );
+    }
+
     (await this.propertyService
       .getById(this.propertyId))
       .forEach(async (Element) => {

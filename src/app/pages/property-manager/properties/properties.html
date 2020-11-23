@@ -8,7 +8,7 @@
     </ion-buttons>
     <ion-title text-align-center size="large">All Properties</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/property-manager/properties/add" shape="round" fill="outline">
+      <ion-button routerLink="{{currentRoute}}/add" shape="round" fill="outline">
         <ion-icon name="add-outline"></ion-icon> Add Property
       </ion-button>
 
@@ -30,7 +30,7 @@
           <ion-card class="speaker-card">
             <ion-card-header>
               <ion-item detail="false" lines="none" class="speaker-item"
-                routerLink="/property-manager/properties/property-details/{{property.id}}">
+                routerLink="{{currentRoute}}/property-details/{{property.id}}">
                 <ion-avatar slot="start">
                   <img src="../../../../assets/img/about/home.jpg" [alt]="' property picture'">
                 </ion-avatar>

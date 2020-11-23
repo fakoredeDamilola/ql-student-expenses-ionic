@@ -2,12 +2,11 @@ import { Component, HostListener } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
-
 import { UserOptions } from "@app/interfaces/user-options";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
-import { Route } from '@angular/compiler/src/core';
-import { first } from 'rxjs/operators';
-import { UserData } from '@app/providers/user-data';
+import { Route } from "@angular/compiler/src/core";
+import { first } from "rxjs/operators";
+import { UserData } from "@app/providers/user-data";
 
 @Component({
   selector: "page-add-pet-owner",
@@ -21,22 +20,22 @@ export class AddPetOwnerPage {
     lastName: "",
     email: "",
     acceptTerms: false,
-    propertyId:"",
-    propertyManagerId:"",
-    password:"",
-    confirmPassword:""
+    propertyId: "",
+    propertyManagerId: "",
+    password: "",
+    confirmPassword: "",
   };
   submitted = false;
 
   accountId: string;
   propertyId: any;
   // key value for the edit input
-  key:any;
-  value:any;
-  saving:boolean=true;
+  key: any;
+  value: any;
+  saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   addingPetOwner: Promise<HTMLIonLoadingElement>;
-
+  propertyManagerId: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -44,25 +43,37 @@ export class AddPetOwnerPage {
     public alertService: AlertService,
     public accountService: AccountService,
     private userData: UserData,
-    private propertyService : PropertyService
+    private propertyService: PropertyService
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
-    this.addingPetOwner = this.alertService.presentLoading("Adding Pet Owner &#10003;");
+    this.addingPetOwner = this.alertService.presentLoading(
+      "Adding Pet Owner &#10003;"
+    );
   }
 
   async ionViewWillEnter() {
     (await this.loading).present();
-    this.accountId = this.accountService.accountValue.id;//<-- The Property Manager ID! also currently logged in persons ID
+
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
+
     // get id out of the url
-    window.history.replaceState({}, document.title, "/" + "property-manager/properties/property-details/pet-owner/add");
+    this.accountId = this.route.snapshot.paramMap.get("accountId");
+    if(this.accountService.accountValue.role!='Admin'){
+      this.accountId = this.accountService.accountValue.id; //<-- The Property Manager ID! also currently logged in persons ID
+      window.history.replaceState(
+        {},
+        document.title,
+        "/" + "property-manager/properties/property-details/pet-owner/add"
+      );
+    }
+
   }
 
-  async ionViewDidEnter(){
+  async ionViewDidEnter() {
     (await this.loading).dismiss();
   }
 
-  async onAddPetOwner(form?: NgForm){
+  async onAddPetOwner(form?: NgForm) {
     (await this.addingPetOwner).present();
     this.submitted = true;
 
@@ -75,12 +86,12 @@ export class AddPetOwnerPage {
     form.value.propertyManagerId = this.accountId;
     form.value.propertyId = this.propertyId;
     form.value.password = "PetCheck123";
-    form.value.confirmPassword = "PetCheck123"
+    form.value.confirmPassword = "PetCheck123";
 
     // TODO add the newly created accounts ID to this propertys Owner ID
 
-    if(!form.value.title){
-      form.value.title = "N/A"
+    if (!form.value.title) {
+      form.value.title = "N/A";
     }
 
     //console.log("the form for add pet owner...", form.value)
@@ -106,6 +117,4 @@ export class AddPetOwnerPage {
       },
     });
   }
-
-
 }

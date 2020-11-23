@@ -12,6 +12,7 @@ export class PropertiesListPage {
   propertiesList: any;
   propertyManagerId: any;
   loading: any;
+  currentRoute: string = this.router.url;
 
   constructor(
     private accountService: AccountService,

@@ -1,8 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConferenceData } from "@app/providers/conference-data";
 import { ActionSheetController, LoadingController } from "@ionic/angular";
-import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
@@ -17,6 +15,7 @@ export class AddPropertyPage {
   account = this.accountService.accountValue;
   submitted: boolean = false;
   loading: any;
+  currentRoute: string = this.router.url;
 
   addProperty: PropertyOptions = {
     propertyName: "",
@@ -87,7 +86,8 @@ export class AddPropertyPage {
             8000
           );
           //await this.userData.signup(this.signup.email);
-          this.router.navigateByUrl("/property-manager/properties");
+          const backUrl = this.currentRoute.replace('/add','');
+          this.router.navigateByUrl(backUrl);
         },
         error: async (error) => {
           this.alertService.createToastAlert(

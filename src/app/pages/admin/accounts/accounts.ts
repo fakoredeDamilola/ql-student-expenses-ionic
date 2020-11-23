@@ -94,18 +94,6 @@ export class AccountsPage implements OnInit {
       this.propertyManagerCondition='';
     }
 
-
-    /*this.confData
-      .getTimeline(
-        this.dayIndex,
-        this.queryText,
-        this.excludeTracks,
-        this.segment
-      )
-      .subscribe((data: any) => {
-        this.shownSessions = data.shownSessions;
-        this.groups = data.groups;
-      });*/
   }
 
   async presentFilter() {
