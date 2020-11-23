@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import {
   AlertController,
@@ -14,9 +14,10 @@ import { AccountsFilterPage } from "./accounts-filter/accounts-filter";
 import { UserData } from "@app/providers/user-data";
 import { AccountService, AlertService } from '@app/_services';
 import { Account } from '@app/_models';
+import { first } from 'rxjs/operators';
 
 @Component({
-  selector: "page-schedule",
+  selector: "page-admin-accounts",
   templateUrl: "accounts.html",
   styleUrls: ["./accounts.scss"],
 })
@@ -50,25 +51,38 @@ export class AccountsPage  {
     public toastCtrl: ToastController,
     public user: UserData,
     public config: Config,
-    private acountService: AccountService
+    private accountService: AccountService
   ) {
     this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
   }
 
+  async ionViewDidEnter(){
+    //console.log("true2");
+    setTimeout(async ()=>{ (await this.loading).dismiss();},300);
+
+  }
+
   async ionViewWillEnter(){
+    this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
+    //console.log("true1");
+    (await this.loading).present();
     this.adminsIsChecked=true;
     this.petOwnersIsChecked=true;
     this.propertyManagersIsChecked=true;
+    this.ios = this.config.get("mode") === "ios";
 
-    (await this.loading).present();
+
+    (await this.accountService.getAll())
+    .pipe(first())
+    .subscribe(accounts => this.allAccounts = accounts);
+
     //this.updateSchedule();
-    this.ios = await this.config.get("mode") === "ios";
-   (await this.acountService.getAll()).forEach(async Element=>{
+   /*(await this.accountService.getAll()).forEach(async Element=>{
       this.allAccounts = Element;
-      console.log(this.allAccounts,"right here")
+      //console.log(this.allAccounts,"right here")
     }).then(async ()=>{
-      (await this.loading).dismiss();
-    });
+
+    });*/
   }
 
   // Updates mani view from filter...very cool

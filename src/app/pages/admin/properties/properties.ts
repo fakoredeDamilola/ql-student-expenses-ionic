@@ -12,8 +12,8 @@ import {
 
 import { PropertiesFilterPage } from "./properties-filter/properties-filter";
 import { UserData } from "@app/providers/user-data";
-import { AccountService, AlertService } from '@app/_services';
-import { Account } from '@app/_models';
+import { AccountService, AlertService, PropertyService } from '@app/_services';
+import { Account, Property } from '@app/_models';
 
 @Component({
   selector: "page-admin-properties",
@@ -29,7 +29,7 @@ export class PropertiesPage  {
   segment = "all";
   showSearchbar: boolean;
   loading: any;
-  allAccounts: any|[Account];
+  allProperties: any|[Property];
   adminsIsChecked:boolean;
   petOwnersIsChecked:boolean
   propertyManagersIsChecked:boolean;
@@ -38,6 +38,8 @@ export class PropertiesPage  {
   adminCondition:string ='';
   petOwnerCondition:string =''
   propertyManagerCondition:string =''
+  currentRoute: string = this.router.url;
+
 
 
   constructor(
@@ -50,7 +52,8 @@ export class PropertiesPage  {
     public toastCtrl: ToastController,
     public user: UserData,
     public config: Config,
-    private acountService: AccountService
+    private acountService: AccountService,
+    private propertyService: PropertyService
   ) {
     this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
   }
@@ -63,9 +66,9 @@ export class PropertiesPage  {
     (await this.loading).present();
     //this.updateSchedule();
     this.ios = await this.config.get("mode") === "ios";
-   (await this.acountService.getAll()).forEach(async Element=>{
-      this.allAccounts = Element;
-      console.log(this.allAccounts,"right here")
+   (await this.propertyService.getAll()).forEach(async Element=>{
+      this.allProperties = Element;
+      console.log(this.allProperties,"right here")
     }).then(async ()=>{
       (await this.loading).dismiss();
     });

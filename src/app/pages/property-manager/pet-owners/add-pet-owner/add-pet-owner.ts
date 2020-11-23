@@ -60,8 +60,14 @@ export class AddPetOwnerPage {
 
     // get id out of the url
     this.accountId = this.route.snapshot.paramMap.get("accountId");
+
+    if(this.accountId==null){
+      this.accountId = this.accountService.accountValue.id;
+    }
+
     if(this.accountService.accountValue.role!='Admin'){
       this.accountId = this.accountService.accountValue.id; //<-- The Property Manager ID! also currently logged in persons ID
+
       window.history.replaceState(
         {},
         document.title,

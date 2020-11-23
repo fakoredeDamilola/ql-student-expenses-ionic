@@ -12,8 +12,8 @@ import {
 
 import { PetsFilterPage } from "./pets-filter/pets-filter";
 import { UserData } from "@app/providers/user-data";
-import { AccountService, AlertService } from '@app/_services';
-import { Account } from '@app/_models';
+import { AccountService, AlertService, PetService } from '@app/_services';
+import { Account, Pet } from '@app/_models';
 
 @Component({
   selector: "page-pets",
@@ -34,10 +34,12 @@ export class PetsPage  {
   petOwnersIsChecked:boolean
   propertyManagersIsChecked:boolean;
   filtersList:any;
+  currentRoute: string = this.router.url;
 
   adminCondition:string ='';
   petOwnerCondition:string =''
   propertyManagerCondition:string =''
+  allPets: any| [Pet];
 
 
   constructor(
@@ -50,6 +52,7 @@ export class PetsPage  {
     public toastCtrl: ToastController,
     public user: UserData,
     public config: Config,
+    private petService: PetService,
     private acountService: AccountService
   ) {
     this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
@@ -63,8 +66,8 @@ export class PetsPage  {
     (await this.loading).present();
     //this.updateSchedule();
     this.ios = await this.config.get("mode") === "ios";
-   (await this.acountService.getAll()).forEach(async Element=>{
-      this.allAccounts = Element;
+   (await this.petService.getAll()).forEach(async Element=>{
+      this.allPets = Element;
       console.log(this.allAccounts,"right here")
     }).then(async ()=>{
       (await this.loading).dismiss();

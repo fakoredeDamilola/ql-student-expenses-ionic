@@ -72,7 +72,7 @@ export class AlertService {
   }
 
   async presentLoading(messageParam: string) {
-    const loading = await this.loadingController.create({
+    const loading = this.loadingController.create({
       message: messageParam,
     });
       return loading;
