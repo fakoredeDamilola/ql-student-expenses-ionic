@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, PetService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
+import {Location} from '@angular/common';
 
 @Component({
   selector: "page-pet-details",
@@ -19,6 +20,7 @@ export class PetDetailsPage {
   savingPet: Promise<HTMLIonLoadingElement>;
   loading: Promise<HTMLIonLoadingElement>;
   rating: number;
+  deleting: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public route: ActivatedRoute,
@@ -26,10 +28,13 @@ export class PetDetailsPage {
     public petService: PetService,
     public alertCtrl: AlertController,
     public alertService: AlertService,
-    public accountService: AccountService
+    public accountService: AccountService,
+    private router: Router,
+    private _location: Location
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
     this.savingPet = this.alertService.presentLoading("Saving Pet...");
+    this.deleting = this.alertService.presentLoading("Deleting Pet...");
   }
 
   async ionViewWillEnter() {
@@ -105,6 +110,56 @@ export class PetDetailsPage {
           this.alertService.createToastAlert(
             "Update To Pet Failed...",
             "warning",
+            8000
+          );
+        },
+      });
+  }
+
+
+  async deleteAreYouSure(){
+    const alert = await this.alertCtrl.create({
+      header: "Delete Pet",
+      message: "Are You Sure you want to DELETE this Pet??  This Action can not be reversed.",
+      buttons: [
+        {
+          text: "Cancel",
+          handler: () => {
+          },
+        },
+        {
+          text: "DELETE",
+          handler: async () => {
+            await this.deletePet();
+          },
+        },
+      ],
+    });
+    // now present the alert on top of all other content
+    await alert.present();
+  }
+
+  async deletePet() {
+    (await this.deleting).present();
+    this.petService
+      .delete(this.petId)
+      .pipe(first())
+      .subscribe({
+        next: async () => {
+          //TODO Replace with toast alert
+          (await this.deleting).dismiss();
+          this.alertService.createToastAlert(
+            "Pet Deleted Successfully!",
+            "success",
+            8000
+          );
+          this._location.back();
+        },
+        error: async (error) => {
+          (await this.deleting).dismiss();
+          this.alertService.createToastAlert(
+            "Pet Delete failed.....!",
+            "danger",
             8000
           );
         },

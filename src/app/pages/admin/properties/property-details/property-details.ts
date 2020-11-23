@@ -8,11 +8,11 @@ import { Pet, Property } from "@app/_models";
 import {Location} from '@angular/common';
 
 @Component({
-  selector: "page-account-details",
-  templateUrl: "account-details.html",
-  styleUrls: ["./account-details.scss"],
+  selector: "page-property-details",
+  templateUrl: "property-details.html",
+  styleUrls: ["./property-details.scss"],
 })
-export class AccountDetailsPage {
+export class PropertyDetailsPage {
   accountId: any;
   account = {
     firstName: "",

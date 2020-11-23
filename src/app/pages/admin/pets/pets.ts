@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import {
   AlertController,
@@ -10,17 +10,17 @@ import {
   Config,
 } from "@ionic/angular";
 
-import { AccountsFilterPage } from "./accounts-filter/accounts-filter";
+import { PetsFilterPage } from "./pets-filter/pets-filter";
 import { UserData } from "@app/providers/user-data";
 import { AccountService, AlertService } from '@app/_services';
 import { Account } from '@app/_models';
 
 @Component({
-  selector: "page-schedule",
-  templateUrl: "accounts.html",
-  styleUrls: ["./accounts.scss"],
+  selector: "page-pets",
+  templateUrl: "pets.html",
+  styleUrls: ["./pets.scss"],
 })
-export class AccountsPage  {
+export class PetsPage  {
   // Gets a reference to the list element
   @ViewChild("allAccountsList", { static: true }) allAccountsList: IonList;
 
@@ -103,7 +103,7 @@ export class AccountsPage  {
     }
 
     const modal = await this.modalCtrl.create({
-      component: AccountsFilterPage,
+      component: PetsFilterPage,
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
       componentProps: { filtersList: await this.filtersList }

@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { PetsListComponent } from './pets-list.component';
-import { PetsAddEditComponent } from './pets-add-edit.component';
-//import { PropertyDetailPage } from './property-detail/property-detail';
+import { PetsPage } from './pets';
 
 const routes: Routes = [
-    { path: '', component: PetsListComponent },
-    { path: 'add', component: PetsAddEditComponent },
-    { path: 'pet/:id', component: PetsAddEditComponent },
-    //{ path: 'property-test/:id', component: PropertyDetailPage }
+  {
+    path: '',
+    component: PetsPage
+  },
+  {
+    path: "pet-details/:petId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/pets/pet-details/pet-details.module"
+      ).then((m) => m.PetDetailsModule),
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class PetsRoutingModule { }
+export class PetsPageRoutingModule { }

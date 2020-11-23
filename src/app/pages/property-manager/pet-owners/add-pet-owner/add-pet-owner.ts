@@ -7,6 +7,7 @@ import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { Route } from "@angular/compiler/src/core";
 import { first } from "rxjs/operators";
 import { UserData } from "@app/providers/user-data";
+import {Location} from '@angular/common';
 
 @Component({
   selector: "page-add-pet-owner",
@@ -43,7 +44,8 @@ export class AddPetOwnerPage {
     public alertService: AlertService,
     public accountService: AccountService,
     private userData: UserData,
-    private propertyService: PropertyService
+    private propertyService: PropertyService,
+    private _location: Location
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
     this.addingPetOwner = this.alertService.presentLoading(
@@ -106,6 +108,7 @@ export class AddPetOwnerPage {
         );
         await this.userData.signup(this.signup.email);
         (await this.addingPetOwner).dismiss();
+        this._location.back();
       },
       error: async (error) => {
         await this.alertService.createToastAlert(

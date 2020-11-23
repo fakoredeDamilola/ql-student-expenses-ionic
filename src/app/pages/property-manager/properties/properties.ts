@@ -28,7 +28,7 @@ export class PropertiesListPage {
     //TODO USE PROPERTY get by propertyManagerId and load virtuals
 
     this.propertyManagerId = this.accountService.accountValue.id;
-    console.log(this.router.url); //  /routename
+    //console.log(this.router.url); //  /routename
 
     if((this.accountService.accountValue.role=='Admin')){
       this.propertyManagerId = this.route.snapshot.paramMap.get("accountId");

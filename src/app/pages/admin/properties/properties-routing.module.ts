@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { PropertiesListComponent } from './properties-list.component';
-import { PropertiesAddEditComponent } from './properties-add-edit.component';
-import { PropertyDetailPage } from './property-detail/property-detail';
+import { PropertiesPage } from './properties';
 
 const routes: Routes = [
-    { path: '', component: PropertiesListComponent },
-    { path: 'add', component: PropertiesAddEditComponent },
-    { path: 'property/:id', component: PropertiesAddEditComponent },
-    { path: 'property-test/:id', component: PropertyDetailPage }
+  {
+    path: '',
+    component: PropertiesPage
+  },
+  {
+    path: "property-details/:propertyId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/properties/property-details/property-details.module"
+      ).then((m) => m.PropertyDetailsModule),
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class PropertiesRoutingModule { }
+export class PropertiesPageRoutingModule { }

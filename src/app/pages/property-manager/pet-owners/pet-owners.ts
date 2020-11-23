@@ -1,7 +1,5 @@
-import { Route } from '@angular/compiler/src/core';
 import { Component } from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
-import { Account } from "@app/_models";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
 
 @Component({
@@ -25,13 +23,13 @@ export class PetOwnersListPage {
   }
 
   async ionViewDidEnter() {
+    (await this.loading).present();
     this.userId = this.account.accountValue.id;
-    if(this.account.accountValue.role=='Admin'){
-      this.userId =this.route.snapshot.paramMap.get("accountId");
-      if(this.route.snapshot.paramMap.get("accountId")==null){
+    if (this.account.accountValue.role == "Admin") {
+      this.userId = this.route.snapshot.paramMap.get("accountId");
+      if (this.route.snapshot.paramMap.get("accountId") == null) {
         this.userId = this.account.accountValue.id;
       }
-
     }
     (await this.account.getAllPetOwnersInProperties(this.userId))
       .forEach(async (element) => {
@@ -39,13 +37,11 @@ export class PetOwnersListPage {
         console.log(this.petOwnersList);
       })
       .then(async () => {
-        {
-          (await this.loading).dismiss();
-        }
+        (await this.loading).dismiss();
       });
   }
 
-  async ionViewWillEnter(){
+  async ionViewWillEnter() {
     (await this.loading).present();
   }
 }

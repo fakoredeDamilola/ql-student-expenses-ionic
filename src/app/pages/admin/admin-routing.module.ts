@@ -18,8 +18,15 @@ const routes: Routes = [
       {
         path: "properties",
         loadChildren: () =>
-          import("./properties/properties.module").then(
+          import("@app/pages/admin/properties/properties.module").then(
             (m) => m.PropertiesModule
+          ),
+      },
+      {
+        path: "pets",
+        loadChildren: () =>
+          import("@app/pages/admin//pets/pets.module").then(
+            (m) => m.PetsModule
           ),
       },
       { path: "", redirectTo: "/admin/accounts", pathMatch: "full" },

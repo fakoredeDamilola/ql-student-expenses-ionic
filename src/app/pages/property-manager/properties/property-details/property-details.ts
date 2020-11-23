@@ -5,6 +5,7 @@ import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { AlertController, LoadingController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Account } from "@app/_models/account";
+import {Location} from '@angular/common';
 
 @Component({
   selector: "page-property-details",
@@ -30,6 +31,7 @@ export class PropertyDetailsPage {
   loading: any;
   savingProperty: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
+  deleting: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public route: ActivatedRoute,
@@ -39,9 +41,10 @@ export class PropertyDetailsPage {
     public alertCtrl: AlertController,
     public alertService: AlertService,
     public accountService: AccountService,
-    private loadingController: LoadingController
+    private _location: Location
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    this.deleting = this.alertService.presentLoading("Deleting Account...");
     this.savingProperty = this.alertService.presentLoading("Saving Property...")
   }
 
@@ -134,6 +137,58 @@ export class PropertyDetailsPage {
           this.alertService.createToastAlert(
             "Update to Property Master List Failed...",
             "warning",
+            8000
+          );
+        },
+      });
+  }
+
+
+
+  async deleteAreYouSure(){
+    const alert = await this.alertCtrl.create({
+      header: "Admin Delete Account",
+      message: "Are You Sure you want to DELETE this property??  This Action can not be reversed.",
+      buttons: [
+        {
+          text: "Cancel",
+          handler: () => {
+          },
+        },
+        {
+          text: "DELETE",
+          handler: async () => {
+            await this.deleteProperty();
+          },
+        },
+      ],
+    });
+    // now present the alert on top of all other content
+    await alert.present();
+  }
+
+
+  async deleteProperty() {
+    (await this.deleting).present();
+    this.propertyService
+      .delete(this.propertyId)
+      .pipe(first())
+      .subscribe({
+        next: async () => {
+          //TODO Replace with toast alert
+          (await this.deleting).dismiss();
+          this.alertService.createToastAlert(
+            "Property Deleted Successfully!",
+            "success",
+            8000
+          );
+          this._location.back();
+        },
+        error: async (error) => {
+          (await this.deleting).dismiss();
+          this.alertService.createToastAlert(
+            "Property Delete failed.....!",
+            "danger",
             8000
           );
         },
