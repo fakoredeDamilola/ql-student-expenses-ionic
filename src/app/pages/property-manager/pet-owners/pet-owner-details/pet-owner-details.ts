@@ -31,6 +31,7 @@ export class PetOwnerDetailsPage {
   petsLength: number;
   property={  city:'', street:'', state:'', zip:'' };
   propertyName: string;
+  isVerified: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -61,6 +62,7 @@ export class PetOwnerDetailsPage {
         this.lastName = Element.lastName;
         this.email = Element.email;
         this.created = Element.created;
+        this.isVerified = Element.isVerified;
         this.pets = Element.petOwnerPets;
         this.petsLength = this.pets.length;
         this.propertyName = Element.petOwnerProperty.propertyName;

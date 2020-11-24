@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { UserOptions } from "@app/interfaces/user-options";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
-import { Route } from "@angular/compiler/src/core";
 import { first } from "rxjs/operators";
 import { UserData } from "@app/providers/user-data";
 import {Location} from '@angular/common';
@@ -37,6 +36,7 @@ export class AddPetOwnerPage {
   loading: Promise<HTMLIonLoadingElement>;
   addingPetOwner: Promise<HTMLIonLoadingElement>;
   propertyManagerId: string;
+  propertyManager: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -55,19 +55,18 @@ export class AddPetOwnerPage {
 
   async ionViewWillEnter() {
     (await this.loading).present();
-
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
-
-    // get id out of the url
-    this.accountId = this.route.snapshot.paramMap.get("accountId");
-
-    if(this.accountId==null){
-      this.accountId = this.accountService.accountValue.id;
-    }
+    // get property, then the propertyManagerId
+    (await this.propertyService
+      .getById(this.propertyId))
+      .forEach(async (Element) => {
+        this.propertyManagerId = Element.propertyManager.id;
+      })
+      .then(async () => {
+        (await this.loading).dismiss();
+      });
 
     if(this.accountService.accountValue.role!='Admin'){
-      this.accountId = this.accountService.accountValue.id; //<-- The Property Manager ID! also currently logged in persons ID
-
       window.history.replaceState(
         {},
         document.title,
@@ -91,7 +90,7 @@ export class AddPetOwnerPage {
       return;
     }
     // creating variables for default account
-    form.value.propertyManagerId = this.accountId;
+    form.value.propertyManagerId = this.propertyManagerId;
     form.value.propertyId = this.propertyId;
     form.value.password = "PetCheck123";
     form.value.confirmPassword = "PetCheck123";

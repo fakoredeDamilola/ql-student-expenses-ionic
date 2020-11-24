@@ -58,7 +58,7 @@
       <ion-row>
         <ion-col size="12" size-md="6" *ngFor="let account of allAccounts"
           [hidden]="account.role==propertyManagerCondition || account.role==adminCondition || account.role==petOwnerCondition || ((account.firstName.indexOf(queryText)==-1 && account.lastName.indexOf(queryText)==-1 && account.email.indexOf(queryText)==-1)  && queryText)">
-          <ion-card class="speaker-card">
+          <ion-card class="speaker-card" routerLink="/admin/accounts/account-details/{{account.id}}">
             <ion-card-header>
               <ion-item detail="false" lines="none" class="speaker-item">
                 <ion-label>
@@ -66,24 +66,18 @@
                     <ion-avatar style="text-align: center;">
                       <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
                     </ion-avatar>
-                    <h2 *ngIf="account.role=='PropertyManager'">Property Manager</h2>
-                    <h2 *ngIf="account.role=='User'">Pet Owner</h2>
-                    <h2 *ngIf="account.role=='Admin'">&nbsp;&nbsp;Admin</h2>
+                    <h2>{{account.firstName}} {{account.lastName}}</h2>
                   </div>
                 </ion-label>
                 <ion-label>
+                  <h2 *ngIf="account.role=='PropertyManager'">Property Manager</h2>
+                  <h2 *ngIf="account.role=='User'">Pet Owner</h2>
+                  <h2 *ngIf="account.role=='Admin'">Admin</h2>
                   <p>
-                    <ion-button fill="clear" routerLink="/admin/accounts/account-details/{{account.id}}">
-                      {{account.firstName}} {{account.lastName}}</ion-button>
-                  </p>
-                  <p>
-                    <ion-button fill="clear">Pets ({{account.petOwnerPetsCount}})</ion-button>
+                    Pets ({{account.petOwnerPetsCount}})
                   </p>
                   <p *ngIf="account.propertyManagerPropertiesCount>0">
-                    <ion-button fill="clear">Properties ({{account.propertyManagerPropertiesCount}})</ion-button>
-                  </p>
-                  <p *ngIf="account.propertyManagerPropertiesCount==0">
-                    <ion-button fill="clear" disabled></ion-button>
+                  Properties ({{account.propertyManagerPropertiesCount}})
                   </p>
                 </ion-label>
               </ion-item>
@@ -92,8 +86,8 @@
             <ion-card-content>
               <ion-list lines="none">
                 <ion-label>
-                  <h2 ><ion-icon *ngIf="account.isVerified==true" style="color:green" name="checkmark-circle"></ion-icon>
-                    <ion-icon name="checkmark-circle"  *ngIf="account.isVerified==false" style="color: firebrick;"></ion-icon>&nbsp;{{account.email}}</h2>
+                  <h2 >{{account.email}}&nbsp;<ion-icon *ngIf="account.isVerified==true" style="color:green" name="checkmark-circle"></ion-icon>
+                    <ion-icon name="checkmark-circle"  *ngIf="account.isVerified==false" style="color: firebrick;"></ion-icon></h2>
                   <p>Created:&nbsp;{{account.created}}</p>
                 </ion-label>
               </ion-list>

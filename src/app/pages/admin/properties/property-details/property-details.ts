@@ -4,7 +4,6 @@ import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { AlertController, LoadingController } from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Account } from "@app/_models/account";
 import {Location} from '@angular/common';
 import { Pet } from '@app/_models';
 
@@ -18,6 +17,7 @@ export class PropertyDetailsPage {
   propertyId: string;
   property = { houseUnitNumber:'', street:'',  city:'', state:'', zip:'' };
   petOwner ={title:'', firstName:'', lastName:'', isVerified:true, email:''};
+  propertyManager ={title:'', firstName:'', lastName:'', isVerified:true, email:''};
   propertyPets:[Pet];
   // key value for the edit input
   key: any;
@@ -68,6 +68,7 @@ export class PropertyDetailsPage {
         this.propertyName = Element.propertyName;
         this.propertyPets = Element.propertyPets;
         this.propertyPetOwnerCount = Element.propertyPetOwnerCount;
+        this.propertyManager = Element.propertyManager;
         this.propertyPetsCount = Element.propertyPets.length;
         console.log(Element)
       })
@@ -142,7 +143,7 @@ export class PropertyDetailsPage {
 
   async deleteAreYouSure(){
     const alert = await this.alertCtrl.create({
-      header: "Delete Property",
+      header: "Admin Delete Property",
       message: "Are You Sure you want to DELETE this property??  This Action can not be reversed.",
       buttons: [
         {

@@ -71,6 +71,8 @@
               </ion-label>
               <ion-label>
                 <h1><b>{{petOwner.firstName}} {{petOwner.lastName}}</b></h1>
+                <h2 >{{petOwner.email}}&nbsp;<ion-icon *ngIf="petOwner.isVerified==true" style="color:green" name="checkmark-circle"></ion-icon>
+                  <ion-icon name="checkmark-circle"  *ngIf="petOwner.isVerified==false" style="color: firebrick;"></ion-icon>&nbsp;</h2>
                 <p>
                   Pets ({{petOwner.petOwnerPetsCount}})
                 </p>
