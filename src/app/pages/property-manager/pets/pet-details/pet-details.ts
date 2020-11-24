@@ -18,6 +18,7 @@ export class PetDetailsPage {
   breed: any;
   loading: any;
   rating: number;
+  pet={petName:'', breed:'', species:'', rating:0}
 
   constructor(
     public route: ActivatedRoute,
@@ -43,10 +44,7 @@ export class PetDetailsPage {
     );
 
     this.petService.getById(this.petId).forEach(async (Element) => {
-      this.petName = Element.petName;
-      this.breed = Element.breed;
-      this.species = Element.species;
-      this.rating = Element.rating;
+      this.pet= Element;
     })
     .then(async () => {
       (await this.loading).dismiss();
