@@ -85,7 +85,7 @@ export class AccountsPage  {
     });*/
   }
 
-  // Updates mani view from filter...very cool
+  // Updates main view from filter...very cool
   async updateView() {
     // TODO make this a switch case statement
     if(this.adminsIsChecked==false){

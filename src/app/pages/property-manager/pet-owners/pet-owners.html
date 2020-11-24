@@ -3,12 +3,43 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/account/profile"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="start">
+    <ion-buttons *ngIf="!showSearchbar" slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title text-align-center size="large">All Pet Owners</ion-title>
+    <ion-segment *ngIf="ios" [(ngModel)]="segment">
+      <ion-segment-button value="all">
+        All
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        Favorites
+      </ion-segment-button>
+
+    </ion-segment>
+    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">All Pet Owners
+    </ion-title>
+    <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
+      (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
+      <ion-button *ngIf="!ios && !showSearchbar" (click)="showSearchbar = true">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="!showSearchbar" (click)="presentFilter()">
+        <span *ngIf="ios">Filter</span>
+        <span *ngIf="!ios">
+          <ion-icon slot="icon-only" name="options"></ion-icon>
+        </span>
+      </ion-button>
     </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="!ios">
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="all">
+        All
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        Favorites
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
@@ -17,40 +48,37 @@
     <ion-toolbar color="secondary">
       <ion-title text-align-center size="large">All Pet Owners</ion-title>
     </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="queryText" placeholder="Search" (ionChange)="updateView()"></ion-searchbar>
+    </ion-toolbar>
   </ion-header>
-  <ion-content>
 
-    <ion-grid fixed>
-      <ion-row>
-        <ion-col size="12" size-md="6" *ngFor="let petOwner of petOwnersList">
-          <ion-card class="speaker-card">
-            <ion-card-header>
-              <ion-item detail="false" lines="none" class="speaker-item"
-                routerLink="{{currentRoute}}/pet-owner-details/{{petOwner.id}}">
-                <ion-avatar slot="start">
-                  <img src="../../../../assets/img/about/home.jpg" [alt]="' property picture'">
-                </ion-avatar>
-                <ion-label>
-                  <h2>{{petOwner.firstName}} {{petOwner.lastName}}</h2>
-                  <h3>Pets:{{petOwner.petOwnerPetsCount}}</h3>
-                </ion-label>
-              </ion-item>
-            </ion-card-header>
-
-            <ion-card-content>
-              <ion-list lines="none">
-                <ion-item>
-                  <ion-label>
-                    <h3 *ngIf="petOwner.isVerified==true" style="color:green"><b>VERIFIED: {{petOwner.email}}</b></h3>
-                    <h3 *ngIf="petOwner.isVerified==false" style="color: firebrick;"><b>NOT VERIFIED: {{petOwner.email}}</b></h3>
-                    <p>{{petOwner.petOwnerProperty.houseUnitNumber}} {{petOwner.petOwnerProperty.street}}</p>
-                    <p>{{petOwner.petOwnerProperty.city}} {{petOwner.petOwnerProperty.state}},{{petOwner.petOwnerProperty.zip}} </p>
-                  </ion-label>
-                </ion-item>
-              </ion-list>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
+  <ion-grid fixed *ngIf="segment=='all'">
+    <ion-row>
+      <ion-col size="12" size-md="6" *ngFor="let petOwner of petOwnersList">
+        <ion-card class="speaker-card" routerLink="{{currentRoute}}/pet-owner-details/{{petOwner.id}}">
+          <ion-card-header>
+            <ion-item detail="false" lines="none">
+              <ion-label>
+                <div>
+                  <ion-avatar style="text-align: center;">
+                    <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
+                  </ion-avatar>
+                  {{petOwner.petOwnerProperty.houseUnitNumber}} {{petOwner.petOwnerProperty.street}}<br>
+                  {{petOwner.petOwnerProperty.city}}<br> {{petOwner.petOwnerProperty.state}},
+                  {{petOwner.petOwnerProperty.zip}}<br>
+                </div>
+              </ion-label>
+              <ion-label>
+                <h1><b>{{petOwner.firstName}} {{petOwner.lastName}}</b></h1>
+                <p>
+                  Pets ({{petOwner.petOwnerPetsCount}})
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

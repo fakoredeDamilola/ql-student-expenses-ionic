@@ -6,6 +6,7 @@ import { AlertController, LoadingController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Account } from "@app/_models/account";
 import {Location} from '@angular/common';
+import { Pet } from '@app/_models';
 
 @Component({
   selector: "page-property-details",
@@ -14,16 +15,10 @@ import {Location} from '@angular/common';
 })
 export class PropertyDetailsPage {
   accountId: string;
-  propertyId: any;
-  propertyName: string;
-  houseUnitNumber: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-  petCount: number;
-  petOwner: any;
-  petOwnerCount: number;
+  propertyId: string;
+  property = { houseUnitNumber:'', street:'',  city:'', state:'', zip:'' };
+  petOwner ={title:'', firstName:'', lastName:'', isVerified:true, email:''};
+  propertyPets:[Pet];
   // key value for the edit input
   key: any;
   value: any;
@@ -32,6 +27,9 @@ export class PropertyDetailsPage {
   savingProperty: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   deleting: Promise<HTMLIonLoadingElement>;
+  propertyName: string;
+  propertyPetsCount: number;
+  propertyPetOwnerCount: number;
 
   constructor(
     public route: ActivatedRoute,
@@ -53,7 +51,6 @@ export class PropertyDetailsPage {
     this.accountId = this.accountService.accountValue.id;
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
     // get id out of url
-
     if(this.accountService.accountValue.role!='Admin'){
       window.history.replaceState(
         {},
@@ -66,15 +63,13 @@ export class PropertyDetailsPage {
       .getById(this.propertyId))
       .forEach(async (Element) => {
         //console.log(Element,"here")
-        this.propertyName = Element.propertyName;
-        this.houseUnitNumber = Element.houseUnitNumber;
-        this.street = Element.street;
-        this.city = Element.city;
-        this.state = Element.state;
-        this.zip = Element.zip;
-        this.petCount = Element.propertyPetsCount;
+        this.property=Element;
         this.petOwner = Element.propertyPetOwner;
-        this.petOwnerCount = Element.propertyPetOwnerCount;
+        this.propertyName = Element.propertyName;
+        this.propertyPets = Element.propertyPets;
+        this.propertyPetOwnerCount = Element.propertyPetOwnerCount;
+        this.propertyPetsCount = Element.propertyPets.length;
+        console.log(Element)
       })
       .then(async () => {
         (await this.loading).dismiss();

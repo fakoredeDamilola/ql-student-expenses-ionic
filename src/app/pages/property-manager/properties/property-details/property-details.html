@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/property-manager/properties"></ion-back-button>
       </ion-buttons>
-      <ion-buttons slot="end" *ngIf="petOwnerCount==0">
+      <ion-buttons slot="end" *ngIf="propertyPetOwnerCount==0">
           <ion-button color="white" size="large" shape="round" fill="outline" routerLink="{{currentRoute}}/pet-owner/add">
             <ion-icon name="add-outline"></ion-icon>Add Pet Owner
           </ion-button>
@@ -16,16 +16,14 @@
 
   </div>
 
-<ion-row>
-  <ion-col><h3>Click to edit property details</h3>
-  </ion-col>
-</ion-row>
 <ion-list inset>
+
   <ion-row>
     <ion-col>
-       <ion-item ><b>Number Of Pets:&nbsp;</b>{{petCount}}</ion-item>
+     <h3><u><b>Property Details:</b></u> (Click to Edit)</h3>
     </ion-col>
   </ion-row>
+
   <ion-row>
     <ion-col>
       <ion-item (click)="editPropertyName()"><b>Property Name:&nbsp; </b>  {{propertyName}}</ion-item>
@@ -33,39 +31,99 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item ><b>House / Unit Number: &nbsp;</b>{{houseUnitNumber}}</ion-item>
+      <ion-item ><b>House / Unit Number: &nbsp;</b>{{property.houseUnitNumber}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item ><b>Street: &nbsp;</b>{{street}}</ion-item>
+      <ion-item ><b>Street: &nbsp;</b>{{property.street}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item ><b>City:&nbsp;</b>{{city}}</ion-item>
+      <ion-item ><b>City:&nbsp;</b>{{property.city}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item ><b>State:&nbsp;</b>{{state}}</ion-item>
+      <ion-item ><b>State:&nbsp;</b>{{property.state}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-       <ion-item ><b>Zip Code:&nbsp;</b>{{zip}}</ion-item>
+       <ion-item ><b>Zip Code:&nbsp;</b>{{property.zip}}</ion-item>
     </ion-col>
   </ion-row>
+<div *ngIf="propertyPetOwnerCount!=0">
+  <ion-row>
+    <ion-col>
+     <h3><u><b>Pet Owner:</b></u></h3>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item><b>Title:&nbsp;</b>{{petOwner.title}}</ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item><b>First Name:&nbsp;</b>{{petOwner.firstName}}</ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item><b>Last Name:&nbsp;</b>{{petOwner.lastName}}</ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item><b>Email:&nbsp;</b>
+        <b *ngIf="petOwner.isVerified==false" style="color: firebrick;">{{petOwner.email}} (Not Verified)</b>
+        <b *ngIf="petOwner.isVerified==true" style="color:green">{{petOwner.email}} (Verified)</b>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col>
+     <h3><u><b>Pets:</b></u></h3>
+    </ion-col>
+  </ion-row>
+  <div *ngIf="propertyPetsCount==0">This Property Has No Pets</div>
+  <ion-grid fixed *ngIf="propertyPetsCount!=0">
+    <ion-row>
+      <ion-col size="12" size-md="6" *ngFor="let pet of propertyPets">
+        <ion-card class="speaker-card">
+          <!--<ion-card-header>-->
+            <ion-item detail="false" lines="none" class="speaker-item" routerLink='{{currentRoute}}/property-pets/pet-details/{{pet.id}}'>
+              <ion-avatar slot="start" *ngIf="pet.species=='Dog'" >
+                <img src="../../../../assets/img/speakers/puppy.jpg" [alt]="pet.petName + ' profile picture'">
+              </ion-avatar>
+              <ion-avatar slot="start" *ngIf="pet.species=='Cat'" >
+                <img src="../../../../assets/img/speakers/kitten.jpg" [alt]="pet.petName + ' profile picture'">
+              </ion-avatar>
+              <ion-label>
+                <h2>{{pet.petName}}</h2>
+                <p>{{pet.species}}</p>
+                <p>{{pet.breed}}</p>
+              </ion-label>
+              <ion-rating rate={{pet.rating}} readonly="false" size="default">
+              </ion-rating>
+            </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
 </ion-list>
 <ion-row>
   <ion-col>
-    <ion-button shape="block" color="primary">View Pet Owner</ion-button>
-  </ion-col>
-  <ion-col>
-    <ion-button shape="block" color="secondary">View Pets</ion-button>
-  </ion-col>
-  <ion-col>
-    <ion-button shape="block" color="danger" (click)="deleteAreYouSure()">Delete Property</ion-button>
+    <ion-button expand="full" shape="block" color="danger" (click)="deleteAreYouSure()">Delete Property</ion-button>
   </ion-col>
 </ion-row>
 </ion-content>

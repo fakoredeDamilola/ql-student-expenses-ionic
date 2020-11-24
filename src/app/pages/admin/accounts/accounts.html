@@ -51,9 +51,9 @@
   </ion-header>
 
   <ion-list #allAccountsList>
-    <ion-item-divider sticky>
+    <!--<ion-item-divider sticky>
 
-    </ion-item-divider>
+    </ion-item-divider>-->
     <ion-grid fixed *ngIf="segment=='all'">
       <ion-row>
         <ion-col size="12" size-md="6" *ngFor="let account of allAccounts"
@@ -91,16 +91,11 @@
 
             <ion-card-content>
               <ion-list lines="none">
-
                 <ion-label>
-                  <h3 *ngIf="account.isVerified==true" style="color:green"><b>VERIFIED: {{account.email}}</b></h3>
-                  <h3 *ngIf="account.isVerified==false" style="color: firebrick;"><b>NOT VERIFIED:
-                      {{account.email}}</b></h3>
+                  <h2 ><ion-icon *ngIf="account.isVerified==true" style="color:green" name="checkmark-circle"></ion-icon>
+                    <ion-icon name="checkmark-circle"  *ngIf="account.isVerified==false" style="color: firebrick;"></ion-icon>&nbsp;{{account.email}}</h2>
                   <p>Created:&nbsp;{{account.created}}</p>
-                  <!--<p>{{account.accountProperty.houseUnitNumber}} {{account.accountProperty.street}}</p>
-                    <p>{{account.accountProperty.city}} {{account.accountProperty.state}},{{account.accountProperty.zip}} </p>-->
                 </ion-label>
-
               </ion-list>
             </ion-card-content>
           </ion-card>

@@ -1,6 +1,7 @@
 .speaker-card {
   display: flex;
   flex-direction: column;
+  --background: 10;
 }
 
 /* Due to the fact the cards are inside of columns the margins don't overlap
@@ -26,7 +27,7 @@ ion-col:not(:last-of-type) .speaker-card {
 }
 
 .speaker-card ion-card-header {
-  padding: 0;
+  padding: 10;
 }
 
 .speaker-card ion-card-content {

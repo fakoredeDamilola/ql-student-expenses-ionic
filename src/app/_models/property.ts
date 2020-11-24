@@ -15,5 +15,6 @@ export class Property {
     pets?:[Pet];
     propertyPetOwnerCount?:number;
     petOwner?:[Account];
+  propertyPets: [Pet];
 
 }

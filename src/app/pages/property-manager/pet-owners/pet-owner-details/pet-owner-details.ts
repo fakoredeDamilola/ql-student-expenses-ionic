@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
-import { first } from "rxjs/operators";
+import { first, toArray } from "rxjs/operators";
+import { Pet, Property } from '@app/_models';
 
 @Component({
   selector: "page-pet-owner-details",
@@ -26,6 +27,10 @@ export class PetOwnerDetailsPage {
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
+  pets: [Pet];
+  petsLength: number;
+  property={  city:'', street:'', state:'', zip:'' };
+  propertyName: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -56,10 +61,16 @@ export class PetOwnerDetailsPage {
         this.lastName = Element.lastName;
         this.email = Element.email;
         this.created = Element.created;
+        this.pets = Element.petOwnerPets;
+        this.petsLength = this.pets.length;
+        this.propertyName = Element.petOwnerProperty.propertyName;
+        this.property = Element.petOwnerProperty;
         console.log(Element);
       })
       .then(async () => {
         (await this.loading).dismiss();
       });
   }
+
+
 }

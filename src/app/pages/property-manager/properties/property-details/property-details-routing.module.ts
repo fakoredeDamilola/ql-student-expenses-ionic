@@ -22,6 +22,13 @@ const routes: Routes = [
         "@app/pages/property-manager/pet-owners/pet-owner-details/pet-owner-details.module"
       ).then((m) => m.PetOwnerDetailsModule),
   },
+  {
+    path: "property-pets/pet-details/:petId",
+    loadChildren: () =>
+      import(
+        "@app/pages/property-manager/pets/pet-details/pet-details.module"
+      ).then((m) => m.PetDetailsModule),
+  }
 
 ];
 

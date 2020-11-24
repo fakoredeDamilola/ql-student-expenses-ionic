@@ -39,7 +39,7 @@ export class PetDetailsPage {
     window.history.replaceState(
       {},
       document.title,
-      "/" + "property-manager/pets/pet-details"
+      "/" + "property-manager/properties-pets/pet-details"
     );
 
     this.petService.getById(this.petId).forEach(async (Element) => {

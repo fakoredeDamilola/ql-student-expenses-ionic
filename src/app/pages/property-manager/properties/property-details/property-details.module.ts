@@ -5,11 +5,15 @@ import { PropertyDetailsPage } from './property-details';
 import { PropertyDetailsPageRoutingModule } from './property-details-routing.module';
 import { IonicModule } from '@ionic/angular';
 
+
+import { IonicRatingModule } from 'ionic-rating';
+
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    PropertyDetailsPageRoutingModule
+    PropertyDetailsPageRoutingModule,
+    IonicRatingModule
   ],
   declarations: [
     PropertyDetailsPage,

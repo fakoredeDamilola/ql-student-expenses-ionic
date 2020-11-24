@@ -24,9 +24,9 @@ export class PropertiesListPage {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }
 
-  async ionViewDidEnter() {
+  async ionViewWillEnter() {
     //TODO USE PROPERTY get by propertyManagerId and load virtuals
-
+    (await this.loading).present();
     this.propertyManagerId = this.accountService.accountValue.id;
     //console.log(this.router.url); //  /routename
 
@@ -45,20 +45,13 @@ export class PropertiesListPage {
       .forEach(async (Element) => {
         //console.log(Element.propertyManagerProperties);
         this.propertiesList = Element;
-        //console.log(Element)
+        console.log(Element)
       })
       .then(async () => {
         (await this.loading).dismiss();
       });
   }
 
-  async ionViewWillEnter() {
-    (await this.loading).present();
-  }
-
-  async ionViewWillExit() {
-    (await this.loading).present();
-  }
 
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
