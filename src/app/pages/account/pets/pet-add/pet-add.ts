@@ -64,7 +64,7 @@ export class PetAddPage {
 
     form.value.petOwnerId = this.account.id;
     form.value.propertyId = this.account.propertyId;
-    form.value.propertyManagerId = this.account.propertyManagerId;
+    //form.value.propertyManagerId = this.account.propertyManagerId;
 
     this.petService
       .create(form.value)

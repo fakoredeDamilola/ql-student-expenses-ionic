@@ -17,6 +17,9 @@ export class PetsListPage {
   petsList: any;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
+  userId: any;
+  petOwnersList: any;
+  propertyPets:any;
 
   constructor(
     private accountService: AccountService,
@@ -36,10 +39,19 @@ export class PetsListPage {
         this.propertyManagerId = this.accountService.accountValue.id;
       }
     }
-    (await this.accountService.getAllPetsInProperties(this.propertyManagerId))
+      this.userId = this.accountService.accountValue.id;
+      if (this.accountService.accountValue.role == "Admin") {
+        this.userId = this.route.snapshot.paramMap.get("accountId");
+        if (this.route.snapshot.paramMap.get("accountId") == null) {
+          this.userId = this.accountService.accountValue.id;
+        }
+      }
+      (await this.accountService.getAllPetOwnersInProperties(this.userId))
       .forEach(async (element) => {
-        this.petsList = element;
-        console.log(this.petsList);
+        console.log(element)
+        this.propertyPets = element
+        console.log(element,"This???")
+
       })
       .then(async () => {
         (await this.loading).dismiss();

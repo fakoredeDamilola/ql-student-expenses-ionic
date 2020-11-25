@@ -37,7 +37,7 @@ export class PetOwnersListPage {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }
 
-  async ionViewDidEnter() {
+async ionViewDidEnter() {
     (await this.loading).present();
     this.adminsIsChecked=true;
     this.petOwnersIsChecked=true;
