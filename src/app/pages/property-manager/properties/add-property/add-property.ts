@@ -33,21 +33,21 @@ export class AddPropertyPage {
     private router: Router,
     public actionSheetCtrl: ActionSheetController,
     public alertService: AlertService,
-    private route : ActivatedRoute
+    private route: ActivatedRoute
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }
 
-  async ionViewDidEnter(){
-    ( await (this.loading)).dismiss();
+  async ionViewDidEnter() {
+    (await this.loading).dismiss();
   }
 
   async ionViewWillEnter() {
-    ( await (this.loading)).present();
+    (await this.loading).present();
   }
 
   async onAddProperty(form?: NgForm) {
-    ( await (this.loading)).present();
+    (await this.loading).present();
     this.submitted = true;
 
     // stop here if form is invalid
@@ -61,32 +61,31 @@ export class AddPropertyPage {
     }
     form.value.propertyManagerId = this.account.id;
 
-    if((this.accountService.accountValue.role=='Admin')){
+    if (this.accountService.accountValue.role == "Admin") {
       console.log(this.route.snapshot.paramMap.get("accountId"));
-      form.value.propertyManagerId = this.route.snapshot.paramMap.get("accountId");
+      form.value.propertyManagerId = this.route.snapshot.paramMap.get(
+        "accountId"
+      );
 
-      if(this.route.snapshot.paramMap.get("accountId")==null){
+      if (this.route.snapshot.paramMap.get("accountId") == null) {
         form.value.propertyManagerId = this.account.id;
       }
     }
 
-    (
-      this.propertyService.create(
-        form.value
-      )
-    )
+    this.propertyService
+      .create(form.value)
       .pipe(first())
       .subscribe({
         next: async () => {
           //TODO Replace with toast alert
-          ( await (this.loading)).dismiss();
+          (await this.loading).dismiss();
           this.alertService.createToastAlert(
             "Property Added Successfully!",
             "success",
             8000
           );
           //await this.userData.signup(this.signup.email);
-          const backUrl = this.currentRoute.replace('/add','');
+          const backUrl = this.currentRoute.replace("/add", "");
           this.router.navigateByUrl(backUrl);
         },
         error: async (error) => {

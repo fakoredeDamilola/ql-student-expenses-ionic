@@ -44,10 +44,10 @@
 <ion-content >
 <ion-content fixed *ngIf="segment=='all'">
 
-  <ion-grid *ngFor="let pet of propertyPets">
+  <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="6">
-        <ion-card class="speaker-card"  *ngFor="let pets of pet.petOwnerPets">
+      <ion-col size="12" size-md="6"  *ngFor="let pets of propertyPets">
+        <ion-card class="speaker-card">
           <!--<ion-card-header>-->
             <ion-item detail="false" lines="none" class="speaker-item" routerLink='{{currentRoute}}/pet-details/{{pets.id}}'>
               <ion-avatar slot="start" *ngIf="(pets.species=='Dog')&&(pets.species!='undefined')" >

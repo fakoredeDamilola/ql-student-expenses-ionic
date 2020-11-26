@@ -9,6 +9,13 @@ const routes: Routes = [
     component: AccountDetailsPage
   },
   {
+    path: "pets/add",
+    loadChildren: () =>
+      import("@app/pages/account/pets/pet-add/pet-add.module").then(
+        (m) => m.PetAddModule
+      ),
+  },
+  {
     path: "pets/pet-details/:petId",
     loadChildren: () =>
       import("@app/pages/account/pets/pet-details/pet-details.module").then(

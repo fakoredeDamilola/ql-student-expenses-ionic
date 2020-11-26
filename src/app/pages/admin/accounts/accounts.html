@@ -49,8 +49,12 @@
       <ion-searchbar [(ngModel)]="queryText" placeholder="Search" (ionChange)="updateView()"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
+  <ion-item-divider sticky>
+    <ion-button shape="round" fill="outline" slot="end">
+      <ion-icon name="add-outline"></ion-icon>Add Account
+    </ion-button>
+  </ion-item-divider>
 
-  <ion-list #allAccountsList>
     <!--<ion-item-divider sticky>
 
     </ion-item-divider>-->
@@ -96,7 +100,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-list>
+
 
 
 </ion-content>

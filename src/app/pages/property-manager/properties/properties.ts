@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
 import { LoadingController } from "@ionic/angular";
 
@@ -13,7 +13,7 @@ export class PropertiesListPage {
   segment = "all";
   showSearchbar: boolean;
   ios: boolean;
-  filtersList:any;
+  filtersList: any;
   propertiesList: any;
   propertyManagerId: any;
   loading: any;
@@ -23,8 +23,8 @@ export class PropertiesListPage {
     private accountService: AccountService,
     private loadingController: LoadingController,
     private alertService: AlertService,
-    private route : ActivatedRoute,
-    private router :Router
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }
@@ -35,10 +35,10 @@ export class PropertiesListPage {
     this.propertyManagerId = this.accountService.accountValue.id;
     //console.log(this.router.url); //  /routename
 
-    if((this.accountService.accountValue.role=='Admin')){
+    if (this.accountService.accountValue.role == "Admin") {
       this.propertyManagerId = this.route.snapshot.paramMap.get("accountId");
 
-      if(this.route.snapshot.paramMap.get("accountId")==null){
+      if (this.route.snapshot.paramMap.get("accountId") == null) {
         this.propertyManagerId = this.accountService.accountValue.id;
       }
     }
@@ -50,13 +50,12 @@ export class PropertiesListPage {
       .forEach(async (Element) => {
         //console.log(Element.propertyManagerProperties);
         this.propertiesList = Element;
-        console.log(Element)
+        console.log(Element);
       })
       .then(async () => {
         (await this.loading).dismiss();
       });
   }
-
 
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
@@ -69,10 +68,8 @@ export class PropertiesListPage {
     return loading;
   }
 
-
-
   async presentFilter() {
-  /*  this.filtersList= {
+    /*  this.filtersList= {
       'adminsIsChecked':this.adminsIsChecked,
       'petOwnersIsChecked':this.petOwnersIsChecked,
       'propertyManagersIsChecked':this.propertyManagersIsChecked

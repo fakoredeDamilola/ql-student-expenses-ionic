@@ -103,6 +103,12 @@ export class AccountService {
     return this.http.get<Account>(`${baseUrl}/${propertyManagerId}/pet-owners`);
   }
 
+  // This One ....
+  async getPropertiesPets(propertyManagerId: string) {
+
+    return this.http.get<Account>(`${baseUrl}/${propertyManagerId}/pets-on-properties`);
+
+  }
   async getAllPropertiesOnAccount(propertyManagerId: string) {
     return this.http.get<Property>(
       `${baseUrl}/${propertyManagerId}/properties`
@@ -121,8 +127,6 @@ export class AccountService {
   async create(params: any) {
     return this.http.post(baseUrl, params);
   }
-
-
 
   async update(accountId: string, params: any) {
     return this.http.put(`${baseUrl}/${accountId}`, params).pipe(

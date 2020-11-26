@@ -46,7 +46,7 @@ export class PetsListPage {
           this.userId = this.accountService.accountValue.id;
         }
       }
-      (await this.accountService.getAllPetOwnersInProperties(this.userId))
+      (await this.accountService.getPropertiesPets(this.userId))
       .forEach(async (element) => {
         console.log(element)
         this.propertyPets = element

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ConferenceData } from "@app/providers/conference-data";
 import { ActionSheetController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
@@ -7,6 +7,7 @@ import { AccountService, AlertService, PetService } from "@app/_services";
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { PetOptions } from "@app/interfaces/pet-options";
+import {Location} from '@angular/common';
 //import { Species } from "@app/_models";
 
 @Component({
@@ -15,7 +16,7 @@ import { PetOptions } from "@app/interfaces/pet-options";
   styleUrls: ["./pet-add.scss"],
 })
 export class PetAddPage {
-  account = this.accountService.accountValue;
+  account = this.accountService.accountValue
   submitted: boolean = false;
   userData: any;
   addPet: PetOptions = {
@@ -28,13 +29,15 @@ export class PetAddPage {
   savingPet: Promise<HTMLIonLoadingElement>;
 
   constructor(
+    private route: ActivatedRoute,
     private accountService: AccountService,
     private petService: PetService,
     private router: Router,
     public actionSheetCtrl: ActionSheetController,
     public confData: ConferenceData,
     public inAppBrowser: InAppBrowser,
-    public alertService: AlertService
+    public alertService: AlertService,
+    private _location: Location
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
     this.savingPet = this.alertService.presentLoading("Saving Pet...");
@@ -61,9 +64,13 @@ export class PetAddPage {
       (await (this.savingPet)).dismiss();
       return;
     }
-
     form.value.petOwnerId = this.account.id;
-    form.value.propertyId = this.account.propertyId;
+    const accountId = this.route.snapshot.paramMap.get("accountId")
+    console.log("this accountId", accountId)
+    if(accountId!=null){
+      form.value.petOwnerId = accountId;
+    }
+    //form.value.propertyId = this.account.propertyId;
     //form.value.propertyManagerId = this.account.propertyManagerId;
 
     this.petService
@@ -79,7 +86,7 @@ export class PetAddPage {
             5000
           );
           //await this.userData.signup(this.signup.email);
-          this.router.navigateByUrl("/account/pets");
+          this._location.back();
         },
         error: async (error) => {
           (await (this.savingPet)).dismiss();

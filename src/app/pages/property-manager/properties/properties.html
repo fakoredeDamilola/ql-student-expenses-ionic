@@ -42,8 +42,14 @@
     </ion-segment>
   </ion-toolbar>
 </ion-header>
-  <ion-content>
+
 <ion-content>
+  <ion-item-divider sticky>
+    <ion-button routerLink="{{currentRoute}}/add" shape="round" fill="outline" slot="end">
+      <ion-icon name="add-outline"></ion-icon>Add Property
+    </ion-button>
+  </ion-item-divider>
+  <ion-content>
     <ion-grid fixed *ngIf="segment=='all'">
       <ion-row>
         <ion-col size="12" size-md="6" *ngFor="let property of propertiesList">
@@ -71,8 +77,8 @@
                       <h3>No Pet Owners</h3>
                     </div>
                     <div *ngIf="property.propertyPetOwnerCount!=0">
-                      <h2><b>Pet Owner:</b> {{property.propertyPetOwner.firstName}} {{property.propertyPetOwner.lastName}}</h2>
-                      <h2><b>Number Of Pets:</b> {{property.propertyPetsCount}}</h2>
+                      <h2><b>Pet Owner:</b> {{property.propertyPetOwner.firstName}}
+                        {{property.propertyPetOwner.lastName}}</h2>
                     </div>
                   </ion-label>
                 </ion-item>

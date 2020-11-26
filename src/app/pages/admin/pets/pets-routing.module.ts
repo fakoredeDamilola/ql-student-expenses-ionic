@@ -7,7 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: PetsPage
-  }
+  },
+  {
+    path: "pet-details/:petId",
+    loadChildren: () =>
+      import("@app/pages/account/pets/pet-details/pet-details.module").then(
+        (m) => m.PetDetailsModule
+      ),
+  },
 ];
 
 @NgModule({

@@ -25,7 +25,7 @@ export class AccountDetailsPage {
     title: "",
   };
 
-  petOwnerProperty: Property = {
+  petOwnerProperty = {
     id: "",
     houseUnitNumber: "",
     street: "",

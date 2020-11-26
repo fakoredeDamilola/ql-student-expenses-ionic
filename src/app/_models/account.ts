@@ -22,5 +22,5 @@ export class Account {
     created: string;
     isVerified: boolean;
     updated: string;
-   petOwnerProperty: Property;
+    petOwnerProperty?: Property;
 }

@@ -16,6 +16,6 @@ export class Property {
     propertyPetOwnerCount?:number;
     petOwner?:[Account];
     propertyPets: [Pet];
-    propertyManager: { id:string, title: string; firstName: string; lastName: string; isVerified: boolean; email: string; };
+    propertyManager?: { id:string, title: string; firstName: string; lastName: string; isVerified: boolean; email: string; };
 
 }

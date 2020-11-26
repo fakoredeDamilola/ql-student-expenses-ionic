@@ -50,32 +50,31 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list #allAccountsList>
-    <ion-item-divider sticky>
-
-    </ion-item-divider>
-    <ion-grid fixed *ngIf="segment=='all'">
-      <ion-row>
-        <ion-col size="12" size-md="6" *ngFor="let pet of allPets">
-          <ion-card class="speaker-card">
-            <!--<ion-card-header>-->
-              <ion-item detail="false" lines="none" class="speaker-item" routerLink='{{currentRoute}}/pet-details/{{pet.id}}'>
-                <ion-avatar slot="start" *ngIf="pet.species=='Dog'" >
-                  <img src="../../../../assets/img/speakers/puppy.jpg" [alt]="pet.petName + ' profile picture'">
-                </ion-avatar>
-                <ion-avatar slot="start" *ngIf="pet.species=='Cat'" >
-                  <img src="../../../../assets/img/speakers/kitten.jpg" [alt]="pet.petName + ' profile picture'">
-                </ion-avatar>
-                <ion-label>
-                  <h2>{{pet.petName}}</h2>
-                  <p>{{pet.species}}</p>
-                  <p>{{pet.breed}}</p>
-                </ion-label>
-                <ion-rating rate={{pet.rating}} readonly="false" size="default">
-                </ion-rating>
-              </ion-item>
-            <!--</ion-card-header>-->
-           <!-- <ion-card-content>
+  <ion-item-divider sticky>
+  </ion-item-divider>
+  <ion-grid fixed *ngIf="segment=='all'">
+    <ion-row>
+      <ion-col size="12" size-md="6" *ngFor="let pet of allPets">
+        <ion-card class="speaker-card">
+          <!--<ion-card-header>-->
+          <ion-item detail="false" lines="none" class="speaker-item"
+            routerLink='{{currentRoute}}/pet-details/{{pet.id}}'>
+            <ion-avatar slot="start" *ngIf="pet.species=='Dog'">
+              <img src="../../../../assets/img/speakers/puppy.jpg" [alt]="pet.petName + ' profile picture'">
+            </ion-avatar>
+            <ion-avatar slot="start" *ngIf="pet.species=='Cat'">
+              <img src="../../../../assets/img/speakers/kitten.jpg" [alt]="pet.petName + ' profile picture'">
+            </ion-avatar>
+            <ion-label>
+              <h2>{{pet.petName}}</h2>
+              <p>{{pet.species}}</p>
+              <p>{{pet.breed}}</p>
+            </ion-label>
+            <ion-rating rate={{pet.rating}} readonly="false" size="default">
+            </ion-rating>
+          </ion-item>
+          <!--</ion-card-header>-->
+          <!-- <ion-card-content>
               <ion-list lines="none">
                 <ion-item>
                   <ion-label>
@@ -84,11 +83,10 @@
                 </ion-item>
               </ion-list>
             </ion-card-content>-->
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 
 </ion-content>

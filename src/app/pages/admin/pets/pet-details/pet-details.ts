@@ -4,7 +4,7 @@ import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Pet, Property } from "@app/_models";
+import { Account, Pet, Property } from "@app/_models";
 import {Location} from '@angular/common';
 
 @Component({
@@ -25,14 +25,14 @@ export class PetDetailsPage {
     title: "",
   };
 
-  petOwnerProperty: Property = {
+  petOwnerProperty = {
     id: "",
     houseUnitNumber: "",
     street: "",
     city: "",
     state: "",
     zip: "",
-    propertyManagerId: "",
+    propertyManagerId: ""
   };
 
   options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };

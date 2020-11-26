@@ -1,4 +1,4 @@
-import { Component, HostListener } from "@angular/core";
+import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -6,7 +6,7 @@ import { UserOptions } from "@app/interfaces/user-options";
 import { AccountService, AlertService, PropertyService } from "@app/_services";
 import { first } from "rxjs/operators";
 import { UserData } from "@app/providers/user-data";
-import {Location} from '@angular/common';
+import { Location } from "@angular/common";
 
 @Component({
   selector: "page-add-pet-owner",
@@ -40,7 +40,6 @@ export class AddPetOwnerPage {
 
   constructor(
     public route: ActivatedRoute,
-    private router: Router,
     public alertService: AlertService,
     public accountService: AccountService,
     private userData: UserData,
@@ -57,8 +56,7 @@ export class AddPetOwnerPage {
     (await this.loading).present();
     this.propertyId = this.route.snapshot.paramMap.get("propertyId");
     // get property, then the propertyManagerId
-    (await this.propertyService
-      .getById(this.propertyId))
+    (await this.propertyService.getById(this.propertyId))
       .forEach(async (Element) => {
         this.propertyManagerId = Element.propertyManager.id;
       })
@@ -66,14 +64,13 @@ export class AddPetOwnerPage {
         (await this.loading).dismiss();
       });
 
-    if(this.accountService.accountValue.role!='Admin'){
+    if (this.accountService.accountValue.role != "Admin") {
       window.history.replaceState(
         {},
         document.title,
         "/" + "property-manager/properties/property-details/pet-owner/add"
       );
     }
-
   }
 
   async ionViewDidEnter() {
