@@ -1,8 +1,5 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/account/profile"></ion-back-button>
-    </ion-buttons>
     <ion-buttons *ngIf="!showSearchbar" slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -15,8 +12,8 @@
       </ion-segment-button>
 
     </ion-segment>
-    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">All Properties
-    </ion-title>
+    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Properties Management
+  </ion-title>
     <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
       (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
@@ -42,6 +39,19 @@
     </ion-segment>
   </ion-toolbar>
 </ion-header>
+
+<ion-content fullscreen="true">
+  <ion-header collapse="condense">
+    <ion-toolbar color="secondary">
+      <ion-title text-align-center size="large">Properties</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+  <ion-item-divider sticky>
+
+  </ion-item-divider>
 
 <ion-content>
   <ion-item-divider sticky>

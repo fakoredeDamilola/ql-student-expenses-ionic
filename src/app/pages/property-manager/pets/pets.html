@@ -1,8 +1,5 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/account/profile"></ion-back-button>
-    </ion-buttons>
     <ion-buttons *ngIf="!showSearchbar" slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -13,9 +10,9 @@
       <ion-segment-button value="favorites">
         Favorites
       </ion-segment-button>
+
     </ion-segment>
-    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">All Properties Pets
-    </ion-title>
+    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Pets</ion-title>
     <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
       (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
@@ -41,9 +38,19 @@
     </ion-segment>
   </ion-toolbar>
 </ion-header>
-<ion-content >
-<ion-content fixed *ngIf="segment=='all'">
 
+<ion-content fullscreen="true">
+  <ion-header collapse="condense">
+    <ion-toolbar color="secondary">
+      <ion-title text-align-center size="large">Pets</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item-divider sticky>
+  </ion-item-divider>
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="6"  *ngFor="let pets of propertyPets">
@@ -69,4 +76,4 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-</ion-content>
+
