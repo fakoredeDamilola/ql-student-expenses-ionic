@@ -7,6 +7,7 @@ import { AccountsPage } from './accounts';
 import { AccountsFilterPage } from './accounts-filter/accounts-filter';
 import { AccountsPageRoutingModule } from './accounts-routing.module';
 
+
 @NgModule({
   imports: [
     CommonModule,
