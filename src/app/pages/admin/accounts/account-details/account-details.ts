@@ -95,8 +95,8 @@ export class AccountDetailsPage {
         this.account = Element;
       })
       .then(async () => {
-        this.account.created = moment(this.account.created).format('LLLL');
-        this.account.updated = moment(this.account.created).format('LLLL');
+        this.account.created = moment(this.account.created).format('MM-DD-YYYY @HH:mm:ss');
+        this.account.updated = moment(this.account.updated).format('MM-DD-YYYY @HH:mm:ss');
         (await this.loading).dismiss();
       });
   }
