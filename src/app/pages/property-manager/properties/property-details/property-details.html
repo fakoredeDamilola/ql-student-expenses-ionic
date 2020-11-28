@@ -26,32 +26,32 @@
 
   <ion-row>
     <ion-col>
-      <ion-item (click)="editPropertyName()"><b>Property Name:&nbsp; </b>  {{propertyName}}</ion-item>
+      <ion-item (click)="editPropertyAttribute('propertyName')"><b>Property Name:&nbsp; </b>  {{propertyName}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item ><b>House / Unit Number: &nbsp;</b>{{property.houseUnitNumber}}</ion-item>
+      <ion-item (click)="editPropertyAttribute('houseUnitNumber')"><b>House / Unit Number: &nbsp;</b>{{property.houseUnitNumber}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item ><b>Street: &nbsp;</b>{{property.street}}</ion-item>
+      <ion-item (click)="editPropertyAttribute('street')"><b>Street: &nbsp;</b>{{property.street}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item ><b>City:&nbsp;</b>{{property.city}}</ion-item>
+      <ion-item (click)="editPropertyAttribute('city')"><b>City:&nbsp;</b>{{property.city}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item ><b>State:&nbsp;</b>{{property.state}}</ion-item>
+      <ion-item (click)="editPropertyAttribute('state')"><b>State:&nbsp;</b>{{property.state}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-       <ion-item ><b>Zip Code:&nbsp;</b>{{property.zip}}</ion-item>
+       <ion-item (click)="editPropertyAttribute('zip')"><b>Zip Code:&nbsp;</b>{{property.zip}}</ion-item>
     </ion-col>
   </ion-row>
 <div *ngIf="propertyPetOwnerCount!=0">

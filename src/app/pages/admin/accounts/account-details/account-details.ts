@@ -5,7 +5,9 @@ import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Pet, Property } from "@app/_models";
-import {Location} from '@angular/common';
+import { Location } from "@angular/common";
+import * as moment from 'moment';
+
 
 @Component({
   selector: "page-account-details",
@@ -22,7 +24,7 @@ export class AccountDetailsPage {
     updated: "",
     isVerified: true,
     created: "",
-    title: "",
+    title: ""
   };
 
   petOwnerProperty = {
@@ -35,8 +37,6 @@ export class AccountDetailsPage {
     propertyManagerId: "",
   };
 
-  options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-  // key value for the edit input
   key: any;
   value: any;
   saving: boolean = true;
@@ -64,6 +64,7 @@ export class AccountDetailsPage {
     private router: Router,
     private _location: Location
   ) {
+
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
     this.deleting = this.alertService.presentLoading("Deleting Account...");
     this.savingAccount = this.alertService.presentLoading("Saving...");
@@ -94,19 +95,21 @@ export class AccountDetailsPage {
         this.account = Element;
       })
       .then(async () => {
+        this.account.created = moment(this.account.created).format('LLLL');
+        this.account.updated = moment(this.account.created).format('LLLL');
         (await this.loading).dismiss();
       });
   }
 
-  async deleteAreYouSure(){
+  async deleteAreYouSure() {
     const alert = await this.alertCtrl.create({
       header: "Admin Delete Account",
-      message: "Are You Sure you want to DELETE this account??  This Action can not be reversed.",
+      message:
+        "Are You Sure you want to DELETE this account??  This Action can not be reversed.",
       buttons: [
         {
           text: "Cancel",
-          handler: () => {
-          },
+          handler: () => {},
         },
         {
           text: "DELETE",
@@ -147,36 +150,57 @@ export class AccountDetailsPage {
       });
   }
 
-
   async changeAccount(contextParamValue) {
-    console.log(contextParamValue)
-    let popUpText:string;
+    console.log(contextParamValue);
+    let popUpText: string;
+    // getting and setting current values
+    let currentValue:string|boolean;
+    let adminChecked:boolean=false;
+    let propertyManagerChecked:boolean=false;
+    let petOwnerChecked:boolean=false;
 
-    switch(contextParamValue) {
-      case 'role':{
-        popUpText='Role';
-        break;
-      }
-      case 'title':{
-        popUpText='Title';
-        break;
-      }
-      case 'firstName':{
-        popUpText='First Name';
-        break;
-      }
-      case 'lastName':{
-        popUpText='Last Name'
-        break;
-      }
-      case 'email':{
-        popUpText='Email'
-        break;
-      }
 
+    switch (contextParamValue) {
+      case "role": {
+        popUpText = "Role";
+        switch(this.account.role){
+          case "Admin": {
+            adminChecked=true;
+            break;
+          }
+          case "PropertyManager":{
+            propertyManagerChecked=true;
+            break;
+          }
+          case "User":{
+            petOwnerChecked=true;
+            break;
+          }
+        }
+        break;
+      }
+      case "title": {
+        popUpText = "Title";
+        break;
+      }
+      case "firstName": {
+        popUpText = "First Name";
+        currentValue = this.account.firstName;
+        break;
+      }
+      case "lastName": {
+        popUpText = "Last Name";
+        currentValue = this.account.lastName;
+        break;
+      }
+      case "email": {
+        currentValue = this.account.email;
+        popUpText = "Email";
+        break;
+      }
     }
 
-    if(contextParamValue=='role'){
+    if (contextParamValue == "role") {
       const alert = await this.alertCtrl.create({
         header: `Change Account Role?`,
         buttons: [
@@ -189,7 +213,7 @@ export class AccountDetailsPage {
               let roleJsonObj = JSON.parse(`{"role":"${data}"}`);
 
               (await this.savingAccount).present();
-             await this.updateAccount(roleJsonObj, popUpText);
+              await this.updateAccount(roleJsonObj, popUpText);
             },
           },
         ],
@@ -197,29 +221,28 @@ export class AccountDetailsPage {
           {
             type: "radio",
             label: `Admin`,
-            name: 'role',
-            //placeholder: `${popUpText}`,
-            value:'Admin'
+            name: "role",
+            value: "Admin",
+            checked: adminChecked
           },
           {
             type: "radio",
             label: `Property Manager`,
-            name: 'role',
-            //placeholder: `${popUpText}`,
-            value:'PropertyManager'
+            name: "role",
+            value: "PropertyManager",
+            checked: propertyManagerChecked
           },
           {
             type: "radio",
             label: `Pet Owner`,
-            name: 'role',
-            //placeholder: `${popUpText}`,
-            value:'User'
+            name: "role",
+            value: "User",
+            checked: petOwnerChecked
           },
         ],
       });
       await alert.present();
-    }
-    else{
+    } else {
       const alert = await this.alertCtrl.create({
         header: `Change ${popUpText}?`,
         buttons: [
@@ -229,7 +252,7 @@ export class AccountDetailsPage {
             handler: async (data: any) => {
               console.log(data);
               (await this.savingAccount).present();
-            await this.updateAccount(data, popUpText);
+              await this.updateAccount(data, popUpText);
             },
           },
         ],
@@ -238,14 +261,13 @@ export class AccountDetailsPage {
             type: "text",
             name: `${contextParamValue}`,
             placeholder: `${popUpText}`,
+            value: `${currentValue}`
           },
         ],
       });
       await alert.present();
     }
-
   }
-
 
   private async updateAccount(contextParamValue, popUpText) {
     //console.log(contextParamValue,"what is this??")
@@ -271,7 +293,4 @@ export class AccountDetailsPage {
         },
       });
   }
-
-
-
 }

@@ -80,38 +80,68 @@ export class PropertyDetailsPage {
   openExternalUrl(url: string) {
     this.inAppBrowser.create(url, "_blank");
   }
-  async editPropertyName() {
-    let alert = await this.alertCtrl.create({
-      header: "Change Property Name",
+  async editPropertyAttribute(contextParameter:string) {
+    // switch case so this is dynamic, pretty cool
+    let popUpText:string;
+    let currentValue:string;
+    switch (contextParameter) {
+      case "propertyName": {
+        popUpText = "Name (Optional)";
+        currentValue = this.propertyName;
+        break;
+      }
+      case "houseUnitNumber": {
+        popUpText = "House / Unit #";
+        currentValue = this.property.houseUnitNumber;
+        break;
+      }
+      case "street": {
+        popUpText = "Street";
+        currentValue = this.property.street;
+        break;
+      }
+      case "city": {
+        popUpText = "City";
+        currentValue = this.property.city;
+        break;
+      }
+      case "state": {
+        popUpText = "State";
+        currentValue = this.property.state;
+        break;
+      }
+      case "zip": {
+        popUpText = "Zip Code";
+        currentValue = this.property.zip;
+        break;
+      }
+    }
+    // then that value from the switch being fed here
+    const alert = await this.alertCtrl.create({
+      header: `Change Property ${popUpText}?`,
       buttons: [
         "Cancel",
         {
           text: "Ok",
           handler: async (data: any) => {
             ( await (this.savingProperty)).present();
-            // this takes data and splits into key value
-            Object.keys(data).forEach((key) => {
-              this.key = key;
-              this.value = data[key];
-            });
-            //this.createTempObject();
-            this.updatePropertyMasterList(data);
+            this.updatePropertyMasterList(data, popUpText);
           },
         },
       ],
       inputs: [
         {
           type: "text",
-          name: "propertyName",
-          value: this.propertyName,
-          placeholder: "Property Name (optional)",
+          name: `${contextParameter}`,
+          value: `${currentValue}`,
+          placeholder: `Property ${popUpText}`,
         },
       ],
     });
     alert.present();
   }
 
-  private async updatePropertyMasterList(contextParamValue) {
+  private async updatePropertyMasterList(contextParamValue, popUpText) {
     //console.log(contextParamValue,"what is this??");
     (await this.propertyService
       .update(this.propertyId, contextParamValue))
@@ -120,7 +150,7 @@ export class PropertyDetailsPage {
         next: async () => {
           ( await (this.savingProperty)).dismiss();
           this.alertService.createToastAlert(
-            "Update To Property Successful",
+            `Update To Property ${popUpText} Successful`,
             "success",
             8000
           );
@@ -130,7 +160,7 @@ export class PropertyDetailsPage {
         error: async (error) => {
           ( await (this.savingProperty)).dismiss();
           this.alertService.createToastAlert(
-            "Update to Property Master List Failed...",
+            `Update to Property ${popUpText} Failed...`,
             "warning",
             8000
           );

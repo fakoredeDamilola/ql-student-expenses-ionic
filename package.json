@@ -45,6 +45,7 @@
     "core-js": "^3.8.0",
     "ionic-rating": "^2.0.0",
     "mobiscroll": "^3.0.0-beta6",
+    "moment": "^2.29.1",
     "rxjs": "^6.6.3",
     "sw-toolbox": "3.6.0",
     "tslib": "^1.14.1",
