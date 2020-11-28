@@ -148,42 +148,114 @@ export class AccountDetailsPage {
   }
 
 
-  async changePassword() {
-    const alert = await this.alertCtrl.create({
-      header: "Change Password",
-      buttons: [
-        "Cancel",
-        {
-          text: "Ok",
-          handler: async (data: any) => {
-            //console.log(data);
-            (await this.savingAccount).present();
-            await this.updateAccountPassword(data);
+  async changeAccount(contextParamValue) {
+    console.log(contextParamValue)
+    let popUpText:string;
+
+    switch(contextParamValue) {
+      case 'role':{
+        popUpText='Role';
+        break;
+      }
+      case 'title':{
+        popUpText='Title';
+        break;
+      }
+      case 'firstName':{
+        popUpText='First Name';
+        break;
+      }
+      case 'lastName':{
+        popUpText='Last Name'
+        break;
+      }
+      case 'email':{
+        popUpText='Email'
+        break;
+      }
+
+    }
+
+    if(contextParamValue=='role'){
+      const alert = await this.alertCtrl.create({
+        header: `Change Account Role?`,
+        buttons: [
+          "Cancel",
+          {
+            text: "Ok",
+            handler: async (data: any) => {
+              console.log(data);
+
+              let roleJsonObj = JSON.parse(`{"role":"${data}"}`);
+
+              (await this.savingAccount).present();
+             await this.updateAccount(roleJsonObj, popUpText);
+            },
           },
-        },
-      ],
-      inputs: [
-        {
-          type: "text",
-          name: "password",
-          placeholder: "password",
-        },
-      ],
-    });
-    await alert.present();
+        ],
+        inputs: [
+          {
+            type: "radio",
+            label: `Admin`,
+            name: 'role',
+            //placeholder: `${popUpText}`,
+            value:'Admin'
+          },
+          {
+            type: "radio",
+            label: `Property Manager`,
+            name: 'role',
+            //placeholder: `${popUpText}`,
+            value:'PropertyManager'
+          },
+          {
+            type: "radio",
+            label: `Pet Owner`,
+            name: 'role',
+            //placeholder: `${popUpText}`,
+            value:'User'
+          },
+        ],
+      });
+      await alert.present();
+    }
+    else{
+      const alert = await this.alertCtrl.create({
+        header: `Change ${popUpText}?`,
+        buttons: [
+          "Cancel",
+          {
+            text: "Ok",
+            handler: async (data: any) => {
+              console.log(data);
+              (await this.savingAccount).present();
+            await this.updateAccount(data, popUpText);
+            },
+          },
+        ],
+        inputs: [
+          {
+            type: "text",
+            name: `${contextParamValue}`,
+            placeholder: `${popUpText}`,
+          },
+        ],
+      });
+      await alert.present();
+    }
+
   }
 
 
-  private async updateAccountPassword(contextParamValue) {
-    //console.log(contextParamValue,"what is this??");
-
+  private async updateAccount(contextParamValue, popUpText) {
+    //console.log(contextParamValue,"what is this??")
     (await this.accountService.update(this.accountId, contextParamValue))
       .pipe(first())
       .subscribe({
         next: async () => {
           (await this.savingAccount).dismiss();
           this.alertService.createToastAlert(
-            "Update to Password Successful",
+            `Update to ${popUpText} Successful`,
             "success",
             8000
           );
@@ -192,7 +264,7 @@ export class AccountDetailsPage {
         error: async (error) => {
           (await this.savingAccount).dismiss();
           this.alertService.createToastAlert(
-            "Update to Property Master List Failed...",
+            `Update to ${popUpText} Failed...`,
             "warning",
             8000
           );
