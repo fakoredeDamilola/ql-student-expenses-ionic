@@ -7,6 +7,7 @@ import { UserData } from "@app/providers/user-data";
 import { UserOptions } from "@app/interfaces/user-options";
 import { AccountService, AlertService } from "@app/_services";
 import { first } from "rxjs/operators";
+import { Role } from '@app/_models';
 
 @Component({
   selector: "page-create-account",
@@ -21,7 +22,8 @@ export class CreateAccountPage {
     email: "",
     password: "",
     confirmPassword: "",
-    acceptTerms: true
+    acceptTerms: true,
+    role:""
   };
   submitted = false;
   loading = false;

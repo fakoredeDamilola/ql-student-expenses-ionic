@@ -27,6 +27,15 @@
       </ion-item>
 
       <ion-item>
+        <ion-label position="floating" color="primary">Role</ion-label>
+        <ion-select [(ngModel)]="signup.role" name="role" #role="ngModel">
+          <ion-select-option value="Admin" >Admin</ion-select-option>
+          <ion-select-option value="PropertyManager">Property Manager</ion-select-option>
+          <ion-select-option value="User">Pet Owner</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
         <ion-label position="floating" color="primary">First Name</ion-label>
         <ion-input [(ngModel)]="signup.firstName" name="firstName" type="text" #firstName="ngModel" required>
         </ion-input>

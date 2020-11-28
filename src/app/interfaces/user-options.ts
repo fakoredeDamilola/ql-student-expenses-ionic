@@ -10,7 +10,7 @@ export interface UserOptions {
   lastName?: string;
   title?: string;
   acceptTerms?: Boolean;
-  role?: Role;
+  role?: string;
   petOwnerPets?:[Pet];
   jwtToken?: string;
   propertyManagerPetOwnersCount?:number;
