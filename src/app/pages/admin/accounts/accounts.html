@@ -12,7 +12,7 @@
       </ion-segment-button>
 
     </ion-segment>
-    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Accounts Management
+    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Accounts
       (Admin)</ion-title>
     <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
       (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
@@ -51,7 +51,7 @@
   </ion-header>
   <ion-item-divider sticky>
     <ion-button shape="round" fill="outline" slot="end">
-      <ion-icon name="add-outline"></ion-icon>Add Account
+      <ion-icon name="add-outline"></ion-icon>Create Account
     </ion-button>
   </ion-item-divider>
 
