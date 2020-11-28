@@ -9,6 +9,13 @@ const routes: Routes = [
     component: AccountsPage
   },
   {
+    path: "create-account",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/accounts/create-account/create-account.module"
+      ).then((m) => m.CreateAccountModule),
+  },
+  {
     path: "account-details/:accountId",
     loadChildren: () =>
       import(

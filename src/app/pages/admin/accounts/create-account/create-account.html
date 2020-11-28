@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>(Admin) Create Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="signup-logo">
+    <img src="assets/img/petcheck-logo.png" alt="Ionic Logo">
+  </div>
+
+  <form #signupForm="ngForm" novalidate>
+    <ion-list lines="none">
+
+      <ion-item>
+        <ion-label position="floating" color="primary" placeholder="optional">Title (optional)</ion-label>
+        <ion-select [(ngModel)]="signup.title" name="title" #title="ngModel">
+          <ion-select-option>Mr</ion-select-option>
+          <ion-select-option>Mrs</ion-select-option>
+          <ion-select-option>Miss</ion-select-option>
+          <ion-select-option>Ms</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating" color="primary">First Name</ion-label>
+        <ion-input [(ngModel)]="signup.firstName" name="firstName" type="text" #firstName="ngModel" required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="firstName.valid || submitted == false" class="ion-padding-start">
+          First Name is required
+        </p>
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="floating" color="primary">Last Name</ion-label>
+        <ion-input [(ngModel)]="signup.lastName" name="lastName" type="text" #lastName="ngModel" required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="lastName.valid || submitted == false" class="ion-padding-start">
+          Last Name is required
+        </p>
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="floating" color="primary" value="" placeholder="John@gmail.com">Email</ion-label>
+        <ion-input [(ngModel)]="signup.email" name="email" type="text" #email="ngModel" required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
+          Email is required
+        </p>
+      </ion-text>
+
+
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">Create</ion-button>
+    </div>
+  </form>
+
+</ion-content>
