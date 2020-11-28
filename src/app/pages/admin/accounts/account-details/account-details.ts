@@ -53,6 +53,7 @@ export class AccountDetailsPage {
   propertyManagerPetsCount: number;
   deleting: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
+  savingAccount: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public route: ActivatedRoute,
@@ -65,6 +66,7 @@ export class AccountDetailsPage {
   ) {
     this.loading = this.alertService.presentLoading("Pet Check &#10003;");
     this.deleting = this.alertService.presentLoading("Deleting Account...");
+    this.savingAccount = this.alertService.presentLoading("Saving...");
   }
   async ionViewWillEnter() {
     (await this.loading).present();
@@ -144,4 +146,60 @@ export class AccountDetailsPage {
         },
       });
   }
+
+
+  async changePassword() {
+    const alert = await this.alertCtrl.create({
+      header: "Change Password",
+      buttons: [
+        "Cancel",
+        {
+          text: "Ok",
+          handler: async (data: any) => {
+            //console.log(data);
+            (await this.savingAccount).present();
+            await this.updateAccountPassword(data);
+          },
+        },
+      ],
+      inputs: [
+        {
+          type: "text",
+          name: "password",
+          placeholder: "password",
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+
+  private async updateAccountPassword(contextParamValue) {
+    //console.log(contextParamValue,"what is this??");
+
+    (await this.accountService.update(this.accountId, contextParamValue))
+      .pipe(first())
+      .subscribe({
+        next: async () => {
+          (await this.savingAccount).dismiss();
+          this.alertService.createToastAlert(
+            "Update to Password Successful",
+            "success",
+            8000
+          );
+          this.ionViewWillEnter();
+        },
+        error: async (error) => {
+          (await this.savingAccount).dismiss();
+          this.alertService.createToastAlert(
+            "Update to Property Master List Failed...",
+            "warning",
+            8000
+          );
+        },
+      });
+  }
+
+
+
 }

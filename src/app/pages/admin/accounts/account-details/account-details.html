@@ -33,7 +33,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-item><b>Role:&nbsp;</b>
+        <ion-item onClick=""><b>Role:&nbsp;</b>
           <span *ngIf="account.role=='PropertyManager'">Property Manager</span>
           <span *ngIf="account.role=='User'">Pet Owner</span>
           <span *ngIf="account.role=='Admin'">Admin</span>
@@ -43,25 +43,25 @@
 
     <ion-row>
       <ion-col>
-        <ion-item><b>Title:&nbsp;</b>{{account.title}}</ion-item>
+        <ion-item onclick=""><b>Title:&nbsp;</b>{{account.title}}</ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-item><b>First Name:&nbsp;</b>{{account.firstName}}</ion-item>
+        <ion-item onclick=""><b>First Name:&nbsp;</b>{{account.firstName}}</ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-item><b>Last Name:&nbsp;</b>{{account.lastName}}</ion-item>
+        <ion-item onclick=""><b>Last Name:&nbsp;</b>{{account.lastName}}</ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-item><b>Email:&nbsp;</b>
+        <ion-item onclick=""><b>Email:&nbsp;</b>
           <b *ngIf="account.isVerified==false" style="color: firebrick;">{{account.email}} (Not Verified)</b>
           <b *ngIf="account.isVerified==true" style="color:green">{{account.email}} (Verified)</b>
         </ion-item>
