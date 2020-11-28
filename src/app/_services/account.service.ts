@@ -62,7 +62,7 @@ export class AccountService {
       );
   }
 
-  async register(account: Account) {
+  register(account: Account) {
     console.log(account, "<--Account for regular register");
     return this.http.post(`${baseUrl}/register`, account);
   }

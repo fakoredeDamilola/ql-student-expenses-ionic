@@ -58,11 +58,13 @@ export class AccountsPage  {
 
   async ionViewDidEnter(){
     //console.log("true2");
+    console.log("DID ENTER");
     setTimeout(async ()=>{ (await this.loading).dismiss();},300);
 
   }
 
   async ionViewWillEnter(){
+    console.log("Will ENTER");
     this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
     //console.log("true1");
     (await this.loading).present();
