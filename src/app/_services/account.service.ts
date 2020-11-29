@@ -24,7 +24,7 @@ export class AccountService {
   }
 
   login(email: string, password: string) {
-    this.accountSubject.subscribe(x => console.log(x,"this still shouldnt be anything???"));
+    //this.accountSubject.subscribe(x => console.log(x,"this still shouldnt be anything???"));
     return this.http
       .post<any>(
         `${baseUrl}/authenticate`,
@@ -46,7 +46,8 @@ export class AccountService {
       .subscribe();
     await this.stopRefreshTokenTimer();
     this.accountSubject.next(null);
-    this.accountSubject.subscribe(x => console.log(x,"This should be undefined???"));
+    //This bellow is freaking sick
+    //this.accountSubject.subscribe(x => console.log(x,"This should be undefined???"));
     await this.router.navigateByUrl("/login");
     //location.reload();
   }
@@ -64,7 +65,7 @@ export class AccountService {
   }
 
   register(account: Account) {
-    console.log(account, "<--Account for regular register");
+    //console.log(account, "<--Account for regular register");
     return this.http.post(`${baseUrl}/register`, account);
   }
 
