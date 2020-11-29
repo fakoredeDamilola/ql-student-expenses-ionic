@@ -24,6 +24,7 @@ export class AccountService {
   }
 
   login(email: string, password: string) {
+    this.accountSubject.subscribe(x => console.log(x,"this still shouldnt be anything???"));
     return this.http
       .post<any>(
         `${baseUrl}/authenticate`,
@@ -45,7 +46,7 @@ export class AccountService {
       .subscribe();
     await this.stopRefreshTokenTimer();
     this.accountSubject.next(null);
-    this.accountSubject = null;
+    this.accountSubject.subscribe(x => console.log(x,"This should be undefined???"));
     await this.router.navigateByUrl("/login");
     //location.reload();
   }
@@ -55,7 +56,7 @@ export class AccountService {
       .post<any>(`${baseUrl}/refresh-token`, {}, { withCredentials: true })
       .pipe(
         map(async (account) => {
-          this.accountSubject.next(await account);
+          this.accountSubject.next(account);
           await this.startRefreshTokenTimer();
           return await account;
         })
@@ -137,7 +138,7 @@ export class AccountService {
           account = await { ...this.accountValue, ...account };
           this.accountSubject.next(account);
         }
-        return await account;
+        return account;
       })
     );
   }

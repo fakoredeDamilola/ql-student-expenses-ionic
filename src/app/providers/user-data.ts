@@ -48,7 +48,7 @@ export class UserData {
     await this.account.logout();
     await this.storage.remove("email");
     window.dispatchEvent(new CustomEvent("user:logout"));
-    location.reload();
+    //location.reload();
     return this.toastAlert.createToastAlert("Logout Successful","primary",4000);
   }
 
