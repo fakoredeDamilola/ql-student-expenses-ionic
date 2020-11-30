@@ -7,6 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component: PetDetailsPage
+  },
+  {
+    path: "add-image",
+    loadChildren: () =>
+      import("@app/pages/account/pets/pet-details/pet-image/pet-image.module").then(
+        (m) => m.PetImagePageModule
+      ),
   }
 ];
 

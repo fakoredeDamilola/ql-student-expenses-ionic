@@ -59,5 +59,6 @@ import { RouteReuseStrategy } from '@angular/router';
     FilePath,
   ],
   bootstrap: [AppComponent],
+
 })
 export class AppModule {}

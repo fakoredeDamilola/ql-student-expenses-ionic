@@ -14,8 +14,16 @@
   <div *ngIf="species=='Cat'" class="cat-background">
 
   </div>
-
-<h3><b><u>Pet Details:</u></b></h3>
+<ion-row>
+  <ion-col>
+    <b><u>Pet Details:</u></b>
+  </ion-col>
+  <ion-col>
+    <ion-button fill="clear" expand="full" color="secondary" routerLink="{{currentRoute}}/add-image">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Add Pet Image</ion-button>
+  </ion-col>
+</ion-row>
 <ion-list inset>
   <ion-row>
     <ion-col>
@@ -34,6 +42,7 @@
    </ion-col>
 </ion-row>
 
+
 <ion-row>
   <ion-col>
     <ion-button shape="block" color="danger" (click)="deleteAreYouSure()">Delete Pet</ion-button>
@@ -42,27 +51,7 @@
 </ion-list>
 
 
-  <h3 text-center>Please Select Image!</h3>
 
-  <ion-list>
-    <ion-item text-wrap>
-      <ion-thumbnail slot="start">
-        <ion-img ></ion-img>
-      </ion-thumbnail>
-      <ion-label>
-        <!--{{ img.name }}-->
-      </ion-label>
-      <ion-button slot="end"  (click)="startUpload()">
-        <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
-      </ion-button>
-      <ion-button slot="end"(click)="deleteImage()">
-        <ion-icon slot="icon-only" name="trash"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
-  <ion-button  expand="full" color="light" (click)="selectImage()">
-    <ion-icon slot="start" name="camera"></ion-icon>
-    Select Image</ion-button>
 
 </ion-content>
 
