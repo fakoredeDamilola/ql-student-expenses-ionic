@@ -14,6 +14,7 @@ import { environment } from '@environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appInitializer, JwtInterceptor, ErrorInterceptor } from '@app/_helpers';
 import { AccountService } from '@app/_services';
+import { ExpandableComponent } from '@app/_components/expandable/expandable.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,7 @@ import { AccountService } from '@app/_services';
       enabled: environment.production
     })
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, ExpandableComponent],
   providers: [InAppBrowser,
      SplashScreen,
      StatusBar,
