@@ -17,7 +17,7 @@
   </ion-header>
 
   <ion-grid>
-    <ion-row>
+    <ion-row ngif="photoService.photos.length>0">
     <ion-col *ngFor="let photo of photoService.photos; index as position">
       <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
     </ion-col>
@@ -25,7 +25,7 @@
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="photoService.addNewToGallery()">
+    <ion-fab-button (click)="photoService.addNewToGallery(petId)">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>

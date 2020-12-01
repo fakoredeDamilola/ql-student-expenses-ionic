@@ -16,19 +16,18 @@ export class PhotoService {
     this.platform = platform;
    }
 
-  public async loadSaved() {
+  public async loadSaved(petId:string) {
     // Retrieve cached photo array data
-    console.log("its getting here")
-    const photoList = await Storage.get({ key: this.PHOTO_STORAGE });
-    console.log(photoList)
+    const photoList = await Storage.get({ key: this.PHOTO_STORAGE+`${petId}` });
+    //console.log(photoList)
     this.photos = JSON.parse(photoList.value) || [];
-    console.log(this.photos)
+    //console.log(this.photos,"SUS")
     // If running on the web...
     if (!this.platform.is('hybrid')) {
-      console.log("true")
       // Display the photo by reading into base64 format
       for (let photo of this.photos) {
         // Read each saved photo's data from the Filesystem
+        //console.log(photo.filepath,"THIS??")
         const readFile = await Filesystem.readFile({
             path: photo.filepath,
             directory: FilesystemDirectory.Data
@@ -49,7 +48,7 @@ export class PhotoService {
   // Store a reference to all photo filepaths using Storage API:
   // https://capacitor.ionicframework.com/docs/apis/storage
   */
-  public async addNewToGallery() {
+  public async addNewToGallery(petId:string) {
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri, // file-based data; provides best performance
@@ -57,25 +56,26 @@ export class PhotoService {
       quality: 100 // highest quality (0 to 100)
     });
 
-    const savedImageFile = await this.savePicture(capturedPhoto);
+    const savedImageFile = await this.savePicture(capturedPhoto,petId);
 
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
 
     // Cache all photo data for future retrieval
     Storage.set({
-      key: this.PHOTO_STORAGE,
+      key: this.PHOTO_STORAGE+`${petId}`,
       value: JSON.stringify(this.photos)
     });
   }
 
   // Save picture to file on device
-  private async savePicture(cameraPhoto: CameraPhoto) {
+  private async savePicture(cameraPhoto: CameraPhoto, petId:string) {
     // Convert photo to base64 format, required by Filesystem API to save
     const base64Data = await this.readAsBase64(cameraPhoto);
 
     // Write the file to the data directory
     const fileName = new Date().getTime() + '.jpeg';
+    //console.log(fileName,"file name to be saved")
     const savedFile = await Filesystem.writeFile({
       path: fileName,
       data: base64Data,
@@ -105,10 +105,10 @@ export class PhotoService {
     // "hybrid" will detect Cordova or Capacitor
     if (this.platform.is('hybrid')) {
       // Read the file into base64 format
+      //console.log(cameraPhoto.path,"huh??")
       const file = await Filesystem.readFile({
         path: cameraPhoto.path
       });
-      console.log(file.data)
       return file.data;
     }
     else {
@@ -121,18 +121,21 @@ export class PhotoService {
   }
 
   // Delete picture by removing it from reference data and the filesystem
-  public async deletePicture(photo: Photo, position: number) {
+  public async deletePicture(photo: Photo, position: number, petId:string ){
     // Remove this photo from the Photos reference data array
+    //console.log(photo,"toy");
+    //console.log(this.photos,"toy2")
     this.photos.splice(position, 1);
 
     // Update photos array cache by overwriting the existing photo array
     Storage.set({
-      key: this.PHOTO_STORAGE,
+      key: this.PHOTO_STORAGE+`${petId}`,
       value: JSON.stringify(this.photos)
     });
 
     // delete photo file from filesystem
-    const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);
+    const filename = photo.filepath//.substr(photo.filepath.lastIndexOf('/') + 1);
+    //console.log(filename,"THISSS DOY")
     await Filesystem.deleteFile({
       path: filename,
       directory: FilesystemDirectory.Data
