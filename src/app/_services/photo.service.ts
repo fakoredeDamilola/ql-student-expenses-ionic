@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Plugins, CameraResultType, Capacitor, FilesystemDirectory, CameraPhoto, CameraSource } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+import { HttpClient } from "@angular/common/http";
+import { environment } from "@environments/environment";
+import { Router } from '@angular/router';
+const baseUrl = `${environment.apiUrl}/storage`;
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -12,11 +16,20 @@ export class PhotoService {
   private PHOTO_STORAGE: string = "photos";
   private platform: Platform;
 
-  constructor(platform: Platform) {
+  constructor(
+    platform: Platform,
+    private router: Router,
+    private http: HttpClient
+    ) {
     this.platform = platform;
    }
 
   public async loadSaved(petId:string) {
+   /* const allFilesList= this.http.get(`${baseUrl}/files/06d3a600eccf6b32250a0d2af294e158.jpeg`).forEach((element)=>{
+      console.log(element)
+    })*/
+
+
     // Retrieve cached photo array data
     const photoList = await Storage.get({ key: this.PHOTO_STORAGE+`${petId}` });
     //console.log(photoList)
@@ -50,13 +63,14 @@ export class PhotoService {
   */
   public async addNewToGallery(petId:string) {
     // Take a photo
-    const capturedPhoto = await Camera.getPhoto({
+    const capturedPhoto:any = await Camera.getPhoto({
       resultType: CameraResultType.Uri, // file-based data; provides best performance
       source: CameraSource.Camera, // automatically take a new photo with the camera
       quality: 100 // highest quality (0 to 100)
     });
+    console.log("getting here")
+    const savedImageFile:any = await this.savePicture(capturedPhoto,petId);
 
-    const savedImageFile = await this.savePicture(capturedPhoto,petId);
 
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
@@ -71,17 +85,18 @@ export class PhotoService {
   // Save picture to file on device
   private async savePicture(cameraPhoto: CameraPhoto, petId:string) {
     // Convert photo to base64 format, required by Filesystem API to save
-    const base64Data = await this.readAsBase64(cameraPhoto);
-
+    const fileName = `${petId}/`+new Date().getTime() + '.jpeg';
+    console.log(fileName,"The file name?")
+    const base64Data = await this.readAsBase64(cameraPhoto, fileName);
     // Write the file to the data directory
-    const fileName = new Date().getTime() + '.jpeg';
+    // Might change this later idk for performance
+
     //console.log(fileName,"file name to be saved")
     const savedFile = await Filesystem.writeFile({
       path: fileName,
       data: base64Data,
       directory: FilesystemDirectory.Data
     });
-
     if (this.platform.is('hybrid')) {
       // Display the new image by rewriting the 'file://' path to HTTP
       // Details: https://ionicframework.com/docs/building/webview#file-protocol
@@ -101,7 +116,7 @@ export class PhotoService {
   }
 
   // Read camera photo into base64 format based on the platform the app is running on
-  private async readAsBase64(cameraPhoto: CameraPhoto) {
+  private async readAsBase64(cameraPhoto: CameraPhoto, fileName: string) {
     // "hybrid" will detect Cordova or Capacitor
     if (this.platform.is('hybrid')) {
       // Read the file into base64 format
@@ -113,11 +128,23 @@ export class PhotoService {
     }
     else {
       // Fetch the photo, read as a blob, then convert to base64 format
-      const response = await fetch(cameraPhoto.webPath!);
+      const response:any = await fetch(cameraPhoto.webPath!);
       const blob = await response.blob();
+      const result = await this.convertBlobToBase64(blob) as string
 
-      return await this.convertBlobToBase64(blob) as string;
+      this.uploadImageToServer(blob, fileName)
+
+      return result;
     }
+  }
+
+  async uploadImageToServer(blob:any, fileName:string){
+    let imageData:FormData = new FormData();
+    imageData.append('image', blob, fileName );
+    this.http
+    .post<any>(`${baseUrl}/yo`, imageData)
+    .subscribe();
+
   }
 
   // Delete picture by removing it from reference data and the filesystem
@@ -150,6 +177,7 @@ export class PhotoService {
     };
     reader.readAsDataURL(blob);
   });
+
 }
 
 export interface Photo {

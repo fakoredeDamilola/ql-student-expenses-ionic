@@ -6,6 +6,13 @@ ion-fab-button {
   --color: var(--ion-color-primary, #3880ff);
 }
 
+ion-content {
+  --color: #fff;
+  --background:none;
+  //background: url(../../assets/imgs/bg.jpg) no-repeat 0 0;
+  background-size: cover;
+}
+
 /*
  * Material Design uses the ripple for activated
  * so only style the iOS activated background
@@ -27,11 +34,5 @@ $categories: (
   navigation: #6600cc
 );
 
-@each $track, $value in map-remove($categories) {
-  ion-item-sliding[track='#{$track}'] ion-label {
-    border-left: 2px solid $value;
-    padding-left: 10px;
-  }
-}
 
 
