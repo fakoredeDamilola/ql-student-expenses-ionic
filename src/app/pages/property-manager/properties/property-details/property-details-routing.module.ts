@@ -28,6 +28,13 @@ const routes: Routes = [
       import(
         "@app/pages/property-manager/pets/pet-details/pet-details.module"
       ).then((m) => m.PetDetailsModule),
+  },
+  {
+    path: "add-image",
+    loadChildren: () =>
+      import("@app/pages/property-manager/properties/property-details/property-image/property-image.module").then(
+        (m) => m.PropertyImagePageModule
+      ),
   }
 
 ];
