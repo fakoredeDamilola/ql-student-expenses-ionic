@@ -152,13 +152,10 @@ export class PhotoService {
     this.http.post<any>(`${baseUrl}/upload`, imageData).subscribe();
   }
 
-  // Delete picture by removing it from reference data and the filesystem
+  // Delete picture by removing it from reference data and the filesystem** Localy
   public async deletePicture(photo: Photo, position: number, objectId: string) {
     // Remove this photo from the Photos reference data array
-    //console.log(photo,"toy");
-    //console.log(this.photos,"toy2")
     this.photos.splice(position, 1);
-
     // Update photos array cache by overwriting the existing photo array
     Storage.set({
       key: this.PHOTO_STORAGE + `${objectId}`,
@@ -168,10 +165,15 @@ export class PhotoService {
     // delete photo file from filesystem
     const filename = photo.filepath; //.substr(photo.filepath.lastIndexOf('/') + 1);
     //console.log(filename,"THISSS DOY")
+    await this.deletePictureFromServer(photo.filepath)
     await Filesystem.deleteFile({
       path: filename,
       directory: FilesystemDirectory.Data,
     });
+  }
+
+  async deletePictureFromServer(fileName:string){
+    this.http.delete<any>(`${baseUrl}/files/${fileName}`).subscribe();
   }
 
   convertBlobToBase64 = (blob: Blob) =>

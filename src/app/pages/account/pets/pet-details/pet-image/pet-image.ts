@@ -24,7 +24,7 @@ export class PetImagePage {
   }
 
   public async showActionSheet(photo: Photo, position: number) {
-    console.log(photo,"this???");
+    console.log("--->>>>",photo.filepath,"this???");
     const actionSheet = await this.actionSheetController.create({
 
       header: "Photos",
