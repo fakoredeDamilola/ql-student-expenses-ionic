@@ -5,11 +5,8 @@ const validateRequest = require("_middleware/validate-request");
 const authorize = require("_middleware/authorize");
 const Role = require("_helpers/role");
 const accountService = require("./account.service");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
-const bodyParser = require("body-parser");
-const propertyService = require("../properties/property.service");
-const petService = require("../pets/pet.service");
+const reportService = require("../reports/report.service");
+const expenseService = require("../expenses/expense.service");
 
 // routes for accounts services like login authenticate etc.
 router.post("/authenticate", authenticateSchema, authenticate);
@@ -32,66 +29,55 @@ router.post("/", createSchema, createAccount);
 router.put("/:accountId", authorize(), update);
 router.delete("/:accountId", authorize(), _delete);
 
-// TODO routes to add pets BASIC FUNCTIONALITY, also TODO Authorize for all...
-//router.put("/:accountId/pets/", authorize(), pushPetToAccount);
-router.get("/:accountId/pets/", getAllPetsOnAccount);
+// TODO routes to add Expenses BASIC FUNCTIONALITY, also TODO Authorize for all...
+//router.put("/:accountId/Expenses/", authorize(), pushPetToAccount);
+router.get("/:accountId/expenses/", getAllExpensesOnAccount);
 
-// Property Manager Routes
-//router.put("/:accountId/properties/", authorize(), pushPropertyToAccount);
-// Need to use db.property find({})
-router.get("/:propertyManagerId/properties/", getAllPropertiesOnAccount);
-router.get("/:propertyManagerId/pet-owners/", getAllPetOwnersInProperties);
-router.get("/:propertyManagerId/pets-on-properties/", getPropertiesPets);
-router.get("/:propertyManagerId/properties-pets/", getAllPetsInProperties);
+// reports Manager Routes
+//router.put("/:accountId/Reports/", authorize(), pushreportsToAccount);
+// Need to use db.reports find({})
+router.get("/:reportsManagerId/reports/", getAllReportsOnAccount);
+router.get("/:reportsManagerId/pet-owners/", getAllStudentsInReports);
+router.get("/:reportsManagerId/expenses-on-reports/", getReportsExpenses);
+router.get("/:reportsManagerId/reports-expenses/", getAllExpensesInReports);
 module.exports = router;
 
-/*******************************************************************
- *  Property Manager Routes
- *  Working:
- *  getAllPetOwnersInProperties
- *  getAllMyProperties, with number of pet owners and pets
- *  getAllPetsInProperties
- ******************************************************************/
-function getAllPetOwnersInProperties(req, res, next) {
+
+function getAllStudentsInReports(req, res, next) {
   //console.log(req)
   accountService
-    .getAllPetOwnersInProperties(req.params.propertyManagerId)
+    .getAllStudentsInReports(req.params.reportsManagerId)
     .then((accounts) => res.json(accounts))
     .catch(next);
 }
 
-function getPropertiesPets(req, res, next) {
+function getReportsExpenses(req, res, next) {
   //console.log(req)
   accountService
-    .getPropertiesPets(req.params.propertyManagerId)
+    .getReportsExpenses(req.params.reportsManagerId)
     .then((accounts) => res.json(accounts))
     .catch(next);
 }
 
-function getAllPropertiesOnAccount(req, res, next) {
-  propertyService
-    .getAllPropertiesOnAccount(req.params.propertyManagerId)
-    .then((properties) => res.json(properties))
+function getAllReportsOnAccount(req, res, next) {
+  reportService
+    .getAllReportsOnAccount(req.params.reportsManagerId)
+    .then((reports) => res.json(reports))
     .catch(next);
 }
 
-function getAllPetsInProperties(req, res, next) {
-  petService
-    .getAllPetsInProperties(req.params.propertyManagerId)
-    .then((pets) => res.json(pets))
+function getAllExpensesInReports(req, res, next) {
+  expenseService
+    .getAllExpensesInReports(req.params.reportsManagerId)
+    .then((expenses) => res.json(expenses))
     .catch(next);
 }
 
-/***************************************************
- * Regular User AKA Pet Owner AKA P.O
- * getAllPetsOnAccount just the logged in persons pets
- *
- *
- */
-function getAllPetsOnAccount(req, res, next) {
-  petService
-  .getAllPetsOnAccount(req.params.accountId)
-  .then((pets) => res.json(pets))
+function getAllExpensesOnAccount(req, res, next) {
+  console.log(req.params)
+  expenseService
+  .getAllExpensesOnAccount(req.params.accountId)
+  .then((Expenses) => res.json(Expenses))
   .catch(next);
 }
 
@@ -141,8 +127,8 @@ function revokeToken(req, res, next) {
 
   if (!token) return res.status(400).json({ message: "Token is required" });
 
-  // users can revoke their own tokens and admins can revoke any tokens
-  if (!req.user.ownsToken(token) && req.user.role !== Role.Admin) {
+  // Students can revoke their own tokens and admins can revoke any tokens
+  if (!req.Student.ownsToken(token) && req.Student.role !== Role.Admin) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
@@ -159,14 +145,13 @@ function registerSchema(req, res, next) {
     role: Joi.string(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
-    propertyId: Joi.string(),
-    propertyManagerId: Joi.string(),
+    reportsId: Joi.string(),
+    reportsManagerId: Joi.string(),
     email: Joi.string().email().required(),
     password: Joi.string().min(6),
     confirmPassword: Joi.string().valid(Joi.ref("password")),
     acceptTerms: Joi.boolean().valid(true),
   });
-
   validateRequest(req, next, schema);
 }
 
@@ -249,12 +234,12 @@ function getAll(req, res, next) {
 }
 
 function getById(req, res, next) {
-  // users can get their own account and admins can get any account
+  // Students can get their own account and admins can get any account
   //console.log(req.params,"????")
-  //console.log(req.user,"tf")
+  //console.log(req.Student,"tf")
   /*if (
-    req.params.accountId !== req.user.accountId &&
-    req.user.role !== Role.Admin
+    req.params.accountId !== req.Student.accountId &&
+    req.Student.role !== Role.Admin
   ) {
     return res.status(401).json({ message: "Unauthorized" });
   }*/
@@ -274,7 +259,7 @@ function createSchema(req, res, next) {
     password: Joi.string().min(6).required(),
     confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
     role: Joi.string()
-      .valid(Role.Admin, Role.User, Role.PropertyManager)
+      .valid(Role.Admin, Role.Student, Role.ReportsManager)
       .required(),
   });
   validateRequest(req, next, schema);
@@ -298,9 +283,9 @@ function updateSchema(req, res, next) {
   };
 
   // only admins can update role
-  if (req.user.role === Role.Admin) {
+  if (req.Student.role === Role.Admin) {
     schemaRules.role = Joi.string()
-      .valid(Role.Admin, Role.User, Role.PropertyManager)
+      .valid(Role.Admin, Role.Student, Role.reportsManager)
       .empty("");
   }
 
@@ -309,8 +294,8 @@ function updateSchema(req, res, next) {
 }
 
 function update(req, res, next) {
-  // users can update their own account and admins can update any account, THIS IS SO IMPORTANT NOT ACCOUNT ID ITS ID FOR user.id
-  if (req.params.accountId !== req.user.id && req.user.role !== Role.Admin) {
+  // Students can update their own account and admins can update any account, THIS IS SO IMPORTANT NOT ACCOUNT ID ITS ID FOR Student.id
+  if (req.params.accountId !== req.Student.id && req.Student.role !== Role.Admin) {
     return res.status(399).json({
       message: "Unauthorized update to someone else account, your bad",
     });
@@ -322,8 +307,8 @@ function update(req, res, next) {
 }
 
 function _delete(req, res, next) {
-  // users can delete their own account and admins can delete any account
-  if (req.params.accountId !== req.user.id && req.user.role !== Role.Admin) {
+  // Students can delete their own account and admins can delete any account
+  if (req.params.accountId !== req.Student.id && req.Student.role !== Role.Admin) {
     return res.status(401).json({
       message: "Unauthorized you tried deleting someone elses account",
     });

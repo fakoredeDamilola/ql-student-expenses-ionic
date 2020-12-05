@@ -1,0 +1,96 @@
+import { Component } from "@angular/core";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
+import { AccountService, AlertService } from "@app/_services";
+import { LoadingController } from "@ionic/angular";
+import { Location } from "@angular/common";
+
+@Component({
+  selector: "page-reports-list",
+  templateUrl: "reports.html",
+  styleUrls: ["./reports.scss"],
+})
+export class ReportsListPage {
+  queryText = "";
+  segment = "all";
+  showSearchbar: boolean;
+  ios: boolean;
+  filtersList: any;
+  ReportsList: any;
+  propertyManagerId: any;
+  loading: any;
+  currentRoute: string = this.router.url;
+
+  constructor(
+    private accountService: AccountService,
+    private loadingController: LoadingController,
+    private alertService: AlertService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _location: Location
+  ) {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+  }
+
+  async ionViewWillEnter() {
+    //TODO USE PROPERTY get by propertyManagerId and load virtuals
+    (await this.loading).present();
+    this.propertyManagerId = this.accountService.accountValue.id;
+    //console.log(this.router.url); //  /routename
+
+    if (this.accountService.accountValue.role == "Admin") {
+      this.propertyManagerId = this.route.snapshot.paramMap.get("accountId");
+
+      if (this.route.snapshot.paramMap.get("accountId") == null) {
+        this.propertyManagerId = this.accountService.accountValue.id;
+      }
+    }
+    (
+      await this.accountService.getAllReportsOnAccount(
+        this.propertyManagerId
+      )
+    )
+      .forEach(async (Element) => {
+        //console.log(Element.propertyManagerReports);
+        this.ReportsList = Element;
+        console.log(Element);
+      })
+      .then(async () => {
+        (await this.loading).dismiss();
+      });
+  }
+
+  async presentLoadingWithOptions() {
+    const loading = await this.loadingController.create({
+      message: "Pet Check &#10003;",
+      translucent: true,
+      //duration:500,
+      cssClass: "custom-class custom-loading",
+      backdropDismiss: true,
+    });
+    return loading;
+  }
+
+  async presentFilter() {
+    /*  this.filtersList= {
+      'adminsIsChecked':this.adminsIsChecked,
+      'petOwnersIsChecked':this.petOwnersIsChecked,
+      'propertyManagersIsChecked':this.propertyManagersIsChecked
+    }
+
+    const modal = await this.modalCtrl.create({
+      component: PetOwnersFilterPage,
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: { filtersList: await this.filtersList }
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.adminsIsChecked = await data.adminsIsChecked;
+      this.petOwnersIsChecked = await data.petOwnersIsChecked;
+      this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
+      this.updateView();
+    }*/
+  }
+}

@@ -21,10 +21,10 @@ module.exports = {
   createAccount,
   update,
   delete: _delete,
-  updatePetsOnAccount,
-  updatePropertiesOnAccount,
-  getAllPetOwnersInProperties,
-  getPropertiesPets,
+  updateExpensesOnAccount,
+  updateReportsOnAccount,
+  getAllStudentsInReports,
+  getReportsExpenses,
 };
 
 async function authenticate({ email, password, ipAddress }) {
@@ -81,7 +81,6 @@ async function refreshToken({ token, ipAddress }) {
 
 async function revokeToken({ token, ipAddress }) {
   const refreshToken = await getRefreshToken(token);
-
   // revoke token and save
   refreshToken.revoked = Date.now();
   refreshToken.revokedByIp = await ipAddress;
@@ -103,11 +102,11 @@ async function register(params, origin) {
   const isFirstAccount = (await db.Account.countDocuments({})) === 0;
   account.role = isFirstAccount
     ? Role.Admin
-    : params.role == "PropertyManager"
-    ? Role.PropertyManager
+    : params.role == "ReportsManager"
+    ? Role.ReportsManager
     : params.role == "Admin"
     ? Role.Admin
-    : Role.User;
+    : Role.Student;
   account.verificationToken = randomTokenString();
 
   // hash password
@@ -173,35 +172,35 @@ async function resetPassword({ token, password }) {
 
 async function getAll() {
   const accounts = await db.Account.find()
-    .populate("petOwnerPetsCount")
-    .populate("propertyManagerPropertiesCount");
+    .populate("studentExpensesCount")
+    .populate("reportsManagerReportsCount");
   return await accounts.map((x) => basicDetails(x));
 }
 
-async function getAllPetOwnersInProperties(propertyManagerId) {
-  const allPetOwnersInProperties = await db.Account.find({
-    propertyManagerId: propertyManagerId,
+async function getAllStudentsInReports(ReportsManagerId) {
+  const allStudentsInReports = await db.Account.find({
+    ReportsManagerId: ReportsManagerId,
   })
-    .populate("petOwnerPets")
-    .populate("petOwnerPetsCount")
-    .populate("petOwnerProperty");
+    .populate("studentExpenses")
+    .populate("studentExpensesCount")
+    .populate("studentReport");
 
-  return await allPetOwnersInProperties.map((x) => basicDetails(x));
+  return await allStudentsInReports.map((x) => basicDetails(x));
 }
 
 //right here
-async function getPropertiesPets(propertyManagerId) {
-  const allPropertiesAccounts = await db.Account.find({
-    propertyManagerId: propertyManagerId,
-  }).populate("petOwnerPets");
-  const accountsLength = await allPropertiesAccounts.length;
+async function getReportsExpenses(reportsManagerId) {
+  const allReportsAccounts = await db.Account.find({
+    reportsManagerId: reportsManagerId,
+  }).populate("studentExpenses");
+  const accountsLength = await allReportsAccounts.length;
   let resultsArray = [];
   for (let i = 0; i < accountsLength; i++) {
-    if (allPropertiesAccounts[i].petOwnerPets.length != 0) {
-      let petsCountOfAccount = await allPropertiesAccounts[i].petOwnerPets
+    if (allReportsAccounts[i].studentExpenses.length != 0) {
+      let expensesCountOfAccount = await allReportsAccounts[i].studentExpenses
         .length;
-      for (let y = 0; y < petsCountOfAccount; y++) {
-        resultsArray.push(allPropertiesAccounts[i].petOwnerPets[y]);
+      for (let y = 0; y < expensesCountOfAccount; y++) {
+        resultsArray.push(allReportsAccounts[i].studentExpenses[y]);
       }
     }
   }
@@ -210,14 +209,14 @@ async function getPropertiesPets(propertyManagerId) {
 
 async function getById(id) {
   const account = await db.Account.findById(id)
-    .populate("petOwnerPets")
-    .populate("petOwnerPetsCount")
-    .populate("petOwnerProperty")
-    .populate("propertyManagerProperties")
-    .populate("propertyManagerPets")
-    .populate("propertyManagerPetOwners")
-    .populate("propertyManagerPetsCount")
-    .populate("propertyManagerPetOwnersCount");
+    .populate("studentExpenses")
+    .populate("studentExpensesCount")
+    .populate("studentReport")
+    .populate("reportsManagerReports")
+    .populate("reportsManagerExpenses")
+    .populate("reportsManagerStudents")
+    .populate("reportsManagerExpensesCount")
+    .populate("reportsManagerStudentsCount");
 
   return basicDetails(account);
 }
@@ -244,9 +243,9 @@ async function update(id, params) {
   const account = await getAccount(id);
   // console.log(account)
   // Later
-  /*const doc = await db.Account.findOne({ email: params.email }).populate('petsArray');
+  /*const doc = await db.Account.findOne({ email: params.email }).populate('ExpensesArray');
       console.log(doc,"HUGE TEST");
-      console.log("REALLY???",doc.petsArray,"HUGE TEST222");*/
+      console.log("REALLY???",doc.ExpensesArray,"HUGE TEST222");*/
   //console.log(params)
   if (
     params.email &&
@@ -269,13 +268,13 @@ async function update(id, params) {
 }
 
 // This Works!!! fuck yea
-async function updatePetsOnAccount(accountId, params) {
-  const pet = await new db.Pet(params);
-  pet.updated = Date.now();
-  await pet.save();
+async function updateExpensesOnAccount(accountId, params) {
+  const Expense = await new db.Expense(params);
+  expense.updated = Date.now();
+  await expense.save();
   const account = await getAccount(accountId);
 
-  await account.pets.push(pet);
+  await account.expenses.push(expense);
   account.updated = Date.now();
   await account.save();
   return basicDetails(account);
@@ -287,13 +286,13 @@ async function _delete(id) {
 }
 
 // This Works!!! fuck yea
-async function updatePropertiesOnAccount(accountId, params) {
-  const property = await new db.Property(params);
-  property.updated = Date.now();
-  await property.save();
+async function updateReportsOnAccount(accountId, params) {
+  const report = await new db.Report(params);
+  report.updated = Date.now();
+  await report.save();
   const account = await getAccount(accountId);
 
-  await account.properties.push(property);
+  await account.reports.push(Report);
   account.updated = Date.now();
   await account.save();
   return basicDetails(account);
@@ -309,13 +308,13 @@ async function _delete(id) {
 async function getAccount(id) {
   if (!db.isValidId(id)) throw "Account not found";
   const account = await db.Account.findById(id)
-    .populate("petOwnerPets")
-    .populate("petOwnerPetsCount")
-    .populate("propertyManagerProperties")
-    .populate("propertyManagerPets")
-    .populate("propertyManagerPetOwners")
-    .populate("propertyManagerPetsCount")
-    .populate("propertyManagerPetOwnersCount");
+    .populate("studentExpenses")
+    .populate("studentExpensesCount")
+    .populate("reportsManagerReports")
+    .populate("reportsManagerExpenses")
+    .populate("reportsManagerStudents")
+    .populate("reportsManagerExpensesCount")
+    .populate("reportsManagerStudentsCount");
   if (!account) throw "Account not found";
   return await account;
 }
@@ -357,8 +356,8 @@ function basicDetails(account) {
   const {
     id,
     title,
-    propertyManagerId,
-    propertyId,
+    ReportsManagerId,
+    ReportId,
     firstName,
     lastName,
     email,
@@ -366,22 +365,22 @@ function basicDetails(account) {
     created,
     updated,
     isVerified,
-    petOwnerPets,
-    petOwnerPetsCount,
+    studentExpenses,
+    studentExpensesCount,
     test,
-    petOwnerProperty,
-    propertyManagerProperties,
-    propertyManagerPropertiesCount,
-    propertyManagerPets,
-    propertyManagerPetOwners,
-    propertyManagerPetsCount,
-    propertyManagerPetOwnersCount,
+    studentReport,
+    reportsManagerReports,
+    reportsManagerReportsCount,
+    reportsManagerExpenses,
+    reportsManagerStudents,
+    reportsManagerExpensesCount,
+    reportsManagerStudentsCount,
   } = account;
   return {
     id,
     title,
-    propertyManagerId,
-    propertyId,
+    ReportsManagerId,
+    ReportId,
     firstName,
     lastName,
     email,
@@ -389,16 +388,16 @@ function basicDetails(account) {
     created,
     updated,
     isVerified,
-    petOwnerPets,
-    petOwnerPetsCount,
+    studentExpenses,
+    studentExpensesCount,
     test,
-    petOwnerProperty,
-    propertyManagerProperties,
-    propertyManagerPropertiesCount,
-    propertyManagerPets,
-    propertyManagerPetOwners,
-    propertyManagerPetsCount,
-    propertyManagerPetOwnersCount,
+    studentReport,
+    reportsManagerReports,
+    reportsManagerReportsCount,
+    reportsManagerExpenses,
+    reportsManagerStudents,
+    reportsManagerExpensesCount,
+    reportsManagerStudentsCount,
   };
 }
 
@@ -415,10 +414,10 @@ async function sendVerificationEmail(account, origin) {
 
   await sendEmail({
     to: account.email,
-    subject: "Pet Check Invite- Verify Email",
+    subject: "Expense Check Invite- Verify Email",
     html: `<h4>Verify Email</h4>
-               <p>You have been invited to join Pet Check!</p>
-               <p>Please Note, the Default password is <b>PetCheck123</b><p>
+               <p>You have been invited to join Expense Check!</p>
+               <p>Please Note, the Default password is <b>ExpenseCheck123</b><p>
                <p>It is important that you change it after you log in!<p>
                ${message}`,
   });
@@ -434,7 +433,7 @@ async function sendAlreadyRegisteredEmail(email, origin) {
 
   await sendEmail({
     to: email,
-    subject: "Pet Check - Email Already Registered",
+    subject: "Expense Check - Email Already Registered",
     html: `<h4>Email Already Registered</h4>
                <p>Your email <strong>${email}</strong> is already registered.</p>
                ${message}`,
@@ -454,7 +453,7 @@ async function sendPasswordResetEmail(account, origin) {
 
   await sendEmail({
     to: account.email,
-    subject: "Pet Check - Reset Password",
+    subject: "Expense Check - Reset Password",
     html: `<h4>Reset Password Email</h4>
                ${message}`,
   });

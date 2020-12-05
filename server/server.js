@@ -30,8 +30,8 @@ app.use(
 
 // api routes
 app.use("/accounts", require("./accounts/accounts.controller"));
-app.use("/pets", require("./pets/pets.controller"));
-app.use("/properties", require("./properties/properties.controller"));
+app.use("/expenses", require("./expenses/expenses.controller"));
+app.use("/reports", require("./reports/reports.controller"));
 app.use("/storage", require("./images/images-service"));
 
 // swagger docs route

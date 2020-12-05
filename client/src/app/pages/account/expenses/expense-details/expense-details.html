@@ -1,0 +1,55 @@
+<ion-content class="speaker-detail">
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/account/expenses"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="species=='Dog'" class="dog-background">
+
+  </div>
+
+  <div *ngIf="species=='Cat'" class="cat-background">
+
+  </div>
+<ion-row>
+  <ion-col>
+    <h3><b><u>Expense Details:</u></b></h3>
+  </ion-col>
+  <ion-col>
+    <ion-button fill="clear" expand="full" color="secondary" routerLink="{{currentRoute}}/add-image">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Add Expense Images</ion-button>
+  </ion-col>
+</ion-row>
+<ion-list inset>
+  <ion-row>
+    <ion-col>
+      <ion-item (click)="editExpenseName()"><b>Expense Name:&nbsp;</b>{{expenseName}}</ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item (click)="editExpenseCost()"><b>Expense Cost:&nbsp;</b>{{expenseCost}}</ion-item>
+    </ion-col>
+</ion-row>
+
+
+<ion-row>
+  <ion-col>
+    <ion-button shape="block" color="danger" (click)="deleteAreYouSure()">Delete Expense</ion-button>
+  </ion-col>
+</ion-row>
+</ion-list>
+
+
+
+
+</ion-content>
+
+
+
+
+

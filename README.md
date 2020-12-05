@@ -1,4 +1,4 @@
-# Ionic Angular Pet Check Application
+# Ionic Angular Student Expenses Application
 
 Code Once, Have Every Where!
 
@@ -19,3 +19,8 @@ Probably the best framework ever.....
 ### iOS
 
 1. Run `ionic cordova run ios --prod`
+
+### For QL Student Expenses Runners
+## client
+1. Run `npm i to install packages`
+2. 
