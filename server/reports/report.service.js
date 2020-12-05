@@ -59,11 +59,7 @@ async function getAllReportsOnAccount(reportsManagerId) {
 async function getReport(id) {
 
   const report = await db.Report.findById(id)
-    /*.populate("ReportPetOwner")
-    .populate("ReportPets")
-    .populate("ReportPetsCount")
-    .populate("ReportPetOwnerCount")
-    .populate("ReportManager");*/
+
   //if (!Report) throw 'Report not found';
   return report;
 }
@@ -74,6 +70,7 @@ function basicDetails(report) {
     reportsManagerId,
     reportsManager,
     reportName,
+    reportStudents,
     reportStudentsCount,
     reportExpensesCount,
     created
@@ -83,6 +80,7 @@ function basicDetails(report) {
     reportsManagerId,
     reportsManager,
     reportName,
+    reportStudents,
     reportStudentsCount,
     reportExpensesCount,
     created

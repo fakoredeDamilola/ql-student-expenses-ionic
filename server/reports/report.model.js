@@ -13,7 +13,6 @@ const schema = new Schema({
 }
 );
 
-// Pet Owner @Property,  have to experiment with indexes and what would be faster
 
 schema.virtual("reportStudents", {
     ref: "Account", // The model to use
@@ -37,7 +36,6 @@ schema.virtual("reportManager", {
     foreignField: "reportId", // is equal to `foreignField`
     count: true
   });  
-
 
 schema.virtual("reportExpenses", {
     ref: "Expense", // The model to use

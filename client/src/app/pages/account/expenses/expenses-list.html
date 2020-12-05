@@ -1,18 +1,24 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/account/expenses"></ion-back-button>
-    </ion-buttons>
-    <ion-buttons slot="start">
+    <ion-buttons *ngIf="!showSearchbar" slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title text-align-center size="large" >My Expenses</ion-title>
+    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">My Expenses</ion-title>
+    <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
+      (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
-      <ion-button routerLink="/account/expenses/add" shape="round" fill="outline">
-        <ion-icon name="add-outline"></ion-icon>Add Expense
+      <ion-button *ngIf="!ios && !showSearchbar" (click)="showSearchbar = true">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
-
+      <ion-button *ngIf="!showSearchbar" (click)="presentFilter()">
+        <span *ngIf="ios">Filter</span>
+        <span *ngIf="!ios">
+          <ion-icon slot="icon-only" name="options"></ion-icon>
+        </span>
+      </ion-button>
     </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="!ios">
   </ion-toolbar>
 </ion-header>
 
@@ -21,9 +27,17 @@
     <ion-toolbar color="secondary">
       <ion-title text-align-center size="large">My Expenses</ion-title>
     </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
+    </ion-toolbar>
   </ion-header>
-<ion-content>
 
+  <ion-item-divider sticky>
+    <ion-item slot='start'>Total:${{expensesTotal}}</ion-item>
+    <ion-button shape="round" fill="outline" slot="end" routerLink="/account/expenses/add">
+      <ion-icon name="add-outline"></ion-icon>Create Expense
+    </ion-button>
+  </ion-item-divider>
   <ion-grid fixed>
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let expense of expensesList">
@@ -44,4 +58,4 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-</ion-content>
+

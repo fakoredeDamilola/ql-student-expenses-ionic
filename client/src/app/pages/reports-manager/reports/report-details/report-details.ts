@@ -81,7 +81,7 @@ export class ReportDetailsPage {
     let popUpText:string;
     let currentValue:string;
     switch (contextParameter) {
-      case "ReportName": {
+      case "reportName": {
         popUpText = "Name (Optional)";
         currentValue = this.reportName;
         break;
@@ -196,7 +196,6 @@ export class ReportDetailsPage {
       .pipe(first())
       .subscribe({
         next: async () => {
-          //TODO Replace with toast alert
           (await this.deleting).dismiss();
           this.alertService.createToastAlert(
             "Report Deleted Successfully!",
