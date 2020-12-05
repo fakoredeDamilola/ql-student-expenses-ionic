@@ -33,12 +33,12 @@ export class AppComponent implements OnInit {
     {
       title: "Reports",
       url: "/admin/reports",
-      icon: "home",
+      icon: "documents",
     },
     {
       title: "Expenses",
       url: "/admin/expenses",
-      icon: "checkmark",
+      icon: "cash",
     },
   ];
 
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
     {
       title: "Reports",
       url: "/reports-manager/reports",
-      icon: "home",
+      icon: "documents",
     },
     {
       title: "Students",
@@ -55,8 +55,8 @@ export class AppComponent implements OnInit {
     },
     {
       title: "Expenses",
-      url: "/property-manager/properties-pets",
-      icon: "checkmark",
+      url: "/reports-manager/reports-expenses",
+      icon: "cash",
     },
   ];
 

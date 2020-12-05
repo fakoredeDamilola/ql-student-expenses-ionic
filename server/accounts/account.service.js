@@ -177,15 +177,15 @@ async function getAll() {
   return await accounts.map((x) => basicDetails(x));
 }
 
-async function getAllStudentsInReports(ReportsManagerId) {
+async function getAllStudentsInReports(reportsManagerId) {
   const allStudentsInReports = await db.Account.find({
-    ReportsManagerId: ReportsManagerId,
+    reportsManagerId: reportsManagerId,
   })
     .populate("studentExpenses")
     .populate("studentExpensesCount")
     .populate("studentReport");
 
-  return await allStudentsInReports.map((x) => basicDetails(x));
+  return allStudentsInReports.map((x) => basicDetails(x));
 }
 
 //right here
@@ -356,8 +356,8 @@ function basicDetails(account) {
   const {
     id,
     title,
-    ReportsManagerId,
-    ReportId,
+    reportsManagerId,
+    reportId,
     firstName,
     lastName,
     email,
@@ -379,8 +379,8 @@ function basicDetails(account) {
   return {
     id,
     title,
-    ReportsManagerId,
-    ReportId,
+    reportsManagerId,
+    reportId,
     firstName,
     lastName,
     email,
@@ -414,10 +414,10 @@ async function sendVerificationEmail(account, origin) {
 
   await sendEmail({
     to: account.email,
-    subject: "Expense Check Invite- Verify Email",
+    subject: "Student Expenses App Invite- Verify Email",
     html: `<h4>Verify Email</h4>
-               <p>You have been invited to join Expense Check!</p>
-               <p>Please Note, the Default password is <b>ExpenseCheck123</b><p>
+               <p>You have been invited to join Student Expenses App!</p>
+               <p>Please Note, the Default password is <b>StudentExpenses123</b><p>
                <p>It is important that you change it after you log in!<p>
                ${message}`,
   });
@@ -433,7 +433,7 @@ async function sendAlreadyRegisteredEmail(email, origin) {
 
   await sendEmail({
     to: email,
-    subject: "Expense Check - Email Already Registered",
+    subject: "Student Expenses App - Email Already Registered",
     html: `<h4>Email Already Registered</h4>
                <p>Your email <strong>${email}</strong> is already registered.</p>
                ${message}`,
@@ -453,7 +453,7 @@ async function sendPasswordResetEmail(account, origin) {
 
   await sendEmail({
     to: account.email,
-    subject: "Expense Check - Reset Password",
+    subject: "Student Expenses App - Reset Password",
     html: `<h4>Reset Password Email</h4>
                ${message}`,
   });

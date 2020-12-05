@@ -10,17 +10,16 @@ import { StudentsFilterPage } from './students-filter/students-filter';
   styleUrls: ["./students.scss"],
 })
 export class StudentsListPage {
-  petOwnersList: any;
+  studentsList: any;
   userId: any;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   queryText = "";
-  segment = "all";
   showSearchbar: boolean;
   ios: boolean;
   filtersList:any;
   adminsIsChecked:boolean;
-  petOwnersIsChecked:boolean
+  studentsIsChecked:boolean
   propertyManagersIsChecked:boolean;
   adminCondition: string;
   petOwnerCondition: string;
@@ -40,7 +39,7 @@ export class StudentsListPage {
 async ionViewDidEnter() {
     (await this.loading).present();
     this.adminsIsChecked=true;
-    this.petOwnersIsChecked=true;
+    this.studentsIsChecked=true;
     this.propertyManagersIsChecked=true;
     this.userId = this.account.accountValue.id;
     if (this.account.accountValue.role == "Admin") {
@@ -49,14 +48,14 @@ async ionViewDidEnter() {
         this.userId = this.account.accountValue.id;
       }
     }
-    (await this.account.getAllStudentsInReports(this.userId))
-      /*.forEach(async (element) => {
-        this.petOwnersList = element;
-        console.log(this.petOwnersList);
+    (await this.account.getAllStudents(this.userId))
+      .forEach(async (element) => {
+        this.studentsList = element;
+        console.log(this.studentsList);
       })
       .then(async () => {
         (await this.loading).dismiss();
-      });*/
+      });
   }
 
   async ionViewWillEnter() {
@@ -67,7 +66,7 @@ async ionViewDidEnter() {
   async presentFilter() {
     this.filtersList= {
       'adminsIsChecked':this.adminsIsChecked,
-      'petOwnersIsChecked':this.petOwnersIsChecked,
+      'studentsIsChecked':this.studentsIsChecked,
       'propertyManagersIsChecked':this.propertyManagersIsChecked
     }
 
@@ -82,7 +81,7 @@ async ionViewDidEnter() {
     const { data } = await modal.onWillDismiss();
     if (data) {
       this.adminsIsChecked = await data.adminsIsChecked;
-      this.petOwnersIsChecked = await data.petOwnersIsChecked;
+      this.studentsIsChecked = await data.studentsIsChecked;
       this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
       this.updateView();
     }
@@ -98,10 +97,10 @@ async ionViewDidEnter() {
       if(this.filtersList.adminsIsChecked==true){
         this.adminCondition='';
       }
-      if(this.filtersList.petOwnersIsChecked==false){
+      if(this.filtersList.studentsIsChecked==false){
         this.petOwnerCondition='User';
       }
-      if(this.filtersList.petOwnersIsChecked==true){
+      if(this.filtersList.studentsIsChecked==true){
         this.petOwnerCondition='';
       }
       if(this.filtersList.propertyManagersIsChecked==false){

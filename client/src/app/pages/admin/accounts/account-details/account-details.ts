@@ -27,15 +27,6 @@ export class AccountDetailsPage {
     title: ""
   };
 
-  ExpenseOwnerReport = {
-    id: "",
-    houseUnitNumber: "",
-    street: "",
-    city: "",
-    state: "",
-    zip: "",
-    ReportManagerId: "",
-  };
 
   key: any;
   value: any;
@@ -43,14 +34,14 @@ export class AccountDetailsPage {
   loading: Promise<HTMLIonLoadingElement>;
   hasReport: boolean = false;
   hasExpenses: boolean = false;
-  ExpenseOwnerExpenses: [Expense];
-  ExpenseOwnerExpensesCount: number;
-  hasProperties: boolean = false;
-  // If they are a P.M
-  ReportManagerProperties: [Report];
-  ReportManagerPropertiesCount: number;
-  ReportManagerExpenseOwnersCount: number;
-  ReportManagerExpensesCount: number;
+  studentExpenses: [Expense];
+  studentExpensesCount: number;
+  hasReports: boolean = false;
+  // If they are a R.M
+  reportsManagerReports: [Report];
+  reportsManagerCount: number;
+  ReportsManagerStudentsCount: number;
+  ReportsManagerExpensesCount: number;
   deleting: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   savingAccount: Promise<HTMLIonLoadingElement>;
@@ -73,32 +64,20 @@ export class AccountDetailsPage {
     (await this.loading).present();
     // The account your viewing....
     this.accountId = this.route.snapshot.paramMap.get("accountId");
-    /*(await this.accountService.getById(this.accountId))
+    (await this.accountService.getById(this.accountId))
       .forEach(async (Element) => {
-        console.log(Element);
-        if (Element.ExpenseOwnerReport) {
-          this.hasReport = true;
-          this.ExpenseOwnerReport = Element.ExpenseOwnerReport;
-        }
-        if (Element.ExpenseOwnerExpenses.length > 0) {
-          this.hasExpenses = true;
-          this.ExpenseOwnerExpenses = Element.ExpenseOwnerExpenses;
-        }
-        if (Element.ReportManagerProperties.length > 0) {
-          this.hasProperties = true;
-          this.ReportManagerPropertiesCount =
-            Element.ReportManagerProperties.length;
-          this.ReportManagerExpenseOwnersCount =
-            Element.ReportManagerExpenseOwnersCount;
-          this.ReportManagerExpensesCount = Element.ReportManagerExpensesCount;
-        }
         this.account = Element;
+        this.studentExpenses = Element.studentExpenses;
+        if(this.studentExpenses.length>0){
+          this.hasExpenses=true;
+        }
+        console.log(Element)
       })
       .then(async () => {
         this.account.created = moment(this.account.created).format('MM-DD-YYYY @HH:mm:ss');
         this.account.updated = moment(this.account.updated).format('MM-DD-YYYY @HH:mm:ss');
         (await this.loading).dismiss();
-      });*/
+      });
   }
 
   async deleteAreYouSure() {
@@ -156,8 +135,8 @@ export class AccountDetailsPage {
     // getting and setting current values
     let currentValue:string|boolean;
     let adminChecked:boolean=false;
-    let ReportManagerChecked:boolean=false;
-    let ExpenseOwnerChecked:boolean=false;
+    let reportsManagerChecked:boolean=false;
+    let studentChecked:boolean=false;
 
 
     switch (contextParamValue) {
@@ -168,12 +147,12 @@ export class AccountDetailsPage {
             adminChecked=true;
             break;
           }
-          case "ReportManager":{
-            ReportManagerChecked=true;
+          case "ReportsManager":{
+            reportsManagerChecked=true;
             break;
           }
-          case "User":{
-            ExpenseOwnerChecked=true;
+          case "Student":{
+            studentChecked=true;
             break;
           }
         }
@@ -227,17 +206,17 @@ export class AccountDetailsPage {
           },
           {
             type: "radio",
-            label: `Report Manager`,
+            label: `Reports Manager`,
             name: "role",
-            value: "ReportManager",
-            checked: ReportManagerChecked
+            value: "ReportsManager",
+            checked: reportsManagerChecked
           },
           {
             type: "radio",
-            label: `Expense Owner`,
+            label: `Student`,
             name: "role",
-            value: "User",
-            checked: ExpenseOwnerChecked
+            value: "Student",
+            checked: studentChecked
           },
         ],
       });

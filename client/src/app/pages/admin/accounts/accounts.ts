@@ -79,12 +79,12 @@ export class AccountsPage  {
     .subscribe(accounts => this.allAccounts = accounts);
 
     //this.updateSchedule();
-   /*(await this.accountService.getAll()).forEach(async Element=>{
+   (await this.accountService.getAll()).forEach(async Element=>{
       this.allAccounts = Element;
-      //console.log(this.allAccounts,"right here")
+      console.log(this.allAccounts,"right here")
     }).then(async ()=>{
 
-    });*/
+    })
   }
 
   // Updates main view from filter...very cool

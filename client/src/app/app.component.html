@@ -3,7 +3,7 @@
     <ion-menu contentId="main-content">
       <ion-header routerLink="/home" routerLinkActive="selected" routerDirection="root" detail="false">
         <ion-toolbar color="primary">
-          <ion-title text-align-left margin-vertical size="large">Student Expenses App</ion-title>
+          <ion-title slot="start" text-align-left margin-vertical size="large">S.E's App</ion-title>
       </ion-toolbar>
       </ion-header>
       <ion-content>
@@ -22,7 +22,7 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list lines="none" [hidden]="!account || account.role =='User' || (account.role != 'Admin' && account.role != 'PropertyManager')">
+        <ion-list lines="none" [hidden]="!account || account.role =='Student' || (account.role != 'Admin' && account.role != 'ReportsManager')">
           <ion-list-header>
             Reports Manager
           </ion-list-header>

@@ -21,7 +21,7 @@
 
     <ion-row>
       <ion-col>
-       <h3><u><b>Basic Details:</b></u></h3>
+       <h3><u><b>Basic Details: (Click To Edit)</b></u></h3>
       </ion-col>
     </ion-row>
 
@@ -34,8 +34,8 @@
     <ion-row>
       <ion-col>
         <ion-item (click)="changeAccount('role')"><b>Role:&nbsp;</b>
-          <span *ngIf="account.role=='PropertyManager'">Property Manager</span>
-          <span *ngIf="account.role=='User'">Pet Owner</span>
+          <span *ngIf="account.role=='ReportsManager'">Reports Manager</span>
+          <span *ngIf="account.role=='Student'">Student</span>
           <span *ngIf="account.role=='Admin'">Admin</span>
         </ion-item>
       </ion-col>
@@ -80,100 +80,55 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-row>
-        <ion-col>
-          <h3 style="text-align: center;"><b><u>Current Address:</u></b></h3>
-        </ion-col>
-      </ion-row>
-    </ion-row>
-    <div *ngIf="hasProperty==false">This Account Is Not Asigned To A Property</div>
-    <div *ngIf="hasProperty==true">
-    <ion-row>
-      <ion-col>
-        <ion-item><b>House / Unit #:&nbsp;</b>{{petOwnerProperty.houseUnitNumber}}</ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item><b>Street:&nbsp;</b>{{petOwnerProperty.street}}</ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item><b>City:&nbsp;</b>{{petOwnerProperty.city}}</ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item><b>State:&nbsp;</b>{{petOwnerProperty.state}}</ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item><b>Zip Code:&nbsp;</b>{{petOwnerProperty.zip}}</ion-item>
-      </ion-col>
-    </ion-row>
-  </div>
-
   <ion-row>
     <ion-row>
       <ion-col>
-        <h3 style="text-align: center;"><b><u>Personal Pets:</u></b></h3>
+        <h3 style="text-align: center;"><b><u>Personal Expenses:</u></b></h3>
         <ion-button routerLink="{{currentRoute}}/pets/add" shape="round" fill="outline">
-          <ion-icon name="add-outline"></ion-icon>Add Pet
+          <ion-icon name="add-outline"></ion-icon>Add Expense
         </ion-button>
       </ion-col>
     </ion-row>
   </ion-row>
 
-  <div *ngIf="hasPets==false">This Account Has No Personal Pets</div>
-  <ion-grid fixed *ngIf="hasPets==true">
+  <div *ngIf="hasExpenses==false">This Account Has No Personal Expenses</div>
+  <ion-grid fixed>
     <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let pet of petOwnerPets">
+      <ion-col size="12" size-md="6" *ngFor="let expense of studentExpenses">
         <ion-card class="speaker-card">
           <!--<ion-card-header>-->
-            <ion-item detail="false" lines="none" class="speaker-item" routerLink='/admin/accounts/account-details/{{accountId}}/pets/pet-details/{{pet.id}}'>
-              <ion-avatar slot="start" *ngIf="pet.species=='Dog'" >
-                <img src="../../../../assets/img/speakers/puppy.jpg" [alt]="pet.petName + ' profile picture'">
-              </ion-avatar>
-              <ion-avatar slot="start" *ngIf="pet.species=='Cat'" >
-                <img src="../../../../assets/img/speakers/kitten.jpg" [alt]="pet.petName + ' profile picture'">
+            <ion-item detail="false" lines="none" class="speaker-item" routerLink='/account/expenses/expense-details/{{expense.id}}'>
+              <ion-avatar slot="start">
+                <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
               </ion-avatar>
               <ion-label>
-                <h2>{{pet.petName}}</h2>
-                <p>{{pet.species}}</p>
-                <p>{{pet.breed}}</p>
+                <h2>{{expense.expenseName}}</h2>
+                <p>{{expense.expenseCost}}</p>
+                <p>{{expense.created}}</p>
               </ion-label>
-              <ion-rating rate={{pet.rating}} readonly="false" size="default">
-              </ion-rating>
             </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <div *ngIf="(account.role=='PropertyManager')||(account.role=='Admin')">
+  <div *ngIf="(account.role=='ReportsManager')||(account.role=='Admin')">
   <ion-row>
     <ion-row>
       <ion-col>
-        <h3 style="text-align: center;"><b><u>Property Manager Details: (VIEW AS THEM)</u></b></h3>
+        <h3 style="text-align: center;"><b><u>Reports Manager Details: (VIEW AS THEM)</u></b></h3>
       </ion-col>
     </ion-row>
   </ion-row>
   <ion-row>
-      <ion-button  expand="block" shape="block" color="primary" routerLink='/admin/accounts/account-details/{{accountId}}/properties'>
-        View Properties ({{propertyManagerPropertiesCount}})
+      <ion-button  expand="block" shape="block" color="primary" routerLink='/admin/accounts/account-details/{{accountId}}/reports'>
+        View Reports ({{propertyManagerPropertiesCount}})
       </ion-button>
-      <ion-button  expand="full" shape="block" color="secondary" routerLink='/admin/accounts/account-details/{{accountId}}/pet-owners'>
-        View Pet Owners ({{propertyManagerPetOwnersCount}})
+      <ion-button  expand="full" shape="block" color="secondary" routerLink='/admin/accounts/account-details/{{accountId}}/students'>
+        View Students ({{propertyManagerPetOwnersCount}})
       </ion-button>
-      <ion-button  expand="full" shape="block" color="medium" routerLink='/admin/accounts/account-details/{{accountId}}/properties-pets'>
-        View Properties Pets ({{propertyManagerPetsCount}})
+      <ion-button  expand="full" shape="block" color="medium" routerLink='/admin/accounts/account-details/{{accountId}}/reports-expenses'>
+        View Expenses ({{propertyManagerPetsCount}})
       </ion-button>
   </ion-row>
 

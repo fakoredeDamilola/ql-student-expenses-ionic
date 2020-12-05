@@ -2,8 +2,8 @@
 
 export class Account {
     id: string;
-    propertyId?:string;//<-----That I belong to, or a resident of
-    propertyManagerId?:string;//<-----That I belong to, or a resident of
+    reportId?:string;//<-----That I belong to, or a resident of
+    reportsManagerId?:string;//<-----That I belong to, or a resident of
     title: string;
     firstName: string;
     lastName: string;
@@ -20,5 +20,6 @@ export class Account {
     created: string;
     isVerified: boolean;
     updated: string;
+  studentExpenses: [import("/Users/mike/Documents/another one ql/student-expenses-ionic/client/src/app/_models/expense").Expense];
     //petOwnerProperty?: Property;
 }

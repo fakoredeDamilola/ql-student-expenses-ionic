@@ -58,7 +58,8 @@ export class AddStudentPage {
     // get report, then the reportManagerId
     (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
-        this.reportsManagerId = Element.reportsManager.id;
+        console.log(Element)
+        this.reportsManagerId = Element.reportsManagerId;
       })
       .then(async () => {
         (await this.loading).dismiss();

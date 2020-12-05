@@ -19,7 +19,7 @@ const connectionOptions = {
 
 // Initialize environment
 const app = express();
-const mongoURI = "mongodb://localhost/node-mongo-signup-verification-api";
+const mongoURI = "mongodb+srv://ql-student-expenses:ql-student-expenses@cluster0.xpl5r.mongodb.net/ql-student-expenses-app?retryWrites=true&w=majority";
 
 // Create Mongo connection
 const conn = mongoose.createConnection(mongoURI, connectionOptions);

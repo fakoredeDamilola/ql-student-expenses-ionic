@@ -67,7 +67,8 @@ function basicDetails(Expense) {
     reportId,
     reportsManagerId,
     expenseName,
-    expenseCost
+    expenseCost,
+    created
   } = Expense;
   return {
     id,
@@ -75,6 +76,7 @@ function basicDetails(Expense) {
     reportId,
     reportsManagerId,
     expenseName,
-    expenseCost
+    expenseCost,
+    created
   };
 }

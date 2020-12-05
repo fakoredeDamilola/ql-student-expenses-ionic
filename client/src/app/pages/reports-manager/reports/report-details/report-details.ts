@@ -16,7 +16,7 @@ import { Expense} from '@app/_models';
 export class ReportDetailsPage {
   accountId: string;
   reportId: string;
-  report = { houseUnitNumber:'', street:'',  city:'', state:'', zip:'' };
+  report = { reportName: "" };
   petOwner ={title:'', firstName:'', lastName:'', isVerified:true, email:''};
   reportExpenses:[Expense];
   // key value for the edit input
@@ -35,7 +35,7 @@ export class ReportDetailsPage {
     public route: ActivatedRoute,
     private router: Router,
     public inAppBrowser: InAppBrowser,
-    public ReportService: ReportService,
+    public reportService: ReportService,
     public alertCtrl: AlertController,
     public alertService: AlertService,
     public accountService: AccountService,
@@ -59,21 +59,17 @@ export class ReportDetailsPage {
       );
     }
 
-    /*(await this.ReportService
+    (await this.reportService
       .getById(this.reportId))
       .forEach(async (Element) => {
         //console.log(Element,"here")
-        this.report=Element;
-        this.student = Element.student;
-        this.ReportName = Element.ReportName;
-        this.ReportPets = Element.ReportPets;
-        this.ReportPetOwnerCount = Element.ReportPetOwnerCount;
-        this.ReportPetsCount = Element.ReportPets.length;
+        this.reportName =Element.reportName;
+
         console.log(Element)
       })
       .then(async () => {
         (await this.loading).dismiss();
-      });*/
+      });
   }
 
 
@@ -143,7 +139,7 @@ export class ReportDetailsPage {
 
   private async updateReportMasterList(contextParamValue, popUpText) {
     //console.log(contextParamValue,"what is this??");
-    (await this.ReportService
+    (await this.reportService
       .update(this.reportId, contextParamValue))
       .pipe(first())
       .subscribe({
@@ -195,7 +191,7 @@ export class ReportDetailsPage {
 
   async deleteReport() {
     (await this.deleting).present();
-    this.ReportService
+    this.reportService
       .delete(this.reportId)
       .pipe(first())
       .subscribe({

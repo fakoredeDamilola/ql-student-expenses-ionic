@@ -11,12 +11,11 @@ import { Location } from "@angular/common";
 })
 export class ReportsListPage {
   queryText = "";
-  segment = "all";
   showSearchbar: boolean;
   ios: boolean;
   filtersList: any;
-  ReportsList: any;
-  propertyManagerId: any;
+  reportsList: any;
+  reportsManagerId: any;
   loading: any;
   currentRoute: string = this.router.url;
 
@@ -32,26 +31,26 @@ export class ReportsListPage {
   }
 
   async ionViewWillEnter() {
-    //TODO USE PROPERTY get by propertyManagerId and load virtuals
+    //TODO USE reports get by reportsManagerId and load virtuals
     (await this.loading).present();
-    this.propertyManagerId = this.accountService.accountValue.id;
+    this.reportsManagerId = this.accountService.accountValue.id;
     //console.log(this.router.url); //  /routename
 
     if (this.accountService.accountValue.role == "Admin") {
-      this.propertyManagerId = this.route.snapshot.paramMap.get("accountId");
+      this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
 
       if (this.route.snapshot.paramMap.get("accountId") == null) {
-        this.propertyManagerId = this.accountService.accountValue.id;
+        this.reportsManagerId = this.accountService.accountValue.id;
       }
     }
     (
       await this.accountService.getAllReportsOnAccount(
-        this.propertyManagerId
+        this.reportsManagerId
       )
     )
       .forEach(async (Element) => {
-        //console.log(Element.propertyManagerReports);
-        this.ReportsList = Element;
+        //console.log(Element.reportsManagerReports);
+        this.reportsList = Element;
         console.log(Element);
       })
       .then(async () => {
@@ -59,22 +58,11 @@ export class ReportsListPage {
       });
   }
 
-  async presentLoadingWithOptions() {
-    const loading = await this.loadingController.create({
-      message: "Pet Check &#10003;",
-      translucent: true,
-      //duration:500,
-      cssClass: "custom-class custom-loading",
-      backdropDismiss: true,
-    });
-    return loading;
-  }
-
   async presentFilter() {
     /*  this.filtersList= {
       'adminsIsChecked':this.adminsIsChecked,
       'petOwnersIsChecked':this.petOwnersIsChecked,
-      'propertyManagersIsChecked':this.propertyManagersIsChecked
+      'reportsManagersIsChecked':this.reportsManagersIsChecked
     }
 
     const modal = await this.modalCtrl.create({
@@ -89,7 +77,7 @@ export class ReportsListPage {
     if (data) {
       this.adminsIsChecked = await data.adminsIsChecked;
       this.petOwnersIsChecked = await data.petOwnersIsChecked;
-      this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
+      this.reportsManagersIsChecked = await data.reportsManagersIsChecked;
       this.updateView();
     }*/
   }

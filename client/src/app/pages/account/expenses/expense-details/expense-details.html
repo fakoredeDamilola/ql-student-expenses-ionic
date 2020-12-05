@@ -7,16 +7,15 @@
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="species=='Dog'" class="dog-background">
-
+  <div >
+    <img src='../../../../../assets/img/expenses1.jpg'/>
   </div>
 
-  <div *ngIf="species=='Cat'" class="cat-background">
 
-  </div>
 <ion-row>
   <ion-col>
-    <h3><b><u>Expense Details:</u></b></h3>
+    <h3><b><u>Expense Details:</u></b>  </h3>
+    <p>Created: {{expenseCreated}}</p>
   </ion-col>
   <ion-col>
     <ion-button fill="clear" expand="full" color="secondary" routerLink="{{currentRoute}}/add-image">
@@ -27,12 +26,12 @@
 <ion-list inset>
   <ion-row>
     <ion-col>
-      <ion-item (click)="editExpenseName()"><b>Expense Name:&nbsp;</b>{{expenseName}}</ion-item>
+      <ion-item (click)="editExpenseName()"><b>Name:&nbsp;</b>{{expenseName}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-item (click)="editExpenseCost()"><b>Expense Cost:&nbsp;</b>{{expenseCost}}</ion-item>
+      <ion-item (click)="editExpenseCost()"><b>Cost:&nbsp;</b>{{expenseCost}}</ion-item>
     </ion-col>
 </ion-row>
 

@@ -37,7 +37,7 @@ router.get("/:accountId/expenses/", getAllExpensesOnAccount);
 //router.put("/:accountId/Reports/", authorize(), pushreportsToAccount);
 // Need to use db.reports find({})
 router.get("/:reportsManagerId/reports/", getAllReportsOnAccount);
-router.get("/:reportsManagerId/pet-owners/", getAllStudentsInReports);
+router.get("/:reportsManagerId/students/", getAllStudentsInReports);
 router.get("/:reportsManagerId/expenses-on-reports/", getReportsExpenses);
 router.get("/:reportsManagerId/reports-expenses/", getAllExpensesInReports);
 module.exports = router;
@@ -145,7 +145,7 @@ function registerSchema(req, res, next) {
     role: Joi.string(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
-    reportsId: Joi.string(),
+    reportId: Joi.string(),
     reportsManagerId: Joi.string(),
     email: Joi.string().email().required(),
     password: Joi.string().min(6),
@@ -295,11 +295,13 @@ function updateSchema(req, res, next) {
 
 function update(req, res, next) {
   // Students can update their own account and admins can update any account, THIS IS SO IMPORTANT NOT ACCOUNT ID ITS ID FOR Student.id
-  if (req.params.accountId !== req.Student.id && req.Student.role !== Role.Admin) {
+  if (req.params.accountId !== req.user.id && req.user.role !== Role.Admin) {
+
     return res.status(399).json({
       message: "Unauthorized update to someone else account, your bad",
     });
   }
+  console.log(req.params, req.body)
   accountService
     .update(req.params.accountId, req.body)
     .then((account) => res.json(account))

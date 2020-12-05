@@ -2,7 +2,7 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/property-manager/pet-owners"></ion-back-button>
+        <ion-back-button defaultHref="/reports-manager/studentss"></ion-back-button>
       </ion-buttons>
       <ion-buttons slot="end">
       </ion-buttons>
@@ -15,7 +15,7 @@
   <ion-list inset>
 <ion-row>
   <ion-col>
-   <h3><u><b>Students' Basic Details:</b></u></h3>
+   <h3><u><b>Student Details:</b></u></h3>
   </ion-col>
 </ion-row>
 
@@ -38,83 +38,12 @@
     </ion-col>
   </ion-row>
   <!--Property Details Section-->
-  <ion-row>
-    <ion-col>
-     <h3><u><b>Current Residence:</b></u></h3>
-    </ion-col>
-  </ion-row>
 
 
 
- <ion-row *ngIf="propertyName!==undefined">
-    <ion-col>
-      <ion-item><b>Property Name:&nbsp;</b>{{propertyName}}</ion-item>
-    </ion-col>
-  </ion-row>
 
-  <ion-row>
-    <ion-col>
-      <ion-item><b>House / Unt #:&nbsp;</b>{{property.city}}</ion-item>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col>
-      <ion-item><b>Street:&nbsp;</b>{{property.street}}</ion-item>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col>
-      <ion-item><b>City:&nbsp;</b>{{property.city}}</ion-item>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col>
-      <ion-item><b>State:&nbsp;</b>{{property.state}}</ion-item>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col>
-      <ion-item><b>Zip Code:&nbsp;</b>{{property.zip}}</ion-item>
-    </ion-col>
-  </ion-row>
-
-<ion-row>
-  <ion-col>
-   <h3><u><b>Pets:</b></u></h3>
-  </ion-col>
-</ion-row>
-
-<div *ngIf="petsLength==0">This Account Has No Personal Pets</div>
-<ion-grid fixed>
-  <ion-row>
-    <ion-col size="12" size-md="6" *ngFor="let pet of pets">
-      <ion-card class="speaker-card">
-        <!--<ion-card-header>-->
-          <ion-item detail="false" lines="none" class="speaker-item" routerLink='{{currentRoute}}/pet-owner-pets/pet-details/{{pet.id}}'>
-            <ion-avatar slot="start" *ngIf="pet.species=='Dog'" >
-              <img src="../../../../assets/img/speakers/puppy.jpg" [alt]="pet.petName + ' profile picture'">
-            </ion-avatar>
-            <ion-avatar slot="start" *ngIf="pet.species=='Cat'" >
-              <img src="../../../../assets/img/speakers/kitten.jpg" [alt]="pet.petName + ' profile picture'">
-            </ion-avatar>
-            <ion-label>
-              <h2>{{pet.petName}}</h2>
-              <p>{{pet.species}}</p>
-              <p>{{pet.breed}}</p>
-            </ion-label>
-            <ion-rating rate='4.5' readonly="false" size="default">
-            </ion-rating>
-          </ion-item>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-</ion-grid>
 </ion-list>
 
-    <ion-button expand="full" shape="block" color="danger">Remove Pet Owner</ion-button>
+    <ion-button expand="full" shape="block" color="danger">Remove Student</ion-button>
 
 </ion-content>

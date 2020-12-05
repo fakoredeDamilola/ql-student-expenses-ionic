@@ -27,7 +27,6 @@ export class StudentDetailsPage {
   currentRoute: string = this.router.url;
   expenses: [Expense];
   expensesLength: number;
-  report={  city:'', street:'', state:'', zip:'' };
   reportName: string;
   isVerified: boolean;
 
@@ -44,7 +43,7 @@ export class StudentDetailsPage {
 
   async ionViewWillEnter() {
     (await this.loading).present();
-    this.studentId = this.route.snapshot.paramMap.get("StudentId");
+    this.studentId = this.route.snapshot.paramMap.get("studentId");
     // get id out of url
     if(this.accountService.accountValue.role!='Admin'){
       window.history.replaceState(
@@ -62,7 +61,7 @@ export class StudentDetailsPage {
         this.created = Element.created;
         this.isVerified = Element.isVerified;
         //this.expenses = Element.studentExpenses;
-        this.expensesLength = this.expenses.length;
+
         //this.reportName = Element.studentReport.reportName;
         //this.report = Element.studentReport;
         console.log(Element);

@@ -27,6 +27,7 @@ export class ExpenseDetailsPage {
   deleting: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   expenseCost: string;
+  expenseCreated: string;
 
 
   constructor(
@@ -89,7 +90,8 @@ export class ExpenseDetailsPage {
       .getById(this.expenseId)
       .forEach(async (Element) => {
         this.expenseName = Element.expenseName;
-        this.expenseCost = Element.expenseCost
+        this.expenseCost = Element.expenseCost;
+        this.expenseCreated = Element.created;
       })
       .then(async () => {
         (await this.loading).dismiss();

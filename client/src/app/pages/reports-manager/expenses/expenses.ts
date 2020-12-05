@@ -9,17 +9,16 @@ import { AccountService, AlertService } from "@app/_services";
 })
 export class ExpensesListPage {
   queryText = "";
-  segment = "all";
   showSearchbar: boolean;
   ios: boolean;
   filtersList:any;
-  propertyManagerId: string;
+  reportsManagerId: string;
   expensesList: any;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   userId: any;
   petOwnersList: any;
-  propertyexpenses:any;
+  reportsExpenses:any;
 
   constructor(
     private accountService: AccountService,
@@ -31,12 +30,12 @@ export class ExpensesListPage {
   }
 
   async ionViewDidEnter() {
-    this.propertyManagerId = this.accountService.accountValue.id;
+    this.reportsManagerId = this.accountService.accountValue.id;
 
     if (this.accountService.accountValue.role == "Admin") {
-      this.propertyManagerId = this.route.snapshot.paramMap.get("accountId");
+      this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
       if (this.route.snapshot.paramMap.get("accountId") == null) {
-        this.propertyManagerId = this.accountService.accountValue.id;
+        this.reportsManagerId = this.accountService.accountValue.id;
       }
     }
       this.userId = this.accountService.accountValue.id;
@@ -49,7 +48,7 @@ export class ExpensesListPage {
       (await this.accountService.getReportsExpenses(this.userId))
       .forEach(async (element) => {
         console.log(element)
-        this.propertyexpenses = element
+        this.reportsExpenses = element
         console.log(element,"This???")
 
       })
@@ -67,7 +66,7 @@ export class ExpensesListPage {
     /*  this.filtersList= {
         'adminsIsChecked':this.adminsIsChecked,
         'petOwnersIsChecked':this.petOwnersIsChecked,
-        'propertyManagersIsChecked':this.propertyManagersIsChecked
+        'reportsManagersIsChecked':this.reportsManagersIsChecked
       }
 
       const modal = await this.modalCtrl.create({
@@ -82,7 +81,7 @@ export class ExpensesListPage {
       if (data) {
         this.adminsIsChecked = await data.adminsIsChecked;
         this.petOwnersIsChecked = await data.petOwnersIsChecked;
-        this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
+        this.reportsManagersIsChecked = await data.reportsManagersIsChecked;
         this.updateView();
       }*/
     }
