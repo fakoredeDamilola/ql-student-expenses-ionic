@@ -24,6 +24,10 @@ ion-toolbar ion-menu-button {
 
   display: flex;
 
+  opacity: 70%;
+
+
+
   padding-top: var(--ion-safe-area-top);
 
   align-items: center;
@@ -33,7 +37,7 @@ ion-toolbar ion-menu-button {
 
   height: calc(250px + var(--ion-safe-area-top));
 
-  background: center / cover url(/assets/img/about/home.jpg) no-repeat;
+  background: center / cover url(/assets/img/er.jpg) no-repeat;
 }
 
 .speaker-background img {
