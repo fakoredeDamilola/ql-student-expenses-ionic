@@ -40,11 +40,12 @@ export class AccountDetailsPage {
   // If they are a R.M
   reportsManagerReports: [Report];
   reportsManagerCount: number;
-  ReportsManagerStudentsCount: number;
-  ReportsManagerExpensesCount: number;
+  reportsManagerStudentsCount: number;
+  reportsManagerExpensesCount: number;
   deleting: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   savingAccount: Promise<HTMLIonLoadingElement>;
+  totalOfExpenses: number=0;
 
   constructor(
     public route: ActivatedRoute,
@@ -68,10 +69,17 @@ export class AccountDetailsPage {
       .forEach(async (Element) => {
         this.account = Element;
         this.studentExpenses = Element.studentExpenses;
+        this.studentExpensesCount = Element.studentExpensesCount;
         if(this.studentExpenses.length>0){
           this.hasExpenses=true;
         }
         console.log(Element)
+             //calculate expenses total
+             for(let i = 0; i< this.studentExpensesCount;i++){
+              this.totalOfExpenses +=  Number(this.studentExpenses[i].expenseCost);
+            }
+            this.totalOfExpenses = Number(this.totalOfExpenses.toFixed(2));
+
       })
       .then(async () => {
         this.account.created = moment(this.account.created).format('MM-DD-YYYY @HH:mm:ss');

@@ -84,7 +84,7 @@
     <ion-row>
       <ion-col>
         <h3 style="text-align: center;"><b><u>Personal Expenses:</u></b></h3>
-        <ion-button routerLink="{{currentRoute}}/pets/add" shape="round" fill="outline">
+        <ion-button routerLink="{{currentRoute}}/expenses/add" shape="round" fill="outline">
           <ion-icon name="add-outline"></ion-icon>Add Expense
         </ion-button>
       </ion-col>
@@ -108,6 +108,11 @@
               </ion-label>
             </ion-item>
         </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+       <h5><u><b>Expenses Total</b></u>: ${{totalOfExpenses}}</h5>
       </ion-col>
     </ion-row>
   </ion-grid>

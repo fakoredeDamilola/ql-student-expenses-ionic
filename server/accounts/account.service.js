@@ -172,8 +172,15 @@ async function resetPassword({ token, password }) {
 
 async function getAll() {
   const accounts = await db.Account.find()
-    .populate("studentExpensesCount")
-    .populate("reportsManagerReportsCount");
+  .populate("studentExpenses")
+  .populate("studentExpensesCount")
+  .populate("studentReport")
+  .populate("reportsManager")
+  .populate("reportsManagerReports")
+  .populate("reportsManagerExpenses")
+  .populate("reportsManagerStudents")
+  .populate("reportsManagerExpensesCount")
+  .populate("reportsManagerStudentsCount");
   return await accounts.map((x) => basicDetails(x));
 }
 
@@ -181,9 +188,15 @@ async function getAllStudentsInReports(reportsManagerId) {
   const allStudentsInReports = await db.Account.find({
     reportsManagerId: reportsManagerId,
   })
-    .populate("studentExpenses")
-    .populate("studentExpensesCount")
-    .populate("studentReport");
+  .populate("studentExpenses")
+  .populate("studentExpensesCount")
+  .populate("studentReport")
+  .populate("reportsManager")
+  .populate("reportsManagerReports")
+  .populate("reportsManagerExpenses")
+  .populate("reportsManagerStudents")
+  .populate("reportsManagerExpensesCount")
+  .populate("reportsManagerStudentsCount");
 
   return allStudentsInReports.map((x) => basicDetails(x));
 }
@@ -212,6 +225,7 @@ async function getById(id) {
     .populate("studentExpenses")
     .populate("studentExpensesCount")
     .populate("studentReport")
+    .populate("reportsManager")
     .populate("reportsManagerReports")
     .populate("reportsManagerExpenses")
     .populate("reportsManagerStudents")
@@ -310,6 +324,7 @@ async function getAccount(id) {
   const account = await db.Account.findById(id)
     .populate("studentExpenses")
     .populate("studentExpensesCount")
+    .populate("reportsManager")
     .populate("reportsManagerReports")
     .populate("reportsManagerExpenses")
     .populate("reportsManagerStudents")
@@ -369,6 +384,7 @@ function basicDetails(account) {
     studentExpensesCount,
     test,
     studentReport,
+    reportsManager,
     reportsManagerReports,
     reportsManagerReportsCount,
     reportsManagerExpenses,
@@ -392,6 +408,7 @@ function basicDetails(account) {
     studentExpensesCount,
     test,
     studentReport,
+    reportsManager,
     reportsManagerReports,
     reportsManagerReportsCount,
     reportsManagerExpenses,

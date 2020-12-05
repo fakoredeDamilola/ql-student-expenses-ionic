@@ -54,13 +54,21 @@ schema.virtual("studentReport", {
   justOne: true
 });
 // My Properties if I am A Report Manager
-schema.virtual("reportsManagerProperties", {
+schema.virtual("reportsManagerReports", {
   ref: "Report", // The model to use
   localField: "_id", // Find people where `localField`
   foreignField: "reportsManagerId", // is equal to `foreignField`
   justOne: false,
 });
-schema.virtual("reportsManagerPropertiesCount", {
+
+schema.virtual("reportsManager", {
+  ref: "Account", // The model to use
+  localField: "reportsManagerId", // Find people where `localField`
+  foreignField: "_id", // is equal to `foreignField`
+  justOne: false,
+});
+
+schema.virtual("reportsManagerReportsCount", {
   ref: "Report", // The model to use
   localField: "_id", // Find people where `localField`
   foreignField: "reportsManagerId", // is equal to `foreignField`
@@ -68,14 +76,14 @@ schema.virtual("reportsManagerPropertiesCount", {
   count:true
 });
 // Expenses In My Properties if I am A Report Manager
-schema.virtual("reportManagerExpenses", {
+schema.virtual("reportsManagerExpenses", {
   ref: "Expense", // The model to use
   localField: "_id", // Find people where `localField`
   foreignField: "reportsManagerId", // is equal to `foreignField`
   justOne: false,
 });
 // Expense Owners In My Properties if I am A Report Manager
-schema.virtual("reportsManagerstudents", {
+schema.virtual("reportsManagerStudents", {
   ref: "Account", // The model to use
   localField: "_id", // Find people where `localField`
   foreignField: "reportsManagerId", // is equal to `foreignField`
@@ -90,7 +98,7 @@ schema.virtual("reportsManagerExpensesCount", {
   count: true,
 });
 // Expense Owners In My Properties if I am A Report Manager
-schema.virtual("reportsManagerstudentsCount", {
+schema.virtual("reportsManagerStudentsCount", {
   ref: "Account", // The model to use
   localField: "_id", // Find people where `localField`
   foreignField: "reportsManagerId", // is equal to `foreignField`

@@ -23,7 +23,7 @@ export class ReportService {
     return this.ReportSubject.value;
   }
 
-  getAll() {
+  async getAll() {
     return this.http.get<Report[]>(baseUrl);
   }
 

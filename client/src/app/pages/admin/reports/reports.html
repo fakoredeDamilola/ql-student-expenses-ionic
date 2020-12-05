@@ -27,7 +27,7 @@
 <ion-content fullscreen="true">
   <ion-header collapse="condense">
     <ion-toolbar color="secondary">
-      <ion-title text-align-center size="large">Properties (Admin)</ion-title>
+      <ion-title text-align-center size="large">Reports (Admin)</ion-title>
     </ion-toolbar>
     <ion-toolbar>
       <ion-searchbar [(ngModel)]="queryText" placeholder="Search" (ionChange)="updateView()"></ion-searchbar>
@@ -36,18 +36,18 @@
   <ion-item-divider sticky>
 
   </ion-item-divider>
-  <ion-grid fixed *ngIf="segment=='all'">
+  <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let property of allProperties">
+      <ion-col size="12" size-md="6" *ngFor="let report of allReports">
         <ion-card class="speaker-card">
           <ion-card-header>
             <ion-item detail="false" lines="none" class="speaker-item"
-              routerLink="{{currentRoute}}/property-details/{{property.id}}">
+              routerLink="{{currentRoute}}/report-details/{{report.id}}">
               <ion-avatar slot="start">
-                <img src="../../../../assets/img/about/home.jpg" [alt]="' property picture'">
+                <img src="../../../../assets/img/credit-card-expense-report-icon-simple-style-credit-card-expense-report-icon-simple-illustration-credit-card-expense-report-160537997.jpg" [alt]="'Report picture'">
               </ion-avatar>
               <ion-label>
-                <h2>{{property.propertyName}}</h2>
+                <h2>{{report.reportName}}</h2>
               </ion-label>
             </ion-item>
           </ion-card-header>
@@ -56,16 +56,7 @@
             <ion-list lines="none">
               <ion-item>
                 <ion-label>
-                  <h3>{{property.houseUnitNumber}} {{property.street}}</h3>
-                  <h3>{{property.city}}, {{property.state}}, {{property.zip}}</h3>
-                  <br>
-                  <div *ngIf="property.propertyPetOwnerCount==0">
-                    <h3>No Pet Owners</h3>
-                  </div>
-                  <div *ngIf="property.propertyPetOwnerCount!=0">
-                    <h2><b>Pet Owner:</b> {{property.propertyPetOwner.firstName}} {{property.propertyPetOwner.lastName}}
-                    </h2>
-                  </div>
+                  <h3>Created:{{report.created}}</h3>
                 </ion-label>
               </ion-item>
             </ion-list>

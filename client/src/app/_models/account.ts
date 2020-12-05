@@ -21,5 +21,6 @@ export class Account {
     isVerified: boolean;
     updated: string;
   studentExpenses: [import("/Users/mike/Documents/another one ql/student-expenses-ionic/client/src/app/_models/expense").Expense];
+  studentExpensesCount: number;
     //petOwnerProperty?: Property;
 }

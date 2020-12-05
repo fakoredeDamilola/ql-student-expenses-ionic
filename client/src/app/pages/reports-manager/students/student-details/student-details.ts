@@ -5,6 +5,7 @@ import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first, toArray } from "rxjs/operators";
 import { Expense, Report } from '@app/_models';
+import { CastExpr } from '@angular/compiler';
 
 @Component({
   selector: "page-student-details",
@@ -25,10 +26,11 @@ export class StudentDetailsPage {
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
-  expenses: [Expense];
+  studentExpenses: [Expense];
   expensesLength: number;
   reportName: string;
   isVerified: boolean;
+  totalOfExpenses: number=0;
 
   constructor(
     public route: ActivatedRoute,
@@ -60,7 +62,8 @@ export class StudentDetailsPage {
         this.email = Element.email;
         this.created = Element.created;
         this.isVerified = Element.isVerified;
-        //this.expenses = Element.studentExpenses;
+        this.studentExpenses = Element.studentExpenses;
+        this.expensesLength = Element.studentExpenses.length;
 
         //this.reportName = Element.studentReport.reportName;
         //this.report = Element.studentReport;
@@ -68,6 +71,12 @@ export class StudentDetailsPage {
       })
       .then(async () => {
         (await this.loading).dismiss();
+
+        //calculate expenses total
+        for(let i = 0; i< this.expensesLength;i++){
+          this.totalOfExpenses +=  Number(this.studentExpenses[i].expenseCost);
+        }
+
       });
   }
 

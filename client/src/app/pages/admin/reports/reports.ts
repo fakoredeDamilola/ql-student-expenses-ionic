@@ -29,7 +29,7 @@ export class ReportsPage  {
   segment = "all";
   showSearchbar: boolean;
   loading: any;
-  allreports: any|[Report];
+  allReports: any|[Report];
   adminsIsChecked:boolean;
   petOwnersIsChecked:boolean
   ReportManagersIsChecked:boolean;
@@ -53,7 +53,7 @@ export class ReportsPage  {
     public user: UserData,
     public config: Config,
     private acountService: AccountService,
-    private ReportService: ReportService
+    private reportService: ReportService
   ) {
     this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
   }
@@ -66,9 +66,9 @@ export class ReportsPage  {
     (await this.loading).present();
     //this.updateSchedule();
     this.ios = await this.config.get("mode") === "ios";
-   (await this.ReportService.getAll()).forEach(async Element=>{
-      this.allreports = Element;
-      console.log(this.allreports,"right here")
+   (await this.reportService.getAll()).forEach(async Element=>{
+      this.allReports = Element;
+      console.log(this.allReports,"right here")
     }).then(async ()=>{
       (await this.loading).dismiss();
     });
@@ -122,79 +122,4 @@ export class ReportsPage  {
     }
   }
 
-  async addFavorite(slidingItem: HTMLIonItemSlidingElement, sessionData: any) {
-    if (this.user.hasFavorite(sessionData.name)) {
-      // Prompt to remove favorite
-      await this.removeFavorite(
-        slidingItem,
-        sessionData,
-        "Favorite already added"
-      );
-    } else {
-      // Add as a favorite
-      this.user.addFavorite(sessionData.name);
-
-      // Close the open item
-      await slidingItem.close();
-
-      // Create a toast
-      const toast = await this.toastCtrl.create({
-        header: `${sessionData.name} was successfully added as a favorite.`,
-        duration: 3000,
-        buttons: [
-          {
-            text: "Close",
-            role: "cancel",
-          },
-        ],
-      });
-
-      // Present the toast at the bottom of the page
-      await toast.present();
-    }
-  }
-
-  async removeFavorite(
-    slidingItem: HTMLIonItemSlidingElement,
-    sessionData: any,
-    title: string
-  ) {
-    const alert = await this.alertCtrl.create({
-      header: title,
-      message: "Would you like to remove this session from your favorites?",
-      buttons: [
-        {
-          text: "Cancel",
-          handler: () => {
-            // they clicked the cancel button, do not remove the session
-            // close the sliding item and hide the option buttons
-            slidingItem.close();
-          },
-        },
-        {
-          text: "Remove",
-          handler: () => {
-            // they want to remove this session from their favorites
-            this.user.removeFavorite(sessionData.name);
-            this.updateView();
-
-            // close the sliding item and hide the option buttons
-            slidingItem.close();
-          },
-        },
-      ],
-    });
-    // now present the alert on top of all other content
-    await alert.present();
-  }
-
-  async openSocial(network: string, fab: HTMLIonFabElement) {
-    const loading = await this.loadingCtrl.create({
-      message: `Posting to ${network}`,
-      duration: Math.random() * 1000 + 500,
-    });
-    await loading.present();
-    await loading.onWillDismiss();
-    fab.close();
-  }
 }

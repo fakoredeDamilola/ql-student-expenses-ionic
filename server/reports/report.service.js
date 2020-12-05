@@ -11,6 +11,9 @@ module.exports = {
 
 async function getAll() {
   const report = await db.Report.find()
+  .populate('reportStudentsCount')
+  .populate('reportExpensesCount');
+  
 
   return report.map((x) => basicDetails(x));
 }
@@ -71,17 +74,17 @@ function basicDetails(report) {
     reportsManagerId,
     reportsManager,
     reportName,
-    studentsCount,
-    reportExpenses,
-    reportExpensesCount
+    reportStudentsCount,
+    reportExpensesCount,
+    created
   } = report;
   return {
     id,
     reportsManagerId,
     reportsManager,
     reportName,
-    studentsCount,
-    reportExpenses,
-    reportExpensesCount
+    reportStudentsCount,
+    reportExpensesCount,
+    created
   };
 }
