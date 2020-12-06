@@ -62,7 +62,7 @@ export class AccountDetailsPage {
     this.savingAccount = this.alertService.presentLoading("Saving...");
   }
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Admin Student Expenses App");
+    this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
     // The account your viewing....
     this.accountId = this.route.snapshot.paramMap.get("accountId");
@@ -260,7 +260,7 @@ export class AccountDetailsPage {
     }
   }
 
-  private async updateAccount(contextParamValue, popUpText) {
+  private async updateAccount(contextParamValue:any, popUpText:string) {
     //console.log(contextParamValue,"what is this??")
     (await this.accountService.update(this.accountId, contextParamValue))
       .pipe(first())

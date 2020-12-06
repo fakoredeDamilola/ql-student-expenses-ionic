@@ -26,7 +26,7 @@ export class AccountService {
     return this.accountSubject.value;
   }
 
-  login(email: string, password: string) {
+  async login(email: string, password: string) {
     //this.accountSubject.subscribe(x => console.log(x,"this still shouldnt be anything???"));
     return this.http
       .post<any>(

@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ExpenseDetailsPage
   },
   {
-    path: "pets/pet-details/:petId",
+    path: "expenses/expense-details/:expenseId",
     loadChildren: () =>
       import("@app/pages/account/expenses/expense-details/expense-details.module").then(
         (m) => m.ExpenseDetailsModule

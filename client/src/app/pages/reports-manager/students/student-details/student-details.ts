@@ -42,7 +42,7 @@ export class StudentDetailsPage {
   ) {}
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.studentId = this.route.snapshot.paramMap.get("studentId");
     // get id out of url

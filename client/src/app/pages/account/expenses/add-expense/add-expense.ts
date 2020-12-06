@@ -6,7 +6,7 @@ import { AccountService, AlertService, ExpenseService } from "@app/_services";
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { ExpenseOptions } from "@app/interfaces/expense-options";
-import {Location} from '@angular/common';
+import { Location } from "@angular/common";
 
 @Component({
   selector: "page-add-expense",
@@ -14,13 +14,12 @@ import {Location} from '@angular/common';
   styleUrls: ["./add-expense.scss"],
 })
 export class AddExpensePage {
-  account = this.accountService.accountValue
+  account = this.accountService.accountValue;
   submitted: boolean = false;
-  userData: any;
 
   addExpense: ExpenseOptions = {
     expenseName: "",
-    expenseCost:""
+    expenseCost: "",
   };
   loading: Promise<HTMLIonLoadingElement>;
   savingExpense: Promise<HTMLIonLoadingElement>;
@@ -33,63 +32,66 @@ export class AddExpensePage {
     public inAppBrowser: InAppBrowser,
     public alertService: AlertService,
     private _location: Location
-  ) {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
-    this.savingExpense = this.alertService.presentLoading("Saving expense...");
-  }
+  ) {}
 
   async ionViewWillEnter() {
-    (await (this.loading)).present();
+    this.loading = this.alertService.presentLoading("Student Expenses");
+    (await this.loading).present();
   }
 
-  async ionViewDidEnter(){
-    (await (this.loading)).dismiss();
+  async ionViewDidEnter() {
+    setTimeout(async () => {
+      (await this.loading).dismiss();
+    }, 300);
   }
 
   async onAddExpense(form?: NgForm) {
-    (await (this.savingExpense)).present();
+    this.savingExpense = this.alertService.presentLoading("Saving Expense...");
+    (await this.savingExpense).present();
     this.submitted = true;
     // stop here if form is invalid
     if (form.invalid) {
       this.alertService.createToastAlert(
-        "Add To expenses failed, fields are invalid.....!",
+        "Add To Expenses Failed, Fields Are Invalid.....!",
         "danger",
         8000
       );
-      (await (this.savingExpense)).dismiss();
+      setTimeout(async () => {
+        (await this.savingExpense).dismiss();
+      }, 300);
       return;
     }
     form.value.studentId = this.account.id;
     form.value.reportId = this.account.reportId;
-    console.log(this.account,'here')
+    console.log(this.account, "here");
     const accountId = this.route.snapshot.paramMap.get("accountId");
     //console.log("this accountId", accountId)
-    if(accountId!=null){
+    if (accountId != null) {
       form.value.studentId = accountId;
     }
-    (await
-      this.expenseService
-        .create(form.value))
-      .pipe(first())
-      .subscribe({
-        next: async () => {
-          (await (this.savingExpense)).dismiss();
-          //TODO Replace with toast alert
-          this.alertService.createToastAlert(
-            "Added Expense Successfully!",
-            "success",
-            5000
-          );
-          this._location.back();
-        },
-        error: async (error) => {
-          (await (this.savingExpense)).dismiss();
-          this.alertService.createToastAlert(
-            "Add Expense Failed.....!",
-            "danger",
-            5000
-          );
-        },
-      });
+    (await this.expenseService.create(form.value)).pipe(first()).subscribe({
+      next: async () => {
+        setTimeout(async () => {
+          (await this.savingExpense).dismiss();
+        }, 300);
+        //TODO Replace with toast alert
+        this.alertService.createToastAlert(
+          "Added Expense Successfully!",
+          "success",
+          5000
+        );
+        this._location.back();
+      },
+      error: async (error) => {
+        setTimeout(async () => {
+          (await this.savingExpense).dismiss();
+        }, 300);
+        this.alertService.createToastAlert(
+          "Add Expense Failed.....!",
+          "danger",
+          5000
+        );
+      },
+    });
   }
 }

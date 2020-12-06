@@ -35,14 +35,10 @@ export class ProfilePage {
     public alertService: AlertService,
     public loadingController: LoadingController
   ) {
-    this.loggingOut = this.alertService.presentLoading(
-      "Logging Out Pet Check &#10003;"
-    );
-    this.savingAccount = this.alertService.presentLoading("Saving...");
   }
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountID = this.accountService.accountValue.id;
     this.title = this.accountService.accountValue.title;
@@ -79,6 +75,7 @@ export class ProfilePage {
           text: "Ok",
           handler: async (data: any) => {
             //console.log(data);
+            this.savingAccount = this.alertService.presentLoading("Saving...");
             (await this.savingAccount).present();
             await this.updateAccountPassword(data);
           },
@@ -96,22 +93,24 @@ export class ProfilePage {
   }
 
   async logout() {
-    (await this.loggingOut).present()
-    .then(async ()=>{
-      await this.userData.logout();
-    })
-    .finally(async () => {
-      setTimeout(async () => {
-        (await this.loggingOut).dismiss();
-      }, 300);
-    });
+    this.loggingOut = this.alertService.presentLoading("Logging Out..");
+    (await this.loggingOut)
+      .present()
+      .then(async () => {
+        await this.userData.logout();
+      })
+      .finally(async () => {
+        setTimeout(async () => {
+          (await this.loggingOut).dismiss();
+        }, 300);
+      });
   }
 
   support() {
     this.router.navigateByUrl("/support");
   }
 
-  private async updateAccountPassword(contextParamValue:string) {
+  private async updateAccountPassword(contextParamValue: string) {
     (await this.accountService.update(this.accountID, contextParamValue))
       .pipe(first())
       .subscribe({

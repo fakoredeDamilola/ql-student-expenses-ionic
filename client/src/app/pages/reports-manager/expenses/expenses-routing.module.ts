@@ -15,7 +15,7 @@ const routes: Routes = [
       ).then((m) => m.AddReportModule),
   },
   {
-    path: "expense-details/:petId",
+    path: "expense-details/:expenseId",
     loadChildren: () =>
       import(
         "@app/pages/reports-manager/expenses/expense-details/expense-details.module"

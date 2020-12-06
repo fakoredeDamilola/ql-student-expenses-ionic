@@ -30,7 +30,6 @@ export class AddReportPage {
     public alertService: AlertService,
     private route: ActivatedRoute
   ) {
-    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
   }
 
   async ionViewDidEnter() {
@@ -38,6 +37,7 @@ export class AddReportPage {
   }
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
   }
 

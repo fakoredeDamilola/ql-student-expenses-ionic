@@ -35,7 +35,7 @@ export class StudentsListPage {
   ) {}
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.adminsIsChecked = true;
     this.studentsIsChecked = true;

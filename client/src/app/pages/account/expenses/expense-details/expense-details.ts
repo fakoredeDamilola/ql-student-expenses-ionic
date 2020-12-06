@@ -2,17 +2,19 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
-import { AlertController, IonRouterOutlet, ModalController } from "@ionic/angular";
+import {
+  AlertController,
+  IonRouterOutlet,
+  ModalController,
+} from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Location } from '@angular/common';
+import { Location } from "@angular/common";
 
-import { ToastController } from '@ionic/angular';
+import { ToastController } from "@ionic/angular";
 
-import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { WebView } from "@ionic-native/ionic-webview/ngx";
 
-
-
-const STORAGE_KEY = 'my_images';
+const STORAGE_KEY = "my_images";
 @Component({
   selector: "page-expense-details",
   templateUrl: "expense-details.html",
@@ -29,7 +31,6 @@ export class ExpenseDetailsPage {
   expenseCost: string;
   expenseCreated: string;
 
-
   constructor(
     public route: ActivatedRoute,
     private router: Router,
@@ -42,19 +43,15 @@ export class ExpenseDetailsPage {
     public modalCtrl: ModalController,
     private _location: Location,
     private webview: WebView,
-    private toastController: ToastController,
-
+    private toastController: ToastController
   ) {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
     this.savingExpense = this.alertService.presentLoading("Saving Expense...");
     this.deleting = this.alertService.presentLoading("Deleting Expense...");
   }
 
-
-
   pathForImage(img) {
     if (img === null) {
-      return '';
+      return "";
     } else {
       let converted = this.webview.convertFileSrc(img);
       return converted;
@@ -63,39 +60,39 @@ export class ExpenseDetailsPage {
 
   async presentToast(text) {
     const toast = await this.toastController.create({
-        message: text,
-        position: 'bottom',
-        duration: 3000
+      message: text,
+      position: "bottom",
+      duration: 3000,
     });
     toast.present();
   }
 
-
-
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.expenseId = this.route.snapshot.paramMap.get("expenseId");
 
     // get id out of the url
-    if(this.accountService.accountValue.role!='Admin'){
-    window.history.replaceState(
-      {},
-      document.title,
-      "/" + "account/expenses/expense-details"
-    );
-  }
+    if (this.accountService.accountValue.role != "Admin") {
+      window.history.replaceState(
+        {},
+        document.title,
+        "/" + "account/expenses/expense-details"
+      );
+    }
 
-    (await this.expenseService
-      .getById(this.expenseId))
+    (await this.expenseService.getById(this.expenseId))
       .forEach(async (Element) => {
-        console.log(Element)
+        console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
         this.expenseCreated = Element.created;
       })
-      .then(async () => {
-        (await this.loading).dismiss();
+      .finally(async () => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
       });
   }
   openExternalUrl(url: string) {
@@ -127,8 +124,7 @@ export class ExpenseDetailsPage {
   }
 
   private async updateExpenseMasterList(contextParamValue) {
-    (await this.expenseService
-      .update(this.expenseId, contextParamValue))
+    (await this.expenseService.update(this.expenseId, contextParamValue))
       .pipe(first())
       .subscribe({
         next: async () => {
@@ -151,16 +147,15 @@ export class ExpenseDetailsPage {
       });
   }
 
-
-  async deleteAreYouSure(){
+  async deleteAreYouSure() {
     const alert = await this.alertCtrl.create({
       header: "Delete expense",
-      message: "Are you sure you want to DELETE this expense??  This action can not be reversed.",
+      message:
+        "Are you sure you want to DELETE this expense??  This action can not be reversed.",
       buttons: [
         {
           text: "Cancel",
-          handler: () => {
-          },
+          handler: () => {},
         },
         {
           text: "DELETE",
@@ -175,34 +170,24 @@ export class ExpenseDetailsPage {
 
   async deleteExpense() {
     (await this.deleting).present();
-    (await this.expenseService
-      .delete(this.expenseId))
-      .pipe(first())
-      .subscribe({
-        next: async () => {
-          (await this.deleting).dismiss();
-          this.alertService.createToastAlert(
-            "Expense Deleted Successfully!",
-            "success",
-            8000
-          );
-          this._location.back();
-        },
-        error: async (error) => {
-          (await this.deleting).dismiss();
-          this.alertService.createToastAlert(
-            "Expense Delete failed.....!",
-            "danger",
-            8000
-          );
-        },
-      });
+    (await this.expenseService.delete(this.expenseId)).pipe(first()).subscribe({
+      next: async () => {
+        (await this.deleting).dismiss();
+        this.alertService.createToastAlert(
+          "Expense Deleted Successfully!",
+          "success",
+          8000
+        );
+        this._location.back();
+      },
+      error: async (error) => {
+        (await this.deleting).dismiss();
+        this.alertService.createToastAlert(
+          "Expense Delete failed.....!",
+          "danger",
+          8000
+        );
+      },
+    });
   }
-
-
-
-
-
 }
-
-

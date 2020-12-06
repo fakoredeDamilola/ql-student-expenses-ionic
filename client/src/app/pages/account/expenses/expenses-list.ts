@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Expense } from '@app/_models';
+import { Expense } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
 
 @Component({
@@ -8,7 +8,7 @@ import { AccountService, AlertService } from "@app/_services";
   styleUrls: ["./expenses-list.scss"],
 })
 export class ExpensesListPage {
-  expensesList: [Expense]|any;
+  expensesList: [Expense] | any;
   userId: string;
   loading: Promise<HTMLIonLoadingElement>;
   expensesListLength: number;
@@ -17,11 +17,11 @@ export class ExpensesListPage {
   constructor(
     private accountService: AccountService,
     private alertService: AlertService
-  ) {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
-  }
+  ) {}
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses");
+    (await this.loading).present();
     this.userId = this.accountService.accountValue.id;
     //console.log(this.userId);
     (await this.accountService.getAllExpensesOnAccount(this.userId))
@@ -37,7 +37,11 @@ export class ExpensesListPage {
       })
       .then(async () => {
         this.expensesTotal = Number(this.expensesTotal.toFixed(2));
-        (await this.loading).dismiss();
+      })
+      .finally(() => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
       });
   }
 }

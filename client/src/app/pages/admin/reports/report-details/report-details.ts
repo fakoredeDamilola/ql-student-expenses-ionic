@@ -61,9 +61,7 @@ export class ReportDetailsPage {
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading(
-      "Admin Student Expenses App"
-    );
+    this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.reportId = this.route.snapshot.paramMap.get("reportId");

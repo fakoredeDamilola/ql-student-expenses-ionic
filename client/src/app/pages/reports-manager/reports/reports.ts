@@ -31,7 +31,7 @@ export class ReportsListPage {
   }
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     //TODO USE reports get by reportsManagerId and load virtuals
     (await this.loading).present();
     this.reportsManagerId = this.accountService.accountValue.id;

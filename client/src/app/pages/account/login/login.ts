@@ -22,17 +22,17 @@ export class LoginPage {
     public router: Router,
     private accountService: AccountService,
     private alertService: AlertService
-  ) {
-    this.loggingIn = this.alertService.presentLoading("Logging In...");
-    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
-  }
+  ) {}
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
   }
 
   async ionViewDidEnter() {
-    (await this.loading).dismiss();
+    setTimeout(async () => {
+      (await this.loading).dismiss();
+    }, 300);
   }
 
   async onSignup() {
@@ -44,6 +44,7 @@ export class LoginPage {
   }
 
   async onLogin() {
+    this.loggingIn = this.alertService.presentLoading("Logging In...");
     (await this.loggingIn).present();
     this.submitted = true;
     (await this.accountService.login(this.login.email, this.login.password))

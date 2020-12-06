@@ -26,7 +26,7 @@ export class HomePage {
     private accountService: AccountService,
     public alertService: AlertService
   ) {
-    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    this.loading = this.alertService.presentLoading("Student Expenses");
   }
 
   async presentPopover(event: Event) {

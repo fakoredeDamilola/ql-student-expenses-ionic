@@ -61,7 +61,7 @@ export class ReportDetailsPage {
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.reportId = this.route.snapshot.paramMap.get("reportId");
@@ -74,7 +74,7 @@ export class ReportDetailsPage {
       );
     }
 
-    await (await this.reportService.getById(this.reportId))
+    (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
         console.log(Element, "here");
         this.reportName = Element.reportName;
@@ -168,7 +168,8 @@ export class ReportDetailsPage {
   }
 
   private async updateReportMasterList(contextParamValue, popUpText) {
-    //console.log(contextParamValue,"what is this??");
+    console.log(contextParamValue,"what is this??");
+    console.log(this.reportId);
     (await this.reportService.update(this.reportId, contextParamValue))
       .pipe(first())
       .subscribe({

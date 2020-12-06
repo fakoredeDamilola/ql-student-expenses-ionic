@@ -28,7 +28,7 @@ export class ExpensesListPage {
   ) {}
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.reportsManagerId = this.accountService.accountValue.id;
 

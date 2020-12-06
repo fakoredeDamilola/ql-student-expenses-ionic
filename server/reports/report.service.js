@@ -33,7 +33,7 @@ async function create(params) {
 async function update(id, params) {
   const report = await getReport(id);
   // copy params to account and save
-  Object.assign(Report, params);
+  Object.assign(report, params);
   report.updated = Date.now();
   await report.save();
   return basicDetails(report);

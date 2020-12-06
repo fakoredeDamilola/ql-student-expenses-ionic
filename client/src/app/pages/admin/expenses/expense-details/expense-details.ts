@@ -49,11 +49,8 @@ export class ExpenseDetailsPage {
     this.deleting = this.alertService.presentLoading("Deleting Expense...");
   }
 
-
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading(
-      "Admin Student Expenses App"
-    );
+    this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.expenseId = this.route.snapshot.paramMap.get("expenseId");
