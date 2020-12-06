@@ -5,8 +5,8 @@ import { AccountService, AlertService, ReportService } from "@app/_services";
 import { AlertController, LoadingController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Account } from "@app/_models/account";
-import {Location} from '@angular/common';
-import { Expense} from '@app/_models';
+import { Location } from "@angular/common";
+import { Expense } from "@app/_models";
 
 @Component({
   selector: "page-report-details",
@@ -17,8 +17,14 @@ export class ReportDetailsPage {
   accountId: string;
   reportId: string;
   report = { reportName: "" };
-  petOwner ={title:'', firstName:'', lastName:'', isVerified:true, email:''};
-  reportExpenses:[Expense];
+  petOwner = {
+    title: "",
+    firstName: "",
+    lastName: "",
+    isVerified: true,
+    email: "",
+  };
+  reportExpenses = [];
   // key value for the edit input
   key: any;
   value: any;
@@ -28,8 +34,11 @@ export class ReportDetailsPage {
   currentRoute: string = this.router.url;
   deleting: Promise<HTMLIonLoadingElement>;
   reportName: string;
-  reportExpensesCount: number;
+  reportExpensesCount: number = 0;
   reportStudentsCount: number;
+  reportStudents: any;
+  userExpenses: any;
+  totalOfReportExpenses: number = 0;
 
   constructor(
     public route: ActivatedRoute,
@@ -43,7 +52,15 @@ export class ReportDetailsPage {
   ) {
     this.loading = this.alertService.presentLoading("Student Expenses App");
     this.deleting = this.alertService.presentLoading("Deleting Account...");
-    this.savingReport = this.alertService.presentLoading("Saving Report...")
+    this.savingReport = this.alertService.presentLoading("Saving Report...");
+  }
+
+  async ionViewDidEnter() {
+    let len = this.reportExpenses.length;
+    console.log(len);
+    /*for (let i = 0; i < this.expensesListLength; i++) {
+      this.expensesTotal += Number(this.expensesList[i].expenseCost);
+    }*/
   }
 
   async ionViewWillEnter() {
@@ -51,7 +68,7 @@ export class ReportDetailsPage {
     this.accountId = this.accountService.accountValue.id;
     this.reportId = this.route.snapshot.paramMap.get("reportId");
     // get id out of url
-    if(this.accountService.accountValue.role!='Admin'){
+    if (this.accountService.accountValue.role != "Admin") {
       window.history.replaceState(
         {},
         document.title,
@@ -59,34 +76,44 @@ export class ReportDetailsPage {
       );
     }
 
-    (await this.reportService
-      .getById(this.reportId))
+    await (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
-        //console.log(Element,"here")
-        this.reportName =Element.reportName;
-
-        console.log(Element)
+        console.log(Element, "here");
+        this.reportName = Element.reportName;
+        this.reportStudents = Element.reportStudents;
+        this.reportStudentsCount = Element.reportStudents.length;
+        this.reportExpenses = Element.reportExpenses;
+        this.reportExpensesCount = Element.reportExpensesCount;
+        // calculating total report expense
+        for (let i = 0; i < this.reportExpensesCount; i++) {
+          this.totalOfReportExpenses += Number(
+            this.reportExpenses[i].expenseCost
+          );
+        }
+        //console.log(Element);
+      })
+      .then(async () => {
+        //await this.getAllReportExpenses();
       })
       .then(async () => {
         (await this.loading).dismiss();
       });
   }
 
-
   openExternalUrl(url: string) {
     this.inAppBrowser.create(url, "_blank");
   }
-  async editReportAttribute(contextParameter:string) {
+  async editReportAttribute(contextParameter: string) {
     // switch case so this is dynamic, pretty cool
-    let popUpText:string;
-    let currentValue:string;
+    let popUpText: string;
+    let currentValue: string;
     switch (contextParameter) {
       case "reportName": {
         popUpText = "Name (Optional)";
         currentValue = this.reportName;
         break;
       }
-     /* case "houseUnitNumber": {
+      /* case "houseUnitNumber": {
         popUpText = "House / Unit #";
         currentValue = this.Report.houseUnitNumber;
         break;
@@ -120,7 +147,7 @@ export class ReportDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            ( await (this.savingReport)).present();
+            (await this.savingReport).present();
             this.updateReportMasterList(data, popUpText);
           },
         },
@@ -139,12 +166,11 @@ export class ReportDetailsPage {
 
   private async updateReportMasterList(contextParamValue, popUpText) {
     //console.log(contextParamValue,"what is this??");
-    (await this.reportService
-      .update(this.reportId, contextParamValue))
+    (await this.reportService.update(this.reportId, contextParamValue))
       .pipe(first())
       .subscribe({
         next: async () => {
-          ( await (this.savingReport)).dismiss();
+          (await this.savingReport).dismiss();
           this.alertService.createToastAlert(
             `Update To Report ${popUpText} Successful`,
             "success",
@@ -154,7 +180,7 @@ export class ReportDetailsPage {
           this.ionViewWillEnter();
         },
         error: async (error) => {
-          ( await (this.savingReport)).dismiss();
+          (await this.savingReport).dismiss();
           this.alertService.createToastAlert(
             `Update to Report ${popUpText} Failed...`,
             "warning",
@@ -164,17 +190,15 @@ export class ReportDetailsPage {
       });
   }
 
-
-
-  async deleteAreYouSure(){
+  async deleteAreYouSure() {
     const alert = await this.alertCtrl.create({
       header: "Delete Report",
-      message: "Are You Sure you want to DELETE this Report??  This Action can not be reversed.",
+      message:
+        "Are You Sure you want to DELETE this Report??  This Action can not be reversed.",
       buttons: [
         {
           text: "Cancel",
-          handler: () => {
-          },
+          handler: () => {},
         },
         {
           text: "DELETE",
@@ -187,7 +211,6 @@ export class ReportDetailsPage {
     // now present the alert on top of all other content
     await alert.present();
   }
-
 
   async deleteReport() {
     (await this.deleting).present();
@@ -214,4 +237,33 @@ export class ReportDetailsPage {
         },
       });
   }
+
+  /*private async getAllReportExpenses() {
+    //for each student get expenses
+    for (let i = 0; i < this.reportStudentsCount; i++) {
+      (
+        await this.accountService.getAllExpensesOnAccount(
+          this.reportStudents[i].id
+        )
+      )
+        .forEach(async (Element) => {
+          this.userExpenses = Element;
+        })
+        .then(async () => {
+          if (this.userExpenses.length > 0) {
+            for (let i = 0; i < this.userExpenses.length; i++) {
+              this.reportExpenses[this.reportExpensesCount] = this.userExpenses[
+                i
+              ];
+              this.reportExpensesCount += 1;
+              console.log(this.reportExpensesCount,'WHAT IS THIS')
+            }
+          }
+        })
+    }
+  }*/
+
+  // calculate pot disbursement
+
+  private async calculatePotDisbursements() {}
 }

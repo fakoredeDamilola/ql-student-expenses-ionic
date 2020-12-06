@@ -89,6 +89,7 @@ export class ExpenseDetailsPage {
     this.expenseService
       .getById(this.expenseId)
       .forEach(async (Element) => {
+        console.log(Element)
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
         this.expenseCreated = Element.created;

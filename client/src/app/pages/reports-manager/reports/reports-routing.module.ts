@@ -20,6 +20,13 @@ const routes: Routes = [
       import(
         "@app/pages/reports-manager/reports/report-details/report-details.module"
       ).then((m) => m.ReportDetailsModule),
+  },
+  {
+    path: "student-details/:studentId",
+    loadChildren: () =>
+      import(
+        "@app/pages/reports-manager/students/student-details/student-details.module"
+      ).then((m) => m.StudentDetailsModule),
   }
 ];
 

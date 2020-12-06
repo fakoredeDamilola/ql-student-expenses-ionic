@@ -60,7 +60,9 @@ export class AddExpensePage {
       return;
     }
     form.value.studentId = this.account.id;
-    const accountId = this.route.snapshot.paramMap.get("accountId")
+    form.value.reportId = this.account.reportId;
+    console.log(this.account,'here')
+    const accountId = this.route.snapshot.paramMap.get("accountId");
     //console.log("this accountId", accountId)
     if(accountId!=null){
       form.value.studentId = accountId;

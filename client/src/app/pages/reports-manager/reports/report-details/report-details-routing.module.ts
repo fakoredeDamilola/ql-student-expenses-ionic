@@ -16,7 +16,7 @@ const routes: Routes = [
       ).then((m) => m.AddStudentModule),
   },
   {
-    path: "student/details",
+    path: "students/student-details/:studentId",
     loadChildren: () =>
       import(
         "@app/pages/reports-manager/students/student-details/student-details.module"

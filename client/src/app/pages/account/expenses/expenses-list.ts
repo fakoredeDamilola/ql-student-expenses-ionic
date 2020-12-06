@@ -8,7 +8,7 @@ import { AccountService, AlertService } from "@app/_services";
   styleUrls: ["./expenses-list.scss"],
 })
 export class ExpensesListPage {
-  expensesList: [Expense];
+  expensesList: [Expense]|any;
   userId: string;
   loading: Promise<HTMLIonLoadingElement>;
   expensesListLength: number;
