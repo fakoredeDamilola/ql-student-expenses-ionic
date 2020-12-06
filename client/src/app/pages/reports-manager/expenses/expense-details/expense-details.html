@@ -2,31 +2,53 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/account/pets"></ion-back-button>
+        <ion-back-button defaultHref="/account/expenses"></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="pet.species=='Dog'" class="dog-background">
+  <div class="expense-background">
 
   </div>
 
-  <div *ngIf="pet.species=='Cat'" class="cat-background">
 
-  </div>
-
-<h3><b><u>Expense Details:</u></b></h3>
+<ion-row>
+  <ion-col>
+    <h3><b><u>Expense Details:</u></b>  </h3>
+    <p>Created: {{expenseCreated}}</p>
+  </ion-col>
+  <ion-col>
+    <ion-button fill="clear" expand="full" color="secondary" routerLink="{{currentRoute}}/add-image">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Add Expense Images</ion-button>
+  </ion-col>
+</ion-row>
 <ion-list inset>
   <ion-row>
     <ion-col>
-      <ion-item><b>Expense Name:&nbsp;</b>{{expense.expenseName}}</ion-item>
+      <ion-item (click)="editExpenseName()"><b>Name:&nbsp;</b>{{expenseName}}</ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col >
-      <ion-item ><b>Expense Cost:&nbsp;</b>{{expense.expenseCost}}</ion-item>
-   </ion-col>
+    <ion-col>
+      <ion-item (click)="editExpenseCost()"><b>Cost:&nbsp;</b>{{expenseCost}}</ion-item>
+    </ion-col>
+</ion-row>
+
+
+<ion-row>
+  <ion-col>
+    <ion-button shape="block" color="danger" (click)="deleteAreYouSure()">Delete Expense</ion-button>
+  </ion-col>
 </ion-row>
 </ion-list>
 
+
+
+
 </ion-content>
+
+
+
+
+

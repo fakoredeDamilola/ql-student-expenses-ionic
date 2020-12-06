@@ -9,13 +9,33 @@ const routes: Routes = [
     component: ExpenseDetailsPage
   },
   {
-    path: "student/add",
+    path: "pets/pet-details/:petId",
     loadChildren: () =>
-      import(
-        "@app/pages/reports-manager/students/add-student/add-student.module"
-      ).then((m) => m.AddStudentModule),
+      import("@app/pages/account/expenses/expense-details/expense-details.module").then(
+        (m) => m.ExpenseDetailsModule
+      ),
   },
-
+  {
+    path: "reports",
+        loadChildren: () =>
+          import("@app/pages/reports-manager/reports/reports.module").then(
+            (m) => m.ReportsListModule
+          ),
+  },
+  {
+    path: "students",
+        loadChildren: () =>
+          import("@app/pages/reports-manager/students/students.module").then(
+            (m) => m.StudentsListModule
+          ),
+  },
+  {
+    path: "reports-expenses",
+        loadChildren: () =>
+          import("@app/pages/reports-manager/expenses/expenses.module").then(
+            (m) => m.ExpensesListModule
+          ),
+  },
 ];
 
 @NgModule({

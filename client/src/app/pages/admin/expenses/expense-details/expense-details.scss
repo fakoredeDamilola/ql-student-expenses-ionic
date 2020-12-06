@@ -1,86 +1,75 @@
-.session-track-ionic {
-  color: var(--ion-color-primary);
-}
-
-.session-track-angular {
-  color: var(--ion-color-angular);
-}
-
-.session-track-communication {
-  color: var(--ion-color-communication);
-}
-
-.session-track-tooling {
-  color: var(--ion-color-tooling);
-}
-
-.session-track-services {
-  color: var(--ion-color-services);
-}
-
-.session-track-design {
-  color: var(--ion-color-design);
-}
-
-.session-track-workshop {
-  color: var(--ion-color-workshop);
-}
-
-.session-track-food {
-  color: var(--ion-color-food);
-}
-
-.session-track-documentation {
-  color: var(--ion-color-documentation);
-}
-
-.session-track-navigation {
-  color: var(--ion-color-navigation);
-}
-
-/* Favorite Icon
- * --------------------------------------------------------
+/*
+ * expense Background
  */
 
-.show-favorite {
-  position: relative;
-}
-
-.icon-heart-empty,
-.icon-heart {
-  --border-radius: 50%;
-  --padding-start: 0;
-  --padding-end: 0;
-
+ ion-toolbar {
   position: absolute;
 
-  top: 5px;
-  right: 5px;
+  top: 0;
+  left: 0;
+  right: 0;
 
-  width: 48px;
-  height: 48px;
-
-  font-size: 16px;
-
-  transition: transform 300ms ease;
+  --background: transparent;
+  --color: white;
 }
 
-.icon-heart-empty {
-  transform: scale(1);
+ion-toolbar ion-button,
+ion-toolbar ion-back-button,
+ion-toolbar ion-menu-button {
+  --color: white;
 }
 
-.icon-heart {
-  transform: scale(0);
+.expense-background {
+  position: relative;
+
+  display: flex;
+
+  padding-top: var(--ion-safe-area-top);
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  height: calc(250px + var(--ion-safe-area-top));
+
+  background: center / cover url(/assets/img/expenses.jpg) no-repeat;
 }
 
-.show-favorite .icon-heart {
-  transform: scale(1);
+.expense-background img {
+  width: 70px;
+  border-radius: 50%;
+  margin-top: calc(-1 * var(--ion-safe-area-top));
 }
 
-.show-favorite .icon-heart-empty {
-  transform: scale(0);
+.expense-background h2 {
+  position: absolute;
+
+  bottom: 10px;
+
+  color: white;
 }
 
-h1 {
-  margin: 0;
+.md .expense-background {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+
+.ios .expense-background {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+}
+
+/*
+ * expense Details
+ */
+
+.expense-detail p {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.expense-detail hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  background: var(--ion-color-step-150, #d7d8da);
 }

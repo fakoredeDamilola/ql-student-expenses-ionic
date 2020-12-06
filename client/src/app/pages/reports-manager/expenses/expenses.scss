@@ -1,46 +1,75 @@
-.speaker-card {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Due to the fact the cards are inside of columns the margins don't overlap
- * properly so we want to remove the extra margin between cards
+/*
+ * expense Background
  */
-ion-col:not(:last-of-type) .speaker-card {
-  margin-bottom: 0;
+
+ ion-toolbar {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  --background: transparent;
+  --color: white;
 }
 
-.speaker-card .speaker-item {
-  --min-height: 85px;
+ion-toolbar ion-button,
+ion-toolbar ion-back-button,
+ion-toolbar ion-menu-button {
+  --color: white;
 }
 
-.speaker-card .speaker-item h2 {
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+.expense-background {
+  position: relative;
+
+  display: flex;
+
+  padding-top: var(--ion-safe-area-top);
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  height: calc(250px + var(--ion-safe-area-top));
+
+  background: center / cover url(/assets/img/expenses.jpg) no-repeat;
 }
 
-.speaker-card .speaker-item p {
-  font-size: 13px;
-  letter-spacing: 0.02em;
+.expense-background img {
+  width: 70px;
+  border-radius: 50%;
+  margin-top: calc(-1 * var(--ion-safe-area-top));
 }
 
-.speaker-card ion-card-header {
-  padding: 0;
+.expense-background h2 {
+  position: absolute;
+
+  bottom: 10px;
+
+  color: white;
 }
 
-.speaker-card ion-card-content {
-  flex: 1 1 auto;
-
-  padding: 0;
+.md .expense-background {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 }
 
-.ios ion-list {
-  margin-bottom: 10px;
+.ios .expense-background {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
 }
 
-.md ion-list {
-  border-top: 1px solid var(--ion-color-step-150, #d7d8da);
+/*
+ * expense Details
+ */
 
-  padding: 0;
+.expense-detail p {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.expense-detail hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  background: var(--ion-color-step-150, #d7d8da);
 }

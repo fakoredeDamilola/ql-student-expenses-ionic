@@ -96,19 +96,22 @@ export class ProfilePage {
   }
 
   async logout() {
-    (await this.loggingOut).present();
-    await this.userData.logout();
-    (await this.loggingOut).dismiss();
-    //await this.accountService.logout();
+    (await this.loggingOut).present()
+    .then(async ()=>{
+      await this.userData.logout();
+    })
+    .finally(async () => {
+      setTimeout(async () => {
+        (await this.loggingOut).dismiss();
+      }, 300);
+    });
   }
 
   support() {
     this.router.navigateByUrl("/support");
   }
 
-  private async updateAccountPassword(contextParamValue) {
-    //console.log(contextParamValue,"what is this??");
-
+  private async updateAccountPassword(contextParamValue:string) {
     (await this.accountService.update(this.accountID, contextParamValue))
       .pipe(first())
       .subscribe({

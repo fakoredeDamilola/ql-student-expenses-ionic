@@ -67,11 +67,9 @@ export class AddExpensePage {
     if(accountId!=null){
       form.value.studentId = accountId;
     }
-    //form.value.propertyId = this.account.propertyId;
-    //form.value.propertyManagerId = this.account.propertyManagerId;
-
-    this.expenseService
-      .create(form.value)
+    (await
+      this.expenseService
+        .create(form.value))
       .pipe(first())
       .subscribe({
         next: async () => {
