@@ -6,61 +6,68 @@ module.exports = {
   create,
   update,
   delete: _delete,
-  getAllExpensesInProperties,
+  getAllExpensesInReports,
   getAllExpensesOnAccount
 };
-
-async function getAllExpensesInProperties(reportsManagerId){
-  const Expenses = await db.Expense.find({reportsManagerId:reportsManagerId});
+// Reports Manager All Expenses...
+async function getAllExpensesInReports(reportsManagerId){
+  console.log(reportsManagerId,'managerId')
+  const expenses = await db.Expense.find({reportsManagerId:reportsManagerId})
+  .populate('expenseStudent')
+  .populate('expenseReport');
+  console.log(expenses,'the expenses???')
   //console.log(Expenses)
-  return Expenses.map((x) => basicDetails(x));
+  return expenses.map((x) => basicDetails(x));
 }
-
+// Personal Account Expenses
 async function getAllExpensesOnAccount(accountId){
   const expenses = await db.Expense.find({studentId:accountId});
   console.log(expenses)
   return expenses.map((x) => basicDetails(x));
 }
-
+// Admin All Expenses 
 async function getAll() {
-  const Expense = await db.Expense.find();
-  return Expense.map((x) => basicDetails(x));
+  const expenses = await db.Expense.find()
+  .populate('expenseStudent')
+  .populate('expenseReport');
+  return expenses.map((x) => basicDetails(x));
 }
-
+// Single expense get
 async function getById(id) {
-  const Expense = await getExpense(id);
-  return basicDetails(Expense);
+  const expense = await getExpense(id);
+  return basicDetails(expense);
 }
-
+// Create single expense
 async function create(params) {
-  const Expense = new db.Expense(params);
-  await Expense.save();
-  return basicDetails(Expense);
+  const expense = new db.Expense(params);
+  await expense.save();
+  return basicDetails(expense);
 }
-
+// Update single expense
 async function update(id, params) {
-  const Expense = await getExpense(id);
+  const expense = await getExpense(id);
   // copy params to account and save
-  Object.assign(Expense, params);
-  Expense.updated = Date.now();
-  await Expense.save();
-  return basicDetails(Expense);
+  Object.assign(expense, params);
+  expense.updated = Date.now();
+  await expense.save();
+  return basicDetails(expense);
 }
-
+// Delete single expense
 async function _delete(id) {
-  const Expense = await getExpense(id);
-  await Expense.remove();
+  const expense = await getExpense(id);
+  await expense.remove();
 }
-
 // helper functions
-
 async function getExpense(id) {
-  const Expense = await db.Expense.findById(id);
-  if (!Expense) throw "Expense not found";
-  return Expense;
+  const expense = await db.Expense.findById(id)
+  .populate('expenseStudent')
+  .populate('expenseReport');
+  if (!expense) throw "Expense not found";
+  return expense;
 }
-
-function basicDetails(Expense) {
+// Can make multiple of these later to return only what is needed for the view
+// example: advanced details, or details for such and such page
+function basicDetails(expense) {
   const {
     id,
     studentId,
@@ -68,8 +75,10 @@ function basicDetails(Expense) {
     reportsManagerId,
     expenseName,
     expenseCost,
-    created
-  } = Expense;
+    created,
+    expenseStudent,
+    expenseReport
+  } = expense;
   return {
     id,
     studentId,
@@ -77,6 +86,8 @@ function basicDetails(Expense) {
     reportsManagerId,
     expenseName,
     expenseCost,
-    created
+    created,
+    expenseStudent,
+    expenseReport
   };
 }

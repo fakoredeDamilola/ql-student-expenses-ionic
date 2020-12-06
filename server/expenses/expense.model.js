@@ -16,6 +16,20 @@ const schema = new Schema({
   toObject :{ virtuals :true}
 });
 
+schema.virtual("expenseStudent", {
+    ref: "Account", // The model to use
+    localField: "studentId", // Find people where `localField`
+    foreignField: "_id", // is equal to `foreignField`
+    justOne: false,
+  });
+
+  schema.virtual("expenseReport", {
+    ref: "Report", // The model to use
+    localField: "reportId", // Find people where `localField`
+    foreignField: "_id", // is equal to `foreignField`
+    justOne: false,
+  });
+
 
 schema.set('toJSON', {
     virtuals: true,

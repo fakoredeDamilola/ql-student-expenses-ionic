@@ -103,6 +103,10 @@ export class ReportDetailsPage {
       });
   }
 
+  async ionViewWillLeave(){
+    this.totalOfReportExpenses=0;
+  }
+
   openExternalUrl(url: string) {
     this.inAppBrowser.create(url, "_blank");
   }

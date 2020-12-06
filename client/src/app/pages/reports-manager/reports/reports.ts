@@ -53,6 +53,7 @@ export class ReportsListPage {
         //console.log(Element.reportsManagerReports);
         this.reportsList = Element;
         console.log(Element);
+
       })
       .finally(async () => {
         setTimeout(async ()=>{ (await this.loading).dismiss()},300);

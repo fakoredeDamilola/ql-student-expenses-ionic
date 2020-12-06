@@ -44,4 +44,8 @@ export class ExpensesListPage {
         }, 300);
       });
   }
+
+  ionViewWillLeave(){
+    this.expensesTotal =0;
+  }
 }

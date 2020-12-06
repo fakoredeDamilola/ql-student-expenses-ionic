@@ -63,6 +63,7 @@ export class AddExpensePage {
     }
     form.value.studentId = this.account.id;
     form.value.reportId = this.account.reportId;
+    form.value.reportsManagerId = this.account.reportsManagerId;
     console.log(this.account, "here");
     const accountId = this.route.snapshot.paramMap.get("accountId");
     //console.log("this accountId", accountId)

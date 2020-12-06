@@ -19,6 +19,8 @@ export class ExpensesListPage {
   userId: any;
   petOwnersList: any;
   reportsExpenses: any;
+  expensesTotal: number;
+  expensesCount: any;
 
   constructor(
     private accountService: AccountService,
@@ -45,11 +47,13 @@ export class ExpensesListPage {
         this.userId = this.accountService.accountValue.id;
       }
     }
-    (await this.accountService.getReportsExpenses(this.userId))
+    (await this.accountService.getAllExpensesInReports(this.userId))
       .forEach(async (element) => {
         console.log(element);
         this.reportsExpenses = element;
-        console.log(element, "This???");
+      })
+      .then(async ()=>{
+        this.expensesCount =this.reportsExpenses.length;
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -60,6 +64,10 @@ export class ExpensesListPage {
 
   async ionViewDidlEnter() {
 
+  }
+
+  ionViewDidLeave(){
+    this.expensesTotal =0;
   }
 
   async presentFilter() {

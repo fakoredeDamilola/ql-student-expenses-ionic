@@ -6,6 +6,8 @@ export class Report {
   reportStudents: any;
   reportExpenses: any[];
   reportExpensesCount: number;
+  expenseStudent: any;
+  expenseReport: any;
 
 
 }

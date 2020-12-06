@@ -108,7 +108,7 @@ export class AccountService {
     return this.http.get<Account>(`${baseUrl}/${reportsManagerId}/students`);
   }
 
-  // This One ....
+  // This One for report managers, their personal reports they are in charge of
   async getReportsExpenses(reportsManagerId: string) {
     return this.http.get<Account>(`${baseUrl}/${reportsManagerId}/expenses-on-reports`);
 
@@ -118,7 +118,7 @@ export class AccountService {
       `${baseUrl}/${reportsManagerId}/reports`
     );
   }
-  async getAllExpensesInreports(reportsManagerId: string) {
+  async getAllExpensesInReports(reportsManagerId: string) {
     return this.http.get<Report>(
       `${baseUrl}/${reportsManagerId}/reports-expenses`
     );
