@@ -4,8 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Accounts
-      (Admin)</ion-title>
+    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Expenses</ion-title>
     <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
       (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
@@ -27,17 +26,12 @@
 <ion-content fullscreen="true">
   <ion-header collapse="condense">
     <ion-toolbar color="secondary">
-      <ion-title text-align-center size="large">Accounts (Admin)</ion-title>
+      <ion-title text-align-center size="large">Expenses</ion-title>
     </ion-toolbar>
     <ion-toolbar>
       <ion-searchbar [(ngModel)]="queryText" placeholder="Search" (ionChange)="updateView()"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
-  <ion-item-divider sticky>
-    <ion-button shape="round" fill="outline" slot="end" routerLink="/admin/create-account">
-      <ion-icon name="add-outline"></ion-icon>Create Account
-    </ion-button>
-  </ion-item-divider>
 
     <!--<ion-item-divider sticky>
 

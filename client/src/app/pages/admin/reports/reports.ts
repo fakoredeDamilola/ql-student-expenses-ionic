@@ -59,7 +59,7 @@ export class ReportsPage  {
   }
 
   async ionViewWillEnter(){
-    this.loading = this.alertService.presentLoading('Student Expenses Admin');
+    this.loading = this.alertService.presentLoading('Admin Student Expenses');
     this.adminsIsChecked=true;
     this.petOwnersIsChecked=true;
     this.ReportManagersIsChecked=true;
