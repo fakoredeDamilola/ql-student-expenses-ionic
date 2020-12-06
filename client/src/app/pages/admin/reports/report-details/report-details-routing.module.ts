@@ -9,40 +9,27 @@ const routes: Routes = [
     component: ReportDetailsPage
   },
   {
-    path: "expenses/expense-details/:expenseId",
-    loadChildren: () =>
-      import("@app/pages/account/expenses/expense-details/expense-details.module").then(
-        (m) => m.ExpenseDetailsModule
-      ),
-  },
-  {
-    path: "reports",
-        loadChildren: () =>
-          import("@app/pages/reports-manager/reports/reports.module").then(
-            (m) => m.ReportsListModule
-          ),
-  },
-  {
-    path: "students",
-        loadChildren: () =>
-          import("@app/pages/reports-manager/students/students.module").then(
-            (m) => m.StudentsListModule
-          ),
-  },
-  {
-    path: "students/add",
+    path: "student/add",
     loadChildren: () =>
       import(
         "@app/pages/reports-manager/students/add-student/add-student.module"
       ).then((m) => m.AddStudentModule),
   },
   {
-    path: "reports-expenses",
-        loadChildren: () =>
-          import("@app/pages/reports-manager/expenses/expenses.module").then(
-            (m) => m.ExpensesListModule
-          ),
+    path: "students/student-details/:studentId",
+    loadChildren: () =>
+      import(
+        "@app/pages/reports-manager/students/student-details/student-details.module"
+      ).then((m) => m.StudentDetailsModule),
   },
+  {
+    path: "reports-expenses/expense-details/:expenseId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/expenses/expense-details/expense-details.module"
+      ).then((m) => m.ExpenseDetailsModule),
+  }
+
 ];
 
 @NgModule({

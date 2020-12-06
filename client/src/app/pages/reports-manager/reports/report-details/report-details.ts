@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
-import { AccountService, AlertService, ReportService } from "@app/_services";
+import { AccountService, AlertService, ExpenseService, ReportService } from "@app/_services";
 import { AlertController, LoadingController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Account } from "@app/_models/account";
@@ -49,6 +49,7 @@ export class ReportDetailsPage {
     public alertCtrl: AlertController,
     public alertService: AlertService,
     public accountService: AccountService,
+    public expenseService: ExpenseService,
     private _location: Location
   ) {
     this.deleting = this.alertService.presentLoading("Deleting Account...");
@@ -73,34 +74,40 @@ export class ReportDetailsPage {
         "/" + "report-manager/reports/report-details"
       );
     }
-
+    // Get Report
     (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
         console.log(Element, "here");
         this.reportName = Element.reportName;
         this.reportStudents = Element.reportStudents;
         this.reportStudentsCount = Element.reportStudents.length;
-        this.reportExpenses = Element.reportExpenses;
-        this.reportExpensesCount = Element.reportExpensesCount;
-        // calculating total report expense
-        for (let i = 0; i < this.reportExpensesCount; i++) {
-          this.totalOfReportExpenses += Number(
-            this.reportExpenses[i].expenseCost
-          );
-          this.totalOfReportExpenses = Number(
-            this.totalOfReportExpenses.toFixed(2)
-          );
-        }
+
+
         //console.log(Element);
-      })
-      .then(async () => {
-        //await this.getAllReportExpenses();
       })
       .finally(async () => {
         setTimeout(async () => {
           (await this.loading).dismiss();
         }, 300);
       });
+
+      // Get Report Students
+      (await this.accountService.getAllStudentsByReportId(this.reportId))
+      .forEach(async (Element) => {
+        console.log('All Report Students', Element)
+        this.reportStudents = Element;
+      });
+
+      // Get Report Expenses
+      (await this.expenseService.getAllExpensesByReportId(this.reportId))
+      .forEach(async (Element) => {
+        console.log('All Report Expenses', Element)
+       this.reportExpenses = Element;
+      });
+
+
+
+
   }
 
   async ionViewWillLeave(){

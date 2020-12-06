@@ -5,6 +5,7 @@ import { ReportDetailsPage } from './report-details';
 import { ReportDetailsPageRoutingModule } from './report-details-routing.module';
 import { IonicModule } from '@ionic/angular';
 
+
 import { IonicRatingModule } from 'ionic-rating';
 
 @NgModule({

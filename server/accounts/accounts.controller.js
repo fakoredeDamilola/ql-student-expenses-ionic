@@ -25,6 +25,7 @@ router.post(
 // main routes for accounts ***
 router.get("/", authorize(Role.Admin), getAll);
 router.get("/:accountId", getById);
+router.get("/:reportId/report-students",authorize(), getAllStudentsByReportId);
 router.post("/", createSchema, createAccount);
 router.put("/:accountId", authorize(), update);
 router.delete("/:accountId", authorize(), _delete);
@@ -47,6 +48,14 @@ function getAllStudentsInReports(req, res, next) {
   //console.log(req)
   accountService
     .getAllStudentsInReports(req.params.reportsManagerId)
+    .then((accounts) => res.json(accounts))
+    .catch(next);
+}
+
+function getAllStudentsByReportId(req, res, next) {
+  //console.log(req)
+  accountService
+    .getAllStudentsByReportId(req.params.reportId)
     .then((accounts) => res.json(accounts))
     .catch(next);
 }

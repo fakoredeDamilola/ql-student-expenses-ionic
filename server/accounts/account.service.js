@@ -25,6 +25,7 @@ module.exports = {
   updateReportsOnAccount,
   getAllStudentsInReports,
   getReportsExpenses,
+  getAllStudentsByReportId
 };
 
 async function authenticate({ email, password, ipAddress }) {
@@ -199,6 +200,16 @@ async function getAllStudentsInReports(reportsManagerId) {
   .populate("reportsManagerStudentsCount");
 
   return allStudentsInReports.map((x) => basicDetails(x));
+}
+
+async function getAllStudentsByReportId(reportId) {
+  const allStudentsOnReport = await db.Account.find({
+    reportId: reportId,
+  })
+  .populate("studentExpenses")
+  .populate("studentExpensesCount")
+
+  return allStudentsOnReport.map((x) => basicDetails(x));
 }
 
 //right here

@@ -9,6 +9,7 @@ const expenseService = require("./expense.service");
 // routes for expenses. proably going to have to update this to allow non admins to create expenses??? idk yet
 router.get("/", authorize(Role.Admin), getAll);
 router.get("/:id", authorize(), getById);
+router.get("/:reportId/report-expenses", authorize(), getAllExpensesByReportId);
 router.post("/", authorize(), create);
 router.put("/:id", authorize(), update);
 router.delete("/:id", authorize(), _delete);
@@ -24,9 +25,16 @@ function getAll(req, res, next) {
 
 function getById(req, res, next) {
   // users can get their own account and admins can get any account
-
   expenseService
     .getById(req.params.id)
+    .then((expense) => (expense ? res.json(expense) : res.sendStatus(404)))
+    .catch(next);
+}
+
+function getAllExpensesByReportId(req, res, next) {
+  // users can get their own account and admins can get any account
+  expenseService
+    .getAllExpensesByReportId(req.params.reportId)
     .then((expense) => (expense ? res.json(expense) : res.sendStatus(404)))
     .catch(next);
 }

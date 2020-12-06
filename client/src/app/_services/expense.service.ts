@@ -31,6 +31,10 @@ export class ExpenseService {
     return this.http.get<Expense>(`${baseUrl}/${id}`);
   }
 
+  async getAllExpensesByReportId(reportId: string) {
+    return this.http.get<Expense[]>(`${baseUrl}/${reportId}/report-expenses`);
+  }
+
   async create(params: any) {
     return this.http.post(baseUrl, params);
   }

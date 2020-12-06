@@ -7,7 +7,8 @@ module.exports = {
   update,
   delete: _delete,
   getAllExpensesInReports,
-  getAllExpensesOnAccount
+  getAllExpensesOnAccount,
+  getAllExpensesByReportId
 };
 // Reports Manager All Expenses...
 async function getAllExpensesInReports(reportsManagerId){
@@ -32,6 +33,13 @@ async function getAll() {
   .populate('expenseReport');
   return expenses.map((x) => basicDetails(x));
 }
+// 
+async function getAllExpensesByReportId(reportId) {
+  const expenses = await db.Expense.find({reportId:reportId})
+  .populate('expenseStudent')
+  return expenses.map((x) => basicDetails(x));
+}
+
 // Single expense get
 async function getById(id) {
   const expense = await getExpense(id);

@@ -61,7 +61,7 @@ export class ReportDetailsPage {
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Admin Student Expenses");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.reportId = this.route.snapshot.paramMap.get("reportId");
@@ -91,12 +91,20 @@ export class ReportDetailsPage {
             this.totalOfReportExpenses.toFixed(2)
           );
         }
+        //console.log(Element);
+      })
+      .then(async () => {
+        //await this.getAllReportExpenses();
       })
       .finally(async () => {
         setTimeout(async () => {
           (await this.loading).dismiss();
         }, 300);
       });
+  }
+
+  async ionViewWillLeave(){
+    this.totalOfReportExpenses=0;
   }
 
   openExternalUrl(url: string) {
@@ -163,12 +171,9 @@ export class ReportDetailsPage {
     alert.present();
   }
 
-  private async updateReportMasterList(
-    contextParamValue: string,
-    popUpText: string
-  ) {
-    //console.log(contextParamValue,"what is this??");
-    console.log(this.reportId, contextParamValue);
+  private async updateReportMasterList(contextParamValue, popUpText) {
+    console.log(contextParamValue,"what is this??");
+    console.log(this.reportId);
     (await this.reportService.update(this.reportId, contextParamValue))
       .pipe(first())
       .subscribe({

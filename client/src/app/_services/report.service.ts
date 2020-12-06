@@ -33,7 +33,6 @@ export class ReportService {
 
   getStudentByReportId(reportId: string) {
     const student = this.http.get<Report>(`${baseUrl}/${reportId}/student`);
-    console.log(student,"????")
     return student;
   }
 

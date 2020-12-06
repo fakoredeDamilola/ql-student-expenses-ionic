@@ -2,7 +2,7 @@
  * Speaker Background
  */
 
- ion-toolbar {
+ion-toolbar {
   position: absolute;
 
   top: 0;
@@ -23,6 +23,10 @@ ion-toolbar ion-menu-button {
   position: relative;
 
   display: flex;
+
+  opacity: 70%;
+
+
 
   padding-top: var(--ion-safe-area-top);
 
