@@ -39,6 +39,7 @@ export class ReportDetailsPage {
   reportStudents: any;
   userExpenses: any;
   totalOfReportExpenses: number = 0;
+  calculatingDisbursementsLoader: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public route: ActivatedRoute,
@@ -50,20 +51,17 @@ export class ReportDetailsPage {
     public accountService: AccountService,
     private _location: Location
   ) {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
     this.deleting = this.alertService.presentLoading("Deleting Account...");
     this.savingReport = this.alertService.presentLoading("Saving Report...");
+    this.calculatingDisbursementsLoader = this.alertService.presentLoading(
+      "Calculating Disbursements..."
+    );
   }
 
-  async ionViewDidEnter() {
-    let len = this.reportExpenses.length;
-    console.log(len);
-    /*for (let i = 0; i < this.expensesListLength; i++) {
-      this.expensesTotal += Number(this.expensesList[i].expenseCost);
-    }*/
-  }
+  async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses App");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.reportId = this.route.snapshot.paramMap.get("reportId");
@@ -89,14 +87,19 @@ export class ReportDetailsPage {
           this.totalOfReportExpenses += Number(
             this.reportExpenses[i].expenseCost
           );
+          this.totalOfReportExpenses = Number(
+            this.totalOfReportExpenses.toFixed(2)
+          );
         }
         //console.log(Element);
       })
       .then(async () => {
         //await this.getAllReportExpenses();
       })
-      .then(async () => {
-        (await this.loading).dismiss();
+      .finally(async () => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
       });
   }
 
@@ -265,5 +268,18 @@ export class ReportDetailsPage {
 
   // calculate pot disbursement
 
-  private async calculatePotDisbursements() {}
+  public async calculateDisbursements() {
+    (await this.calculatingDisbursementsLoader).present();
+
+    // take total devide by number of students
+
+    const averageOfExpenses =
+      this.totalOfReportExpenses / this.reportStudentsCount;
+
+    console.log(averageOfExpenses, "average");
+
+    // calculate how much each student spent
+
+    // calculate how much each student owes or is owed to/from disbursements
+  }
 }

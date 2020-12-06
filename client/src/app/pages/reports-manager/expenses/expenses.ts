@@ -11,25 +11,25 @@ export class ExpensesListPage {
   queryText = "";
   showSearchbar: boolean;
   ios: boolean;
-  filtersList:any;
+  filtersList: any;
   reportsManagerId: string;
   expensesList: any;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   userId: any;
   petOwnersList: any;
-  reportsExpenses:any;
+  reportsExpenses: any;
 
   constructor(
     private accountService: AccountService,
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
-  }
+  ) {}
 
-  async ionViewDidEnter() {
+  async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses App");
+    (await this.loading).present();
     this.reportsManagerId = this.accountService.accountValue.id;
 
     if (this.accountService.accountValue.role == "Admin") {
@@ -38,29 +38,29 @@ export class ExpensesListPage {
         this.reportsManagerId = this.accountService.accountValue.id;
       }
     }
-      this.userId = this.accountService.accountValue.id;
-      if (this.accountService.accountValue.role == "Admin") {
-        this.userId = this.route.snapshot.paramMap.get("accountId");
-        if (this.route.snapshot.paramMap.get("accountId") == null) {
-          this.userId = this.accountService.accountValue.id;
-        }
+    this.userId = this.accountService.accountValue.id;
+    if (this.accountService.accountValue.role == "Admin") {
+      this.userId = this.route.snapshot.paramMap.get("accountId");
+      if (this.route.snapshot.paramMap.get("accountId") == null) {
+        this.userId = this.accountService.accountValue.id;
       }
-      (await this.accountService.getReportsExpenses(this.userId))
+    }
+    (await this.accountService.getReportsExpenses(this.userId))
       .forEach(async (element) => {
-        console.log(element)
-        this.reportsExpenses = element
-        console.log(element,"This???")
-
+        console.log(element);
+        this.reportsExpenses = element;
+        console.log(element, "This???");
       })
-      .then(async () => {
-        (await this.loading).dismiss();
+      .finally(async () => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
       });
   }
 
-  async ionViewWillEnter() {
-    (await this.loading).present();
-  }
+  async ionViewDidlEnter() {
 
+  }
 
   async presentFilter() {
     /*  this.filtersList= {
@@ -84,5 +84,5 @@ export class ExpensesListPage {
         this.reportsManagersIsChecked = await data.reportsManagersIsChecked;
         this.updateView();
       }*/
-    }
+  }
 }

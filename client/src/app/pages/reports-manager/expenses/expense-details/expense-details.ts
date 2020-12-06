@@ -40,7 +40,7 @@ export class ExpenseDetailsPage {
       "/" + "property-manager/properties-Expenses/Expense-details"
     );
 
-    this.ExpenseService.getById(this.expenseId).forEach(async (Element) => {
+    (await this.ExpenseService.getById(this.expenseId)).forEach(async (Element) => {
       this.expense= Element;
     })
     .then(async () => {
@@ -54,8 +54,8 @@ export class ExpenseDetailsPage {
 
 
   private async updateExpenseMasterList(contextParamValue) {
-    this.ExpenseService
-      .update(this.expenseId, contextParamValue)
+    (await this.ExpenseService
+      .update(this.expenseId, contextParamValue))
       .pipe(first())
       .subscribe({
         next: async () => {

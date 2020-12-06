@@ -4,8 +4,8 @@ import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first, toArray } from "rxjs/operators";
-import { Expense, Report } from '@app/_models';
-import { CastExpr } from '@angular/compiler';
+import { Expense, Report } from "@app/_models";
+import { CastExpr } from "@angular/compiler";
 
 @Component({
   selector: "page-student-details",
@@ -30,7 +30,7 @@ export class StudentDetailsPage {
   expensesLength: number;
   reportName: string;
   isVerified: boolean;
-  totalOfExpenses: number=0;
+  totalOfExpenses: number = 0;
 
   constructor(
     public route: ActivatedRoute,
@@ -39,15 +39,14 @@ export class StudentDetailsPage {
     public alertCtrl: AlertController,
     public alertService: AlertService,
     private router: Router
-  ) {
-    this.loading = this.alertService.presentLoading("Expense Check &#10003;");
-  }
+  ) {}
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses App");
     (await this.loading).present();
     this.studentId = this.route.snapshot.paramMap.get("studentId");
     // get id out of url
-    if(this.accountService.accountValue.role!='Admin'){
+    if (this.accountService.accountValue.role != "Admin") {
       window.history.replaceState(
         {},
         document.title,
@@ -70,15 +69,15 @@ export class StudentDetailsPage {
         console.log(Element);
       })
       .then(async () => {
-        (await this.loading).dismiss();
-
         //calculate expenses total
-        for(let i = 0; i< this.expensesLength;i++){
-          this.totalOfExpenses +=  Number(this.studentExpenses[i].expenseCost);
+        for (let i = 0; i < this.expensesLength; i++) {
+          this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);
         }
-
+      })
+      .finally(async () => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
       });
   }
-
-
 }

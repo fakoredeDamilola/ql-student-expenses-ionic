@@ -27,10 +27,11 @@ export class ReportsListPage {
     private router: Router,
     private _location: Location
   ) {
-    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+
   }
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses App");
     //TODO USE reports get by reportsManagerId and load virtuals
     (await this.loading).present();
     this.reportsManagerId = this.accountService.accountValue.id;
@@ -53,8 +54,8 @@ export class ReportsListPage {
         this.reportsList = Element;
         console.log(Element);
       })
-      .then(async () => {
-        (await this.loading).dismiss();
+      .finally(async () => {
+        setTimeout(async ()=>{ (await this.loading).dismiss()},300);
       });
   }
 

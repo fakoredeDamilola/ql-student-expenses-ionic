@@ -34,7 +34,7 @@
 
   <ion-row>
     <ion-col>
-     <h3><u><b>Students:</b></u></h3>
+     <h3><u><b>Report Students:</b></u></h3>
     </ion-col>
   </ion-row>
 
@@ -66,7 +66,7 @@
 
   <ion-row>
     <ion-col>
-     <h3><u><b>Expenses:</b></u></h3>
+     <h3><u><b>Report Expenses:</b></u></h3>
     </ion-col>
   </ion-row>
 
@@ -91,7 +91,19 @@
   </ion-grid>
 
   <ion-row>
-    Report Total:$ {{totalOfReportExpenses}}
+    <b>Report Total </b>:${{totalOfReportExpenses}}
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col>
+     <h3><u><b>Report Disbursements:</b></u></h3>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button expand="full" shape="block" color="success" (click)="calculateDisbursements()">Calculate Disbursements</ion-button>
+    </ion-col>
   </ion-row>
 
 <ion-row>

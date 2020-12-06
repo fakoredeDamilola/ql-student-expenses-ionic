@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: "expense-details/:expenseId",
     loadChildren: () =>
-      import("@app/pages/account/expenses/expense-details/expense-details.module").then(
+      import("@app/pages/admin/expenses/expense-details/expense-details.module").then(
         (m) => m.ExpenseDetailsModule
       ),
   },

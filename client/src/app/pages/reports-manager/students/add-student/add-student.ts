@@ -46,13 +46,13 @@ export class AddStudentPage {
     private reportService: ReportService,
     private _location: Location
   ) {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
     this.addingStudent = this.alertService.presentLoading(
       "Adding Student;"
     );
   }
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses App");
     (await this.loading).present();
     this.reportId = this.route.snapshot.paramMap.get("reportId");
     // get report, then the reportManagerId
@@ -63,6 +63,11 @@ export class AddStudentPage {
       })
       .then(async () => {
         (await this.loading).dismiss();
+      })
+      .finally(async () => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
       });
 
     if (this.accountService.accountValue.role != "Admin") {

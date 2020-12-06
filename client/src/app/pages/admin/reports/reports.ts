@@ -55,10 +55,11 @@ export class ReportsPage  {
     private acountService: AccountService,
     private reportService: ReportService
   ) {
-    this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
+
   }
 
   async ionViewWillEnter(){
+    this.loading = this.alertService.presentLoading('Student Expenses Admin');
     this.adminsIsChecked=true;
     this.petOwnersIsChecked=true;
     this.ReportManagersIsChecked=true;
@@ -69,8 +70,8 @@ export class ReportsPage  {
    (await this.reportService.getAll()).forEach(async Element=>{
       this.allReports = Element;
       console.log(this.allReports,"right here")
-    }).then(async ()=>{
-      (await this.loading).dismiss();
+    }).finally(async ()=>{
+      setTimeout(async ()=>{ (await this.loading).dismiss()},300);
     });
   }
 

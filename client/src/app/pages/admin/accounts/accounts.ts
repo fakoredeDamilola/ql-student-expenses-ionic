@@ -53,19 +53,14 @@ export class AccountsPage  {
     public config: Config,
     private accountService: AccountService
   ) {
-    this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
   }
 
   async ionViewDidEnter(){
-    //console.log("true2");
-    console.log("DID ENTER");
-    setTimeout(async ()=>{ (await this.loading).dismiss();},300);
 
   }
 
   async ionViewWillEnter(){
-    console.log("Will ENTER");
-    this.loading = this.alertService.presentLoading('Admin Pet Check&#10003; ');
+    this.loading = this.alertService.presentLoading('Admin Student Expenses');
     //console.log("true1");
     (await this.loading).present();
     this.adminsIsChecked=true;
@@ -82,8 +77,9 @@ export class AccountsPage  {
    (await this.accountService.getAll()).forEach(async Element=>{
       this.allAccounts = Element;
       console.log(this.allAccounts,"right here")
-    }).then(async ()=>{
-
+    })
+    .finally(()=>{
+      setTimeout(async ()=>{ (await this.loading).dismiss()},300);
     })
   }
 
@@ -135,79 +131,6 @@ export class AccountsPage  {
     }
   }
 
-  async addFavorite(slidingItem: HTMLIonItemSlidingElement, sessionData: any) {
-    if (this.user.hasFavorite(sessionData.name)) {
-      // Prompt to remove favorite
-      await this.removeFavorite(
-        slidingItem,
-        sessionData,
-        "Favorite already added"
-      );
-    } else {
-      // Add as a favorite
-      this.user.addFavorite(sessionData.name);
 
-      // Close the open item
-      await slidingItem.close();
 
-      // Create a toast
-      const toast = await this.toastCtrl.create({
-        header: `${sessionData.name} was successfully added as a favorite.`,
-        duration: 3000,
-        buttons: [
-          {
-            text: "Close",
-            role: "cancel",
-          },
-        ],
-      });
-
-      // Present the toast at the bottom of the page
-      await toast.present();
-    }
-  }
-
-  async removeFavorite(
-    slidingItem: HTMLIonItemSlidingElement,
-    sessionData: any,
-    title: string
-  ) {
-    const alert = await this.alertCtrl.create({
-      header: title,
-      message: "Would you like to remove this session from your favorites?",
-      buttons: [
-        {
-          text: "Cancel",
-          handler: () => {
-            // they clicked the cancel button, do not remove the session
-            // close the sliding item and hide the option buttons
-            slidingItem.close();
-          },
-        },
-        {
-          text: "Remove",
-          handler: () => {
-            // they want to remove this session from their favorites
-            this.user.removeFavorite(sessionData.name);
-            this.updateView();
-
-            // close the sliding item and hide the option buttons
-            slidingItem.close();
-          },
-        },
-      ],
-    });
-    // now present the alert on top of all other content
-    await alert.present();
-  }
-
-  async openSocial(network: string, fab: HTMLIonFabElement) {
-    const loading = await this.loadingCtrl.create({
-      message: `Posting to ${network}`,
-      duration: Math.random() * 1000 + 500,
-    });
-    await loading.present();
-    await loading.onWillDismiss();
-    fab.close();
-  }
 }

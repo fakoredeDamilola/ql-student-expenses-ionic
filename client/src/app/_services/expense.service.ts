@@ -23,19 +23,19 @@ export class ExpenseService {
     return this.ExpenseSubject.value;
   }
 
-  getAll() {
+  async getAll() {
     return this.http.get<Expense[]>(baseUrl);
   }
 
-  getById(id: string) {
+  async getById(id: string) {
     return this.http.get<Expense>(`${baseUrl}/${id}`);
   }
 
-  create(params: any) {
+  async create(params: any) {
     return this.http.post(baseUrl, params);
   }
 
-  update(id: string, params) {
+  async update(id: string, params) {
     return this.http.put(`${baseUrl}/${id}`, params).pipe(
       map((Expense: any) => {
         // update the current Expense if it was updated
@@ -49,7 +49,7 @@ export class ExpenseService {
     );
   }
 
-  delete(id: string) {
+  async delete(id: string) {
     return this.http.delete(`${baseUrl}/${id}`).pipe(
       finalize(() => {
         // auto logout if the logged in Expense was deleted

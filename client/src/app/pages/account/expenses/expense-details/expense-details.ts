@@ -86,8 +86,8 @@ export class ExpenseDetailsPage {
     );
   }
 
-    this.expenseService
-      .getById(this.expenseId)
+    (await this.expenseService
+      .getById(this.expenseId))
       .forEach(async (Element) => {
         console.log(Element)
         this.expenseName = Element.expenseName;
@@ -127,8 +127,8 @@ export class ExpenseDetailsPage {
   }
 
   private async updateExpenseMasterList(contextParamValue) {
-    this.expenseService
-      .update(this.expenseId, contextParamValue)
+    (await this.expenseService
+      .update(this.expenseId, contextParamValue))
       .pipe(first())
       .subscribe({
         next: async () => {
@@ -175,8 +175,8 @@ export class ExpenseDetailsPage {
 
   async deleteExpense() {
     (await this.deleting).present();
-    this.expenseService
-      .delete(this.expenseId)
+    (await this.expenseService
+      .delete(this.expenseId))
       .pipe(first())
       .subscribe({
         next: async () => {

@@ -57,11 +57,12 @@ export class AccountDetailsPage {
     private _location: Location
   ) {
 
-    this.loading = this.alertService.presentLoading("Expense Check &#10003;");
+
     this.deleting = this.alertService.presentLoading("Deleting Account...");
     this.savingAccount = this.alertService.presentLoading("Saving...");
   }
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Admin Student Expenses App");
     (await this.loading).present();
     // The account your viewing....
     this.accountId = this.route.snapshot.paramMap.get("accountId");
@@ -84,8 +85,11 @@ export class AccountDetailsPage {
       .then(async () => {
         this.account.created = moment(this.account.created).format('MM-DD-YYYY @HH:mm:ss');
         this.account.updated = moment(this.account.updated).format('MM-DD-YYYY @HH:mm:ss');
-        (await this.loading).dismiss();
-      });
+
+      })
+      .finally(()=>{
+        setTimeout(async ()=>{ (await this.loading).dismiss()},300);
+      })
   }
 
   async deleteAreYouSure() {

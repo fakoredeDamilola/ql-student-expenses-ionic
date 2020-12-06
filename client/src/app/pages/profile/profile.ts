@@ -35,26 +35,28 @@ export class ProfilePage {
     public alertService: AlertService,
     public loadingController: LoadingController
   ) {
-    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
     this.loggingOut = this.alertService.presentLoading(
       "Logging Out Pet Check &#10003;"
     );
     this.savingAccount = this.alertService.presentLoading("Saving...");
   }
 
-  async ionViewDidEnter() {
+  async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Pet Check &#10003;");
+    (await this.loading).present();
     this.accountID = this.accountService.accountValue.id;
     this.title = this.accountService.accountValue.title;
     this.firstName = this.accountService.accountValue.firstName;
     this.lastName = this.accountService.accountValue.lastName;
     this.email = this.accountService.accountValue.email;
     this.role = this.accountService.accountValue.role;
-    (await this.loading).dismiss();
+
+    setTimeout(async () => {
+      (await this.loading).dismiss();
+    }, 300);
   }
 
-  async ionViewWillEnter() {
-    (await this.loading).present();
-  }
+  async ionViewDidlEnter() {}
 
   updatePicture() {
     console.log("Clicked to update picture");
@@ -117,7 +119,7 @@ export class ProfilePage {
             "success",
             8000
           );
-          this.ionViewDidEnter();
+          this.ionViewWillEnter();
         },
         error: async (error) => {
           (await this.savingAccount).dismiss();

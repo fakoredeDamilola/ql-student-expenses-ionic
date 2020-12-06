@@ -61,6 +61,7 @@ async function getReport(id) {
 
   const report = await db.Report.findById(id)
   .populate("reportStudents")
+  .populate('reportStudentsCount')
   .populate('reportExpenses')
   .populate('reportExpensesCount');
 
