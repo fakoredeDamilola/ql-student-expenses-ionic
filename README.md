@@ -4,6 +4,15 @@ Code Once, Have Every Where!
 
 Probably the best framework ever.....
 
+### For QL Student Expenses Runners
+1. cd into client and npm Install
+2. cd into server and npm Install
+3. npm start to start server
+4. cd into client
+5. run ionic serve (will open up a page in browser)
+6. Home Page has more instructions and overview
+
+
 ## Deploying
 
 ### Progressive Web App
@@ -20,7 +29,8 @@ Probably the best framework ever.....
 
 1. Run `ionic cordova run ios --prod`
 
-### For QL Student Expenses Runners
-## client
-1. Run `npm i to install packages`
-2. 
+## Bug Tracker / Features TODO
+
+1. Camera for expenses images, saving to DB and retrieving (currently works with memory)
+2. Adding expenses for people, and creating users for reports managers
+
