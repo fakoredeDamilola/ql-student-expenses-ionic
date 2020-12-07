@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 
 import { IonicRatingModule } from 'ionic-rating';
+import { MinusPipe } from '@app/minus.pipe';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { IonicRatingModule } from 'ionic-rating';
     IonicRatingModule
   ],
   declarations: [
-    ReportDetailsPage,
+    ReportDetailsPage
   ]
 })
 export class ReportDetailsModule { }

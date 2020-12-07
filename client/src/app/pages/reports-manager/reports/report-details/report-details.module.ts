@@ -14,12 +14,10 @@ import { MinusPipe } from '@app/minus.pipe';
     CommonModule,
     IonicModule,
     ReportDetailsPageRoutingModule,
-    IonicRatingModule,
-    MinusPipe
+    IonicRatingModule
   ],
   declarations: [
-    ReportDetailsPage,
-    MinusPipe
+    ReportDetailsPage
   ]
 })
 export class ReportDetailsModule { }

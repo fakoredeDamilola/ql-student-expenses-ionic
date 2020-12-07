@@ -10,8 +10,6 @@ import {
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
-import { MinusPipe } from '@app/minus.pipe';
-
 
 @Component({
   selector: "page-report-details",
@@ -43,7 +41,8 @@ export class ReportDetailsPage {
   reportStudentsCount: number;
   reportStudents: any;
   userExpenses: any;
-  totalOfReportExpenses: number = 0;
+  totalOfReportExpenses: number ;
+  totalOfReportExpensesString: string;
   calculatingDisbursementsLoader: Promise<HTMLIonLoadingElement>;
 
   constructor(
@@ -67,6 +66,7 @@ export class ReportDetailsPage {
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
+    this.totalOfReportExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
@@ -101,12 +101,18 @@ export class ReportDetailsPage {
               this.reportExpenses = El;
               this.reportExpensesCount = this.reportExpenses.length;
               for (let i = 0; i < this.reportExpensesCount; i++) {
-                this.totalOfReportExpenses += Number(
-                  this.reportExpenses[i].expenseCost
-                );
+                this.totalOfReportExpenses += Number(this.reportExpenses[
+                  i
+                ].expenseCost);
               }
-              this.totalOfReportExpenses = Number(
-                this.totalOfReportExpenses.toFixed(2)
+
+              this.totalOfReportExpensesString = this.totalOfReportExpenses.toLocaleString(
+                "en-US",
+                {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 2
+                }
               );
             });
           })
@@ -232,62 +238,43 @@ export class ReportDetailsPage {
       });
   }
 
-  /*private async getAllReportExpenses() {
-    //for each student get expenses
-    for (let i = 0; i < this.reportStudentsCount; i++) {
-      (
-        await this.accountService.getAllExpensesOnAccount(
-          this.reportStudents[i].id
-        )
-      )
-        .forEach(async (Element) => {
-          this.userExpenses = Element;
-        })
-        .then(async () => {
-          if (this.userExpenses.length > 0) {
-            for (let i = 0; i < this.userExpenses.length; i++) {
-              this.reportExpenses[this.reportExpensesCount] = this.userExpenses[
-                i
-              ];
-              this.reportExpensesCount += 1;
-              console.log(this.reportExpensesCount,'WHAT IS THIS')
-            }
-          }
-        })
-    }
-  }*/
-
-  // calculate pot disbursement
+  // Calculate Disbursements Per Student
 
   public async calculateDisbursements() {
     (await this.calculatingDisbursementsLoader).present();
     // take total devide by number of students to get average
-    console.log(this.totalOfReportExpenses);
-    console.log(this.reportStudents.length);
-
+    //console.log(this.totalOfReportExpenses);
+    //console.log(this.reportStudents.length);
     const studentCount = this.reportStudents.length;
 
-    let averageOfExpenses =
-      this.totalOfReportExpenses / studentCount;
+    let averageOfExpenses = this.totalOfReportExpenses / studentCount;
 
-    averageOfExpenses = Number(averageOfExpenses.toFixed(2));
+    averageOfExpenses = Number(averageOfExpenses);
 
     console.log(averageOfExpenses, "average");
 
     // calculate how much each student spent
 
-    for(let i=0; i< studentCount;i++){
-      let studentExpensesTotal = Number(this.reportStudents[i].expensesTotal)
-      this.reportStudents[i].disbursementAmmount = (averageOfExpenses-studentExpensesTotal).toFixed(2);
-      console.log(this.reportStudents[i])
+    for (let i = 0; i < studentCount; i++) {
+      let studentExpensesTotal = Number(this.reportStudents[i].expensesTotal);
+      this.reportStudents[i].disbursementAmmount = (
+        averageOfExpenses - studentExpensesTotal
+      );
+      this.reportStudents[i].disbursementAmmountAbsoluteValue = Math.abs(
+        this.reportStudents[i].disbursementAmmount
+      );
+      this.reportStudents[i].disbursementAmmountAbsoluteValueCurrencyString= this.reportStudents[i].disbursementAmmountAbsoluteValue.toLocaleString(
+        "en-US",
+        {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 2
+        });
+      console.log(this.reportStudents[i]);
     }
 
     (await this.calculatingDisbursementsLoader).dismiss();
 
     // calculate how much each student owes or is owed to/from disbursements
-  }
-
-  async makePositive(){
-
   }
 }

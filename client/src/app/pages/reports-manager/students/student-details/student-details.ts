@@ -42,6 +42,8 @@ export class StudentDetailsPage {
   ) {}
 
   async ionViewWillEnter() {
+    // resetting this because of a bug noticed..
+    this.totalOfExpenses=0;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.studentId = this.route.snapshot.paramMap.get("studentId");

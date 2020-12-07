@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
 import { LoadingController } from "@ionic/angular";
 import { Location } from "@angular/common";
+import * as moment from "moment";
 
 @Component({
   selector: "page-reports-list",
@@ -26,9 +27,7 @@ export class ReportsListPage {
     private route: ActivatedRoute,
     private router: Router,
     private _location: Location
-  ) {
-
-  }
+  ) {}
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -44,19 +43,24 @@ export class ReportsListPage {
         this.reportsManagerId = this.accountService.accountValue.id;
       }
     }
-    (
-      await this.accountService.getAllReportsOnAccount(
-        this.reportsManagerId
-      )
-    )
+    (await this.accountService.getAllReportsOnAccount(this.reportsManagerId))
       .forEach(async (Element) => {
         //console.log(Element.reportsManagerReports);
         this.reportsList = Element;
         console.log(Element);
-
+      })
+      .then(async () => {
+        const reportsCount = this.reportsList.length;
+        for (let i = 0; i < reportsCount; i++) {
+          this.reportsList[i].created = moment(
+            this.reportsList[i].created
+          ).format("MM-DD-YYYY @HH:mm:ss");
+        }
       })
       .finally(async () => {
-        setTimeout(async ()=>{ (await this.loading).dismiss()},300);
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
       });
   }
 

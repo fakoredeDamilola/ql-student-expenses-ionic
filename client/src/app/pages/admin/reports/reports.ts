@@ -12,15 +12,16 @@ import {
 
 import { ReportsFilterPage } from "./reports-filter/reports-filter";
 import { UserData } from "@app/providers/user-data";
-import { AccountService, AlertService, ReportService } from '@app/_services';
-import { Account, Report } from '@app/_models';
+import { AccountService, AlertService, ReportService } from "@app/_services";
+import { Report } from "@app/_models";
+import * as moment from "moment";
 
 @Component({
   selector: "page-admin-reports",
   templateUrl: "reports.html",
   styleUrls: ["./reports.scss"],
 })
-export class ReportsPage  {
+export class ReportsPage {
   // Gets a reference to the list element
   @ViewChild("allAccountsList", { static: true }) allAccountsList: IonList;
 
@@ -29,18 +30,16 @@ export class ReportsPage  {
   segment = "all";
   showSearchbar: boolean;
   loading: any;
-  allReports: any|[Report];
-  adminsIsChecked:boolean;
-  petOwnersIsChecked:boolean
-  ReportManagersIsChecked:boolean;
-  filtersList:any;
+  allReports: any | [Report];
+  adminsIsChecked: boolean;
+  petOwnersIsChecked: boolean;
+  ReportManagersIsChecked: boolean;
+  filtersList: any;
 
-  adminCondition:string ='';
-  petOwnerCondition:string =''
-  ReportManagerCondition:string =''
+  adminCondition: string = "";
+  petOwnerCondition: string = "";
+  ReportManagerCondition: string = "";
   currentRoute: string = this.router.url;
-
-
 
   constructor(
     public alertCtrl: AlertController,
@@ -54,63 +53,71 @@ export class ReportsPage  {
     public config: Config,
     private acountService: AccountService,
     private reportService: ReportService
-  ) {
+  ) {}
 
-  }
-
-  async ionViewWillEnter(){
-    this.loading = this.alertService.presentLoading('Admin Student Expenses');
-    this.adminsIsChecked=true;
-    this.petOwnersIsChecked=true;
-    this.ReportManagersIsChecked=true;
-
+  async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
-    //this.updateSchedule();
-    this.ios = await this.config.get("mode") === "ios";
-   (await this.reportService.getAll()).forEach(async Element=>{
-      this.allReports = Element;
-      console.log(this.allReports,"right here")
-    }).finally(async ()=>{
-      setTimeout(async ()=>{ (await this.loading).dismiss()},300);
-    });
+    this.adminsIsChecked = true;
+    this.petOwnersIsChecked = true;
+    this.ReportManagersIsChecked = true;
+    this.ios = (await this.config.get("mode")) === "ios";
+
+    (await this.reportService.getAll())
+      .forEach(async (Element) => {
+        this.allReports = Element;
+        console.log(this.allReports, "right here");
+      })
+      .then(async () => {
+        const reportsCount = this.allReports.length;
+        for (let i = 0; i < reportsCount; i++) {
+          this.allReports[i].created = moment(
+            this.allReports[i].created
+          ).format("MM-DD-YYYY @HH:mm:ss");
+        }
+      })
+      .finally(async () => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
+      });
   }
 
   // Updates mani view from filter...very cool
   async updateView() {
     // TODO make this a switch case statement
-    if(this.adminsIsChecked==false){
-      this.adminCondition='Admin';
+    if (this.adminsIsChecked == false) {
+      this.adminCondition = "Admin";
     }
-    if(this.adminsIsChecked==true){
-      this.adminCondition='';
+    if (this.adminsIsChecked == true) {
+      this.adminCondition = "";
     }
-    if(this.petOwnersIsChecked==false){
-      this.petOwnerCondition='User';
+    if (this.petOwnersIsChecked == false) {
+      this.petOwnerCondition = "User";
     }
-    if(this.petOwnersIsChecked==true){
-      this.petOwnerCondition='';
+    if (this.petOwnersIsChecked == true) {
+      this.petOwnerCondition = "";
     }
-    if(this.ReportManagersIsChecked==false){
-      this.ReportManagerCondition='ReportManager';
+    if (this.ReportManagersIsChecked == false) {
+      this.ReportManagerCondition = "ReportManager";
     }
-    if(this.ReportManagersIsChecked==true){
-      this.ReportManagerCondition='';
+    if (this.ReportManagersIsChecked == true) {
+      this.ReportManagerCondition = "";
     }
-
   }
 
   async presentFilter() {
-    this.filtersList= {
-      'adminsIsChecked':this.adminsIsChecked,
-      'petOwnersIsChecked':this.petOwnersIsChecked,
-      'ReportManagersIsChecked':this.ReportManagersIsChecked
-    }
+    this.filtersList = {
+      adminsIsChecked: this.adminsIsChecked,
+      petOwnersIsChecked: this.petOwnersIsChecked,
+      ReportManagersIsChecked: this.ReportManagersIsChecked,
+    };
 
     const modal = await this.modalCtrl.create({
       component: ReportsFilterPage,
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
-      componentProps: { filtersList: await this.filtersList }
+      componentProps: { filtersList: await this.filtersList },
     });
     await modal.present();
 
@@ -122,5 +129,4 @@ export class ReportsPage  {
       this.updateView();
     }
   }
-
 }

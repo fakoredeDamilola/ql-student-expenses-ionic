@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
+import * as moment from "moment";
 
 @Component({
   selector: "page-expenses-list",
@@ -54,6 +55,13 @@ export class ExpensesListPage {
       })
       .then(async ()=>{
         this.expensesCount =this.reportsExpenses.length;
+      })
+      .then(async () => {
+        for (let i = 0; i < this.expensesCount; i++) {
+          this.reportsExpenses[i].created = moment(
+            this.reportsExpenses[i].created
+          ).format("MM-DD-YYYY @HH:mm:ss");
+        }
       })
       .finally(async () => {
         setTimeout(async () => {

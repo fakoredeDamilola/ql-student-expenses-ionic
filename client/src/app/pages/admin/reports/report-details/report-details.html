@@ -19,7 +19,8 @@
       <h3><b><u>Report Details:</u></b></h3>
     </ion-col>
     <ion-col>
-      <ion-button end size="medium" style="vertical-align: center; text-align: right;" shape="round" fill="clear" routerLink="{{currentRoute}}/student/add">
+      <ion-button end size="medium" style="vertical-align: center; text-align: right;" shape="round" fill="clear"
+        routerLink="{{currentRoute}}/student/add">
         <ion-icon name="add-outline"></ion-icon>Add Student
       </ion-button>
     </ion-col>
@@ -27,18 +28,19 @@
 
   <ion-row>
     <ion-col>
-      <ion-item (click)="editReportAttribute('reportName')"><b>Report Name:&nbsp; </b>  {{reportName}} (Click To Edit)</ion-item>
+      <ion-item (click)="editReportAttribute('reportName')"><b>Report Name:&nbsp; </b> {{reportName}} (Click To Edit)
+      </ion-item>
     </ion-col>
   </ion-row>
 
 
   <ion-row>
     <ion-col>
-     <h3><u><b>Report Students:</b></u></h3>
+      <h3><u><b>Report Students:</b></u></h3>
     </ion-col>
   </ion-row>
 
-  <ion-grid >
+  <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let student of reportStudents">
         <ion-card class="speaker-card" routerLink="{{currentRoute}}/students/student-details/{{student.id}}">
@@ -54,8 +56,14 @@
               </ion-label>
               <ion-label>
                 <h1><b>{{student.firstName}} {{student.lastName}}</b></h1>
-                <h2 >{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green" name="checkmark-circle"></ion-icon>
-                  <ion-icon name="checkmark-circle"  *ngIf="student.isVerified==false" style="color: firebrick;"></ion-icon>&nbsp;</h2>
+                <h2>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green"
+                    name="checkmark-circle"></ion-icon>
+                  <ion-icon name="checkmark-circle" *ngIf="student.isVerified==false" style="color: firebrick;">
+                  </ion-icon>&nbsp;
+                </h2>
+                <p>
+                  Expenses: {{student.studentExpensesCount}}
+                </p>
               </ion-label>
             </ion-item>
           </ion-card-header>
@@ -66,49 +74,94 @@
 
   <ion-row>
     <ion-col>
-     <h3><u><b>Report Expenses:</b></u></h3>
+      <h3><u><b>Report Expenses:</b></u></h3>
     </ion-col>
   </ion-row>
 
-  <ion-grid>
+  <ion-grid fixed>
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let expense of reportExpenses">
         <ion-card class="speaker-card">
           <!--<ion-card-header>-->
-            <ion-item detail="false" lines="none" class="speaker-item" routerLink='{{currentRoute}}/reports-expenses/expense-details/{{expense.id}}'>
-              <ion-avatar slot="start">
-                <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
-              </ion-avatar>
-              <ion-label>
-                <h2>{{expense.expenseName}}</h2>
-                <p>{{expense.expenseCost}}</p>
-                <p>{{expense.created}}</p>
-              </ion-label>
-            </ion-item>
+          <ion-item detail="false" lines="none" class="speaker-item"
+            routerLink='{{currentRoute}}/reports-expenses/expense-details/{{expense.id}}'>
+            <ion-avatar slot="start">
+              <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
+            </ion-avatar>
+            <ion-label>
+              <h2>${{expense.expenseCost}}-{{expense.expenseName}}</h2>
+              <p>Created By: {{expense.expenseStudent[0].firstName}} {{expense.expenseStudent[0].lastName}}</p>
+              <p>{{expense.created}}</p>
+            </ion-label>
+          </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-row>
-    <b>Report Total </b>:${{totalOfReportExpenses}}
+    <h5><b>Report Total</b>: {{totalOfReportExpensesString}}</h5>
   </ion-row>
 
 
   <ion-row>
     <ion-col>
-     <h3><u><b>Report Disbursements:</b></u></h3>
+      <h3><u><b>Report Disbursements:</b></u></h3>
     </ion-col>
   </ion-row>
   <ion-row>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="12" *ngFor="let student of reportStudents">
+          <ion-card class="speaker-card" routerLink="{{currentRoute}}/students/student-details/{{student.id}}">
+            <ion-card-header>
+              <ion-item detail="false" lines="none">
+                <ion-label>
+                  <div>
+                    <ion-avatar style="text-align: center;">
+                      <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
+                    </ion-avatar>
+
+                  </div>
+                </ion-label>
+                <ion-label>
+                  <h1><b>{{student.firstName}} {{student.lastName}}</b></h1>
+                  <h2>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green"
+                      name="checkmark-circle"></ion-icon>
+                    <ion-icon name="checkmark-circle" *ngIf="student.isVerified==false" style="color: firebrick;">
+                    </ion-icon>&nbsp;
+                  </h2>
+                  <p>
+                    Expenses: {{student.studentExpensesCount}}
+                  </p>
+                </ion-label>
+                <ion-label>
+                  <h4>Total:$ {{student.expensesTotal}}</h4>
+                  <h2><b><u>DISBURSEMENT</u></b></h2>
+                  <span *ngIf='student.disbursementAmmount<0' style="color: green;">Is Owed
+                    {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><span *ngIf='student.disbursementAmmount>0'
+                    style="color: red;">Owes {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><b></b>
+                </ion-label>
+              </ion-item>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-row>
+
+
+
+  <ion-row>
     <ion-col>
-      <ion-button expand="full" shape="block" color="success" (click)="calculateDisbursements()">Calculate Disbursements</ion-button>
+      <ion-button expand="full" shape="block" color="success" (click)="calculateDisbursements()">Calculate Disbursements
+      </ion-button>
     </ion-col>
   </ion-row>
 
-<ion-row>
-  <ion-col>
-    <ion-button expand="full" shape="block" color="danger" (click)="deleteAreYouSure()">Delete Report</ion-button>
-  </ion-col>
-</ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button expand="full" shape="block" color="danger" (click)="deleteAreYouSure()">Delete Report</ion-button>
+    </ion-col>
+  </ion-row>
 </ion-content>
