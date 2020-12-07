@@ -6,16 +6,12 @@ import { ReportDetailsPageRoutingModule } from './report-details-routing.module'
 import { IonicModule } from '@ionic/angular';
 
 
-import { IonicRatingModule } from 'ionic-rating';
-import { MinusPipe } from '@app/minus.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    ReportDetailsPageRoutingModule,
-    IonicRatingModule
-  ],
+    ReportDetailsPageRoutingModule],
   declarations: [
     ReportDetailsPage
   ]

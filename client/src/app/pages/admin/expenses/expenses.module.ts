@@ -6,15 +6,13 @@ import { IonicModule } from '@ionic/angular';
 import { ExpensesPage } from './expenses';
 import { ExpensesFilterPage } from './expenses-filter/expenses-filter';
 import { ExpensesPageRoutingModule } from './expenses-routing.module';
-import { IonicRatingModule } from 'ionic-rating';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ExpensesPageRoutingModule,
-    IonicRatingModule
+    ExpensesPageRoutingModule
   ],
   declarations: [
     ExpensesPage,

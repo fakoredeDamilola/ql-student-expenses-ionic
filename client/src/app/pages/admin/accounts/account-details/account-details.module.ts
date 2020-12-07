@@ -5,14 +5,12 @@ import { AccountDetailsPage } from './account-details';
 import { AccountDetailsPageRoutingModule } from './account-details-routing.module';
 import { IonicModule } from '@ionic/angular';
 
-import { IonicRatingModule } from 'ionic-rating';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    AccountDetailsPageRoutingModule,
-    IonicRatingModule
+    AccountDetailsPageRoutingModule
   ],
   declarations: [
     AccountDetailsPage,
