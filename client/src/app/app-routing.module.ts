@@ -5,7 +5,7 @@ import { AuthGuard } from "@app/_helpers";
 import { Role } from "@app/_models";
 
 const routes: Routes = [
-  { path: "", redirectTo: "/tutorial", pathMatch: "full" },
+  { path: "", redirectTo: "/home", pathMatch: "full" },
   {
     path: "home",
     loadChildren: () =>

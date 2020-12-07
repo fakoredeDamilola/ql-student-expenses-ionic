@@ -53,8 +53,10 @@ async function create(params) {
 }
 // Update single expense
 async function update(id, params) {
+  //console.log(params,"here")
   const expense = await getExpense(id);
   // copy params to account and save
+  //console.log(expense,'getting expense back')
   Object.assign(expense, params);
   expense.updated = Date.now();
   await expense.save();
@@ -70,7 +72,7 @@ async function getExpense(id) {
   const expense = await db.Expense.findById(id)
   .populate('expenseStudent')
   .populate('expenseReport');
-  if (!expense) throw "Expense not found";
+  //if (!expense) throw "Expense not found";
   return expense;
 }
 // Can make multiple of these later to return only what is needed for the view
@@ -85,6 +87,7 @@ function basicDetails(expense) {
     expenseCost,
     expenseCategory,
     created,
+    updated,
     expenseStudent,
     expenseReport
   } = expense;
@@ -97,6 +100,7 @@ function basicDetails(expense) {
     expenseCost,
     expenseCategory,
     created,
+    updated,
     expenseStudent,
     expenseReport
   };

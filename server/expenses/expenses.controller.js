@@ -49,7 +49,6 @@ function create(req, res, next) {
 
 function update(req, res, next) {
   // users can update their own account and admins can update any account
-
   expenseService
     .update(req.params.id, req.body)
     .then((expense) => res.json(expense))
