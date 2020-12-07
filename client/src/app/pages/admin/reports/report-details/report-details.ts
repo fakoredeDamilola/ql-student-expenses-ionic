@@ -10,6 +10,7 @@ import {
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
+import * as moment from "moment";
 
 @Component({
   selector: "page-report-details",
@@ -20,17 +21,8 @@ export class ReportDetailsPage {
   accountId: string;
   reportId: string;
   report = { reportName: "" };
-  petOwner = {
-    title: "",
-    firstName: "",
-    lastName: "",
-    isVerified: true,
-    email: "",
-  };
   reportExpenses = [];
   // key value for the edit input
-  key: any;
-  value: any;
   saving: boolean = true;
   loading: any;
   savingReport: Promise<HTMLIonLoadingElement>;
@@ -44,6 +36,7 @@ export class ReportDetailsPage {
   totalOfReportExpenses: number;
   totalOfReportExpensesString: string;
   calculatingDisbursementsLoader: Promise<HTMLIonLoadingElement>;
+  reportCreated: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -55,9 +48,7 @@ export class ReportDetailsPage {
     public accountService: AccountService,
     public expenseService: ExpenseService,
     private _location: Location
-  ) {
-
-  }
+  ) {}
 
   async ionViewDidEnter() {}
 
@@ -81,6 +72,9 @@ export class ReportDetailsPage {
     (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
         this.reportName = Element.reportName;
+        this.reportCreated = moment(Element.created).format(
+          "MM-DD-YYYY @HH:mm:ss"
+        );
       })
       .then(async () => {
         // Get Report Students
@@ -122,7 +116,6 @@ export class ReportDetailsPage {
   }
 
   async editReportAttribute(contextParameter: string) {
-
     // switch case so this is dynamic, pretty cool
     let popUpText: string;
     let currentValue: string;
@@ -141,7 +134,9 @@ export class ReportDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            this.savingReport = this.alertService.presentLoading("Saving Report...");
+            this.savingReport = this.alertService.presentLoading(
+              "Saving Report..."
+            );
             (await this.savingReport).present();
             this.updateReportMasterList(data, popUpText);
           },

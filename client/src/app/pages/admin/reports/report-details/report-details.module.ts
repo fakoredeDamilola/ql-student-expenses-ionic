@@ -6,12 +6,12 @@ import { ReportDetailsPageRoutingModule } from './report-details-routing.module'
 import { IonicModule } from '@ionic/angular';
 
 
-
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    ReportDetailsPageRoutingModule],
+    ReportDetailsPageRoutingModule
+  ],
   declarations: [
     ReportDetailsPage
   ]
