@@ -41,7 +41,7 @@ export class ReportDetailsPage {
   reportStudentsCount: number;
   reportStudents: any;
   userExpenses: any;
-  totalOfReportExpenses: number ;
+  totalOfReportExpenses: number;
   totalOfReportExpensesString: string;
   calculatingDisbursementsLoader: Promise<HTMLIonLoadingElement>;
 
@@ -56,16 +56,13 @@ export class ReportDetailsPage {
     public expenseService: ExpenseService,
     private _location: Location
   ) {
-    this.deleting = this.alertService.presentLoading("Deleting Account...");
-    this.savingReport = this.alertService.presentLoading("Saving Report...");
-    this.calculatingDisbursementsLoader = this.alertService.presentLoading(
-      "Calculating Disbursements..."
-    );
+
   }
 
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
+    // Reset because of weird behavior observed...
     this.totalOfReportExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
@@ -76,7 +73,7 @@ export class ReportDetailsPage {
       window.history.replaceState(
         {},
         document.title,
-        "/" + "report-manager/reports/report-details"
+        "/" + "reports-manager/reports/report-details"
       );
     }
     // This Chain can be split up later for lazy loading each section
@@ -101,9 +98,9 @@ export class ReportDetailsPage {
               this.reportExpenses = El;
               this.reportExpensesCount = this.reportExpenses.length;
               for (let i = 0; i < this.reportExpensesCount; i++) {
-                this.totalOfReportExpenses += Number(this.reportExpenses[
-                  i
-                ].expenseCost);
+                this.totalOfReportExpenses += Number(
+                  this.reportExpenses[i].expenseCost
+                );
               }
 
               this.totalOfReportExpensesString = this.totalOfReportExpenses.toLocaleString(
@@ -111,7 +108,7 @@ export class ReportDetailsPage {
                 {
                   style: "currency",
                   currency: "USD",
-                  minimumFractionDigits: 2
+                  minimumFractionDigits: 2,
                 }
               );
             });
@@ -124,10 +121,8 @@ export class ReportDetailsPage {
       });
   }
 
-  openExternalUrl(url: string) {
-    this.inAppBrowser.create(url, "_blank");
-  }
   async editReportAttribute(contextParameter: string) {
+
     // switch case so this is dynamic, pretty cool
     let popUpText: string;
     let currentValue: string;
@@ -146,6 +141,7 @@ export class ReportDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
+            this.savingReport = this.alertService.presentLoading("Saving Report...");
             (await this.savingReport).present();
             this.updateReportMasterList(data, popUpText);
           },
@@ -194,7 +190,7 @@ export class ReportDetailsPage {
     const alert = await this.alertCtrl.create({
       header: "Delete Report",
       message:
-        "Are You Sure you want to DELETE this Report??  This Action can not be reversed.",
+        "Are You Sure you want to DELETE this Report??  This Action cannot be reversed.",
       buttons: [
         {
           text: "Cancel",
@@ -213,6 +209,7 @@ export class ReportDetailsPage {
   }
 
   async deleteReport() {
+    this.deleting = this.alertService.presentLoading("Deleting Report...");
     (await this.deleting).present();
     this.reportService
       .delete(this.reportId)
@@ -241,40 +238,38 @@ export class ReportDetailsPage {
   // Calculate Disbursements Per Student
 
   public async calculateDisbursements() {
-    (await this.calculatingDisbursementsLoader).present();
-    // take total devide by number of students to get average
-    //console.log(this.totalOfReportExpenses);
-    //console.log(this.reportStudents.length);
-    const studentCount = this.reportStudents.length;
-
-    let averageOfExpenses = this.totalOfReportExpenses / studentCount;
-
-    averageOfExpenses = Number(averageOfExpenses);
-
-    console.log(averageOfExpenses, "average");
-
-    // calculate how much each student spent
-
-    for (let i = 0; i < studentCount; i++) {
-      let studentExpensesTotal = Number(this.reportStudents[i].expensesTotal);
-      this.reportStudents[i].disbursementAmmount = (
-        averageOfExpenses - studentExpensesTotal
-      );
-      this.reportStudents[i].disbursementAmmountAbsoluteValue = Math.abs(
-        this.reportStudents[i].disbursementAmmount
-      );
-      this.reportStudents[i].disbursementAmmountAbsoluteValueCurrencyString= this.reportStudents[i].disbursementAmmountAbsoluteValue.toLocaleString(
-        "en-US",
-        {
-          style: "currency",
-          currency: "USD",
-          minimumFractionDigits: 2
-        });
-      console.log(this.reportStudents[i]);
-    }
-
-    (await this.calculatingDisbursementsLoader).dismiss();
-
-    // calculate how much each student owes or is owed to/from disbursements
+    this.calculatingDisbursementsLoader = this.alertService.presentLoading(
+      "Calculating Disbursements..."
+    );
+    (await this.calculatingDisbursementsLoader)
+      .present()
+      .then(async () => {
+        const studentCount = this.reportStudents.length;
+        let averageOfExpenses = this.totalOfReportExpenses / studentCount;
+        averageOfExpenses = Number(averageOfExpenses);
+        // loop through each student and calculate what they owe or is owed from disbursement pot
+        for (let i = 0; i < studentCount; i++) {
+          let studentExpensesTotal = Number(
+            this.reportStudents[i].expensesTotal
+          );
+          this.reportStudents[i].disbursementAmmount =
+            averageOfExpenses - studentExpensesTotal;
+          this.reportStudents[i].disbursementAmmountAbsoluteValue = Math.abs(
+            this.reportStudents[i].disbursementAmmount
+          );
+          this.reportStudents[
+            i
+          ].disbursementAmmountAbsoluteValueCurrencyString = this.reportStudents[
+            i
+          ].disbursementAmmountAbsoluteValue.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 2,
+          });
+        }
+      })
+      .finally(async () => {
+        (await this.calculatingDisbursementsLoader).dismiss();
+      });
   }
 }

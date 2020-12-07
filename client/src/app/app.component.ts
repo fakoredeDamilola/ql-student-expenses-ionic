@@ -13,7 +13,6 @@ import { UserData } from "./providers/user-data";
 import { AccountService, AlertService } from "@app/_services";
 import { Account, Role } from "@app/_models";
 
-
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -76,28 +75,25 @@ export class AppComponent implements OnInit {
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private alertService: AlertService,
+    private alertService: AlertService
   ) {
-    this.loading = this.alertService.presentLoading("Student Expenses App");
-    this.loggingOut = this.alertService.presentLoading("Logging Out...");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     this.accountService.account.subscribe((x) => (this.account = x));
     this.initializeApp();
   }
 
   async ionViewDidEnter() {
-    (await (this.loading)).dismiss();
+    (await this.loading).dismiss();
     this.splashScreen.hide();
   }
 
-  async ionViewWillEnter(){
-
-  }
+  async ionViewWillEnter() {}
 
   async ngOnInit() {
     this.splashScreen.show();
     await this.checkLoginStatus();
     await this.listenForLoginEvents();
-
+    // Used if I ever did an update service...
     this.swUpdate.available.subscribe(async (res) => {
       const toast = await this.toastCtrl.create({
         message: "Update available!",
@@ -118,18 +114,21 @@ export class AppComponent implements OnInit {
   }
 
   async initializeApp() {
-    await this.platform.ready().then(async () => {
-      (await (this.loading)).present();
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    }).then(async () => {
-      (await (this.loading)).dismiss();
-    });
+    await this.platform
+      .ready()
+      .then(async () => {
+        (await this.loading).present();
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+      })
+      .then(async () => {
+        (await this.loading).dismiss();
+      });
   }
 
   async checkLoginStatus() {
     const loggedIn = await this.userData.isLoggedIn();
-    return await this.updateLoggedInStatus(loggedIn);
+    return this.updateLoggedInStatus(loggedIn);
   }
 
   async updateLoggedInStatus(loggedIn: boolean) {
@@ -153,15 +152,14 @@ export class AppComponent implements OnInit {
   }
 
   async logout() {
-    (await (this.loggingOut)).present();
-    await this.userData.logout();
-    (await (this.loggingOut)).dismiss();
-    //await this.accountService.logout();
-  }
-
-  async openTutorial() {
-    await this.menu.enable(false);
-    await this.storage.set("ion_did_tutorial", false);
-    await this.router.navigateByUrl("/tutorial");
+    this.loggingOut = this.alertService.presentLoading("Logging Out...");
+    (await this.loggingOut)
+      .present()
+      .then(async () => {
+        await this.userData.logout();
+      })
+      .finally(async () => {
+        (await this.loggingOut).dismiss();
+      });
   }
 }

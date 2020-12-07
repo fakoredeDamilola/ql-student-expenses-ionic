@@ -1,21 +1,14 @@
 ﻿import { Injectable } from "@angular/core";
 import { ToastController } from "@ionic/angular";
 import { LoadingController } from "@ionic/angular";
-import { Observable, Subject } from "rxjs";
-import { filter } from "rxjs/operators";
-
 
 @Injectable({ providedIn: "root" })
 export class AlertService {
-
-
   constructor(
     private toastCtrl: ToastController,
     private loadingController: LoadingController
   ) {}
-
-
-
+  // Used to create toast alerts throughout app
   async createToastAlert(
     messageParam: string,
     colorParam?: "primary" | "warning" | "danger" | "success",
@@ -36,11 +29,11 @@ export class AlertService {
     await toast.present();
     toast.onDidDismiss();
   }
-
+  // used to create loaders throughout app
   async presentLoading(messageParam: string) {
     const loading = this.loadingController.create({
       message: messageParam,
     });
-      return loading;
+    return loading;
   }
 }

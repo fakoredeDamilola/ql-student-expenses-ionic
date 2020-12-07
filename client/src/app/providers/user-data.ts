@@ -14,21 +14,6 @@ export class UserData {
      private toastAlert: AlertService
      ) {}
 
-  hasFavorite(sessionName: string): boolean {
-    return this.favorites.indexOf(sessionName) > -1;
-  }
-
-  async addFavorite(sessionName: string): Promise<any> {
-    this.favorites.push(sessionName);
-  }
-
-  async removeFavorite(sessionName: string): Promise<any> {
-    const index = this.favorites.indexOf(sessionName);
-    if (index > -1) {
-      this.favorites.splice(index, 1);
-    }
-  }
-
   async login(email: string): Promise<any> {
     await this.storage.set(this.HAS_LOGGED_IN, true);
     await this.setUsername(email);

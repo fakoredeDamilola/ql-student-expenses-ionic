@@ -14,13 +14,12 @@ import { ReportOptions } from "@app/interfaces/report-options";
 export class AddReportPage {
   account = this.accountService.accountValue;
   submitted: boolean = false;
-  loading: any;
   currentRoute: string = this.router.url;
-
   addReport: ReportOptions = {
     reportName: "",
-
   };
+  creatingReport: Promise<HTMLIonLoadingElement>;
+  loading: Promise<HTMLIonLoadingElement>;
 
   constructor(
     private accountService: AccountService,
@@ -29,8 +28,7 @@ export class AddReportPage {
     public actionSheetCtrl: ActionSheetController,
     public alertService: AlertService,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   async ionViewDidEnter() {
     (await this.loading).dismiss();
@@ -42,13 +40,13 @@ export class AddReportPage {
   }
 
   async onAddReport(form?: NgForm) {
-    (await this.loading).present();
+    this.creatingReport = this.alertService.presentLoading("Creating Report...");
+    (await this.creatingReport).present();
     this.submitted = true;
-
-    // stop here if form is invalid
+    // stop here if form is invalid, not relevent here, only have optional name...
     if (form.invalid) {
       this.alertService.createToastAlert(
-        "Add to properties failed, fields are invalid.....!",
+        "Create Report failed, fields are invalid.....!",
         "danger",
         8000
       );
@@ -67,30 +65,25 @@ export class AddReportPage {
       }
     }
 
-    this.reportService
-      .create(form.value)
-      .pipe(first())
-      .subscribe({
-        next: async () => {
-          //TODO Replace with toast alert
-          (await this.loading).dismiss();
-          this.alertService.createToastAlert(
-            "Report Added Successfully!",
-            "success",
-            8000
-          );
-          //await this.userData.signup(this.signup.email);
-          const backUrl = this.currentRoute.replace("/add", "");
-          this.router.navigateByUrl(backUrl);
-        },
-        error: async (error) => {
-          this.alertService.createToastAlert(
-            "Add to properties failed.....!",
-            "danger",
-            8000
-          );
-          this.loading = false;
-        },
-      });
+    (await this.reportService.create(form.value)).pipe(first()).subscribe({
+      next: async () => {
+        (await this.creatingReport).dismiss();
+        this.alertService.createToastAlert(
+          "Report Added Successfully!",
+          "success",
+          8000
+        );
+        const backUrl = this.currentRoute.replace("/add", "");
+        this.router.navigateByUrl(backUrl);
+      },
+      error: async (error) => {
+        (await this.creatingReport).dismiss();
+        this.alertService.createToastAlert(
+          "Create Report failed.....!",
+          "danger",
+          8000
+        );
+      },
+    });
   }
 }

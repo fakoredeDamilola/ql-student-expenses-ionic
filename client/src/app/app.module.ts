@@ -24,8 +24,7 @@ import { Camera } from "@ionic-native/Camera/ngx";
 import { File } from "@ionic-native/File/ngx";
 import { WebView } from "@ionic-native/ionic-webview/ngx";
 import { FilePath } from "@ionic-native/file-path/ngx";
-import { RouteReuseStrategy } from '@angular/router';
-import { MinusPipe } from './minus.pipe';
+import { RouteReuseStrategy } from "@angular/router";
 
 @NgModule({
   imports: [
@@ -40,7 +39,7 @@ import { MinusPipe } from './minus.pipe';
       enabled: environment.production,
     }),
   ],
-  declarations: [AppComponent, ExpandableComponent, MinusPipe],
+  declarations: [AppComponent, ExpandableComponent],
   providers: [
     InAppBrowser,
     SplashScreen,
@@ -60,6 +59,5 @@ import { MinusPipe } from './minus.pipe';
     FilePath,
   ],
   bootstrap: [AppComponent],
-
 })
 export class AppModule {}

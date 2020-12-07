@@ -11,9 +11,6 @@ const baseUrl = `${environment.apiUrl}/accounts`;
 
 @Injectable({ providedIn: "root" })
 export class AccountService {
-  getAllStudentsInReports(userId: any) {
-    throw new Error('Method not implemented.');
-  }
   private accountSubject: BehaviorSubject<Account>;
   public account: Observable<Account>;
 
@@ -67,7 +64,7 @@ export class AccountService {
       );
   }
 
-  register(account: Account) {
+  async register(account: Account) {
     //console.log(account, "<--Account for regular register");
     return this.http.post(`${baseUrl}/register`, account);
   }

@@ -14,15 +14,11 @@ import { CastExpr } from "@angular/compiler";
 })
 export class StudentDetailsPage {
   studentId: any;
-  //
   firstName: string;
   lastName: string;
   email: string;
   created: any;
 
-  // key value for the edit input
-  key: any;
-  value: any;
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
@@ -42,12 +38,12 @@ export class StudentDetailsPage {
   ) {}
 
   async ionViewWillEnter() {
-    // resetting this because of a bug noticed..
+    // reseting this because of a bug noticed..
     this.totalOfExpenses=0;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.studentId = this.route.snapshot.paramMap.get("studentId");
-    // get id out of url
+    // get id out of url for non admins
     if (this.accountService.accountValue.role != "Admin") {
       window.history.replaceState(
         {},

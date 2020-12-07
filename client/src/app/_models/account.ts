@@ -1,26 +1,19 @@
-﻿import { Role } from './role';
+﻿import { Role } from "./role";
+import { Expense } from "./expense";
 
 export class Account {
-    id: string;
-    reportId?:string;//<-----That I belong to, or a resident of
-    reportsManagerId?:string;//<-----That I belong to, or a resident of
-    title: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    role: Role;
-    //petOwnerPets?:[Pet];
-    petOwnerPetsCount?:number;
-    jwtToken?: string;
-    propertyManagerPetOwnersCount?:number;
-    propertyManagerPetsCount?:number;
-    propertyManagerPetOwners?:[Account];
-    //propertyManagerPets?:[Pet];
-    //propertyManagerProperties?:[Property];
-    created: string;
-    isVerified: boolean;
-    updated: string;
-  studentExpenses: [import("/Users/mike/Documents/another one ql/student-expenses-ionic/client/src/app/_models/expense").Expense];
+  id: string;
+  reportId?: string;
+  reportsManagerId?: string;
+  title: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: Role;
+  jwtToken?: string;
+  created: string;
+  isVerified: boolean;
+  updated: string;
+  studentExpenses: [Expense];
   studentExpensesCount: number;
-    //petOwnerProperty?: Property;
 }

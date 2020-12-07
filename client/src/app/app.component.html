@@ -4,7 +4,7 @@
       <ion-header routerLink="/home" routerLinkActive="selected" routerDirection="root" detail="false">
         <ion-toolbar color="primary">
           <ion-title slot="start" text-align-left margin-vertical size="large">Student Expenses</ion-title>
-      </ion-toolbar>
+        </ion-toolbar>
       </ion-header>
       <ion-content>
         <ion-list lines="none" [hidden]="!account || account.role != 'Admin'">
@@ -22,7 +22,8 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list lines="none" [hidden]="!account || account.role =='Student' || (account.role != 'Admin' && account.role != 'ReportsManager')">
+        <ion-list lines="none"
+          [hidden]="!account || account.role =='Student' || (account.role != 'Admin' && account.role != 'ReportsManager')">
           <ion-list-header>
             Reports Manager
           </ion-list-header>

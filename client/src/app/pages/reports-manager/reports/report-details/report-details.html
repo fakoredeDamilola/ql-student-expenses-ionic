@@ -28,7 +28,9 @@
 
   <ion-row>
     <ion-col>
-      <ion-item (click)="editReportAttribute('reportName')"><b>Report Name:&nbsp; </b> {{reportName}} (Click To Edit)
+      <ion-item (click)="editReportAttribute('reportName')"><b>Report Name:&nbsp; </b> {{reportName}}
+      </ion-item>
+      <ion-item><b>Created:&nbsp; </b> {{reportCreated}}
       </ion-item>
     </ion-col>
   </ion-row>
@@ -117,26 +119,13 @@
             <ion-card-header>
               <ion-item detail="false" lines="none">
                 <ion-label>
-                  <div>
-                    <ion-avatar style="text-align: center;">
-                      <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
-                    </ion-avatar>
-
-                  </div>
-                </ion-label>
-                <ion-label>
                   <h1><b>{{student.firstName}} {{student.lastName}}</b></h1>
-                  <h2>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green"
-                      name="checkmark-circle"></ion-icon>
-                    <ion-icon name="checkmark-circle" *ngIf="student.isVerified==false" style="color: firebrick;">
-                    </ion-icon>&nbsp;
-                  </h2>
-                  <p>
+                  <h3>
                     Expenses: {{student.studentExpensesCount}}
-                  </p>
+                  </h3>
+                  <h4>Total: ${{student.expensesTotal}}</h4>
                 </ion-label>
                 <ion-label>
-                  <h4>Total:$ {{student.expensesTotal}}</h4>
                   <h2><b><u>DISBURSEMENT</u></b></h2>
                   <span *ngIf='student.disbursementAmmount<0' style="color: green;">Is Owed
                     {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><span *ngIf='student.disbursementAmmount>0'

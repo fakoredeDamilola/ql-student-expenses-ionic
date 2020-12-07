@@ -31,28 +31,24 @@ export class ReportService {
     return this.http.get<Report>(`${baseUrl}/${id}`);
   }
 
-  getStudentByReportId(reportId: string) {
+  async getStudentByReportId(reportId: string) {
     const student = this.http.get<Report>(`${baseUrl}/${reportId}/student`);
     return student;
   }
 
-  create(params: any) {
+  async create(params: any) {
     return this.http.post(baseUrl, params);
   }
 
   async update(id: string, params: any) {
     return this.http.put(`${baseUrl}/${id}`, params).pipe(
-      map(async (Report: any) => {
-        return await Report;
+      map(async (report: any) => {
+        return report;
       })
     );
   }
 
   delete(id: string) {
-    return this.http.delete(`${baseUrl}/${id}`).pipe(
-      finalize(() => {
-
-      })
-    );
+    return this.http.delete(`${baseUrl}/${id}`).pipe(finalize(() => {}));
   }
 }

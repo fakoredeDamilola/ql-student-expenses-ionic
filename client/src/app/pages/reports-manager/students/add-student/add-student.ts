@@ -46,9 +46,6 @@ export class AddStudentPage {
     private reportService: ReportService,
     private _location: Location
   ) {
-    this.addingStudent = this.alertService.presentLoading(
-      "Adding Student;"
-    );
   }
 
   async ionViewWillEnter() {
@@ -58,11 +55,8 @@ export class AddStudentPage {
     // get report, then the reportManagerId
     (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
-        console.log(Element)
+        //console.log(Element);
         this.reportsManagerId = Element.reportsManagerId;
-      })
-      .then(async () => {
-        (await this.loading).dismiss();
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -79,14 +73,12 @@ export class AddStudentPage {
     }
   }
 
-  async ionViewDidEnter() {
-    (await this.loading).dismiss();
-  }
+  async ionViewDidEnter() {}
 
   async onAddStudent(form?: NgForm) {
+    this.addingStudent = this.alertService.presentLoading("Adding Student;");
     (await this.addingStudent).present();
     this.submitted = true;
-
     // stop here if form is invalid
     if (form.invalid) {
       (await this.addingStudent).dismiss();
@@ -98,25 +90,26 @@ export class AddStudentPage {
     form.value.password = "StudentExpenses123";
     form.value.confirmPassword = "StudentExpenses123";
 
-    // TODO add the newly created accounts ID to this reports Owner ID
-
     if (!form.value.title) {
       form.value.title = "N/A";
     }
 
-    //console.log("the form for add pet owner...", form.value)
-
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {
         //TODO Replace with toast alert
-        await this.alertService.createToastAlert(
-          "Invite Email To Student Sent Successfully",
-          "success",
-          5000
-        );
-        await this.userData.signup(this.signup.email);
-        (await this.addingStudent).dismiss();
-        this._location.back();
+        await this.alertService
+          .createToastAlert(
+            "Invite Email To Student Sent Successfully",
+            "success",
+            5000
+          )
+          .then(async () => {
+            await this.userData.signup(this.signup.email);
+          })
+          .finally(async () => {
+            (await this.addingStudent).dismiss();
+            this._location.back();
+          });
       },
       error: async (error) => {
         await this.alertService.createToastAlert(

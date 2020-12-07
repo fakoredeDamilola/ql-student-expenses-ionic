@@ -28,15 +28,10 @@ export class PhotoService {
   }
 
   public async loadSaved(objectId: string) {
-    /* const allFilesList= this.http.get(`${baseUrl}/files/06d3a600eccf6b32250a0d2af294e158.jpeg`).forEach((element)=>{
-      console.log(element)
-    })*/
-
     // Retrieve cached photo array data
     const photoList = await Storage.get({
       key: this.PHOTO_STORAGE + `${objectId}`,
     });
-    //console.log(photoList)
     this.photos = JSON.parse(photoList.value) || [];
     // If running on the web...
     if (!this.platform.is("hybrid")) {
@@ -48,7 +43,6 @@ export class PhotoService {
           path: photo.filepath,
           directory: FilesystemDirectory.Data,
         });
-
         // Web platform only: Load the photo as base64 data
         photo.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
       }
@@ -71,16 +65,13 @@ export class PhotoService {
       source: CameraSource.Camera, // automatically take a new photo with the camera
       quality: 100, // highest quality (0 to 100)
     });
-    console.log("getting here");
     const savedImageFile: any = await this.savePicture(
       capturedPhoto,
       objectId,
       type
     );
-
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
-
     // Cache all photo data for future retrieval
     Storage.set({
       key: this.PHOTO_STORAGE + `${objectId}`,
@@ -96,7 +87,6 @@ export class PhotoService {
   ) {
     // Convert photo to base64 format, required by Filesystem API to save
     const fileName = `${type}-${objectId}-` + new Date().getTime() + ".jpeg";
-    console.log(fileName, "The file name?");
     const base64Data = await this.readAsBase64(cameraPhoto, fileName);
     // Write the file to the data directory
     // Might change this later idk for performance
@@ -123,7 +113,6 @@ export class PhotoService {
       };
     }
   }
-
   // Read camera photo into base64 format based on the platform the app is running on
   private async readAsBase64(cameraPhoto: CameraPhoto, fileName: string) {
     // "hybrid" will detect Cordova or Capacitor
@@ -151,7 +140,6 @@ export class PhotoService {
     imageData.append("image", blob, fileName);
     this.http.post<any>(`${baseUrl}/upload`, imageData).subscribe();
   }
-
   // Delete picture by removing it from reference data and the filesystem** Localy
   public async deletePicture(photo: Photo, position: number, objectId: string) {
     // Remove this photo from the Photos reference data array
@@ -165,14 +153,14 @@ export class PhotoService {
     // delete photo file from filesystem
     const filename = photo.filepath; //.substr(photo.filepath.lastIndexOf('/') + 1);
     //console.log(filename,"THISSS DOY")
-    await this.deletePictureFromServer(photo.filepath)
+    await this.deletePictureFromServer(photo.filepath);
     await Filesystem.deleteFile({
       path: filename,
       directory: FilesystemDirectory.Data,
     });
   }
 
-  async deletePictureFromServer(fileName:string){
+  async deletePictureFromServer(fileName: string) {
     this.http.delete<any>(`${baseUrl}/files/${fileName}`).subscribe();
   }
 

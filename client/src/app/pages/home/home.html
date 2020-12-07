@@ -24,11 +24,55 @@
     <h3 class="ion-padding-top ion-padding-start">Welcome To The Student Expenses App <span>&#10003;</span></h3>
 
     <p class="ion-padding-start ion-padding-end">
-        The idea for this app, and inspiration was from previous companies and kinda modeled after expense reports ive had to do in the past.
-        So the use is simple, and I wanted to utilize Ionic because it looks clean, very responsive, latest angular 11 etc.
-        So as a Reports Manager(could be like a teacher or an actual manager for a department etc.) creates a Report, where he/she then goes and adds students to the report
-        , who will recieve an exmail invite.  Then when those students add there expenses in their own profile through the app, its automatically associated with the expense reports they were added to.
-     </p>
+      The idea for this app, and inspiration was from previous companies and kinda modeled after expense reports i've
+      had to do in the past.
+    </p>
+
+    <p class="ion-padding-start ion-padding-end">
+      So the use is simple, and I wanted to utilize Ionic because it looks clean, very responsive, latest angular 11
+      etc.
+    </p>
+    <p class="ion-padding-start ion-padding-end">
+      So as a Reports Manager(could be like a teacher or an actual manager for a department etc.) creates a Report,
+      where he/she then goes and adds students to the report
+      , who will recieve an email invite.
+    </p>
+
+    <p class="ion-padding-start ion-padding-end">
+      Then when those students add there expenses in their own profile through the app, its automatically associated
+      with the expense reports they were added to, as well as the reports manager...
+    </p>
+
+    <p class="ion-padding-start ion-padding-end">
+      This does not use a server smtp, but instead for development uses a fake email service.
+    </p>
+    <p class="ion-padding-start ion-padding-end">
+      Use this to view the emails for adding students, reseting password, verifying email:<a
+        href='https://ethereal.email/login'>Ethereal Email</a><br>
+      The User Name is: brannon.fahey@ethereal.email <br>
+      The Password is: mNXuzdz9gE1Q3KJ6Vw
+    </p>
+
+    <p class="ion-padding-start ion-padding-end">
+      The Connection String for the Atlas Cloud MongoDB Instance is:
+      mongodb+srv://ql-student-expenses:ql-student-expenses@cluster0.xpl5r.mongodb.net/ql-student-expenses-app?retryWrites=true&w=majority
+    </p>
+    <p class="ion-padding-start ion-padding-end">
+      <b><u>There are 3 User Groups:</u></b><br>
+      <b>1. Admins</b><br>
+      - Can Create/View/Edit All Accounts<br>
+      * Can Create/View/Edit Everything for Reports Managers<br>
+      - Can View/Edit All Reports<br>
+      - Can View/Edit All Expenses<br>
+      <b>2. Reports Managers</b><br>
+      - Can Create/View/Edit Reports & Calculate Disbursements<br>
+      - Can Add Students To Reports<br>
+      - Can View/Edit Expenses<br>
+      <b>3. Students</b><br>
+      - Can Create/View/Edit Personal Expenses
+
+    </p>
+
 
 
 
