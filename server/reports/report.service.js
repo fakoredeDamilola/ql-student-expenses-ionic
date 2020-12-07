@@ -40,7 +40,7 @@ async function update(id, params) {
 }
 
 async function _delete(id) {
-  console.log("Im deleting Report...");
+  //console.log("Im deleting Report...");
   const report = await getReport(id);
   await report.remove();
 }

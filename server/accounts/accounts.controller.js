@@ -83,7 +83,7 @@ function getAllExpensesInReports(req, res, next) {
 }
 
 function getAllExpensesOnAccount(req, res, next) {
-  console.log(req.params)
+  //console.log(req.params)
   expenseService
   .getAllExpensesOnAccount(req.params.accountId)
   .then((Expenses) => res.json(Expenses))
