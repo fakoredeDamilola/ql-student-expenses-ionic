@@ -10,7 +10,8 @@ import { IonicModule } from '@ionic/angular';
   imports: [
     CommonModule,
     IonicModule,
-    ExpenseDetailsPageRoutingModule],
+    ExpenseDetailsPageRoutingModule
+  ],
   declarations: [
     ExpenseDetailsPage,
   ]

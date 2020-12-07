@@ -319,7 +319,8 @@ function update(req, res, next) {
 
 function _delete(req, res, next) {
   // Students can delete their own account and admins can delete any account
-  if (req.params.accountId !== req.Student.id && req.Student.role !== Role.Admin) {
+  console.log(req.user)
+  if (req.params.accountId !== req.user.id && req.user.role !== Role.Admin) {
     return res.status(401).json({
       message: "Unauthorized you tried deleting someone elses account",
     });

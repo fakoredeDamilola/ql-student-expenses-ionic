@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ExpenseDetailsPage } from './expense-details';
+import { ExpenseDetailsPageRoutingModule } from './expense-details-routing.module';
 import { IonicModule } from '@ionic/angular';
-import { ExpenseDetailsPageRoutingModule } from '@app/pages/account/expenses/expense-details/expense-details-routing.module';
+
 
 @NgModule({
   imports: [

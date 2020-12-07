@@ -9,10 +9,7 @@ import {
 } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
-
-import { ToastController } from "@ionic/angular";
-
-import { WebView } from "@ionic-native/ionic-webview/ngx";
+import * as moment from "moment";
 
 const STORAGE_KEY = "my_images";
 @Component({
@@ -30,6 +27,10 @@ export class ExpenseDetailsPage {
   currentRoute: string = this.router.url;
   expenseCost: string;
   expenseCreated: string;
+  expenseCategory: string;
+  expenseCreatedBy: string;
+  expenseReport: any;
+  expenseReportsManager: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -41,16 +42,13 @@ export class ExpenseDetailsPage {
     public accountService: AccountService,
     public routerOutlet: IonRouterOutlet,
     public modalCtrl: ModalController,
-    private _location: Location,
-    private webview: WebView,
-    private toastController: ToastController
+    private _location: Location
   ) {
-    this.savingExpense = this.alertService.presentLoading("Saving Expense...");
     this.deleting = this.alertService.presentLoading("Deleting Expense...");
   }
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Admin Student Expenses");
+    this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.expenseId = this.route.snapshot.paramMap.get("expenseId");
@@ -69,7 +67,13 @@ export class ExpenseDetailsPage {
         console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
-        this.expenseCreated = Element.created;
+        this.expenseCreatedBy = `${Element.expenseStudent[0].firstName} ${Element.expenseStudent[0].lastName} `;
+        this.expenseReport = Element.expenseReport[0].reportName;
+        this.expenseCategory = Element.expenseCategory;
+        this.expenseReportsManager = `${Element.expenseReportsManager[0].firstName} ${Element.expenseReportsManager[0].lastName}`;
+        this.expenseCreated = moment(
+          Element.created
+        ).format("MM-DD-YYYY @HH:mm:ss");
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -78,24 +82,48 @@ export class ExpenseDetailsPage {
       });
   }
 
-  async editExpenseName() {
+  async editExpense(contextParamValue) {
+    let popUpText: string;
+    let currentValue: string;
+    switch (contextParamValue) {
+      case "expenseName": {
+        popUpText = "Expense Name";
+        currentValue = this.expenseName;
+        break;
+      }
+      case "expenseCost": {
+        popUpText = "Expense Cost";
+        currentValue = this.expenseCost;
+        break;
+      }
+      case "expenseCategory": {
+        popUpText = "Expense Category";
+        currentValue = this.expenseCategory;
+        break;
+      }
+    }
+
     let alert = await this.alertCtrl.create({
-      header: "Change expense Name",
+      header: `Change ${popUpText}`,
       buttons: [
         "Cancel",
         {
           text: "Ok",
           handler: async (data: any) => {
+            console.log(data);
+            this.savingExpense = this.alertService.presentLoading(
+              "Saving Expense..."
+            );
             (await this.savingExpense).present();
-            this.updateExpenseMasterList(data);
+            this.updateExpenseMasterList(data, popUpText);
           },
         },
       ],
       inputs: [
         {
           type: "text",
-          name: "expenseName",
-          value: this.expenseName,
+          name: contextParamValue,
+          value: currentValue,
           placeholder: "us",
         },
       ],
@@ -103,14 +131,17 @@ export class ExpenseDetailsPage {
     await alert.present();
   }
 
-  private async updateExpenseMasterList(contextParamValue) {
+  private async updateExpenseMasterList(
+    contextParamValue: any,
+    popUpText: string
+  ) {
     (await this.expenseService.update(this.expenseId, contextParamValue))
       .pipe(first())
       .subscribe({
         next: async () => {
           (await this.savingExpense).dismiss();
           this.alertService.createToastAlert(
-            "Update To Expense Successful!",
+            `Update To Expense ${popUpText} Successful! `,
             "success",
             8000
           );
@@ -119,7 +150,7 @@ export class ExpenseDetailsPage {
         error: async (error) => {
           (await this.savingExpense).dismiss();
           this.alertService.createToastAlert(
-            "Update To Expense Failed...",
+            `Update To Expense ${popUpText} Failed...`,
             "warning",
             8000
           );

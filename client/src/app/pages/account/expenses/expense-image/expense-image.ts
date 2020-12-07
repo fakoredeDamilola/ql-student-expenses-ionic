@@ -13,7 +13,7 @@ export class ExpenseImagePage {
 
   constructor(
     public photoService: PhotoService,
-    public actionSheetController: ActionSheetController,
+    public actionShexpenseController: ActionSheetController,
     private route: ActivatedRoute
   ) {}
 
@@ -24,13 +24,11 @@ export class ExpenseImagePage {
   }
 
   public async showActionSheet(photo: Photo, position: number) {
-    console.log("--->>>>",photo.filepath,"this???");
-    const actionSheet = await this.actionSheetController.create({
-
+    const actionShexpense = await this.actionShexpenseController.create({
       header: "Photos",
       buttons: [
         {
-          text: "Delete",
+          text: "Delete Picture",
           role: "destructive",
           icon: "trash",
           handler: () => {
@@ -42,11 +40,11 @@ export class ExpenseImagePage {
           icon: "close",
           role: "cancel",
           handler: () => {
-            // Nothing to do, action sheet is automatically closed
+            // Nothing to do, action shexpense is automatically closed
           },
         },
       ],
     });
-    await actionSheet.present();
+    await actionShexpense.present();
   }
 }

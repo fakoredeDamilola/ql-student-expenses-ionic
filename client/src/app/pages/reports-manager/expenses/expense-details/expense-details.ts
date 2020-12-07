@@ -9,10 +9,7 @@ import {
 } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
-
-import { ToastController } from "@ionic/angular";
-
-import { WebView } from "@ionic-native/ionic-webview/ngx";
+import * as moment from "moment";
 
 const STORAGE_KEY = "my_images";
 @Component({
@@ -30,6 +27,9 @@ export class ExpenseDetailsPage {
   currentRoute: string = this.router.url;
   expenseCost: string;
   expenseCreated: string;
+  expenseCategory: string;
+  expenseCreatedBy: string;
+  expenseReport: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -41,9 +41,7 @@ export class ExpenseDetailsPage {
     public accountService: AccountService,
     public routerOutlet: IonRouterOutlet,
     public modalCtrl: ModalController,
-    private _location: Location,
-    private webview: WebView,
-    private toastController: ToastController
+    private _location: Location
   ) {
     this.deleting = this.alertService.presentLoading("Deleting Expense...");
   }
@@ -68,7 +66,12 @@ export class ExpenseDetailsPage {
         console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
-        this.expenseCreated = Element.created;
+        this.expenseCreatedBy = `${Element.expenseStudent[0].firstName} ${Element.expenseStudent[0].lastName} `;
+        this.expenseReport = Element.expenseReport[0].reportName;
+        this.expenseCategory = Element.expenseCategory;
+        this.expenseCreated = moment(
+          Element.created
+        ).format("MM-DD-YYYY @HH:mm:ss");
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -79,7 +82,7 @@ export class ExpenseDetailsPage {
 
   async editExpense(contextParamValue) {
     let popUpText: string;
-    let currentValue:string;
+    let currentValue: string;
     switch (contextParamValue) {
       case "expenseName": {
         popUpText = "Expense Name";
@@ -89,6 +92,11 @@ export class ExpenseDetailsPage {
       case "expenseCost": {
         popUpText = "Expense Cost";
         currentValue = this.expenseCost;
+        break;
+      }
+      case "expenseCategory": {
+        popUpText = "Expense Category";
+        currentValue = this.expenseCategory;
         break;
       }
     }
@@ -101,7 +109,9 @@ export class ExpenseDetailsPage {
           text: "Ok",
           handler: async (data: any) => {
             console.log(data);
-            this.savingExpense = this.alertService.presentLoading("Saving Expense...");
+            this.savingExpense = this.alertService.presentLoading(
+              "Saving Expense..."
+            );
             (await this.savingExpense).present();
             this.updateExpenseMasterList(data, popUpText);
           },
@@ -119,7 +129,10 @@ export class ExpenseDetailsPage {
     await alert.present();
   }
 
-  private async updateExpenseMasterList(contextParamValue:any, popUpText:string) {
+  private async updateExpenseMasterList(
+    contextParamValue: any,
+    popUpText: string
+  ) {
     (await this.expenseService.update(this.expenseId, contextParamValue))
       .pipe(first())
       .subscribe({

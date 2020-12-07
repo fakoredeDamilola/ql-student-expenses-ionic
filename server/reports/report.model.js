@@ -23,7 +23,7 @@ schema.virtual("reportStudents", {
 
 // The Property Manager for the Property
 
-schema.virtual("reportManager", {
+schema.virtual("reportsManager", {
   ref: "Account", // The model to use
   localField: "reportsManagerId", // Find people where `localField`
   foreignField: "_id", // is equal to `foreignField`

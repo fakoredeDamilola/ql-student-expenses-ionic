@@ -12,7 +12,8 @@ module.exports = {
 async function getAll() {
   const report = await db.Report.find()
   .populate('reportStudentsCount')
-  .populate('reportExpensesCount');
+  .populate('reportExpensesCount')
+  .populate('reportsManager');
   
 
   return report.map((x) => basicDetails(x));
@@ -51,9 +52,8 @@ async function getAllReportsOnAccount(reportsManagerId) {
   const reports = await db.Report.find({
     reportsManagerId: reportsManagerId
   })
-    /*.populate("ReportPetOwner")
-    .populate("ReportPetsCount")
-    .populate("ReportPetOwnerCount");*/
+  .populate('reportStudentsCount')
+  .populate('reportExpensesCount')
   return await reports;
 }
 
@@ -63,7 +63,8 @@ async function getReport(id) {
   .populate("reportStudents")
   .populate('reportStudentsCount')
   .populate('reportExpenses')
-  .populate('reportExpensesCount');
+  .populate('reportExpensesCount')
+  .populate('reportsManager');
 
   //if (!Report) throw 'Report not found';
   return report;

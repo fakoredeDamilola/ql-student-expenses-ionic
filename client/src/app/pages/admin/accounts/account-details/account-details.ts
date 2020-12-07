@@ -115,6 +115,7 @@ export class AccountDetailsPage {
   }
 
   async deleteAccount() {
+    console.log(this.accountId,'accountId');
     (await this.deleting).present();
     this.accountService
       .delete(this.accountId)

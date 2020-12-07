@@ -31,6 +31,13 @@ schema.virtual("expenseStudent", {
     justOne: false,
   });
 
+  schema.virtual("expenseReportsManager", {
+    ref: "Account", // The model to use
+    localField: "reportsManagerId", // Find people where `localField`
+    foreignField: "_id", // is equal to `foreignField`
+    justOne: false,
+  });
+
 
 schema.set('toJSON', {
     virtuals: true,

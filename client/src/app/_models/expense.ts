@@ -7,4 +7,7 @@ export class Expense {
     expenseName: string;
     expenseCost: string;
     expenseCategory:string;
+  expenseStudent: any;
+  expenseReport: any;
+  expenseReportsManager: any;
 }

@@ -8,4 +8,5 @@ export class Report {
   expenseStudent: any;
   expenseReport: any;
   created: any;
+  reportsManager: any;
 }

@@ -30,6 +30,8 @@
     <ion-col>
       <ion-item (click)="editReportAttribute('reportName')"><b>Report Name:&nbsp; </b> {{reportName}}
       </ion-item>
+      <ion-item><b>Reports Manager:&nbsp; </b> {{reportsManager}}
+      </ion-item>
       <ion-item><b>Created:&nbsp; </b> {{reportCreated}}
       </ion-item>
     </ion-col>
@@ -91,9 +93,11 @@
               <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
             </ion-avatar>
             <ion-label>
-              <h2>${{expense.expenseCost}}-{{expense.expenseName}}</h2>
+              <h1>{{expense.expenseName}}</h1>
+              <p><b>${{expense.expenseCost}}</b></p>
               <p>Created By: {{expense.expenseStudent[0].firstName}} {{expense.expenseStudent[0].lastName}}</p>
               <p>{{expense.created}}</p>
+              <p>{{expense.expenseCategory}}</p>
             </ion-label>
           </ion-item>
         </ion-card>

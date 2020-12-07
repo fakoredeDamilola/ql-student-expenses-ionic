@@ -34,9 +34,15 @@
       <ion-item>
         <ion-label position="floating" color="primary" placeholder="optional">Expense Category</ion-label>
         <ion-select [(ngModel)]="addExpense.expenseCategory" name="expenseCategory" #expenseCategory="ngModel">
+          <ion-select-option>Air Fair</ion-select-option>
+          <ion-select-option>Auto Rental</ion-select-option>
+          <ion-select-option>Taxi-Etc.</ion-select-option>
+          <ion-select-option>Gas & Oil</ion-select-option>
+          <ion-select-option>Parking & Tolls</ion-select-option>
           <ion-select-option>Food</ion-select-option>
           <ion-select-option>Hotel</ion-select-option>
           <ion-select-option>Suplies</ion-select-option>
+          <ion-select-option>Entertainment</ion-select-option>
           <ion-select-option>Other</ion-select-option>
         </ion-select>
       </ion-item>

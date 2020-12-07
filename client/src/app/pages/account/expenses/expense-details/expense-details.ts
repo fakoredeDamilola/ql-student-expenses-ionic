@@ -30,6 +30,7 @@ export class ExpenseDetailsPage {
   currentRoute: string = this.router.url;
   expenseCost: string;
   expenseCreated: string;
+  expenseCategory: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -45,26 +46,7 @@ export class ExpenseDetailsPage {
     private webview: WebView,
     private toastController: ToastController
   ) {
-    this.savingExpense = this.alertService.presentLoading("Saving Expense...");
     this.deleting = this.alertService.presentLoading("Deleting Expense...");
-  }
-
-  pathForImage(img) {
-    if (img === null) {
-      return "";
-    } else {
-      let converted = this.webview.convertFileSrc(img);
-      return converted;
-    }
-  }
-
-  async presentToast(text) {
-    const toast = await this.toastController.create({
-      message: text,
-      position: "bottom",
-      duration: 3000,
-    });
-    toast.present();
   }
 
   async ionViewWillEnter() {
@@ -87,7 +69,9 @@ export class ExpenseDetailsPage {
         console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
+        this.expenseCategory = Element.expenseCategory;
         this.expenseCreated = Element.created;
+
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -95,27 +79,47 @@ export class ExpenseDetailsPage {
         }, 300);
       });
   }
-  openExternalUrl(url: string) {
-    this.inAppBrowser.create(url, "_blank");
-  }
-  async editExpenseName() {
+
+  async editExpense(contextParamValue) {
+    let popUpText: string;
+    let currentValue:string;
+    switch (contextParamValue) {
+      case "expenseName": {
+        popUpText = "Expense Name";
+        currentValue = this.expenseName;
+        break;
+      }
+      case "expenseCost": {
+        popUpText = "Expense Cost";
+        currentValue = this.expenseCost;
+        break;
+      }
+      case "expenseCategory": {
+        popUpText = "Expense Category";
+        currentValue = this.expenseCategory;
+        break;
+      }
+    }
+
     let alert = await this.alertCtrl.create({
-      header: "Change expense Name",
+      header: `Change ${popUpText}`,
       buttons: [
         "Cancel",
         {
           text: "Ok",
           handler: async (data: any) => {
+            console.log(data);
+            this.savingExpense = this.alertService.presentLoading("Saving Expense...");
             (await this.savingExpense).present();
-            this.updateExpenseMasterList(data);
+            this.updateExpenseMasterList(data, popUpText);
           },
         },
       ],
       inputs: [
         {
           type: "text",
-          name: "expenseName",
-          value: this.expenseName,
+          name: contextParamValue,
+          value: currentValue,
           placeholder: "us",
         },
       ],
@@ -123,14 +127,14 @@ export class ExpenseDetailsPage {
     await alert.present();
   }
 
-  private async updateExpenseMasterList(contextParamValue) {
+  private async updateExpenseMasterList(contextParamValue:any, popUpText:string) {
     (await this.expenseService.update(this.expenseId, contextParamValue))
       .pipe(first())
       .subscribe({
         next: async () => {
           (await this.savingExpense).dismiss();
           this.alertService.createToastAlert(
-            "Update To Expense Successful!",
+            `Update To Expense ${popUpText} Successful! `,
             "success",
             8000
           );
@@ -139,7 +143,7 @@ export class ExpenseDetailsPage {
         error: async (error) => {
           (await this.savingExpense).dismiss();
           this.alertService.createToastAlert(
-            "Update To Expense Failed...",
+            `Update To Expense ${popUpText} Failed...`,
             "warning",
             8000
           );

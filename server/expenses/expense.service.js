@@ -71,7 +71,8 @@ async function _delete(id) {
 async function getExpense(id) {
   const expense = await db.Expense.findById(id)
   .populate('expenseStudent')
-  .populate('expenseReport');
+  .populate('expenseReport')
+  .populate('expenseReportsManager')
   //if (!expense) throw "Expense not found";
   return expense;
 }
@@ -89,7 +90,8 @@ function basicDetails(expense) {
     created,
     updated,
     expenseStudent,
-    expenseReport
+    expenseReport,
+    expenseReportsManager
   } = expense;
   return {
     id,
@@ -102,6 +104,7 @@ function basicDetails(expense) {
     created,
     updated,
     expenseStudent,
-    expenseReport
+    expenseReport,
+    expenseReportsManager
   };
 }
