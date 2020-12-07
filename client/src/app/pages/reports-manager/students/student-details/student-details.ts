@@ -73,6 +73,7 @@ export class StudentDetailsPage {
         for (let i = 0; i < this.expensesLength; i++) {
           this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);
         }
+        this.totalOfExpenses = Number(this.totalOfExpenses.toFixed(2));
       })
       .finally(async () => {
         setTimeout(async () => {

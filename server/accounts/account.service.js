@@ -25,7 +25,7 @@ module.exports = {
   updateReportsOnAccount,
   getAllStudentsInReports,
   getReportsExpenses,
-  getAllStudentsByReportId
+  getAllStudentsByReportId,
 };
 
 async function authenticate({ email, password, ipAddress }) {
@@ -173,15 +173,15 @@ async function resetPassword({ token, password }) {
 
 async function getAll() {
   const accounts = await db.Account.find()
-  .populate("studentExpenses")
-  .populate("studentExpensesCount")
-  .populate("studentReport")
-  .populate("reportsManager")
-  .populate("reportsManagerReports")
-  .populate("reportsManagerExpenses")
-  .populate("reportsManagerStudents")
-  .populate("reportsManagerExpensesCount")
-  .populate("reportsManagerStudentsCount");
+    .populate("studentExpenses")
+    .populate("studentExpensesCount")
+    .populate("studentReport")
+    .populate("reportsManager")
+    .populate("reportsManagerReports")
+    .populate("reportsManagerExpenses")
+    .populate("reportsManagerStudents")
+    .populate("reportsManagerExpensesCount")
+    .populate("reportsManagerStudentsCount");
   return await accounts.map((x) => basicDetails(x));
 }
 
@@ -189,27 +189,41 @@ async function getAllStudentsInReports(reportsManagerId) {
   const allStudentsInReports = await db.Account.find({
     reportsManagerId: reportsManagerId,
   })
-  .populate("studentExpenses")
-  .populate("studentExpensesCount")
-  .populate("studentReport")
-  .populate("reportsManager")
-  .populate("reportsManagerReports")
-  .populate("reportsManagerExpenses")
-  .populate("reportsManagerStudents")
-  .populate("reportsManagerExpensesCount")
-  .populate("reportsManagerStudentsCount");
+    .populate("studentExpenses")
+    .populate("studentExpensesCount")
+    .populate("studentReport")
+    .populate("reportsManager")
+    .populate("reportsManagerReports")
+    .populate("reportsManagerExpenses")
+    .populate("reportsManagerStudents")
+    .populate("reportsManagerExpensesCount")
+    .populate("reportsManagerStudentsCount");
 
   return allStudentsInReports.map((x) => basicDetails(x));
 }
-
+// Main funtion for the report details view
 async function getAllStudentsByReportId(reportId) {
   const allStudentsOnReport = await db.Account.find({
     reportId: reportId,
   })
-  .populate("studentExpenses")
-  .populate("studentExpensesCount")
+    .populate("studentExpenses")
+    .populate("studentExpensesCount");
 
-  return allStudentsOnReport.map((x) => basicDetails(x));
+  const studentsCount = allStudentsOnReport.length;
+  // for each student
+  for (let i = 0; i < studentsCount; i++) {
+    // for each students expenses
+    let studentExpensesCount = allStudentsOnReport[i].studentExpenses.length;
+    let studentExpenseTotal = 0;
+    for (let y = 0; y < studentExpensesCount; y++) {
+      studentExpenseTotal += Number(
+        allStudentsOnReport[i].studentExpenses[y].expenseCost
+      );
+    }
+    allStudentsOnReport[i].expensesTotal = Number(studentExpenseTotal).toFixed(2);
+  }
+
+  return await allStudentsOnReport.map((x) => basicDetails(x));
 }
 
 //right here
@@ -310,7 +324,7 @@ async function _delete(id) {
   await account.remove();
 }
 
-// This Works!!! fuck yea
+
 async function updateReportsOnAccount(accountId, params) {
   const report = await new db.Report(params);
   report.updated = Date.now();
@@ -402,6 +416,7 @@ function basicDetails(account) {
     reportsManagerStudents,
     reportsManagerExpensesCount,
     reportsManagerStudentsCount,
+    expensesTotal,
   } = account;
   return {
     id,
@@ -426,6 +441,7 @@ function basicDetails(account) {
     reportsManagerStudents,
     reportsManagerExpensesCount,
     reportsManagerStudentsCount,
+    expensesTotal,
   };
 }
 

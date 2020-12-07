@@ -32,13 +32,13 @@ export class AccountsPage  {
   loading: any;
   allAccounts: any|[Account];
   adminsIsChecked:boolean;
-  petOwnersIsChecked:boolean
-  propertyManagersIsChecked:boolean;
+  studentsIsChecked:boolean
+  reportsManagersIsChecked:boolean;
   filtersList:any;
 
   adminCondition:string ='';
-  petOwnerCondition:string =''
-  propertyManagerCondition:string =''
+  studentCondition:string =''
+  reportsManagerCondition:string =''
 
 
   constructor(
@@ -64,8 +64,8 @@ export class AccountsPage  {
     //console.log("true1");
     (await this.loading).present();
     this.adminsIsChecked=true;
-    this.petOwnersIsChecked=true;
-    this.propertyManagersIsChecked=true;
+    this.studentsIsChecked=true;
+    this.reportsManagersIsChecked=true;
     this.ios = this.config.get("mode") === "ios";
 
 
@@ -92,17 +92,17 @@ export class AccountsPage  {
     if(this.adminsIsChecked==true){
       this.adminCondition='';
     }
-    if(this.petOwnersIsChecked==false){
-      this.petOwnerCondition='User';
+    if(this.studentsIsChecked==false){
+      this.studentCondition='Student';
     }
-    if(this.petOwnersIsChecked==true){
-      this.petOwnerCondition='';
+    if(this.studentsIsChecked==true){
+      this.studentCondition='';
     }
-    if(this.propertyManagersIsChecked==false){
-      this.propertyManagerCondition='PropertyManager';
+    if(this.reportsManagersIsChecked==false){
+      this.reportsManagerCondition='ReportsManager';
     }
-    if(this.propertyManagersIsChecked==true){
-      this.propertyManagerCondition='';
+    if(this.reportsManagersIsChecked==true){
+      this.reportsManagerCondition='';
     }
 
   }
@@ -110,8 +110,8 @@ export class AccountsPage  {
   async presentFilter() {
     this.filtersList= {
       'adminsIsChecked':this.adminsIsChecked,
-      'petOwnersIsChecked':this.petOwnersIsChecked,
-      'propertyManagersIsChecked':this.propertyManagersIsChecked
+      'studentsIsChecked':this.studentsIsChecked,
+      'reportsManagersIsChecked':this.reportsManagersIsChecked
     }
 
     const modal = await this.modalCtrl.create({
@@ -125,8 +125,8 @@ export class AccountsPage  {
     const { data } = await modal.onWillDismiss();
     if (data) {
       this.adminsIsChecked = await data.adminsIsChecked;
-      this.petOwnersIsChecked = await data.petOwnersIsChecked;
-      this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
+      this.studentsIsChecked = await data.studentsIsChecked;
+      this.reportsManagersIsChecked = await data.reportsManagersIsChecked;
       this.updateView();
     }
   }

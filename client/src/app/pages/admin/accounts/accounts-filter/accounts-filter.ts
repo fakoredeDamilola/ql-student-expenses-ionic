@@ -14,8 +14,8 @@ export class AccountsFilterPage {
 
   //adminsIsChecked: boolean=true;
   adminsIsChecked:boolean;
-  petOwnersIsChecked:boolean;
-  propertyManagersIsChecked:boolean;
+  studentsIsChecked:boolean;
+  reportsManagersIsChecked:boolean;
 
   filtersList:any;
 
@@ -32,8 +32,8 @@ export class AccountsFilterPage {
     const filtersListComingIn = this.navParams.get('filtersList');
 
     this.adminsIsChecked = filtersListComingIn.adminsIsChecked;
-    this.petOwnersIsChecked = filtersListComingIn.petOwnersIsChecked;
-    this.propertyManagersIsChecked = filtersListComingIn.propertyManagersIsChecked;
+    this.studentsIsChecked = filtersListComingIn.studentsIsChecked;
+    this.reportsManagersIsChecked = filtersListComingIn.reportsManagersIsChecked;
 
 
     //console.log(filtersListComingIn,"yo Filters List Coming In");
@@ -47,8 +47,8 @@ export class AccountsFilterPage {
     // Pass back a new array of track names to exclude
     this.filtersList={
       'adminsIsChecked':this.adminsIsChecked,
-      'petOwnersIsChecked':this.petOwnersIsChecked,
-      'propertyManagersIsChecked':this.propertyManagersIsChecked
+      'studentsIsChecked':this.studentsIsChecked,
+      'reportsManagersIsChecked':this.reportsManagersIsChecked
     }
     this.dismiss(this.filtersList);
   }

@@ -1,12 +1,17 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
-import { AccountService, AlertService, ExpenseService, ReportService } from "@app/_services";
-import { AlertController, LoadingController } from "@ionic/angular";
+import {
+  AccountService,
+  AlertService,
+  ExpenseService,
+  ReportService,
+} from "@app/_services";
+import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Account } from "@app/_models/account";
 import { Location } from "@angular/common";
-import { Expense } from "@app/_models";
+import { MinusPipe } from '@app/minus.pipe';
+
 
 @Component({
   selector: "page-report-details",
@@ -74,44 +79,43 @@ export class ReportDetailsPage {
         "/" + "report-manager/reports/report-details"
       );
     }
-    // Get Report
+    // This Chain can be split up later for lazy loading each section
+    // Get Report Info
     (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
-        console.log(Element, "here");
         this.reportName = Element.reportName;
-        this.reportStudents = Element.reportStudents;
-        this.reportStudentsCount = Element.reportStudents.length;
-
-
-        //console.log(Element);
       })
-      .finally(async () => {
-        setTimeout(async () => {
-          (await this.loading).dismiss();
-        }, 300);
+      .then(async () => {
+        // Get Report Students
+        (await this.accountService.getAllStudentsByReportId(this.reportId))
+          .forEach(async (Elem) => {
+            console.log("All Report Students", Elem);
+            this.reportStudents = Elem;
+          })
+          .then(async () => {
+            // Get Report Expenses
+            (
+              await this.expenseService.getAllExpensesByReportId(this.reportId)
+            ).forEach(async (El) => {
+              //console.log("All Report Expenses", El);
+              this.reportExpenses = El;
+              this.reportExpensesCount = this.reportExpenses.length;
+              for (let i = 0; i < this.reportExpensesCount; i++) {
+                this.totalOfReportExpenses += Number(
+                  this.reportExpenses[i].expenseCost
+                );
+              }
+              this.totalOfReportExpenses = Number(
+                this.totalOfReportExpenses.toFixed(2)
+              );
+            });
+          })
+          .finally(async () => {
+            setTimeout(async () => {
+              (await this.loading).dismiss();
+            }, 400);
+          });
       });
-
-      // Get Report Students
-      (await this.accountService.getAllStudentsByReportId(this.reportId))
-      .forEach(async (Element) => {
-        console.log('All Report Students', Element)
-        this.reportStudents = Element;
-      });
-
-      // Get Report Expenses
-      (await this.expenseService.getAllExpensesByReportId(this.reportId))
-      .forEach(async (Element) => {
-        console.log('All Report Expenses', Element)
-       this.reportExpenses = Element;
-      });
-
-
-
-
-  }
-
-  async ionViewWillLeave(){
-    this.totalOfReportExpenses=0;
   }
 
   openExternalUrl(url: string) {
@@ -127,31 +131,6 @@ export class ReportDetailsPage {
         currentValue = this.reportName;
         break;
       }
-      /* case "houseUnitNumber": {
-        popUpText = "House / Unit #";
-        currentValue = this.Report.houseUnitNumber;
-        break;
-      }
-      case "street": {
-        popUpText = "Street";
-        currentValue = this.Report.street;
-        break;
-      }
-      case "city": {
-        popUpText = "City";
-        currentValue = this.Report.city;
-        break;
-      }
-      case "state": {
-        popUpText = "State";
-        currentValue = this.Report.state;
-        break;
-      }
-      case "zip": {
-        popUpText = "Zip Code";
-        currentValue = this.Report.zip;
-        break;
-      }*/
     }
     // then that value from the switch being fed here
     const alert = await this.alertCtrl.create({
@@ -179,7 +158,7 @@ export class ReportDetailsPage {
   }
 
   private async updateReportMasterList(contextParamValue, popUpText) {
-    console.log(contextParamValue,"what is this??");
+    console.log(contextParamValue, "what is this??");
     console.log(this.reportId);
     (await this.reportService.update(this.reportId, contextParamValue))
       .pipe(first())
@@ -282,16 +261,33 @@ export class ReportDetailsPage {
 
   public async calculateDisbursements() {
     (await this.calculatingDisbursementsLoader).present();
+    // take total devide by number of students to get average
+    console.log(this.totalOfReportExpenses);
+    console.log(this.reportStudents.length);
 
-    // take total devide by number of students
+    const studentCount = this.reportStudents.length;
 
-    const averageOfExpenses =
-      this.totalOfReportExpenses / this.reportStudentsCount;
+    let averageOfExpenses =
+      this.totalOfReportExpenses / studentCount;
+
+    averageOfExpenses = Number(averageOfExpenses.toFixed(2));
 
     console.log(averageOfExpenses, "average");
 
     // calculate how much each student spent
 
+    for(let i=0; i< studentCount;i++){
+      let studentExpensesTotal = Number(this.reportStudents[i].expensesTotal)
+      this.reportStudents[i].disbursementAmmount = (averageOfExpenses-studentExpensesTotal).toFixed(2);
+      console.log(this.reportStudents[i])
+    }
+
+    (await this.calculatingDisbursementsLoader).dismiss();
+
     // calculate how much each student owes or is owed to/from disbursements
+  }
+
+  async makePositive(){
+
   }
 }
