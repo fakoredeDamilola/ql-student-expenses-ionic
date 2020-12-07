@@ -83,6 +83,7 @@ function basicDetails(expense) {
     reportsManagerId,
     expenseName,
     expenseCost,
+    expenseCategory,
     created,
     expenseStudent,
     expenseReport
@@ -94,6 +95,7 @@ function basicDetails(expense) {
     reportsManagerId,
     expenseName,
     expenseCost,
+    expenseCategory,
     created,
     expenseStudent,
     expenseReport

@@ -20,6 +20,7 @@ export class AddExpensePage {
   addExpense: ExpenseOptions = {
     expenseName: "",
     expenseCost: "",
+    expenseCategory:""
   };
   loading: Promise<HTMLIonLoadingElement>;
   savingExpense: Promise<HTMLIonLoadingElement>;
@@ -64,7 +65,7 @@ export class AddExpensePage {
     form.value.studentId = this.account.id;
     form.value.reportId = this.account.reportId;
     form.value.reportsManagerId = this.account.reportsManagerId;
-    console.log(this.account, "here");
+    //console.log(this.account, "here");
     const accountId = this.route.snapshot.paramMap.get("accountId");
     //console.log("this accountId", accountId)
     if (accountId != null) {
@@ -75,7 +76,6 @@ export class AddExpensePage {
         setTimeout(async () => {
           (await this.savingExpense).dismiss();
         }, 300);
-        //TODO Replace with toast alert
         this.alertService.createToastAlert(
           "Added Expense Successfully!",
           "success",

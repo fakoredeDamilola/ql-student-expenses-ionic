@@ -7,6 +7,7 @@ const schema = new Schema({
     reportsManagerId: { type: String, required: false },
     expenseName: { type: String, required: true },
     expenseCost:{ type: String, required: true },
+    expenseCategory:{ type: String, required: true },
     created: { type: Date, default: Date.now },
     updated: Date,
     images: { type:Array, required:false }

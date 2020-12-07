@@ -8,7 +8,6 @@ import { UserOptions } from "@app/interfaces/student-options";
 import { AccountService, AlertService } from "@app/_services";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
-import { observable } from 'rxjs';
 
 @Component({
   selector: "page-create-account",
@@ -56,7 +55,7 @@ export class CreateAccountPage {
     }
     form.value.confirmPassword = form.value.password;
     form.value.acceptTerms = true;
-    (this.accountService.register(form.value)).pipe(first()).subscribe({
+    (await (this.accountService.register(form.value))).pipe(first()).subscribe({
       next: async () => {
         //TODO Replace with toast alert
         await this.toastAlert.createToastAlert(

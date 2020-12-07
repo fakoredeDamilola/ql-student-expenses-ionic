@@ -6,4 +6,5 @@ export class Expense {
     created?: string;
     expenseName: string;
     expenseCost: string;
+    expenseCategory:string;
 }

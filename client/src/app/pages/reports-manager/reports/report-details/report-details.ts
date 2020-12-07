@@ -21,17 +21,8 @@ export class ReportDetailsPage {
   accountId: string;
   reportId: string;
   report = { reportName: "" };
-  petOwner = {
-    title: "",
-    firstName: "",
-    lastName: "",
-    isVerified: true,
-    email: "",
-  };
   reportExpenses = [];
   // key value for the edit input
-  key: any;
-  value: any;
   saving: boolean = true;
   loading: any;
   savingReport: Promise<HTMLIonLoadingElement>;
