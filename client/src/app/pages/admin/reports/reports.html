@@ -44,7 +44,7 @@
                   [alt]="'Report picture'">
               </ion-avatar>
               <ion-label>
-                <h2>{{report.reportName}}</h2>
+                <h1><b>{{report.reportName}}</b></h1>
                 <h4>Reports Manager: {{report.reportsManager.firstName}} {{report.reportsManager.lastName}}</h4>
               </ion-label>
             </ion-item>
@@ -54,8 +54,8 @@
             <ion-list lines="none">
               <ion-item>
                 <ion-label>
-                  <p>Expenses: ({{report.reportExpensesCount}})</p>
-                  <p>Students: ({{report.reportStudentsCount}})</p>
+                  <p>Expenses: ( {{report.reportExpensesCount}} )</p>
+                  <p>Students: ( {{report.reportStudentsCount}} )</p>
                   <h3>Created:{{report.created}}</h3>
                 </ion-label>
               </ion-item>

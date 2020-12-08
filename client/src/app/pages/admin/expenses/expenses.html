@@ -49,8 +49,8 @@
                 <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
               </ion-avatar>
               <ion-label>
-                <h2>{{expense.expenseName}}</h2>
-                <p><b>${{expense.expenseCost}}</b></p>
+                <h2><b>{{expense.expenseName}}</b></h2>
+                <h4><b>${{expense.expenseCost}}</b></h4>
                 <p>Report: {{expense.expenseReport[0].reportName}}</p>
                 <p>Created By: {{expense.expenseStudent[0].firstName}} {{expense.expenseStudent[0].lastName}}</p>
                 <p>Created:{{expense.created}}</p>

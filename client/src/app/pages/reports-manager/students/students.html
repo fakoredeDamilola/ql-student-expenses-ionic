@@ -47,13 +47,13 @@
               </ion-label>
               <ion-label>
                 <h1><b>{{student.firstName}} {{student.lastName}}</b></h1>
-                <h2>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green"
+                <h4>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green"
                     name="checkmark-circle"></ion-icon>
                   <ion-icon name="checkmark-circle" *ngIf="student.isVerified==false" style="color: firebrick;">
                   </ion-icon>&nbsp;
-                </h2>
+                </h4>
                 <p>
-                  Expenses: ({{student.studentExpensesCount}})
+                  Expenses: ( {{student.studentExpensesCount}} )
                 </p>
               </ion-label>
             </ion-item>
