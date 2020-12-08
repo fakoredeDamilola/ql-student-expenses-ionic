@@ -66,12 +66,10 @@ export class AppComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private menu: MenuController,
     private platform: Platform,
-    private router: Router,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private storage: Storage,
+    //private storage: Storage,
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,

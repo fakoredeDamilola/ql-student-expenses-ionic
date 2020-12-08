@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { ExpensesListPage } from './expenses-list';
+import { ExpensesListPage } from "./expenses-list";
 const routes: Routes = [
   {
-    path: '',
-    component: ExpensesListPage
+    path: "",
+    component: ExpensesListPage,
   },
   {
     path: "expense-details/:expenseId",
     loadChildren: () =>
-      import("@app/pages/account/expenses/expense-details/expense-details.module").then(
-        (m) => m.ExpenseDetailsModule
-      ),
+      import(
+        "@app/pages/account/expenses/expense-details/expense-details.module"
+      ).then((m) => m.ExpenseDetailsModule),
   },
   {
     path: "add",
@@ -25,6 +25,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ExpensesListPageRoutingModule {}

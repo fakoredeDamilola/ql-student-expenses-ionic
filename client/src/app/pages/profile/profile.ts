@@ -34,26 +34,30 @@ export class ProfilePage {
     public accountService: AccountService,
     public alertService: AlertService,
     public loadingController: LoadingController
-  ) {
-  }
+  ) {}
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
-    (await this.loading).present();
-    this.accountID = this.accountService.accountValue.id;
-    this.title = this.accountService.accountValue.title;
-    this.firstName = this.accountService.accountValue.firstName;
-    this.lastName = this.accountService.accountValue.lastName;
-    this.email = this.accountService.accountValue.email;
-    this.role = this.accountService.accountValue.role;
-
-    setTimeout(async () => {
-      (await this.loading).dismiss();
-    }, 300);
+    (await this.loading)
+      .present()
+      .then(() => {
+        this.accountID = this.accountService.accountValue.id;
+        this.title = this.accountService.accountValue.title;
+        this.firstName = this.accountService.accountValue.firstName;
+        this.lastName = this.accountService.accountValue.lastName;
+        this.email = this.accountService.accountValue.email;
+        this.role = this.accountService.accountValue.role;
+      })
+      .finally(() => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
+      });
   }
 
   async ionViewDidlEnter() {}
 
+  // TODO with images later
   updatePicture() {
     console.log("Clicked to update picture");
   }
@@ -133,4 +137,13 @@ export class ProfilePage {
         },
       });
   }
+
+async deleteAccount(){
+  this.alertService.createToastAlert(
+    "Currently ONLY Admins Can Delete Accounts",
+    "warning",
+    8000
+  );
+}
+
 }

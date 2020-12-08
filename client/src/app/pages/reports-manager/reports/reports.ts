@@ -22,11 +22,9 @@ export class ReportsListPage {
 
   constructor(
     private accountService: AccountService,
-    private loadingController: LoadingController,
     private alertService: AlertService,
     private route: ActivatedRoute,
-    private router: Router,
-    private _location: Location
+    private router: Router
   ) {}
 
   async ionViewWillEnter() {
@@ -34,8 +32,6 @@ export class ReportsListPage {
     //TODO USE reports get by reportsManagerId and load virtuals
     (await this.loading).present();
     this.reportsManagerId = this.accountService.accountValue.id;
-    //console.log(this.router.url); //  /routename
-
     if (this.accountService.accountValue.role == "Admin") {
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
 
@@ -47,7 +43,6 @@ export class ReportsListPage {
       .forEach(async (Element) => {
         //console.log(Element.reportsManagerReports);
         this.reportsList = Element;
-        console.log(Element);
       })
       .then(async () => {
         const reportsCount = this.reportsList.length;

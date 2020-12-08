@@ -56,24 +56,27 @@ export class ReportsPage {
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
-    (await this.loading).present();
-    this.adminsIsChecked = true;
-    this.petOwnersIsChecked = true;
-    this.ReportManagersIsChecked = true;
-    this.ios = (await this.config.get("mode")) === "ios";
-
-    (await this.reportService.getAll())
-      .forEach(async (Element) => {
-        this.allReports = Element;
-        console.log(this.allReports, "right here");
+    (await this.loading)
+      .present()
+      .then(async () => {
+        this.adminsIsChecked = true;
+        this.petOwnersIsChecked = true;
+        this.ReportManagersIsChecked = true;
+        this.ios = (await this.config.get("mode")) === "ios";
       })
       .then(async () => {
-        const reportsCount = this.allReports.length;
-        for (let i = 0; i < reportsCount; i++) {
-          this.allReports[i].created = moment(
-            this.allReports[i].created
-          ).format("MM-DD-YYYY @HH:mm:ss");
-        }
+        await (await this.reportService.getAll())
+          .forEach(async (Element) => {
+            this.allReports = Element;
+          })
+          .then(async () => {
+            const reportsCount = this.allReports.length;
+            for (let i = 0; i < reportsCount; i++) {
+              this.allReports[i].created = moment(
+                this.allReports[i].created
+              ).format("MM-DD-YYYY @HH:mm:ss");
+            }
+          });
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -81,5 +84,4 @@ export class ReportsPage {
         }, 300);
       });
   }
-
 }

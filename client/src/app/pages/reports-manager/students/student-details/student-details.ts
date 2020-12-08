@@ -3,9 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
-import { first, toArray } from "rxjs/operators";
-import { Expense, Report } from "@app/_models";
-import { CastExpr } from "@angular/compiler";
+import { Expense } from "@app/_models";
 
 @Component({
   selector: "page-student-details",
@@ -13,7 +11,7 @@ import { CastExpr } from "@angular/compiler";
   styleUrls: ["./student-details.scss"],
 })
 export class StudentDetailsPage {
-  studentId: any;
+  studentId: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -61,10 +59,6 @@ export class StudentDetailsPage {
         this.isVerified = Element.isVerified;
         this.studentExpenses = Element.studentExpenses;
         this.expensesLength = Element.studentExpenses.length;
-
-        //this.reportName = Element.studentReport.reportName;
-        //this.report = Element.studentReport;
-        console.log(Element);
       })
       .then(async () => {
         //calculate expenses total
@@ -78,5 +72,13 @@ export class StudentDetailsPage {
           (await this.loading).dismiss();
         }, 300);
       });
+  }
+
+  async removeStudent(){
+    this.alertService.createToastAlert(
+      "Currently ONLY Admins Can Delete/Remove Accounts",
+      "warning",
+      8000
+    );
   }
 }

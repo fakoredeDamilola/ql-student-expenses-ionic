@@ -132,8 +132,9 @@
                 <ion-label>
                   <h2><b><u>DISBURSEMENT</u></b></h2>
                   <span *ngIf='student.disbursementAmmount<0' style="color: green;">Owed
-                    {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><span *ngIf='student.disbursementAmmount>0'
-                    style="color: red;">Owes {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><b></b>
+                    {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><span
+                    *ngIf='student.disbursementAmmount>0' style="color: red;">Owes
+                    {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><b></b>
                 </ion-label>
               </ion-item>
             </ion-card-header>

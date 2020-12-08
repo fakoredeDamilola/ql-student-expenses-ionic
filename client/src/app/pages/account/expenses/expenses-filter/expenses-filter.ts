@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { Config, ModalController, NavParams } from "@ionic/angular";
-import { filter } from "rxjs/operators";
 
 @Component({
   selector: "page-expenses-filter",
@@ -52,9 +51,6 @@ export class ExpensesFilterPage {
   }
 
   dismiss(data?: any) {
-    // using the injected ModalController this page
-    // can "dismiss" itself and pass back data
-    //console.log("filters list after done with modal",data)
     this.modalCtrl.dismiss(data);
   }
 }

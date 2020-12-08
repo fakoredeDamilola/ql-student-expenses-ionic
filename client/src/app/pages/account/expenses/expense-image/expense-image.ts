@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActionSheetController } from "@ionic/angular";
 import { Photo, PhotoService } from "@app/_services/photo.service";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "expense-image",
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ["expense-image.scss"],
 })
 export class ExpenseImagePage {
-  expenseId: any;
+  expenseId: string;
 
   constructor(
     public photoService: PhotoService,
@@ -20,7 +20,6 @@ export class ExpenseImagePage {
   async ngOnInit() {
     this.expenseId = this.route.snapshot.paramMap.get("expenseId");
     await this.photoService.loadSaved(this.expenseId);
-    console.log(this.expenseId)
   }
 
   public async showActionSheet(photo: Photo, position: number) {

@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { Expense } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
-import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { IonRouterOutlet, ModalController } from "@ionic/angular";
 import * as moment from "moment";
-import { ExpensesFilterPage } from './expenses-filter/expenses-filter';
+import { ExpensesFilterPage } from "./expenses-filter/expenses-filter";
 
 @Component({
   selector: "page-expenses-list",
@@ -39,7 +39,7 @@ export class ExpensesListPage {
 
   async ionViewWillEnter() {
     // Reset because of weird behavior noticed
-    this.expensesTotal=0;
+    this.expensesTotal = 0;
     this.foodIsChecked = true;
     this.hotelIsChecked = true;
     this.entertainmentIsChecked = true;
@@ -76,8 +76,8 @@ export class ExpensesListPage {
       });
   }
 
-  ionViewWillLeave(){
-    this.expensesTotal =0;
+  ionViewWillLeave() {
+    this.expensesTotal = 0;
   }
 
   // Updates main view from filter...very cool

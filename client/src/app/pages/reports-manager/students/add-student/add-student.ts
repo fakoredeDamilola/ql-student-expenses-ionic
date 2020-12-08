@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
 import { UserOptions } from "@app/interfaces/student-options";
 import { AccountService, AlertService, ReportService } from "@app/_services";
@@ -45,8 +45,7 @@ export class AddStudentPage {
     private userData: UserData,
     private reportService: ReportService,
     private _location: Location
-  ) {
-  }
+  ) {}
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses App");
@@ -55,7 +54,6 @@ export class AddStudentPage {
     // get report, then the reportManagerId
     (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
-        //console.log(Element);
         this.reportsManagerId = Element.reportsManagerId;
       })
       .finally(async () => {
@@ -68,7 +66,7 @@ export class AddStudentPage {
       window.history.replaceState(
         {},
         document.title,
-        "/" + "reports-manager/reports/report-details/student/add"
+        "/" + "reports-manager/reports/report-details/students/add"
       );
     }
   }

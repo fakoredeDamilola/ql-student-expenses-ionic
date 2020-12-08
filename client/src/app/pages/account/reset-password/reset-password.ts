@@ -1,4 +1,4 @@
-﻿import { Component, HostListener, OnInit } from "@angular/core";
+﻿import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
@@ -14,7 +14,6 @@ enum TokenStatus {
 
 @Component({ templateUrl: "reset-password.html" })
 export class ResetPasswordPage implements OnInit {
-
   resetPassword: UserOptions = { password: "" };
   TokenStatus = TokenStatus;
   tokenStatus = TokenStatus.Validating;
@@ -30,7 +29,6 @@ export class ResetPasswordPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-
     const token = await this.route.snapshot.queryParams["token"];
     // remove token from url to prevent http referer leakage
     await this.router.navigate([], {

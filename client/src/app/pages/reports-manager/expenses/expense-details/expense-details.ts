@@ -63,15 +63,15 @@ export class ExpenseDetailsPage {
 
     (await this.expenseService.getById(this.expenseId))
       .forEach(async (Element) => {
-        console.log(Element);
+        //console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
         this.expenseCreatedBy = `${Element.expenseStudent[0].firstName} ${Element.expenseStudent[0].lastName} `;
         this.expenseReport = Element.expenseReport[0].reportName;
         this.expenseCategory = Element.expenseCategory;
-        this.expenseCreated = moment(
-          Element.created
-        ).format("MM-DD-YYYY @HH:mm:ss");
+        this.expenseCreated = moment(Element.created).format(
+          "MM-DD-YYYY @HH:mm:ss"
+        );
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -101,7 +101,7 @@ export class ExpenseDetailsPage {
       }
     }
 
-    let alert = await this.alertCtrl.create({
+    const alert = await this.alertCtrl.create({
       header: `Change ${popUpText}`,
       buttons: [
         "Cancel",

@@ -119,33 +119,29 @@ export class AccountDetailsPage {
     this.deleting = this.alertService.presentLoading("Deleting Account...");
     //console.log(this.accountId, "accountId");
     (await this.deleting).present();
-    (await this.accountService
-      .delete(this.accountId))
-      .pipe(first())
-      .subscribe({
-        next: async () => {
-          //TODO Replace with toast alert
-          (await this.deleting).dismiss();
-          this.alertService.createToastAlert(
-            "Account Deleted Successfully!",
-            "success",
-            8000
-          );
-          this._location.back();
-        },
-        error: async (error) => {
-          (await this.deleting).dismiss();
-          this.alertService.createToastAlert(
-            "Account Delete failed.....!",
-            "danger",
-            8000
-          );
-        },
-      });
+    (await this.accountService.delete(this.accountId)).pipe(first()).subscribe({
+      next: async () => {
+        //TODO Replace with toast alert
+        (await this.deleting).dismiss();
+        this.alertService.createToastAlert(
+          "Account Deleted Successfully!",
+          "success",
+          8000
+        );
+        this._location.back();
+      },
+      error: async (error) => {
+        (await this.deleting).dismiss();
+        this.alertService.createToastAlert(
+          "Account Delete failed.....!",
+          "danger",
+          8000
+        );
+      },
+    });
   }
 
   async changeAccount(contextParamValue) {
-    console.log(contextParamValue);
     let popUpText: string;
     // getting and setting current values
     let currentValue: string | boolean;

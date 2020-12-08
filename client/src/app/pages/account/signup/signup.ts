@@ -1,9 +1,7 @@
-import { Component, HostListener } from "@angular/core";
+import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
-
 import { UserData } from "@app/providers/user-data";
-
 import { UserOptions } from "@app/interfaces/student-options";
 import { AccountService, AlertService } from "@app/_services";
 import { first } from "rxjs/operators";
@@ -41,7 +39,7 @@ export class SignupPage {
       return;
     }
     this.loading = true;
-    console.log(form.value,"The Form Value");
+    console.log(form.value, "The Form Value");
     form.value.confirmPassword = await form.value.password;
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {

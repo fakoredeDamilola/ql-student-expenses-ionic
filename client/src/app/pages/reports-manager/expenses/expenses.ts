@@ -80,7 +80,6 @@ export class ExpensesListPage {
     }
     (await this.accountService.getAllExpensesInReports(this.userId))
       .forEach(async (element) => {
-        console.log(element);
         this.reportsExpenses = element;
       })
       .then(async () => {

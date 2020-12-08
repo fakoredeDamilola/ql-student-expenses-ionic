@@ -12,7 +12,6 @@ import {
 import { AccountsFilterPage } from "./accounts-filter/accounts-filter";
 import { AccountService, AlertService } from "@app/_services";
 import { Account } from "@app/_models";
-import { first } from "rxjs/operators";
 import * as moment from "moment";
 
 @Component({
@@ -54,32 +53,35 @@ export class AccountsPage {
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Admin Student Expenses");
-    //console.log("true1");
-    (await this.loading).present();
-    this.adminsIsChecked = true;
-    this.studentsIsChecked = true;
-    this.reportsManagersIsChecked = true;
-    this.ios = this.config.get("mode") === "ios";
-
     // this is faster but using the later to visualize data
     /* (await this.accountService.getAll())
       .pipe(first())
       .subscribe((accounts) => (this.allAccounts = accounts));
     */
-    //this.updateSchedule();
-    (await this.accountService.getAll())
-      .forEach(async (Element) => {
-        this.allAccounts = Element;
-        console.log(this.allAccounts, "right here");
+
+    this.loading = this.alertService.presentLoading("Admin Student Expenses");
+    (await this.loading)
+      .present()
+      .then(async () => {
+        this.adminsIsChecked = true;
+        this.studentsIsChecked = true;
+        this.reportsManagersIsChecked = true;
+        this.ios = this.config.get("mode") === "ios";
       })
       .then(async () => {
-        const accountsCount = this.allAccounts.length;
-        for (let i = 0; i < accountsCount; i++) {
-          this.allAccounts[i].created = moment(
-            this.allAccounts[i].created
-          ).format("MM-DD-YYYY @HH:mm:ss");
-        }
+        await (await this.accountService.getAll())
+          .forEach(async (Element) => {
+            this.allAccounts = Element;
+            //console.log(this.allAccounts, "right here");
+          })
+          .then(async () => {
+            const accountsCount = this.allAccounts.length;
+            for (let i = 0; i < accountsCount; i++) {
+              this.allAccounts[i].created = moment(
+                this.allAccounts[i].created
+              ).format("MM-DD-YYYY @HH:mm:ss");
+            }
+          });
       })
       .finally(async () => {
         setTimeout(async () => {

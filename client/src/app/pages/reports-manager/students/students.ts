@@ -35,21 +35,25 @@ export class StudentsListPage {
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
-    (await this.loading).present();
-    this.adminsIsChecked = true;
-    this.studentsIsChecked = true;
-    this.propertyManagersIsChecked = true;
-    this.userId = this.account.accountValue.id;
-    if (this.account.accountValue.role == "Admin") {
-      this.userId = this.route.snapshot.paramMap.get("accountId");
-      if (this.route.snapshot.paramMap.get("accountId") == null) {
+    (await this.loading)
+      .present()
+      .then(async () => {
+        this.adminsIsChecked = true;
+        this.studentsIsChecked = true;
+        this.propertyManagersIsChecked = true;
         this.userId = this.account.accountValue.id;
-      }
-    }
-    (await this.account.getAllStudents(this.userId))
-      .forEach(async (element) => {
-        this.studentsList = element;
-        console.log(this.studentsList);
+        if (this.account.accountValue.role == "Admin") {
+          this.userId = this.route.snapshot.paramMap.get("accountId");
+          if (this.route.snapshot.paramMap.get("accountId") == null) {
+            this.userId = this.account.accountValue.id;
+          }
+        }
+        (await this.account.getAllStudents(this.userId)).forEach(
+          async (element) => {
+            this.studentsList = element;
+            //console.log(this.studentsList);
+          }
+        );
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -59,8 +63,4 @@ export class StudentsListPage {
   }
 
   async ionViewDidEnter() {}
-
-
-
-
 }

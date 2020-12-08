@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { AccountDetailsPage } from './account-details';
+import { AccountDetailsPage } from "./account-details";
 
 const routes: Routes = [
   {
-    path: '',
-    component: AccountDetailsPage
+    path: "",
+    component: AccountDetailsPage,
   },
   {
     path: "expenses/add",
@@ -18,35 +18,35 @@ const routes: Routes = [
   {
     path: "expenses/expense-details/:expenseId",
     loadChildren: () =>
-      import("@app/pages/account/expenses/expense-details/expense-details.module").then(
-        (m) => m.ExpenseDetailsModule
-      ),
+      import(
+        "@app/pages/account/expenses/expense-details/expense-details.module"
+      ).then((m) => m.ExpenseDetailsModule),
   },
   {
     path: "reports",
-        loadChildren: () =>
-          import("@app/pages/reports-manager/reports/reports.module").then(
-            (m) => m.ReportsListModule
-          ),
+    loadChildren: () =>
+      import("@app/pages/reports-manager/reports/reports.module").then(
+        (m) => m.ReportsListModule
+      ),
   },
   {
     path: "students",
-        loadChildren: () =>
-          import("@app/pages/reports-manager/students/students.module").then(
-            (m) => m.StudentsListModule
-          ),
+    loadChildren: () =>
+      import("@app/pages/reports-manager/students/students.module").then(
+        (m) => m.StudentsListModule
+      ),
   },
   {
     path: "reports-expenses",
-        loadChildren: () =>
-          import("@app/pages/reports-manager/expenses/expenses.module").then(
-            (m) => m.ExpensesListModule
-          ),
+    loadChildren: () =>
+      import("@app/pages/reports-manager/expenses/expenses.module").then(
+        (m) => m.ExpensesListModule
+      ),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AccountDetailsPageRoutingModule { }
+export class AccountDetailsPageRoutingModule {}

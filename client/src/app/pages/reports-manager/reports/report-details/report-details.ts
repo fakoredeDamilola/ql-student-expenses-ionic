@@ -80,7 +80,6 @@ export class ReportDetailsPage {
         // Get Report Students
         (await this.accountService.getAllStudentsByReportId(this.reportId))
           .forEach(async (Elem) => {
-            console.log("All Report Students", Elem);
             this.reportStudents = Elem;
           })
           .then(async () => {
@@ -155,8 +154,6 @@ export class ReportDetailsPage {
   }
 
   private async updateReportMasterList(contextParamValue, popUpText) {
-    console.log(contextParamValue, "what is this??");
-    console.log(this.reportId);
     (await this.reportService.update(this.reportId, contextParamValue))
       .pipe(first())
       .subscribe({
@@ -230,7 +227,7 @@ export class ReportDetailsPage {
       });
   }
 
-  // Calculate Disbursements Per Student
+  // Calculate Disbursements Per Student The Test Function!!!!
 
   public async calculateDisbursements() {
     this.calculatingDisbursementsLoader = this.alertService.presentLoading(
