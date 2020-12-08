@@ -1,4 +1,4 @@
-# server side of Student Expenses
+# Server side of Student Expenses
 
 Basic controllers and services
 
