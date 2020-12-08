@@ -39,7 +39,9 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
 2. A Pipe To Validate Amount entered is actually a valid currency , example cant submit an expense cost of 23.55htjK
 3. Create Standard components for list views for uniform styling, seperate currently for diplaying different information for different roles.
    --Fix Styling 
-4. Date Ranges for Reports filter, Expenses Filter, Accounts Filter
+4. Date Ranges for Reports filter, Expenses Filter, Accounts Filter.
+5. Invite Students to another expense report, currently can only be assoicated with one expense report.
+   -- Invite Student who already has an account, current behavior when student is added to report, account created for them. 
 
 
 # Bugs
