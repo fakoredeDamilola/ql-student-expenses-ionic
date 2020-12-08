@@ -1,8 +1,7 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import {
   AlertController,
-  IonList,
   IonRouterOutlet,
   LoadingController,
   ModalController,
@@ -12,7 +11,7 @@ import {
 
 import { ExpensesFilterPage } from "./expenses-filter/expenses-filter";
 import { UserData } from "@app/providers/user-data";
-import { AccountService, AlertService, ExpenseService } from "@app/_services";
+import { AlertService, ExpenseService } from "@app/_services";
 import { Account, Expense } from "@app/_models";
 import * as moment from "moment";
 
@@ -22,24 +21,25 @@ import * as moment from "moment";
   styleUrls: ["./expenses.scss"],
 })
 export class ExpensesPage {
-  // Gets a reference to the list element
-
   ios: boolean;
   queryText = "";
   segment = "all";
   showSearchbar: boolean;
   loading: any;
   allAccounts: any | [Account];
-  adminsIsChecked: boolean;
-  petOwnersIsChecked: boolean;
-  propertyManagersIsChecked: boolean;
+  allExpenses: any | [Expense];
+  // Filters list items
+  foodIsChecked: boolean;
+  hotelIsChecked: boolean;
+  entertainmentIsChecked: boolean;
+  otherIsChecked: boolean;
   filtersList: any;
   currentRoute: string = this.router.url;
-
-  adminCondition: string = "";
-  petOwnerCondition: string = "";
-  propertyManagerCondition: string = "";
-  allExpenses: any | [Expense];
+  // Filters list items for hidden in view
+  foodCondition: string = "";
+  hotelCondition: string = "";
+  entertainmentCondition: string = "";
+  otherCondition: string = "";
 
   constructor(
     public alertCtrl: AlertController,
@@ -51,15 +51,15 @@ export class ExpensesPage {
     public toastCtrl: ToastController,
     public user: UserData,
     public config: Config,
-    private expenseService: ExpenseService,
-    private acountService: AccountService
+    private expenseService: ExpenseService
   ) {}
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
-    this.adminsIsChecked = true;
-    this.petOwnersIsChecked = true;
-    this.propertyManagersIsChecked = true;
+    this.foodIsChecked = true;
+    this.hotelIsChecked = true;
+    this.entertainmentIsChecked = true;
+    this.otherIsChecked = true;
 
     (await this.loading).present();
     //this.updateSchedule();
@@ -84,34 +84,31 @@ export class ExpensesPage {
       });
   }
 
-  // Updates mani view from filter...very cool
+  // Updates main view from filter...very cool
   async updateView() {
-    // TODO make this a switch case statement
-    if (this.adminsIsChecked == false) {
-      this.adminCondition = "Admin";
-    }
-    if (this.adminsIsChecked == true) {
-      this.adminCondition = "";
-    }
-    if (this.petOwnersIsChecked == false) {
-      this.petOwnerCondition = "User";
-    }
-    if (this.petOwnersIsChecked == true) {
-      this.petOwnerCondition = "";
-    }
-    if (this.propertyManagersIsChecked == false) {
-      this.propertyManagerCondition = "PropertyManager";
-    }
-    if (this.propertyManagersIsChecked == true) {
-      this.propertyManagerCondition = "";
-    }
+    this.foodIsChecked
+      ? (this.foodCondition = "")
+      : (this.foodCondition = "Food");
+
+    this.hotelIsChecked
+      ? (this.hotelCondition = "")
+      : (this.hotelCondition = "Hotel");
+
+    this.entertainmentIsChecked
+      ? (this.entertainmentCondition = "")
+      : (this.entertainmentCondition = "Entertainment");
+
+    this.otherIsChecked
+      ? (this.otherCondition = "")
+      : (this.otherCondition = "Other");
   }
 
   async presentFilter() {
     this.filtersList = {
-      adminsIsChecked: this.adminsIsChecked,
-      petOwnersIsChecked: this.petOwnersIsChecked,
-      propertyManagersIsChecked: this.propertyManagersIsChecked,
+      foodIsChecked: this.foodIsChecked,
+      hotelIsChecked: this.hotelIsChecked,
+      entertainmentIsChecked: this.entertainmentIsChecked,
+      otherIsChecked: this.otherIsChecked,
     };
 
     const modal = await this.modalCtrl.create({
@@ -124,10 +121,11 @@ export class ExpensesPage {
 
     const { data } = await modal.onWillDismiss();
     if (data) {
-      this.adminsIsChecked = await data.adminsIsChecked;
-      this.petOwnersIsChecked = await data.petOwnersIsChecked;
-      this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
-      this.updateView();
+      this.foodIsChecked = await data.foodIsChecked;
+      this.hotelIsChecked = await data.hotelIsChecked;
+      this.entertainmentIsChecked = await data.entertainmentIsChecked;
+      this.otherIsChecked = await data.otherIsChecked;
+      await this.updateView();
     }
   }
 }

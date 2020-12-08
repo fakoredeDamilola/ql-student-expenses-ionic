@@ -90,25 +90,15 @@ export class AccountsPage {
 
   // Updates main view from filter...very cool
   async updateView() {
-    // TODO make this a switch case statement
-    if (this.adminsIsChecked == false) {
-      this.adminCondition = "Admin";
-    }
-    if (this.adminsIsChecked == true) {
-      this.adminCondition = "";
-    }
-    if (this.studentsIsChecked == false) {
-      this.studentCondition = "Student";
-    }
-    if (this.studentsIsChecked == true) {
-      this.studentCondition = "";
-    }
-    if (this.reportsManagersIsChecked == false) {
-      this.reportsManagerCondition = "ReportsManager";
-    }
-    if (this.reportsManagersIsChecked == true) {
-      this.reportsManagerCondition = "";
-    }
+    this.adminsIsChecked
+      ? (this.adminCondition = "")
+      : (this.adminCondition = "Admin");
+    this.studentsIsChecked
+      ? (this.studentCondition = "")
+      : (this.studentCondition = "Student");
+    this.reportsManagersIsChecked
+      ? (this.reportsManagerCondition = "")
+      : (this.reportsManagerCondition = "ReportsManager");
   }
 
   async presentFilter() {

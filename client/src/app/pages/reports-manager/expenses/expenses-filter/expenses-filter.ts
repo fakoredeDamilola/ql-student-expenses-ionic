@@ -38,10 +38,10 @@ export class ExpensesFilterPage {
   applyFilters() {
     // Pass back a new array of track names to exclude
     this.filtersList = {
-      'foodIsChecked': this.foodIsChecked,
-      'hotelIsChecked': this.hotelIsChecked,
-      'entertainmentIsChecked': this.entertainmentIsChecked,
-      'otherIsChecked': this.otherIsChecked,
+      foodIsChecked: this.foodIsChecked,
+      hotelIsChecked: this.hotelIsChecked,
+      entertainmentIsChecked: this.entertainmentIsChecked,
+      otherIsChecked: this.otherIsChecked,
     };
     this.dismiss(this.filtersList);
   }

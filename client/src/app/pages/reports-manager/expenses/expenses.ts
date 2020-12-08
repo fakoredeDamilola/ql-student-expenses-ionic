@@ -1,7 +1,10 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AccountService, AlertService } from "@app/_services";
+import { UserData } from '@app/providers/user-data';
+import { AccountService, AlertService, ExpenseService } from "@app/_services";
+import { AlertController, Config, IonRouterOutlet, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import * as moment from "moment";
+import { ExpensesFilterPage } from './expenses-filter/expenses-filter';
 
 @Component({
   selector: "page-expenses-list",
@@ -22,18 +25,38 @@ export class ExpensesListPage {
   reportsExpenses: any;
   expensesTotal: number;
   expensesCount: any;
+  foodIsChecked: boolean;
+  hotelIsChecked: boolean;
+  entertainmentIsChecked: boolean;
+  otherIsChecked: boolean;
+  foodCondition: string = "";
+  hotelCondition: string = "";
+  entertainmentCondition: string = "";
+  otherCondition: string = "";
 
   constructor(
-    private accountService: AccountService,
+    public alertCtrl: AlertController,
     private alertService: AlertService,
-    private route: ActivatedRoute,
-    private router: Router
+    public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController,
+    public router: Router,
+    public routerOutlet: IonRouterOutlet,
+    public toastCtrl: ToastController,
+    public user: UserData,
+    public config: Config,
+    private accountService: AccountService,
+    private route : ActivatedRoute
   ) {}
 
   async ionViewWillEnter() {
+    this.foodIsChecked = true;
+    this.hotelIsChecked = true;
+    this.entertainmentIsChecked = true;
+    this.otherIsChecked = true;
+    this.reportsManagerId = this.accountService.accountValue.id;
+    this.ios = (await this.config.get("mode")) === "ios";
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
-    this.reportsManagerId = this.accountService.accountValue.id;
 
     if (this.accountService.accountValue.role == "Admin") {
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
@@ -78,27 +101,48 @@ export class ExpensesListPage {
     this.expensesTotal =0;
   }
 
+    // Updates main view from filter...very cool
+    async updateView() {
+      this.foodIsChecked
+        ? (this.foodCondition = "")
+        : (this.foodCondition = "Food");
+
+      this.hotelIsChecked
+        ? (this.hotelCondition = "")
+        : (this.hotelCondition = "Hotel");
+
+      this.entertainmentIsChecked
+        ? (this.entertainmentCondition = "")
+        : (this.entertainmentCondition = "Entertainment");
+
+      this.otherIsChecked
+        ? (this.otherCondition = "")
+        : (this.otherCondition = "Other");
+    }
+
   async presentFilter() {
-    /*  this.filtersList= {
-        'adminsIsChecked':this.adminsIsChecked,
-        'petOwnersIsChecked':this.petOwnersIsChecked,
-        'reportsManagersIsChecked':this.reportsManagersIsChecked
-      }
+    this.filtersList = {
+      foodIsChecked: this.foodIsChecked,
+      hotelIsChecked: this.hotelIsChecked,
+      entertainmentIsChecked: this.entertainmentIsChecked,
+      otherIsChecked: this.otherIsChecked,
+    };
 
-      const modal = await this.modalCtrl.create({
-        component: PetOwnersFilterPage,
-        swipeToClose: true,
-        presentingElement: this.routerOutlet.nativeEl,
-        componentProps: { filtersList: await this.filtersList }
-      });
-      await modal.present();
+    const modal = await this.modalCtrl.create({
+      component: ExpensesFilterPage,
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: { filtersList: await this.filtersList },
+    });
+    await modal.present();
 
-      const { data } = await modal.onWillDismiss();
-      if (data) {
-        this.adminsIsChecked = await data.adminsIsChecked;
-        this.petOwnersIsChecked = await data.petOwnersIsChecked;
-        this.reportsManagersIsChecked = await data.reportsManagersIsChecked;
-        this.updateView();
-      }*/
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.foodIsChecked = await data.foodIsChecked;
+      this.hotelIsChecked = await data.hotelIsChecked;
+      this.entertainmentIsChecked = await data.entertainmentIsChecked;
+      this.otherIsChecked = await data.otherIsChecked;
+      await this.updateView();
+    }
   }
 }
