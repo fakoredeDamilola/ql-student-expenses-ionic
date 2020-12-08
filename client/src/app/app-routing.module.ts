@@ -60,6 +60,7 @@ const routes: Routes = [
       import("@app/pages/reports-manager/reports-manager.module").then(
         (m) => m.ReportsManagerModule
       ),
+      canActivate: [AuthGuard],
   },
   {
     path: "account/reset-password",

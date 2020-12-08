@@ -71,7 +71,6 @@ export class ReportDetailsPage {
     // Get Report Info
     (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
-        console.log(Element)
         this.reportName = Element.reportName;
         this.reportsManager = `${Element.reportsManager.firstName} ${Element.reportsManager.lastName}`
         this.reportCreated = moment(Element.created).format(
