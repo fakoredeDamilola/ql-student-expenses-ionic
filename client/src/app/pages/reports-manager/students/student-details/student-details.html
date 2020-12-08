@@ -48,9 +48,8 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let expense of studentExpenses">
-        <ion-card class="speaker-card">
+        <ion-card class="speaker-card" detail="false" lines="none" class="speaker-item" routerLink='/{{currentRoute}}/student-expenses/expense-details/{{expense.id}}'>
           <!--<ion-card-header>-->
-            <ion-item detail="false" lines="none" class="speaker-item" routerLink='/{{currentRoute}}/student-expenses/expense-details/{{expense.id}}'>
               <ion-avatar slot="start">
                 <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
               </ion-avatar>
@@ -59,7 +58,6 @@
                 <p>${{expense.expenseCost}}</p>
                 <p>{{expense.created}}</p>
               </ion-label>
-            </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
