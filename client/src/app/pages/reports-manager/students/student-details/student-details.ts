@@ -4,6 +4,7 @@ import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { Expense } from "@app/_models";
+import * as moment from "moment";
 
 @Component({
   selector: "page-student-details",
@@ -37,7 +38,7 @@ export class StudentDetailsPage {
 
   async ionViewWillEnter() {
     // reseting this because of a bug noticed..
-    this.totalOfExpenses=0;
+    this.totalOfExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.studentId = this.route.snapshot.paramMap.get("studentId");
@@ -64,6 +65,9 @@ export class StudentDetailsPage {
         //calculate expenses total
         for (let i = 0; i < this.expensesLength; i++) {
           this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);
+          this.studentExpenses[i].created = moment(
+            this.studentExpenses[i].created
+          ).format("MM-DD-YYYY @HH:mm:ss");
         }
         this.totalOfExpenses = Number(this.totalOfExpenses.toFixed(2));
       })
@@ -74,7 +78,7 @@ export class StudentDetailsPage {
       });
   }
 
-  async removeStudent(){
+  async removeStudent() {
     this.alertService.createToastAlert(
       "Currently ONLY Admins Can Delete/Remove Accounts",
       "warning",

@@ -94,6 +94,9 @@ export class ReportDetailsPage {
                 this.totalOfReportExpenses += Number(
                   this.reportExpenses[i].expenseCost
                 );
+                this.reportExpenses[i].created = moment(
+                  this.reportExpenses[i].created
+                ).format("MM-DD-YYYY @HH:mm:ss");
               }
 
               this.totalOfReportExpensesString = this.totalOfReportExpenses.toLocaleString(

@@ -89,13 +89,15 @@ export class ReportDetailsPage {
             (
               await this.expenseService.getAllExpensesByReportId(this.reportId)
             ).forEach(async (El) => {
-              //console.log("All Report Expenses", El);
               this.reportExpenses = El;
               this.reportExpensesCount = this.reportExpenses.length;
               for (let i = 0; i < this.reportExpensesCount; i++) {
                 this.totalOfReportExpenses += Number(
                   this.reportExpenses[i].expenseCost
                 );
+                this.reportExpenses[i].created = moment(
+                  this.reportExpenses[i].created
+                ).format("MM-DD-YYYY @HH:mm:ss");
               }
 
               this.totalOfReportExpensesString = this.totalOfReportExpenses.toLocaleString(

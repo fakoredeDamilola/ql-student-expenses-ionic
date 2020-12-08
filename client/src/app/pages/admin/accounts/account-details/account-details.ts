@@ -75,6 +75,9 @@ export class AccountDetailsPage {
         //calculate expenses total
         for (let i = 0; i < this.studentExpensesCount; i++) {
           this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);
+          this.studentExpenses[i].created = moment(
+            this.studentExpenses[i].created
+          ).format("MM-DD-YYYY @HH:mm:ss");
         }
         this.totalOfExpenses = Number(this.totalOfExpenses.toFixed(2));
       })
