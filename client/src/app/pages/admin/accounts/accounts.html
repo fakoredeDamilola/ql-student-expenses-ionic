@@ -62,8 +62,12 @@
                 <h2 *ngIf="account.role=='Student'">Student</h2>
                 <h2 *ngIf="account.role=='Admin'">Admin</h2>
                 <p>
-                  Expenses ({{account.studentExpensesCount}})
+                 <b>Account Expenses ({{account.studentExpensesCount}})</b>
                 </p>
+                <div *ngIf="account.role == 'ReportsManager' || account.role=='Admin'">
+                  <p>Reports ({{account.reportsManagerReports.length}})</p>
+                  <p>Students ({{account.reportsManagerStudentsCount}})</p>
+                </div>
               </ion-label>
             </ion-item>
           </ion-card-header>
