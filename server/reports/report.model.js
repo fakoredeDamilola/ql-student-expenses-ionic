@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    reportsManagerId:{ type: String, required: true },//<-- The Account Id of the property manager
+    reportsManagerId:{ type: String, required: true },
     reportName: { type: String, required: false },
     created: { type: Date, default: Date.now },
     updated: Date
