@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ReportsPage } from './reports';
-import { ReportsFilterPage } from './reports-filter/reports-filter';
 import { ReportsPageRoutingModule } from './reports-routing.module';
 
 @NgModule({
@@ -15,11 +14,9 @@ import { ReportsPageRoutingModule } from './reports-routing.module';
     ReportsPageRoutingModule
   ],
   declarations: [
-    ReportsPage,
-    ReportsFilterPage
+    ReportsPage
   ],
   entryComponents: [
-    ReportsFilterPage
   ]
 })
 export class ReportsModule { }

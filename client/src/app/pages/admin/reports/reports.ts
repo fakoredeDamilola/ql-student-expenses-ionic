@@ -10,7 +10,6 @@ import {
   Config,
 } from "@ionic/angular";
 
-import { ReportsFilterPage } from "./reports-filter/reports-filter";
 import { UserData } from "@app/providers/user-data";
 import { AccountService, AlertService, ReportService } from "@app/_services";
 import { Report } from "@app/_models";

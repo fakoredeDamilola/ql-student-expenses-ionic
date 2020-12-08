@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
 import { IonRouterOutlet, ModalController } from "@ionic/angular";
-import { StudentsFilterPage } from "./students-filter/students-filter";
 
 @Component({
   selector: "page-students-list",

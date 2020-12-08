@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
 import { LoadingController } from "@ionic/angular";
 import { Location } from "@angular/common";

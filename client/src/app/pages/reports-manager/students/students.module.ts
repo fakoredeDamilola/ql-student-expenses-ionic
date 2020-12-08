@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { StudentsListPage } from './students';
 import { StudentsListPageRoutingModule } from './students-routing.module';
-import { StudentsFilterPage } from './students-filter/students-filter';
 
 @NgModule({
   imports: [
@@ -16,10 +15,8 @@ import { StudentsFilterPage } from './students-filter/students-filter';
   ],
   declarations: [
     StudentsListPage,
-    StudentsFilterPage
   ],
   entryComponents: [
-    StudentsFilterPage
   ]
 })
 export class StudentsListModule {}
