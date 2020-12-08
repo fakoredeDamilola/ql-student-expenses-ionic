@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { ActionSheetController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
@@ -20,10 +20,11 @@ export class AddExpensePage {
   addExpense: ExpenseOptions = {
     expenseName: "",
     expenseCost: "",
-    expenseCategory:""
+    expenseCategory: "",
   };
   loading: Promise<HTMLIonLoadingElement>;
   savingExpense: Promise<HTMLIonLoadingElement>;
+  accountId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class AddExpensePage {
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
+    this.accountId = this.route.snapshot.paramMap.get("accountId"); //<----------potentially null for regular students
   }
 
   async ionViewDidEnter() {
@@ -62,15 +64,21 @@ export class AddExpensePage {
       }, 300);
       return;
     }
-    form.value.studentId = this.account.id;
-    form.value.reportId = this.account.reportId;
-    form.value.reportsManagerId = this.account.reportsManagerId;
-    //console.log(this.account, "here");
-    const accountId = this.route.snapshot.paramMap.get("accountId");
-    //console.log("this accountId", accountId)
-    if (accountId != null) {
-      form.value.studentId = accountId;
+
+    if (this.accountId) { //<------------------- Admin Is Adding Expense for somebody
+      form.value.studentId = this.accountId;
+      await (await this.accountService.getById(this.accountId)).forEach(
+        async (Element) => {
+          form.value.reportId = Element.reportId;
+          form.value.reportsManagerId = Element.reportsManagerId;
+        }
+      );
+    } else { //<--------------------------------Regular student adding their own expense
+      form.value.studentId = this.account.id;
+      form.value.reportId = this.account.reportId;
+      form.value.reportsManagerId = this.account.reportsManagerId;
     }
+
     (await this.expenseService.create(form.value)).pipe(first()).subscribe({
       next: async () => {
         setTimeout(async () => {
