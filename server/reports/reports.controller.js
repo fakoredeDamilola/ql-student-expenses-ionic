@@ -8,7 +8,7 @@ const reportService = require('./report.service');
 // routes
 router.get('/', authorize(Role.Admin), getAll);
 router.get('/:reportId', authorize(), getById);
-router.post('/',create);
+router.post('/',authorize(), create);
 router.put('/:reportId', authorize(), update);
 router.delete('/:reportId', authorize(), _delete);
 
@@ -16,7 +16,7 @@ module.exports = router;
 
 function getAll(req, res, next) {
     reportService.getAll()
-        .then(report => res.json(report))
+        .then(reports => res.json(reports))
         .catch(next);
 }
 

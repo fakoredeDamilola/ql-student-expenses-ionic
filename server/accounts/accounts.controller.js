@@ -24,25 +24,36 @@ router.post(
 );
 // main routes for accounts ***
 router.get("/", authorize(Role.Admin), getAll);
-router.get("/:accountId", getById);
-router.get("/:reportId/report-students",authorize(), getAllStudentsByReportId);
+router.get("/:accountId", authorize(), getById);
+router.get("/:reportId/report-students", authorize(), getAllStudentsByReportId);
 router.post("/", createSchema, createAccount);
 router.put("/:accountId", authorize(), update);
 router.delete("/:accountId", authorize(), _delete);
 
 // TODO routes to add Expenses BASIC FUNCTIONALITY, also TODO Authorize for all...
 //router.put("/:accountId/Expenses/", authorize(), pushPetToAccount);
-router.get("/:accountId/expenses/", getAllExpensesOnAccount);
+router.get("/:accountId/expenses/", authorize(), getAllExpensesOnAccount);
 
 // reports Manager Routes
 //router.put("/:accountId/Reports/", authorize(), pushreportsToAccount);
 // Need to use db.reports find({})
-router.get("/:reportsManagerId/reports/", getAllReportsOnAccount);
-router.get("/:reportsManagerId/students/", getAllStudentsInReports);
-router.get("/:reportsManagerId/expenses-on-reports/", getReportsExpenses);
-router.get("/:reportsManagerId/reports-expenses/", getAllExpensesInReports);
+router.get("/:reportsManagerId/reports/", authorize(), getAllReportsOnAccount);
+router.get(
+  "/:reportsManagerId/students/",
+  authorize(),
+  getAllStudentsInReports
+);
+router.get(
+  "/:reportsManagerId/expenses-on-reports/",
+  authorize(),
+  getReportsExpenses
+);
+router.get(
+  "/:reportsManagerId/reports-expenses/",
+  authorize(),
+  getAllExpensesInReports
+);
 module.exports = router;
-
 
 function getAllStudentsInReports(req, res, next) {
   //console.log(req)
@@ -85,9 +96,9 @@ function getAllExpensesInReports(req, res, next) {
 function getAllExpensesOnAccount(req, res, next) {
   //console.log(req.params)
   expenseService
-  .getAllExpensesOnAccount(req.params.accountId)
-  .then((Expenses) => res.json(Expenses))
-  .catch(next);
+    .getAllExpensesOnAccount(req.params.accountId)
+    .then((Expenses) => res.json(Expenses))
+    .catch(next);
 }
 
 function authenticateSchema(req, res, next) {
@@ -305,12 +316,11 @@ function updateSchema(req, res, next) {
 function update(req, res, next) {
   // Students can update their own account and admins can update any account, THIS IS SO IMPORTANT NOT ACCOUNT ID ITS ID FOR Student.id
   if (req.params.accountId !== req.user.id && req.user.role !== Role.Admin) {
-
     return res.status(399).json({
       message: "Unauthorized update to someone else account, your bad",
     });
   }
-  console.log(req.params, req.body)
+  console.log(req.params, req.body);
   accountService
     .update(req.params.accountId, req.body)
     .then((account) => res.json(account))
@@ -319,7 +329,7 @@ function update(req, res, next) {
 
 function _delete(req, res, next) {
   // Students can delete their own account and admins can delete any account
-  console.log(req.user)
+  console.log(req.user);
   if (req.params.accountId !== req.user.id && req.user.role !== Role.Admin) {
     return res.status(401).json({
       message: "Unauthorized you tried deleting someone elses account",
