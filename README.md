@@ -34,6 +34,6 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
 ## Bug Tracker / Features TODO
 
 1. Camera for expenses images, saving to DB and retrieving (currently works with memory/cache)
-2. A Pipe To Validate Ammount entered is actually a valid currency , example cant submit and expense cost of 23.55htjK
+2. A Pipe To Validate Ammount entered is actually a valid currency , example cant submit an expense cost of 23.55htjK
 3. Create Standard components for list views for uniform styling, seperate currently for diplaying different information for different roles.
 
