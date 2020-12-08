@@ -1,5 +1,5 @@
 module.exports = {
     Admin: 'Admin',
-    Student: 'Student', //<--General user AKA Pet Owner ONLY
+    Student: 'Student', //<--General User
     ReportsManager: 'ReportsManager'
 }
