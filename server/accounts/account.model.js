@@ -53,7 +53,7 @@ schema.virtual("studentReport", {
   foreignField: "_id", // is equal to `foreignField`
   justOne: true
 });
-// My Properties if I am A Report Manager
+// My Reports if I am A Report Manager
 schema.virtual("reportsManagerReports", {
   ref: "Report", // The model to use
   localField: "_id", // Find people where `localField`
