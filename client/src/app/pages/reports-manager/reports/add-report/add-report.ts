@@ -55,7 +55,7 @@ export class AddReportPage {
     form.value.reportsManagerId = this.account.id;
 
     if (this.accountService.accountValue.role == "Admin") {
-      console.log(this.route.snapshot.paramMap.get("accountId"));
+      //console.log(this.route.snapshot.paramMap.get("accountId"));
       form.value.reportsManagerId = this.route.snapshot.paramMap.get(
         "accountId"
       );

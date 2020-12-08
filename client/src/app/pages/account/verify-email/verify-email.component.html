@@ -1,20 +1,6 @@
-﻿<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+﻿<h1>Verify Email Page</h1>
 
-    <ion-title>Verify Email</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-<ion-item [hidden]="emailStatus == EmailStatus.Verifying">
-  <ion-label>Verifying...</ion-label>
-</ion-item>
-
-<ion-item [hidden]="emailStatus == EmailStatus.Failed">
-  <ion-label>Verification failed, you can also verify your account using the <a routerLink="forgot-password">forgot password</a> page.</ion-label>
-</ion-item>
-
-</ion-content>
+<div [hidden]="emailStatus == EmailStatus.Verifying">Verifying....</div>
+<div [hidden]="emailStatus == EmailStatus.Failed">
+  Verification failed, you can also verify your account using the <a routerLink="forgot-password">forgot password</a> page.
+</div>

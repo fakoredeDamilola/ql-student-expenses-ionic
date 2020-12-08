@@ -71,7 +71,7 @@ export class AccountDetailsPage {
         if (this.studentExpenses.length > 0) {
           this.hasExpenses = true;
         }
-        console.log(Element);
+        //console.log(Element);
         //calculate expenses total
         for (let i = 0; i < this.studentExpensesCount; i++) {
           this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);

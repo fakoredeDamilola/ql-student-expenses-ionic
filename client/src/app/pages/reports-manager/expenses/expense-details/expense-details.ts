@@ -108,7 +108,7 @@ export class ExpenseDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            console.log(data);
+            //console.log(data);
             this.savingExpense = this.alertService.presentLoading(
               "Saving Expense..."
             );
