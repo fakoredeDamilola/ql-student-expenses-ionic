@@ -32,5 +32,5 @@ Probably the best framework ever.....
 ## Bug Tracker / Features TODO
 
 1. Camera for expenses images, saving to DB and retrieving (currently works with memory/cache)
-
+2. A Pipe To Validate Ammount entered is actually a valid currency , example cant submit and expense cost of 23.55htjK
 
