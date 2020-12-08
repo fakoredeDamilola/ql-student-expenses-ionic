@@ -117,10 +117,10 @@ export class AccountDetailsPage {
 
   async deleteAccount() {
     this.deleting = this.alertService.presentLoading("Deleting Account...");
-    console.log(this.accountId, "accountId");
+    //console.log(this.accountId, "accountId");
     (await this.deleting).present();
-    this.accountService
-      .delete(this.accountId)
+    (await this.accountService
+      .delete(this.accountId))
       .pipe(first())
       .subscribe({
         next: async () => {
@@ -245,7 +245,7 @@ export class AccountDetailsPage {
           {
             text: "Ok",
             handler: async (data: any) => {
-              console.log(data);
+              //console.log(data);
               this.savingAccount = this.alertService.presentLoading(
                 "Saving..."
               );

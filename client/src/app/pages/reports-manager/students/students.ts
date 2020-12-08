@@ -61,50 +61,7 @@ export class StudentsListPage {
 
   async ionViewDidEnter() {}
 
-  async presentFilter() {
-    this.filtersList = {
-      adminsIsChecked: this.adminsIsChecked,
-      studentsIsChecked: this.studentsIsChecked,
-      propertyManagersIsChecked: this.propertyManagersIsChecked,
-    };
 
-    const modal = await this.modalCtrl.create({
-      component: StudentsFilterPage,
-      swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl,
-      componentProps: { filtersList: await this.filtersList },
-    });
-    await modal.present();
 
-    const { data } = await modal.onWillDismiss();
-    if (data) {
-      this.adminsIsChecked = await data.adminsIsChecked;
-      this.studentsIsChecked = await data.studentsIsChecked;
-      this.propertyManagersIsChecked = await data.propertyManagersIsChecked;
-      this.updateView();
-    }
-  }
 
-  // Updates mani view from filter...very cool
-  async updateView() {
-    // TODO make this a switch case statement
-    if (this.filtersList.adminsIsChecked == false) {
-      this.adminCondition = "Admin";
-    }
-    if (this.filtersList.adminsIsChecked == true) {
-      this.adminCondition = "";
-    }
-    if (this.filtersList.studentsIsChecked == false) {
-      this.petOwnerCondition = "User";
-    }
-    if (this.filtersList.studentsIsChecked == true) {
-      this.petOwnerCondition = "";
-    }
-    if (this.filtersList.propertyManagersIsChecked == false) {
-      this.propertyManagerCondition = "PropertyManager";
-    }
-    if (this.filtersList.propertyManagersIsChecked == true) {
-      this.propertyManagerCondition = "";
-    }
-  }
 }

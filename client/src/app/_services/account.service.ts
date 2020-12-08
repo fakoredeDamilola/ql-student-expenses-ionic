@@ -24,7 +24,6 @@ export class AccountService {
   }
 
   async login(email: string, password: string) {
-    //this.accountSubject.subscribe(x => console.log(x,"this still shouldnt be anything???"));
     return this.http
       .post<any>(
         `${baseUrl}/authenticate`,
@@ -32,7 +31,7 @@ export class AccountService {
         { withCredentials: true }
       )
       .pipe(
-        map((account) => {
+        map(async (account) => {
           this.accountSubject.next(account);
           this.startRefreshTokenTimer();
           return account;
@@ -46,10 +45,9 @@ export class AccountService {
       .subscribe();
     await this.stopRefreshTokenTimer();
     this.accountSubject.next(null);
-    //This bellow is freaking sick
+    //This bellow is really cool
     //this.accountSubject.subscribe(x => console.log(x,"This should be undefined???"));
     await this.router.navigateByUrl("/login");
-    //location.reload();
   }
 
   refreshToken() {
@@ -59,13 +57,12 @@ export class AccountService {
         map(async (account) => {
           this.accountSubject.next(account);
           await this.startRefreshTokenTimer();
-          return await account;
+          return account;
         })
       );
   }
 
   async register(account: Account) {
-    //console.log(account, "<--Account for regular register");
     return this.http.post(`${baseUrl}/register`, account);
   }
 
@@ -109,15 +106,14 @@ export class AccountService {
     return this.http.get<Account[]>(`${baseUrl}/${reportId}/report-students`);
   }
 
-  // This One for report managers, their personal reports they are in charge of
+  // Reports Manager Routes
   async getReportsExpenses(reportsManagerId: string) {
-    return this.http.get<Account>(`${baseUrl}/${reportsManagerId}/expenses-on-reports`);
-
+    return this.http.get<Account>(
+      `${baseUrl}/${reportsManagerId}/expenses-on-reports`
+    );
   }
   async getAllReportsOnAccount(reportsManagerId: string) {
-    return this.http.get<Report>(
-      `${baseUrl}/${reportsManagerId}/reports`
-    );
+    return this.http.get<Report>(`${baseUrl}/${reportsManagerId}/reports`);
   }
   async getAllExpensesInReports(reportsManagerId: string) {
     return this.http.get<Report>(
@@ -147,9 +143,9 @@ export class AccountService {
     );
   }
 
-  delete(id: string) {
+  async delete(id: string) {
     return this.http.delete(`${baseUrl}/${id}`).pipe(
-      finalize(() => {
+      finalize(async () => {
         // auto logout if the logged in account was deleted
         if (id === this.accountValue.id) this.logout();
       })

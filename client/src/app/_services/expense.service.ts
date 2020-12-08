@@ -41,22 +41,22 @@ export class ExpenseService {
 
   async update(id: string, params) {
     return this.http.put(`${baseUrl}/${id}`, params).pipe(
-      map((Expense: any) => {
+      map(async (expense: any) => {
         // update the current Expense if it was updated
         // if (Expense.id === this.ExpenseTestValue.id) {
         // publish updated Expense to subscribers
         //    Expense = { ...this.ExpenseTestValue, ...Expense };
         //    this.ExpenseSubject.next(Expense);
         // }
-        return Expense;
+        return expense;
       })
     );
   }
 
   async delete(id: string) {
     return this.http.delete(`${baseUrl}/${id}`).pipe(
-      finalize(() => {
-        // auto logout if the logged in Expense was deleted
+      finalize(async() => {
+        // not sure if needed
       })
     );
   }

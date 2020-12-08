@@ -63,28 +63,4 @@ export class ReportsListPage {
         }, 300);
       });
   }
-
-  async presentFilter() {
-    /*  this.filtersList= {
-      'adminsIsChecked':this.adminsIsChecked,
-      'petOwnersIsChecked':this.petOwnersIsChecked,
-      'reportsManagersIsChecked':this.reportsManagersIsChecked
-    }
-
-    const modal = await this.modalCtrl.create({
-      component: PetOwnersFilterPage,
-      swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl,
-      componentProps: { filtersList: await this.filtersList }
-    });
-    await modal.present();
-
-    const { data } = await modal.onWillDismiss();
-    if (data) {
-      this.adminsIsChecked = await data.adminsIsChecked;
-      this.petOwnersIsChecked = await data.petOwnersIsChecked;
-      this.reportsManagersIsChecked = await data.reportsManagersIsChecked;
-      this.updateView();
-    }*/
-  }
 }

@@ -1,5 +1,5 @@
 export enum Role {
-    Student = 'Student', //<-- General User AKA Pet Owners
-    ReportsManager = 'ReportsManager',
-    Admin = 'Admin'
+    Student = 'Student', //<-- General User
+    ReportsManager = 'ReportsManager', //<---- elevated user type
+    Admin = 'Admin' //<---- Highest Level User
 }
