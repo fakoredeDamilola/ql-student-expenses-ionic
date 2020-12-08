@@ -1,38 +1,46 @@
-ion-fab-button {
-  --background: var(--ion-color-step-150, #fff);
-  --background-hover: var(--ion-color-step-200, #f2f2f2);
-  --background-focused: var(--ion-color-step-250, #d9d9d9);
-
-  --color: var(--ion-color-primary, #3880ff);
+.speaker-card {
+  display: flex;
+  flex-direction: column;
 }
 
-ion-content {
-  --color: #fff;
-  --background:none;
-  //background: url(../../assets/imgs/bg.jpg) no-repeat 0 0;
-  background-size: cover;
-}
-
-/*
- * Material Design uses the ripple for activated
- * so only style the iOS activated background
+/* Due to the fact the cards are inside of columns the margins don't overlap
+ * properly so we want to remove the extra margin between cards
  */
-.ios ion-fab-button {
-  --background-activated: var(--ion-color-step-250, #d9d9d9);
+ion-col:not(:last-of-type) .speaker-card {
+  margin-bottom: 0;
 }
 
-$categories: (
-  ionic: var(--ion-color-primary),
-  angular: #ac282b,
-  communication: #8e8d93,
-  tooling: #fe4c52,
-  services: #fd8b2d,
-  design: #fed035,
-  workshop: #69bb7b,
-  food: #3bc7c4,
-  documentation: #b16be3,
-  navigation: #6600cc
-);
+.speaker-card .speaker-item {
+  --min-height: 85px;
+}
 
+.speaker-card .speaker-item h2 {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
 
+.speaker-card .speaker-item p {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
 
+.speaker-card ion-card-header {
+  padding: 0;
+}
+
+.speaker-card ion-card-content {
+  flex: 1 1 auto;
+
+  padding: 0;
+}
+
+.ios ion-list {
+  margin-bottom: 10px;
+}
+
+.md ion-list {
+  border-top: 1px solid var(--ion-color-step-150, #d7d8da);
+
+  padding: 0;
+}
