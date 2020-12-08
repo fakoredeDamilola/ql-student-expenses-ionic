@@ -31,6 +31,6 @@ Probably the best framework ever.....
 
 ## Bug Tracker / Features TODO
 
-1. Camera for expenses images, saving to DB and retrieving (currently works with memory)
-2. Adding expenses for people, and creating users for reports managers
+1. Camera for expenses images, saving to DB and retrieving (currently works with memory/cache)
+
 
