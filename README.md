@@ -4,6 +4,8 @@ Code Once, Have Every Where!
 
 Probably the best framework ever.....
 
+This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
+
 ### For QL Student Expenses Runners
 1. cd into client and npm Install
 2. cd into server and npm Install
