@@ -11,10 +11,9 @@ module.exports = {
 
 async function getAll() {
   const report = await db.Report.find()
-  .populate('reportStudentsCount')
-  .populate('reportExpensesCount')
-  .populate('reportsManager');
-  
+    .populate("reportStudentsCount")
+    .populate("reportExpensesCount")
+    .populate("reportsManager");
 
   return report.map((x) => basicDetails(x));
 }
@@ -50,21 +49,20 @@ async function _delete(id) {
 
 async function getAllReportsOnAccount(reportsManagerId) {
   const reports = await db.Report.find({
-    reportsManagerId: reportsManagerId
+    reportsManagerId: reportsManagerId,
   })
-  .populate('reportStudentsCount')
-  .populate('reportExpensesCount')
+    .populate("reportStudentsCount")
+    .populate("reportExpensesCount");
   return await reports;
 }
 
 async function getReport(id) {
-
   const report = await db.Report.findById(id)
-  .populate("reportStudents")
-  .populate('reportStudentsCount')
-  .populate('reportExpenses')
-  .populate('reportExpensesCount')
-  .populate('reportsManager');
+    .populate("reportStudents")
+    .populate("reportStudentsCount")
+    .populate("reportExpenses")
+    .populate("reportExpensesCount")
+    .populate("reportsManager");
 
   //if (!Report) throw 'Report not found';
   return report;
@@ -80,7 +78,7 @@ function basicDetails(report) {
     reportStudentsCount,
     reportExpensesCount,
     reportExpenses,
-    created
+    created,
   } = report;
   return {
     id,
@@ -91,6 +89,30 @@ function basicDetails(report) {
     reportStudentsCount,
     reportExpensesCount,
     reportExpenses,
-    created
+    created,
   };
+
+  // TODO
+  /**
+   *  Get Reports Total Of Expenses
+   * 
+   * 
+   async function calculateReportTotal(){
+    //something sort of like the bellow
+    let reportExpensesCount = 
+    let reportExpenseTotal = 0;
+    for (let y = 0; y < reportExpensesCount; y++) {
+      studentExpenseTotal += Number(
+        allStudentsOnReport[i].studentExpenses[y].expenseCost
+      );
+    }
+    allStudentsOnReport[i].expensesTotal = Number(studentExpenseTotal).toFixed(2);
+  }
+};
+   * 
+   * 
+   * 
+   * 
+   * 
+   */
 }

@@ -67,6 +67,7 @@ export class ReportsPage {
       .then(async () => {
         await (await this.reportService.getAll())
           .forEach(async (Element) => {
+            //console.log(Element);
             this.allReports = Element;
           })
           .then(async () => {
