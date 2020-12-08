@@ -14,9 +14,10 @@
     <h2>{{email}}</h2>
 
     <ion-list inset>
-      <ion-item (click)="updatePicture()">Update Profile Picture</ion-item>
-      <ion-item (click)="changePassword()">Change Password</ion-item>
       <ion-row>
+        <ion-col>
+          <ion-button (click)="changePassword()" color="success" shape="block">Change Password</ion-button>
+        </ion-col>
         <ion-col>
           <ion-button (click)="support()" color="secondary" shape="block">Contact Support</ion-button>
         </ion-col>

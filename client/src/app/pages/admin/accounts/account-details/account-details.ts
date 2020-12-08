@@ -6,8 +6,7 @@ import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Expense, Report } from "@app/_models";
 import { Location } from "@angular/common";
-import * as moment from 'moment';
-
+import * as moment from "moment";
 
 @Component({
   selector: "page-account-details",
@@ -24,9 +23,8 @@ export class AccountDetailsPage {
     updated: "",
     isVerified: true,
     created: "",
-    title: ""
+    title: "",
   };
-
 
   key: any;
   value: any;
@@ -45,7 +43,8 @@ export class AccountDetailsPage {
   deleting: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   savingAccount: Promise<HTMLIonLoadingElement>;
-  totalOfExpenses: number=0;
+  totalOfExpenses: number = 0;
+  reportsManagerReportsCount: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -55,12 +54,7 @@ export class AccountDetailsPage {
     public alertService: AlertService,
     private router: Router,
     private _location: Location
-  ) {
-
-
-    this.deleting = this.alertService.presentLoading("Deleting Account...");
-    this.savingAccount = this.alertService.presentLoading("Saving...");
-  }
+  ) {}
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
@@ -71,25 +65,32 @@ export class AccountDetailsPage {
         this.account = Element;
         this.studentExpenses = Element.studentExpenses;
         this.studentExpensesCount = Element.studentExpensesCount;
-        if(this.studentExpenses.length>0){
-          this.hasExpenses=true;
+        this.reportsManagerStudentsCount = Element.reportsManagerStudentsCount;
+        this.reportsManagerReportsCount = Element.reportsManagerReports.length;
+        this.reportsManagerExpensesCount = Element.reportsManagerExpensesCount;
+        if (this.studentExpenses.length > 0) {
+          this.hasExpenses = true;
         }
-        console.log(Element)
-             //calculate expenses total
-             for(let i = 0; i< this.studentExpensesCount;i++){
-              this.totalOfExpenses +=  Number(this.studentExpenses[i].expenseCost);
-            }
-            this.totalOfExpenses = Number(this.totalOfExpenses.toFixed(2));
-
+        console.log(Element);
+        //calculate expenses total
+        for (let i = 0; i < this.studentExpensesCount; i++) {
+          this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);
+        }
+        this.totalOfExpenses = Number(this.totalOfExpenses.toFixed(2));
       })
       .then(async () => {
-        this.account.created = moment(this.account.created).format('MM-DD-YYYY @HH:mm:ss');
-        this.account.updated = moment(this.account.updated).format('MM-DD-YYYY @HH:mm:ss');
-
+        this.account.created = moment(this.account.created).format(
+          "MM-DD-YYYY @HH:mm:ss"
+        );
+        this.account.updated = moment(this.account.updated).format(
+          "MM-DD-YYYY @HH:mm:ss"
+        );
       })
-      .finally(()=>{
-        setTimeout(async ()=>{ (await this.loading).dismiss()},300);
-      })
+      .finally(() => {
+        setTimeout(async () => {
+          (await this.loading).dismiss();
+        }, 300);
+      });
   }
 
   async deleteAreYouSure() {
@@ -115,7 +116,8 @@ export class AccountDetailsPage {
   }
 
   async deleteAccount() {
-    console.log(this.accountId,'accountId');
+    this.deleting = this.alertService.presentLoading("Deleting Account...");
+    console.log(this.accountId, "accountId");
     (await this.deleting).present();
     this.accountService
       .delete(this.accountId)
@@ -146,26 +148,25 @@ export class AccountDetailsPage {
     console.log(contextParamValue);
     let popUpText: string;
     // getting and setting current values
-    let currentValue:string|boolean;
-    let adminChecked:boolean=false;
-    let reportsManagerChecked:boolean=false;
-    let studentChecked:boolean=false;
-
+    let currentValue: string | boolean;
+    let adminChecked: boolean = false;
+    let reportsManagerChecked: boolean = false;
+    let studentChecked: boolean = false;
 
     switch (contextParamValue) {
       case "role": {
         popUpText = "Role";
-        switch(this.account.role){
+        switch (this.account.role) {
           case "Admin": {
-            adminChecked=true;
+            adminChecked = true;
             break;
           }
-          case "ReportsManager":{
-            reportsManagerChecked=true;
+          case "ReportsManager": {
+            reportsManagerChecked = true;
             break;
           }
-          case "Student":{
-            studentChecked=true;
+          case "Student": {
+            studentChecked = true;
             break;
           }
         }
@@ -203,7 +204,9 @@ export class AccountDetailsPage {
               console.log(data);
 
               let roleJsonObj = JSON.parse(`{"role":"${data}"}`);
-
+              this.savingAccount = this.alertService.presentLoading(
+                "Saving..."
+              );
               (await this.savingAccount).present();
               await this.updateAccount(roleJsonObj, popUpText);
             },
@@ -215,21 +218,21 @@ export class AccountDetailsPage {
             label: `Admin`,
             name: "role",
             value: "Admin",
-            checked: adminChecked
+            checked: adminChecked,
           },
           {
             type: "radio",
             label: `Reports Manager`,
             name: "role",
             value: "ReportsManager",
-            checked: reportsManagerChecked
+            checked: reportsManagerChecked,
           },
           {
             type: "radio",
             label: `Student`,
             name: "role",
             value: "Student",
-            checked: studentChecked
+            checked: studentChecked,
           },
         ],
       });
@@ -243,6 +246,9 @@ export class AccountDetailsPage {
             text: "Ok",
             handler: async (data: any) => {
               console.log(data);
+              this.savingAccount = this.alertService.presentLoading(
+                "Saving..."
+              );
               (await this.savingAccount).present();
               await this.updateAccount(data, popUpText);
             },
@@ -253,7 +259,7 @@ export class AccountDetailsPage {
             type: "text",
             name: `${contextParamValue}`,
             placeholder: `${popUpText}`,
-            value: `${currentValue}`
+            value: `${currentValue}`,
           },
         ],
       });
@@ -261,7 +267,7 @@ export class AccountDetailsPage {
     }
   }
 
-  private async updateAccount(contextParamValue:any, popUpText:string) {
+  private async updateAccount(contextParamValue: any, popUpText: string) {
     //console.log(contextParamValue,"what is this??")
     (await this.accountService.update(this.accountId, contextParamValue))
       .pipe(first())

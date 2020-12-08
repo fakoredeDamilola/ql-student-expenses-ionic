@@ -68,7 +68,7 @@ export class AddStudentPage {
       window.history.replaceState(
         {},
         document.title,
-        "/" + "report-manager/reports/report-details/student/add"
+        "/" + "reports-manager/reports/report-details/student/add"
       );
     }
   }

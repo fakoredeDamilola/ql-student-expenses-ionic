@@ -23,8 +23,7 @@ export class ExpenseImagePage {
     console.log(this.expenseId)
   }
 
-  public async showActionShexpense(photo: Photo, position: number) {
-    console.log(photo,"this???");
+  public async showActionSheet(photo: Photo, position: number) {
     const actionShexpense = await this.actionShexpenseController.create({
 
       header: "Photos",

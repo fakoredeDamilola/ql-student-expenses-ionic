@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Pet Photo Gallery
+      Expense Photo Gallery
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/account/pets"></ion-back-button>
@@ -25,7 +25,7 @@
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="photoService.addNewToGallery(petId)">
+    <ion-fab-button (click)="photoService.addNewToGallery(expenseId)">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>

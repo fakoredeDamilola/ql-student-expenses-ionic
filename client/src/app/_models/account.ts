@@ -16,4 +16,7 @@ export class Account {
   updated: string;
   studentExpenses: [Expense];
   studentExpensesCount: number;
+  reportsManagerStudentsCount: number;
+  reportsManagerExpensesCount: number;
+  reportsManagerReports: any;
 }

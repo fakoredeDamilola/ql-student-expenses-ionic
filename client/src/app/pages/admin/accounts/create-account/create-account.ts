@@ -49,7 +49,7 @@ export class CreateAccountPage {
     }
     this.loading = true;
     console.log(form.value, "The Form Value");
-    form.value.password = "PetCheck123";
+    form.value.password = "StudentExpenses123";
     if (form.value.title == "") {
       form.value.title = "N/A";
     }

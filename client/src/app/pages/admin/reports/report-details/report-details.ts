@@ -22,7 +22,6 @@ export class ReportDetailsPage {
   reportId: string;
   report = { reportName: "" };
   reportExpenses = [];
-  // key value for the edit input
   saving: boolean = true;
   loading: any;
   savingReport: Promise<HTMLIonLoadingElement>;

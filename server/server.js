@@ -17,7 +17,10 @@ app.use(cookieParser());
 
 
 // init middleware
+
+// Used for logging each requst, remove for performance boost and Production
 app.use(logger);
+// Used for files uploads
 app.use(express.static('uploads'));
 
 // allow cors requests from any origin and with credentials
