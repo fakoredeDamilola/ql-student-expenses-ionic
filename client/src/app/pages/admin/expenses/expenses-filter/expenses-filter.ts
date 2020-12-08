@@ -33,7 +33,12 @@ export class ExpensesFilterPage {
     this.otherIsChecked = filtersListComingIn.otherIsChecked;
   }
 
-  selectAll(check: boolean) {}
+  selectAll(check: boolean) {
+    this.foodIsChecked = true;
+    this.hotelIsChecked = true;
+    this.entertainmentIsChecked = true;
+    this.otherIsChecked = true;
+  }
 
   applyFilters() {
     // Pass back a new array of track names to exclude

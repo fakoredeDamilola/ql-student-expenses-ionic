@@ -1,10 +1,17 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { UserData } from '@app/providers/user-data';
+import { UserData } from "@app/providers/user-data";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
-import { AlertController, Config, IonRouterOutlet, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import {
+  AlertController,
+  Config,
+  IonRouterOutlet,
+  LoadingController,
+  ModalController,
+  ToastController,
+} from "@ionic/angular";
 import * as moment from "moment";
-import { ExpensesFilterPage } from './expenses-filter/expenses-filter';
+import { ExpensesFilterPage } from "./expenses-filter/expenses-filter";
 
 @Component({
   selector: "page-expenses-list",
@@ -45,7 +52,7 @@ export class ExpensesListPage {
     public user: UserData,
     public config: Config,
     private accountService: AccountService,
-    private route : ActivatedRoute
+    private route: ActivatedRoute
   ) {}
 
   async ionViewWillEnter() {
@@ -76,8 +83,8 @@ export class ExpensesListPage {
         console.log(element);
         this.reportsExpenses = element;
       })
-      .then(async ()=>{
-        this.expensesCount =this.reportsExpenses.length;
+      .then(async () => {
+        this.expensesCount = this.reportsExpenses.length;
       })
       .then(async () => {
         for (let i = 0; i < this.expensesCount; i++) {
@@ -93,32 +100,30 @@ export class ExpensesListPage {
       });
   }
 
-  async ionViewDidlEnter() {
+  async ionViewDidlEnter() {}
 
+  ionViewDidLeave() {
+    this.expensesTotal = 0;
   }
 
-  ionViewDidLeave(){
-    this.expensesTotal =0;
+  // Updates main view from filter...very cool
+  async updateView() {
+    this.foodIsChecked
+      ? (this.foodCondition = "")
+      : (this.foodCondition = "Food");
+
+    this.hotelIsChecked
+      ? (this.hotelCondition = "")
+      : (this.hotelCondition = "Hotel");
+
+    this.entertainmentIsChecked
+      ? (this.entertainmentCondition = "")
+      : (this.entertainmentCondition = "Entertainment");
+
+    this.otherIsChecked
+      ? (this.otherCondition = "")
+      : (this.otherCondition = "Other");
   }
-
-    // Updates main view from filter...very cool
-    async updateView() {
-      this.foodIsChecked
-        ? (this.foodCondition = "")
-        : (this.foodCondition = "Food");
-
-      this.hotelIsChecked
-        ? (this.hotelCondition = "")
-        : (this.hotelCondition = "Hotel");
-
-      this.entertainmentIsChecked
-        ? (this.entertainmentCondition = "")
-        : (this.entertainmentCondition = "Entertainment");
-
-      this.otherIsChecked
-        ? (this.otherCondition = "")
-        : (this.otherCondition = "Other");
-    }
 
   async presentFilter() {
     this.filtersList = {

@@ -55,7 +55,7 @@ export class ReportDetailsPage {
   async ionViewWillEnter() {
     // Reset because of weird behavior observed...
     this.totalOfReportExpenses = 0;
-    this.loading = this.alertService.presentLoading("Student Expenses");
+    this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.reportId = this.route.snapshot.paramMap.get("reportId");

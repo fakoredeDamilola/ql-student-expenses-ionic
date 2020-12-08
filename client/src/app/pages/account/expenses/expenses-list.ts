@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { Expense } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import * as moment from "moment";
+import { ExpensesFilterPage } from './expenses-filter/expenses-filter';
 
 @Component({
   selector: "page-expenses-list",
@@ -19,14 +21,29 @@ export class ExpensesListPage {
   expensesListLength: number;
   expensesTotal: number = 0;
 
+  foodIsChecked: boolean;
+  hotelIsChecked: boolean;
+  entertainmentIsChecked: boolean;
+  otherIsChecked: boolean;
+  foodCondition: string = "";
+  hotelCondition: string = "";
+  entertainmentCondition: string = "";
+  otherCondition: string = "";
+
   constructor(
     private accountService: AccountService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public routerOutlet: IonRouterOutlet,
+    public modalCtrl: ModalController
   ) {}
 
   async ionViewWillEnter() {
     // Reset because of weird behavior noticed
     this.expensesTotal=0;
+    this.foodIsChecked = true;
+    this.hotelIsChecked = true;
+    this.entertainmentIsChecked = true;
+    this.otherIsChecked = true;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.userId = this.accountService.accountValue.id;
@@ -61,5 +78,50 @@ export class ExpensesListPage {
 
   ionViewWillLeave(){
     this.expensesTotal =0;
+  }
+
+  // Updates main view from filter...very cool
+  async updateView() {
+    this.foodIsChecked
+      ? (this.foodCondition = "")
+      : (this.foodCondition = "Food");
+
+    this.hotelIsChecked
+      ? (this.hotelCondition = "")
+      : (this.hotelCondition = "Hotel");
+
+    this.entertainmentIsChecked
+      ? (this.entertainmentCondition = "")
+      : (this.entertainmentCondition = "Entertainment");
+
+    this.otherIsChecked
+      ? (this.otherCondition = "")
+      : (this.otherCondition = "Other");
+  }
+
+  async presentFilter() {
+    this.filtersList = {
+      foodIsChecked: this.foodIsChecked,
+      hotelIsChecked: this.hotelIsChecked,
+      entertainmentIsChecked: this.entertainmentIsChecked,
+      otherIsChecked: this.otherIsChecked,
+    };
+
+    const modal = await this.modalCtrl.create({
+      component: ExpensesFilterPage,
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: { filtersList: await this.filtersList },
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.foodIsChecked = await data.foodIsChecked;
+      this.hotelIsChecked = await data.hotelIsChecked;
+      this.entertainmentIsChecked = await data.entertainmentIsChecked;
+      this.otherIsChecked = await data.otherIsChecked;
+      await this.updateView();
+    }
   }
 }

@@ -35,7 +35,11 @@ export class AccountsFilterPage {
     //console.log(filtersListComingIn,"yo Filters List Coming In");
   }
 
-  selectAll(check: boolean) {}
+  selectAll(check: boolean) {
+    this.adminsIsChecked = true;
+    this.studentsIsChecked = true;
+    this.reportsManagersIsChecked = true;
+  }
 
   applyFilters() {
     // Pass back a new array of track names to exclude

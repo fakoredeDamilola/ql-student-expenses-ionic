@@ -48,23 +48,14 @@ export class ExpenseDetailsPage {
   }
 
   async ionViewWillEnter() {
-    this.loading = this.alertService.presentLoading("Student Expenses");
+    this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.expenseId = this.route.snapshot.paramMap.get("expenseId");
 
-    // get id out of the url
-    if (this.accountService.accountValue.role != "Admin") {
-      window.history.replaceState(
-        {},
-        document.title,
-        "/" + "account/expenses/expense-details"
-      );
-    }
-
     (await this.expenseService.getById(this.expenseId))
       .forEach(async (Element) => {
-        console.log(Element);
+        //console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
         this.expenseCreatedBy = `${Element.expenseStudent[0].firstName} ${Element.expenseStudent[0].lastName} `;
@@ -103,7 +94,7 @@ export class ExpenseDetailsPage {
       }
     }
 
-    let alert = await this.alertCtrl.create({
+    const alert = await this.alertCtrl.create({
       header: `Change ${popUpText}`,
       buttons: [
         "Cancel",
