@@ -1,5 +1,7 @@
-# node-mongo-signup-verification-api
+# server side of Student Expenses
 
-NodeJS + MongoDB - API with Email Sign Up, Verification, Authentication & Forgot Password
+Basic controllers and services
 
-For documentation and instructions see https://jasonwatmore.com/post/2020/05/13/node-mongo-api-with-email-sign-up-verification-authentication-forgot-password
+1. Expenses
+2. Accounts
+3. Reports
