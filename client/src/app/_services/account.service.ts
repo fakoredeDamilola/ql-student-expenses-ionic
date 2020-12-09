@@ -106,6 +106,12 @@ export class AccountService {
     return this.http.get<Account[]>(`${baseUrl}/${reportId}/report-students`);
   }
 
+  //***** For create account page for admins, get all reportsmanagers and admins who can also be a reports manager
+  // I only want Name and there ID back
+  async getAllReportsManagers() {
+    return this.http.get<Account[]>(`${baseUrl}/reports-managers-list`);
+  }
+
   // Reports Manager Routes
   async getReportsExpenses(reportsManagerId: string) {
     return this.http.get<Account>(

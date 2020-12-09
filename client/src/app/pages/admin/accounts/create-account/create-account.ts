@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, SimpleChanges } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 
@@ -27,6 +27,9 @@ export class CreateAccountPage {
   };
   submitted = false;
   loading = false;
+  allReportsManagers:any;
+
+  loadListDone:boolean=false;
 
   constructor(
     public router: Router,
@@ -72,5 +75,26 @@ export class CreateAccountPage {
         this.loading = false;
       },
     });
+  }
+
+  // Loading the list of Reports Managers & Admins because they can also be reports Managers
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.data) {
+      const data = changes.data;
+      console.log(data,'the changes???')
+    }
+  }
+
+  async loadReportsManagers(role){
+    console.log("It changed",role);
+  if(role=='Student'){
+   (await this.accountService.getAllReportsManagers())
+          .forEach(async (Element) => {
+          this.allReportsManagers = Element;
+          })
+          .then(()=>{
+            this.loadListDone=true;
+          });
+        }
   }
 }

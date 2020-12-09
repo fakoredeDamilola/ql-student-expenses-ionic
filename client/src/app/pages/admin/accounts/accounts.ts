@@ -71,7 +71,6 @@ export class AccountsPage {
       .then(async () => {
         await (await this.accountService.getAll())
           .forEach(async (Element) => {
-            //console.log(Element);
             this.allAccounts = Element;
             //console.log(this.allAccounts, "right here");
           })

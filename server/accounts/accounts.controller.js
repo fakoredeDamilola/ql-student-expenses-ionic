@@ -24,6 +24,7 @@ router.post(
 );
 // main routes for accounts ***
 router.get("/", authorize(Role.Admin), getAll);
+router.get("/reports-managers-list", authorize(Role.Admin), getAllReportsManagers);
 router.get("/:accountId", authorize(), getById);
 router.get("/:reportId/report-students", authorize(), getAllStudentsByReportId);
 router.post("/", createSchema, createAccount);
@@ -253,6 +254,14 @@ function getAll(req, res, next) {
     .catch(next);
 }
 
+// Route for getting list of reports managers (who could be admins) so both
+function getAllReportsManagers(req, res, next) {
+  accountService
+    .getAllReportsManagers()
+    .then((accounts) => res.json(accounts))
+    .catch(next);
+}
+
 function getById(req, res, next) {
   // Students can get their own account and admins can get any account
   //console.log(req.params,"????")
@@ -328,8 +337,8 @@ function update(req, res, next) {
 }
 
 function _delete(req, res, next) {
-  // Students can delete their own account and admins can delete any account
-  console.log(req.user);
+  // Students can delete their own account and admins can delete any account, 
+  //console.log(req.user);
   if (req.params.accountId !== req.user.id && req.user.role !== Role.Admin) {
     return res.status(401).json({
       message: "Unauthorized you tried deleting someone elses account",

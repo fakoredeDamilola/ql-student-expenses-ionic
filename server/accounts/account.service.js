@@ -26,6 +26,7 @@ module.exports = {
   getAllStudentsInReports,
   getReportsExpenses,
   getAllStudentsByReportId,
+  getAllReportsManagers
 };
 
 async function authenticate({ email, password, ipAddress }) {
@@ -172,6 +173,7 @@ async function resetPassword({ token, password }) {
 }
 
 async function getAll() {
+  //console.log('getting here');
   const accounts = await db.Account.find()
     .populate("studentExpenses")
     .populate("studentExpensesCount")
@@ -182,6 +184,7 @@ async function getAll() {
     .populate("reportsManagerStudents")
     .populate("reportsManagerExpensesCount")
     .populate("reportsManagerStudentsCount");
+    //console.log(accounts,'the accounts??')
   return await accounts.map((x) => basicDetails(x));
 }
 
@@ -223,8 +226,15 @@ async function getAllStudentsByReportId(reportId) {
     allStudentsOnReport[i].expensesTotal = Number(studentExpenseTotal).toFixed(2);
   }
 
-  return await allStudentsOnReport.map((x) => basicDetails(x));
+  return allStudentsOnReport.map((x) => basicDetails(x));
 }
+
+// function to get all reports managers + admins list , I just want their Id + fName + lName 
+async function getAllReportsManagers(){
+  const reportsManagers= db.Account.find( { role: "ReportsManager" , role:"Admin" }, { firstName: 1, lastName: 1 } );
+        return reportsManagers;
+}
+
 
 //right here
 async function getReportsExpenses(reportsManagerId) {
@@ -415,7 +425,7 @@ function basicDetails(account) {
     reportsManagerStudents,
     reportsManagerExpensesCount,
     reportsManagerStudentsCount,
-    expensesTotal,
+    expensesTotal
   } = account;
   return {
     id,
@@ -439,7 +449,7 @@ function basicDetails(account) {
     reportsManagerStudents,
     reportsManagerExpensesCount,
     reportsManagerStudentsCount,
-    expensesTotal,
+    expensesTotal
   };
 }
 
