@@ -25,22 +25,35 @@
 
       <ion-item>
         <ion-label position="floating" color="primary">Role</ion-label>
-        <ion-select [(ngModel)]="signup.role" name="role" #role="ngModel" (ionChange)="loadReportsManagers(signup.role)">
-          <ion-select-option value="Admin" >Admin</ion-select-option>
+        <ion-select [(ngModel)]="signup.role" name="role" #role="ngModel" (ionChange)="loadReportsManagers(signup.role)"
+          required>
+          <ion-select-option value="Admin">Admin</ion-select-option>
           <ion-select-option value="ReportsManager">Reports Manager</ion-select-option>
           <ion-select-option value="Student">Student</ion-select-option>
         </ion-select>
       </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="submitted == false || role.valid" class="ion-padding-start">
+          A Role is required
+        </p>
+      </ion-text>
 
 
       <ion-item *ngIf="loadListDone==false && signup.role=='Student'">Loading Reports Managers List..</ion-item>
 
-      <ion-item *ngIf="loadListDone==true">
-        <ion-label position="floating" color="primary">Reports Manager For Student</ion-label>
-        <ion-select [(ngModel)]="signup.reportsManagerId" name="reportsManagerId" #reportsManagerId="ngModel">
-          <ion-select-option *ngFor="let reportsManager of allReportsManagers" value={{reportsManager.id}}>{{reportsManager.firstName}} {{reportsManager.lastName}}</ion-select-option>
+      <ion-item *ngIf="loadListDone==true && signup.role=='Student'">
+        <ion-label position="floating" color="primary">Select Reports Manager For Student</ion-label>
+        <ion-select [(ngModel)]="signup.reportsManagerId" name="reportsManagerId" #reportsManagerId="ngModel"
+          type="text" required>
+          <ion-select-option *ngFor="let reportsManager of allReportsManagers" value={{reportsManager.id}}>
+            {{reportsManager.firstName}} {{reportsManager.lastName}}</ion-select-option>
         </ion-select>
       </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="submitted == false || signup.role!='Student' || signup.reportsManagerId" class="ion-padding-start">
+          A Reports Manager For Student is required
+        </p>
+      </ion-text>
 
       <ion-item>
         <ion-label position="floating" color="primary">First Name</ion-label>

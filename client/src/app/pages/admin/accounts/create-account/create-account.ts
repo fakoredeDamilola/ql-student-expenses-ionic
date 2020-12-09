@@ -77,22 +77,15 @@ export class CreateAccountPage {
     });
   }
 
-  // Loading the list of Reports Managers & Admins because they can also be reports Managers
-  ngOnChanges(changes: SimpleChanges) {
-    if(changes.data) {
-      const data = changes.data;
-      console.log(data,'the changes???')
-    }
-  }
-
+  // Loading the list of Reports Managers & Admins because they can also be Reports Managers
   async loadReportsManagers(role){
-    console.log("It changed",role);
+    //console.log("It changed",role);
   if(role=='Student'){
    (await this.accountService.getAllReportsManagers())
           .forEach(async (Element) => {
           this.allReportsManagers = Element;
           })
-          .then(()=>{
+          .finally(async()=>{
             this.loadListDone=true;
           });
         }
