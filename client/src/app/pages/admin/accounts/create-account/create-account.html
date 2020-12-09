@@ -39,12 +39,12 @@
       </ion-text>
 
 
-      <ion-item *ngIf="loadListDone==false && signup.role=='Student'">Loading Reports Managers List..</ion-item>
+      <ion-item *ngIf="loadReportsManagersListDone==false && signup.role=='Student'">Loading Reports Managers...</ion-item>
 
-      <ion-item *ngIf="loadListDone==true && signup.role=='Student'">
+      <ion-item *ngIf="loadReportsManagersListDone==true && signup.role=='Student'">
         <ion-label position="floating" color="primary">Select Reports Manager For Student</ion-label>
         <ion-select [(ngModel)]="signup.reportsManagerId" name="reportsManagerId" #reportsManagerId="ngModel"
-          type="text" required>
+          type="text" required (ionChange)="loadReportsManagerReports(signup.reportsManagerId)">
           <ion-select-option *ngFor="let reportsManager of allReportsManagers" value={{reportsManager.id}}>
             {{reportsManager.firstName}} {{reportsManager.lastName}}</ion-select-option>
         </ion-select>
@@ -52,6 +52,22 @@
       <ion-text color="danger">
         <p [hidden]="submitted == false || signup.role!='Student' || signup.reportsManagerId" class="ion-padding-start">
           A Reports Manager For Student is required
+        </p>
+      </ion-text>
+
+      <ion-item *ngIf="loadReportsManagerReportsListDone==false && signup.reportsManagerId!=undefined">Loading Reports Manager Reports...</ion-item>
+
+      <ion-item *ngIf="loadReportsManagerReportsListDone==true && signup.role=='Student'">
+        <ion-label position="floating" color="primary">Select Report Association</ion-label>
+        <ion-select [(ngModel)]="signup.reportId" name="reportId" #reportId="ngModel"
+          type="text" required>
+          <ion-select-option *ngFor="let report of allReportsManagerReports" value={{report.id}}>
+            {{report.reportName}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="submitted == false || signup.role!='Student' || signup.reportsManagerId" class="ion-padding-start">
+          A Report Selection Is Required
         </p>
       </ion-text>
 

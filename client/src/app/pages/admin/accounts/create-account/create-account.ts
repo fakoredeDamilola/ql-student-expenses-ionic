@@ -27,9 +27,11 @@ export class CreateAccountPage {
   };
   submitted = false;
   loading = false;
-  allReportsManagers:any;
+  allReportsManagers: any;
+  allReportsManagerReports: any;
 
-  loadListDone:boolean=false;
+  loadReportsManagersListDone: boolean = false;
+  loadReportsManagerReportsListDone: boolean = false;
 
   constructor(
     public router: Router,
@@ -78,16 +80,28 @@ export class CreateAccountPage {
   }
 
   // Loading the list of Reports Managers & Admins because they can also be Reports Managers
-  async loadReportsManagers(role){
-    //console.log("It changed",role);
-  if(role=='Student'){
-   (await this.accountService.getAllReportsManagers())
-          .forEach(async (Element) => {
+  async loadReportsManagers(role: string) {
+    if (role == "Student") {
+      (await this.accountService.getAllReportsManagers())
+        .forEach(async (Element) => {
           this.allReportsManagers = Element;
-          })
-          .finally(async()=>{
-            this.loadListDone=true;
-          });
-        }
+        })
+        .finally(async () => {
+          this.loadReportsManagersListDone = true;
+        });
+    }
+  }
+
+  // Loading the List of Reports the Reports Manager Selected is responsible for
+  async loadReportsManagerReports(reportsManagerId: string) {
+    if (reportsManagerId != undefined) {
+      (await this.accountService.getAllReportsManagerReports(reportsManagerId))
+        .forEach(async (Element) => {
+          this.allReportsManagerReports = Element;
+        })
+        .finally(async () => {
+          this.loadReportsManagerReportsListDone = true;
+        });
+    }
   }
 }

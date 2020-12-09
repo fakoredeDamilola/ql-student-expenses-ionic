@@ -24,7 +24,11 @@ router.post(
 );
 // main routes for accounts ***
 router.get("/", authorize(Role.Admin), getAll);
+
+// For specefic create account admin view
 router.get("/reports-managers-list", authorize(Role.Admin), getAllReportsManagers);
+router.get("/:reportsManagerId/reports-manager-reports", authorize(Role.Admin), getAllReportsManagerReports);
+//
 router.get("/:accountId", authorize(), getById);
 router.get("/:reportId/report-students", authorize(), getAllStudentsByReportId);
 router.post("/", createSchema, createAccount);
@@ -262,6 +266,13 @@ function getAllReportsManagers(req, res, next) {
   accountService
     .getAllReportsManagers()
     .then((accounts) => res.json(accounts))
+    .catch(next);
+}
+// Route for getting all of a reports manager reports, should probably be moved to reports controller/service
+function getAllReportsManagerReports(req, res, next) {
+  accountService
+    .getAllReportsManagerReports(req.params.reportsManagerId)
+    .then((reports) => res.json(reports))
     .catch(next);
 }
 

@@ -11,6 +11,7 @@ const baseUrl = `${environment.apiUrl}/accounts`;
 
 @Injectable({ providedIn: "root" })
 export class AccountService {
+
   private accountSubject: BehaviorSubject<Account>;
   public account: Observable<Account>;
 
@@ -110,6 +111,10 @@ export class AccountService {
   // I only want Name and there ID back
   async getAllReportsManagers() {
     return this.http.get<Account[]>(`${baseUrl}/reports-managers-list`);
+  }
+    //***** For create account page for admins, get all reportsmanager reports
+  async getAllReportsManagerReports(reportsManagerId:string) {
+    return this.http.get<Report[]>(`${baseUrl}/${reportsManagerId}/reports-manager-reports`);
   }
 
   // Reports Manager Routes

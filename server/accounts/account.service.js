@@ -26,7 +26,8 @@ module.exports = {
   getAllStudentsInReports,
   getReportsExpenses,
   getAllStudentsByReportId,
-  getAllReportsManagers
+  getAllReportsManagers,
+  getAllReportsManagerReports
 };
 
 async function authenticate({ email, password, ipAddress }) {
@@ -235,6 +236,12 @@ async function getAllStudentsByReportId(reportId) {
 async function getAllReportsManagers(){
   const reportsManagers= db.Account.find( { role: { $in: [ 'Admin', 'ReportsManager' ] } }, { firstName: 1, lastName: 1 } );
         return reportsManagers;
+}
+
+// function to get all reports manager reports I just want their Id + reportName 
+async function getAllReportsManagerReports(reportsManagerId){
+  const reportsManagerReports = db.Report.find( { reportsManagerId: reportsManagerId }, { reportName:1} );
+        return reportsManagerReports;
 }
 
 
