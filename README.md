@@ -56,4 +56,7 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
 1.  Reports Manager Creates Expense in their personal profile, expense is not associated with a report 
 2.  Admin Creates A regular student and that student is not assoiciated with a report
 
+# Issues
+1. <a href="https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d">No Xcode or CLT version detected!</a>
+
 
