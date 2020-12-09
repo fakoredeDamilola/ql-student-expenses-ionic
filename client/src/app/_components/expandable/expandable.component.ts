@@ -1,3 +1,5 @@
+// want to implement this later for views to be accordion style, and to lazy load elements
+
 import { Component, AfterViewInit, Input, ViewChild,  ElementRef, Renderer2 } from "@angular/core";
 
 @Component({
