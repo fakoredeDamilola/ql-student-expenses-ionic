@@ -65,8 +65,8 @@
                  <b>Expenses:&nbsp;( {{account.studentExpensesCount}} )</b>
                 </p>
                 <div *ngIf="account.role == 'ReportsManager' || account.role=='Admin'">
-                  <p>Reports:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( {{account.reportsManagerReports.length}} )</p>
-                  <p>Students:&nbsp;&nbsp;&nbsp;( {{account.reportsManagerStudentsCount}} )</p>
+                  <p>Reports:&nbsp;( {{account.reportsManagerReports.length}} )</p>
+                  <p>Students: ( {{account.reportsManagerStudentsCount}} )</p>
                 </div>
               </ion-label>
             </ion-item>

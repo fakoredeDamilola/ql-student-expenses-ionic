@@ -16,17 +16,17 @@ const routes: Routes = [
       ).then((m) => m.AddStudentModule),
   },
   {
-    path: "students/student-details/:studentId",
+    path: "students/student-details/:accountId",
     loadChildren: () =>
       import(
-        "@app/pages/reports-manager/students/student-details/student-details.module"
-      ).then((m) => m.StudentDetailsModule),
+        "@app/pages/admin/accounts/account-details/account-details.module"
+      ).then((m) => m.AccountDetailsModule),
   },
   {
     path: "reports-expenses/expense-details/:expenseId",
     loadChildren: () =>
       import(
-        "@app/pages/reports-manager/expenses/expense-details/expense-details.module"
+        "@app/pages/admin/expenses/expense-details/expense-details.module"
       ).then((m) => m.ExpenseDetailsModule),
   },
 ];

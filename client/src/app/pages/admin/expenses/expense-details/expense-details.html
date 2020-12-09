@@ -26,6 +26,13 @@
     </ion-col>
   </ion-row>
   <ion-list inset>
+
+    <ion-row>
+      <ion-col>
+        <ion-item><b>Id:&nbsp;</b>{{expenseId}}</ion-item>
+      </ion-col>
+    </ion-row>
+
     <ion-row>
       <ion-col>
         <ion-item (click)="editExpense('expenseName')"><b>Name:&nbsp;</b>{{expenseName}}</ion-item>
