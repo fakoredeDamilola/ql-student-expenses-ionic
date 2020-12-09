@@ -17,7 +17,7 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
 6. run "ionic serve" (will open up a page in browser)
 7. Home Page has more instructions and overview
 
-** You should have 2 termianals running, one for the server, and one for the client...
+** You should have 2 terminals running, one for the server, and one for the client...
 
 
 ## Deploying
