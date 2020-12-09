@@ -47,13 +47,13 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
 4. Date ranges for Reports filter, Expenses Filter, Accounts Filter.
 5. Invite Students to another Expense Report, currently can only be associated with one Expense Report.
    -- Invite Students who already have an account, current behavior when a student is added to report, account created for them. 
-6. Test Cases (unit tests and e2e), Documentation, Swagger Documentation update.
-7. Trim api calls JSON objects, returning only the data needed for the specific view.   
+6. Test cases (unit tests and e2e), Documentation, Swagger Documentation update.
+7. Trim API calls JSON objects, returning only the data needed for the specific views, modify endpoints.   
 
 
 # Bugs
 
-1.  Reports Manager Creates Expense in their personal profile, expense is not associated with a report ioni
+1.  Reports Manager Creates Expense in their personal profile, expense is not associated with a reportId.
 
 # Issues
 1. <a href="https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d">No Xcode or CLT version detected!</a>
