@@ -62,9 +62,9 @@ export class ExpenseDetailsPage {
         this.expenseReport = Element.expenseReport[0].reportName;
         this.expenseCategory = Element.expenseCategory;
         this.expenseReportsManager = `${Element.expenseReportsManager[0].firstName} ${Element.expenseReportsManager[0].lastName}`;
-        this.expenseCreated = moment(
-          Element.created
-        ).format("MM-DD-YYYY @HH:mm:ss");
+        this.expenseCreated = moment(Element.created).format(
+          "MM-DD-YYYY @HH:mm:ss"
+        );
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -125,9 +125,11 @@ export class ExpenseDetailsPage {
           {
             text: "Ok",
             handler: async (data: any) => {
-             // console.log(data);
+              // console.log(data);
 
-              const categoryJsonObj = JSON.parse(`{"expenseCategory":"${data}"}`);
+              const categoryJsonObj = JSON.parse(
+                `{"expenseCategory":"${data}"}`
+              );
               this.savingExpense = this.alertService.presentLoading(
                 "Saving Expense..."
               );
@@ -168,35 +170,50 @@ export class ExpenseDetailsPage {
         ],
       });
       await alert.present();
-    }
-    else{
-    const alert = await this.alertCtrl.create({
-      header: `Change ${popUpText}`,
-      buttons: [
-        "Cancel",
-        {
-          text: "Ok",
-          handler: async (data: any) => {
-            //console.log(data);
-            this.savingExpense = this.alertService.presentLoading(
-              "Saving Expense..."
-            );
-            (await this.savingExpense).present();
-            this.updateExpenseMasterList(data, popUpText);
+    } else {
+      const alert = await this.alertCtrl.create({
+        header: `Change ${popUpText}`,
+        buttons: [
+          "Cancel",
+          {
+            text: "Ok",
+            handler: async (data: any) => {
+              //console.log(data);
+              this.savingExpense = this.alertService.presentLoading(
+                "Saving Expense..."
+              );
+              // check for valid currency
+              if (data.expenseCost) {
+                const regex = /^\d+(?:\.\d{0,2})$/;
+                const numStr = `${data.expenseCost}`;
+                if (!regex.test(numStr)) {
+                  this.alertService.createToastAlert(
+                    "Update To Expense Failed, Cost Is Invalid.....!",
+                    "danger",
+                    4000
+                  );
+                  setTimeout(async () => {
+                    (await this.savingExpense).dismiss();
+                  }, 300);
+                  return;
+                }
+              }
+              (await this.savingExpense).present();
+              this.updateExpenseMasterList(data, popUpText);
+            },
           },
-        },
-      ],
-      inputs: [
-        {
-          type: "text",
-          name: contextParamValue,
-          value: currentValue,
-          placeholder: "us",
-        },
-      ],
-    });
-    await alert.present();
-  }
+        ],
+        inputs: [
+          {
+            type: "text",
+            name: contextParamValue,
+            value: currentValue,
+            placeholder: "us",
+          },
+        ],
+      });
+      await alert.present();
+    }
   }
 
   private async updateExpenseMasterList(

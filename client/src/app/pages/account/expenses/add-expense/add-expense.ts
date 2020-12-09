@@ -49,15 +49,20 @@ export class AddExpensePage {
   }
 
   async onAddExpense(form?: NgForm) {
-    this.savingExpense = this.alertService.presentLoading("Saving Expense...");
+    this.savingExpense = this.alertService.presentLoading("Saving Expense!...");
+    //console.log(form.value);
     (await this.savingExpense).present();
     this.submitted = true;
     // stop here if form is invalid
-    if (form.invalid) {
+    // also have a currency validator working!
+    const regex  = /^\d+(?:\.\d{0,2})$/;
+    const numStr = `${form.value.expenseCost}`;
+
+    if (form.invalid || !regex.test(numStr)) {
       this.alertService.createToastAlert(
         "Add To Expenses Failed, Fields Are Invalid.....!",
         "danger",
-        8000
+        4000
       );
       setTimeout(async () => {
         (await this.savingExpense).dismiss();

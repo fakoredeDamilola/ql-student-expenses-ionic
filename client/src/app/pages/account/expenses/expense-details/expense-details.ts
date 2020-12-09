@@ -177,7 +177,22 @@ export class ExpenseDetailsPage {
         {
           text: "Ok",
           handler: async (data: any) => {
-            console.log(data);
+            // check for valid currency
+            if (data.expenseCost) {
+              const regex = /^\d+(?:\.\d{0,2})$/;
+              const numStr = `${data.expenseCost}`;
+              if (!regex.test(numStr)) {
+                this.alertService.createToastAlert(
+                  "Update To Expens Failed, Cost Is Invalid.....!",
+                  "danger",
+                  4000
+                );
+                setTimeout(async () => {
+                  (await this.savingExpense).dismiss();
+                }, 300);
+                return;
+              }
+            }
             this.savingExpense = this.alertService.presentLoading(
               "Saving Expense..."
             );
