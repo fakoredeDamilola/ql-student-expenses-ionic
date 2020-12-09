@@ -9,15 +9,15 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
 ***The Ionic CLI is needed to run the application.
 
 ## For QL Student Expenses Runners
-1. cd into client and npm Install
-2. cd into server and npm Install
-3. npm start to start server
-4. Open a new terminal window...
-5. cd into client
-6. run ionic serve (will open up a page in browser)
+1. cd into server and npm Install
+2. npm start to start server (should say running "Server listening on port 4000" )
+3. Open a new terminal window...
+4. cd into client
+5. npm i
+6. run "ionic serve" (will open up a page in browser)
 7. Home Page has more instructions and overview
 
-** You should have 2 terianls running, one for the server, and one for the client...
+** You should have 2 termianals running, one for the server, and one for the client...
 
 
 ## Deploying
