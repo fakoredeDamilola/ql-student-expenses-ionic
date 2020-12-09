@@ -23,7 +23,7 @@ export class AccountDetailsPage {
     updated: "",
     isVerified: true,
     created: "",
-    title: "",
+    title: ""
   };
 
   key: any;
@@ -45,6 +45,8 @@ export class AccountDetailsPage {
   savingAccount: Promise<HTMLIonLoadingElement>;
   totalOfExpenses: number = 0;
   reportsManagerReportsCount: any;
+  reportsManager: import("/Users/mike/Documents/another one ql/student-expenses-ionic/client/src/app/_models/account").Account;
+  studentReport: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -62,6 +64,9 @@ export class AccountDetailsPage {
     this.accountId = this.route.snapshot.paramMap.get("accountId");
     (await this.accountService.getById(this.accountId))
       .forEach(async (Element) => {
+        //console.log(Element)
+        this.reportsManager = Element.reportsManager;
+        this.studentReport = Element.studentReport;
         this.account = Element;
         this.studentExpenses = Element.studentExpenses;
         this.studentExpensesCount = Element.studentExpensesCount;

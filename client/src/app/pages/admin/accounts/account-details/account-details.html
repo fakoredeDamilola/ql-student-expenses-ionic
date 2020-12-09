@@ -81,6 +81,18 @@
     </ion-row>
 
     <ion-row>
+      <ion-col>
+        <ion-item *ngIf="account.role=='Student'"><b>Reports Manager:&nbsp;</b>{{reportsManager.firstName}} {{reportsManager.lastName}}</ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item *ngIf="account.role=='Student'"><b>Current Expense Report:&nbsp;</b>{{studentReport.reportName}}</ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
       <ion-row>
         <ion-col>
           <h3 style="text-align: center;"><b><u>Personal Expenses:</u></b></h3>

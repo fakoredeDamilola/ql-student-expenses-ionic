@@ -14,9 +14,11 @@ export class Account {
   created: string;
   isVerified: boolean;
   updated: string;
-  studentExpenses: [Expense];
-  studentExpensesCount: number;
-  reportsManagerStudentsCount: number;
-  reportsManagerExpensesCount: number;
-  reportsManagerReports: any;
+  studentExpenses?: [Expense];
+  studentExpensesCount?: number;
+  reportsManager?:any;
+  reportsManagerStudentsCount?: number;
+  reportsManagerExpensesCount?: number;
+  reportsManagerReports?: any;
+  studentReport?: any;
 }
