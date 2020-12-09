@@ -38,14 +38,14 @@ export class ExpensesListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses");
+    (await this.loading).present();
     // Reset because of weird behavior noticed
     this.expensesTotal = 0;
     this.foodIsChecked = true;
     this.hotelIsChecked = true;
     this.entertainmentIsChecked = true;
     this.otherIsChecked = true;
-    this.loading = this.alertService.presentLoading("Student Expenses");
-    (await this.loading).present();
     this.userId = this.accountService.accountValue.id;
     //console.log(this.userId);
     (await this.accountService.getAllExpensesOnAccount(this.userId))
