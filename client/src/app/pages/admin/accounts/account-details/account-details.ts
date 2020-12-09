@@ -45,7 +45,7 @@ export class AccountDetailsPage {
   savingAccount: Promise<HTMLIonLoadingElement>;
   totalOfExpenses: number = 0;
   reportsManagerReportsCount: any;
-  reportsManager: import("/Users/mike/Documents/another one ql/student-expenses-ionic/client/src/app/_models/account").Account;
+  reportsManager: any;
   studentReport: any;
 
   constructor(
