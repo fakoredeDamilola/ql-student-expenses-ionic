@@ -231,7 +231,7 @@ async function getAllStudentsByReportId(reportId) {
 
 // function to get all reports managers + admins list , I just want their Id + fName + lName 
 async function getAllReportsManagers(){
-  const reportsManagers= db.Account.find( { role: "ReportsManager" , role:"Admin" }, { firstName: 1, lastName: 1 } );
+  const reportsManagers= db.Account.find( { role: { $in: [ 'Admin', 'ReportsManager' ] } }, { firstName: 1, lastName: 1 } );
         return reportsManagers;
 }
 
