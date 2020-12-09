@@ -373,6 +373,9 @@ async function getRefreshToken(token) {
   const refreshToken = await db.RefreshToken.findOne({ token }).populate(
     "account"
   );
+
+  //console.log(refreshToken)
+
   if (!refreshToken || !refreshToken.isActive) throw "Invalid token";
   return refreshToken;
 }
