@@ -56,29 +56,24 @@ export class ExpensesPage {
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
-    (await this.loading)
-      .present()
-      .then(async () => {
-        this.foodIsChecked = true;
-        this.hotelIsChecked = true;
-        this.entertainmentIsChecked = true;
-        this.otherIsChecked = true;
-        this.ios = (await this.config.get("mode")) === "ios";
+    (await this.loading).present();
+    this.foodIsChecked = true;
+    this.hotelIsChecked = true;
+    this.entertainmentIsChecked = true;
+    this.otherIsChecked = true;
+    this.ios = (await this.config.get("mode")) === "ios";
+    (await this.expenseService.getAll())
+      .forEach(async (Element) => {
+        this.allExpenses = Element;
+        //console.log(this.allExpenses, "right here");
       })
       .then(async () => {
-        await (await this.expenseService.getAll())
-          .forEach(async (Element) => {
-            this.allExpenses = Element;
-            //console.log(this.allExpenses, "right here");
-          })
-          .then(async () => {
-            const expensesCount = this.allExpenses.length;
-            for (let i = 0; i < expensesCount; i++) {
-              this.allExpenses[i].created = moment(
-                this.allExpenses[i].created
-              ).format("MM-DD-YYYY @HH:mm:ss");
-            }
-          });
+        const expensesCount = this.allExpenses.length;
+        for (let i = 0; i < expensesCount; i++) {
+          this.allExpenses[i].created = moment(
+            this.allExpenses[i].created
+          ).format("MM-DD-YYYY @HH:mm:ss");
+        }
       })
       .finally(async () => {
         setTimeout(async () => {

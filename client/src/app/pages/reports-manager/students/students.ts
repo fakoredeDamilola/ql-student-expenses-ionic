@@ -27,22 +27,17 @@ export class StudentsListPage {
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
-    (await this.loading)
-      .present()
-      .then(async () => {
+    (await this.loading).present();
+    this.userId = this.account.accountValue.id;
+    if (this.account.accountValue.role == "Admin") {
+      this.userId = this.route.snapshot.paramMap.get("accountId");
+      if (this.route.snapshot.paramMap.get("accountId") == null) {
         this.userId = this.account.accountValue.id;
-        if (this.account.accountValue.role == "Admin") {
-          this.userId = this.route.snapshot.paramMap.get("accountId");
-          if (this.route.snapshot.paramMap.get("accountId") == null) {
-            this.userId = this.account.accountValue.id;
-          }
-        }
-        (await this.account.getAllStudents(this.userId)).forEach(
-          async (element) => {
-            this.studentsList = element;
-            //console.log(this.studentsList);
-          }
-        );
+      }
+    }
+    (await this.account.getAllStudents(this.userId))
+      .forEach(async (element) => {
+        this.studentsList = element;
       })
       .finally(async () => {
         setTimeout(async () => {
