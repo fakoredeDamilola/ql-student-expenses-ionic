@@ -12,9 +12,12 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
 1. cd into client and npm Install
 2. cd into server and npm Install
 3. npm start to start server
-4. cd into client
-5. run ionic serve (will open up a page in browser)
-6. Home Page has more instructions and overview
+4. Open a new terminal window...
+5. cd into client
+6. run ionic serve (will open up a page in browser)
+7. Home Page has more instructions and overview
+
+** You should have 2 terianls running, one for the server, and one for the client...
 
 
 ## Deploying
