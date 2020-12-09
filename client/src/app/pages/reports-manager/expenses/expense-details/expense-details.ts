@@ -82,25 +82,100 @@ export class ExpenseDetailsPage {
 
   async editExpense(contextParamValue) {
     let popUpText: string;
-    let currentValue: string;
+    let currentValue: string | boolean;
+
+    let foodChecked: boolean = false;
+    let hotelChecked: boolean = false;
+    let entertainmentChecked: boolean = false;
+    let otherChecked: boolean = false;
     switch (contextParamValue) {
       case "expenseName": {
-        popUpText = "Expense Name";
+        popUpText = "Name";
         currentValue = this.expenseName;
         break;
       }
       case "expenseCost": {
-        popUpText = "Expense Cost";
+        popUpText = "Cost";
         currentValue = this.expenseCost;
         break;
       }
       case "expenseCategory": {
-        popUpText = "Expense Category";
-        currentValue = this.expenseCategory;
+        popUpText = "Category";
+        switch (this.expenseCategory) {
+          case "Food": {
+            foodChecked = true;
+            break;
+          }
+          case "Hotel": {
+            hotelChecked = true;
+            break;
+          }
+          case "Entertainment": {
+            entertainmentChecked = true;
+            break;
+          }
+          case "Other": {
+            otherChecked = true;
+            break;
+          }
+        }
         break;
       }
     }
 
+    if (contextParamValue == "expenseCategory") {
+      const alert = await this.alertCtrl.create({
+        header: `Change Expense Category?`,
+        buttons: [
+          "Cancel",
+          {
+            text: "Ok",
+            handler: async (data: any) => {
+             // console.log(data);
+
+              const categoryJsonObj = JSON.parse(`{"expenseCategory":"${data}"}`);
+              this.savingExpense = this.alertService.presentLoading(
+                "Saving Expense..."
+              );
+              (await this.savingExpense).present();
+              await this.updateExpenseMasterList(categoryJsonObj, popUpText);
+            },
+          },
+        ],
+        inputs: [
+          {
+            type: "radio",
+            label: `Food`,
+            name: "expenseCategory",
+            value: "Food",
+            checked: foodChecked,
+          },
+          {
+            type: "radio",
+            label: `Hotel`,
+            name: "expenseCategory",
+            value: "Hotel",
+            checked: hotelChecked,
+          },
+          {
+            type: "radio",
+            label: `Entertainment`,
+            name: "expenseCategory",
+            value: "Entertainment",
+            checked: entertainmentChecked,
+          },
+          {
+            type: "radio",
+            label: `Other`,
+            name: "expenseCategory",
+            value: "Other",
+            checked: otherChecked,
+          },
+        ],
+      });
+      await alert.present();
+    }
+    else{
     const alert = await this.alertCtrl.create({
       header: `Change ${popUpText}`,
       buttons: [
@@ -127,6 +202,7 @@ export class ExpenseDetailsPage {
       ],
     });
     await alert.present();
+  }
   }
 
   private async updateExpenseMasterList(

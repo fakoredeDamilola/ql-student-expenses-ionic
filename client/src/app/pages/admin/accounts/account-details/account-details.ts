@@ -205,9 +205,8 @@ export class AccountDetailsPage {
           {
             text: "Ok",
             handler: async (data: any) => {
-              console.log(data);
-
-              let roleJsonObj = JSON.parse(`{"role":"${data}"}`);
+              //console.log(data);
+              const roleJsonObj = JSON.parse(`{"role":"${data}"}`);
               this.savingAccount = this.alertService.presentLoading(
                 "Saving..."
               );
