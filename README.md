@@ -42,7 +42,8 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
 4. Date Ranges for Reports filter, Expenses Filter, Accounts Filter.
 5. Invite Students to another expense report, currently can only be assoicated with one expense report.
    -- Invite Student who already has an account, current behavior when student is added to report, account created for them. 
-6. Test Cases (unit tests and e2e), Documentation, Swagger Documentation update   
+6. Test Cases (unit tests and e2e), Documentation, Swagger Documentation update.
+7. Trim api calls JSON objects, returning only the data needed for the specefic view.   
 
 
 # Bugs
