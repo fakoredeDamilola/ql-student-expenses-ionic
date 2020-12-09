@@ -16,20 +16,12 @@ export class StudentsListPage {
   queryText = "";
   showSearchbar: boolean;
   ios: boolean;
-  filtersList: any;
-  adminsIsChecked: boolean;
-  studentsIsChecked: boolean;
-  propertyManagersIsChecked: boolean;
-  adminCondition: string;
-  petOwnerCondition: string;
-  propertyManagerCondition: string;
 
   constructor(
     private account: AccountService,
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
-    private routerOutlet: IonRouterOutlet,
     public modalCtrl: ModalController
   ) {}
 
@@ -38,9 +30,6 @@ export class StudentsListPage {
     (await this.loading)
       .present()
       .then(async () => {
-        this.adminsIsChecked = true;
-        this.studentsIsChecked = true;
-        this.propertyManagersIsChecked = true;
         this.userId = this.account.accountValue.id;
         if (this.account.accountValue.role == "Admin") {
           this.userId = this.route.snapshot.paramMap.get("accountId");
