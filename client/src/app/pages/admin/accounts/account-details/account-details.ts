@@ -59,6 +59,8 @@ export class AccountDetailsPage {
   ) {}
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
+    //reseting expense total
+    this.totalOfExpenses =0;
     (await this.loading).present();
     // The account your viewing....
     this.accountId = this.route.snapshot.paramMap.get("accountId");

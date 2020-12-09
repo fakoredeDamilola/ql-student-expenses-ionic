@@ -50,7 +50,6 @@ export class ReportsPage {
     public toastCtrl: ToastController,
     public user: UserData,
     public config: Config,
-    private acountService: AccountService,
     private reportService: ReportService
   ) {}
 
