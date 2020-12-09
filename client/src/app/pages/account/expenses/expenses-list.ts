@@ -55,6 +55,7 @@ export class ExpensesListPage {
         this.expensesListLength = this.expensesList.length;
       })
       .then(async () => {
+        //Calculate current expenses total
         for (let i = 0; i < this.expensesListLength; i++) {
           this.expensesTotal += Number(this.expensesList[i].expenseCost);
         }
