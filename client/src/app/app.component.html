@@ -7,7 +7,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list lines="none" [hidden]="!account || account.role != 'Admin'">
+        <ion-list lines="none" [hidden]="!account || account.role != 'Admin'" *ngIf="loggedIn">
           <ion-list-header>
             Admin
           </ion-list-header>
@@ -23,7 +23,7 @@
         </ion-list>
 
         <ion-list lines="none"
-          [hidden]="!account || account.role =='Student' || (account.role != 'Admin' && account.role != 'ReportsManager')">
+          [hidden]="!account || account.role =='Student' || (account.role != 'Admin' && account.role != 'ReportsManager')" *ngIf="loggedIn">
           <ion-list-header>
             Reports Manager
           </ion-list-header>

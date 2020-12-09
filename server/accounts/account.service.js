@@ -60,7 +60,7 @@ async function authenticate({ email, password, ipAddress }) {
 
 async function refreshToken({ token, ipAddress }) {
   const refreshToken = await getRefreshToken(token);
-  console.log(refreshToken,'the refresh token')
+  //console.log(refreshToken,'the refresh token')
   const { account } = refreshToken;
 
   // replace old refresh token with a new one and save

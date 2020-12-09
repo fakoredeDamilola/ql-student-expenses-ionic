@@ -148,7 +148,7 @@ function revokeToken(req, res, next) {
   const token = req.body.token || req.cookies.refreshToken;
   //console.log(token)
   const ipAddress = req.ip;
-  console.log(req.user)
+  //console.log(req.user)
   if (!token) return res.status(400).json({ message: "Token is required" });
 
   // Students + Reports Managers can revoke their own tokens and admins can revoke any tokens
