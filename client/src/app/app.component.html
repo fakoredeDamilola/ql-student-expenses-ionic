@@ -2,9 +2,15 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content">
       <ion-header routerLink="/home" routerLinkActive="selected" routerDirection="root" detail="false">
-        <ion-toolbar color="primary">
+
+        <ion-toolbar color="primary" *ngIf="!ios">
           <ion-title slot="start" text-align-left margin-vertical size="large">Student Expenses</ion-title>
         </ion-toolbar>
+
+        <ion-toolbar color="primary" *ngIf="ios">
+          <ion-title slot="start" style="text-align: left !important;font-size:  22px !important; padding-inline: 10px;">Student Expenses</ion-title>
+        </ion-toolbar>
+
       </ion-header>
       <ion-content>
         <ion-list lines="none" [hidden]="!account || account.role != 'Admin'" *ngIf="loggedIn">
@@ -18,7 +24,6 @@
                 {{p.title}}
               </ion-label>
             </ion-item>
-
           </ion-menu-toggle>
         </ion-list>
 

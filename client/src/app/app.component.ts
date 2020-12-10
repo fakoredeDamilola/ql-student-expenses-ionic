@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { SwUpdate } from "@angular/service-worker";
 
-import { Platform, ToastController } from "@ionic/angular";
+import { Config, Platform, ToastController } from "@ionic/angular";
 
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
@@ -20,6 +20,7 @@ import { Account, Role } from "@app/_models";
 export class AppComponent implements OnInit {
   Role = Role;
   account: Account;
+  ios: boolean;
 
   appAdminPages = [
     {
@@ -72,7 +73,8 @@ export class AppComponent implements OnInit {
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public config: Config
   ) {
     this.loading = this.alertService.presentLoading("Student Expenses");
     this.accountService.account.subscribe((x) => (this.account = x));
@@ -84,10 +86,14 @@ export class AppComponent implements OnInit {
     this.splashScreen.hide();
   }
 
-  async ionViewWillEnter() {}
+  async ionViewWillEnter() {
+
+    this.ios = (await this.config.get("mode")) === "ios";
+  }
 
   async ngOnInit() {
-    //this.data=false;
+
+    this.ios = (await this.config.get("mode")) === "ios";
     this.splashScreen.show();
     await this.checkLoginStatus();
     await this.listenForLoginEvents();
@@ -120,7 +126,6 @@ export class AppComponent implements OnInit {
         this.splashScreen.hide();
       })
       .then(async () => {
-       // this.data=true;
         (await this.loading).dismiss();
       });
   }
