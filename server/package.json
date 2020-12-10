@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cornflourblue/node-mongo-signup-verification-api.git"
+    "url": ""
   },
   "scripts": {
     "start": "node ./server.js",
@@ -36,10 +36,7 @@
     "@types/mongoose": "^5.10.2",
     "nodemon": "^2.0.6"
   },
-  "bugs": {
-    "url": "https://github.com/cornflourblue/node-mongo-signup-verification-api/issues"
-  },
-  "homepage": "https://github.com/cornflourblue/node-mongo-signup-verification-api#readme",
+  "homepage": "",
   "main": "server.js",
   "author": "michael cass"
 }
