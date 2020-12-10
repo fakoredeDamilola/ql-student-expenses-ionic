@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { VerifyEmailComponent } from "@app/pages/account/verify-email/verify-email.component";
 import { AuthGuard } from "@app/_helpers";
 import { Role } from "@app/_models";
 
@@ -19,17 +18,18 @@ const routes: Routes = [
     data: { roles: [Role.Admin] },
   },
   {
-    path: "account/profile",
+    path: "reports-manager",
     loadChildren: () =>
-      import("@app/pages/profile/profile.module").then((m) => m.ProfileModule),
+      import("@app/pages/reports-manager/reports-manager.module").then(
+        (m) => m.ReportsManagerModule
+      ),
     canActivate: [AuthGuard],
+    data: { roles: [Role.Admin, Role.ReportsManager] },
   },
   {
-    path: "account/expenses",
+    path: "account",
     loadChildren: () =>
-      import("@app/pages/account/expenses/expenses-list.module").then(
-        (m) => m.ExpensesListModule
-      ),
+      import("@app/pages/account/account.module").then((m) => m.AccountModule),
     canActivate: [AuthGuard],
   },
   {
@@ -52,15 +52,6 @@ const routes: Routes = [
       import("@app/pages/account/forgot-password/forgot-password.module").then(
         (m) => m.ForgotPasswordModule
       ),
-  },
-  { path: "account/verify-email", component: VerifyEmailComponent },
-  {
-    path: "reports-manager",
-    loadChildren: () =>
-      import("@app/pages/reports-manager/reports-manager.module").then(
-        (m) => m.ReportsManagerModule
-      ),
-      canActivate: [AuthGuard],
   },
   {
     path: "account/reset-password",

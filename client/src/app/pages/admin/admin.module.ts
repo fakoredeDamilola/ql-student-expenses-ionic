@@ -6,14 +6,11 @@ import { Admin } from './admin';
 import { AdminRoutingModule } from './admin-routing.module';
 
 
-import { AccountsModule } from './accounts/accounts.module';
-
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    AccountsModule,
     AdminRoutingModule
   ],
   declarations: [

@@ -1,13 +1,34 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { VerifyEmailComponent } from "@app/pages/account/verify-email/verify-email.component";
-import { AuthGuard } from "@app/_helpers";
-import { Role } from "@app/_models";
+import { Account } from "./account";
+import { VerifyEmailComponent } from "./verify-email/verify-email.component";
 
-const routes: Routes = []
+const routes: Routes = [
+  {
+    path: "",
+    component: Account,
+    children: [
+      {
+        path: "profile",
+        loadChildren: () =>
+          import("@app/pages/account/profile/profile.module").then(
+            (m) => m.ProfileModule
+          ),
+      },
+      {
+        path: "expenses",
+        loadChildren: () =>
+          import("@app/pages/account/expenses/expenses-list.module").then(
+            (m) => m.ExpensesListModule
+          ),
+      },
+      { path: "verify-email", component: VerifyEmailComponent },
+    ],
+  },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class AccountRoutingModule {}
