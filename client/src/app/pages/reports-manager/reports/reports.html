@@ -1,6 +1,6 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <ion-buttons slot="start"  [hidden]="roleViewer!='A'">
+    <ion-buttons slot="start" [hidden]="roleViewer!='A'">
       <ion-back-button defaultHref="/account/profile"></ion-back-button>
     </ion-buttons>
     <ion-buttons *ngIf="!showSearchbar" slot="start">
@@ -37,45 +37,45 @@
       </ion-button>
     </ion-item-divider>
     <ion-content>
-   <!-- Skeleton for when fetching data-->
-   <div *ngIf="!data">
-    <ion-row *ngFor="let dead of deadData">
-    <ion-col size="12" size-md="6">
-        <ion-card class="speaker-card">
-          <!--<ion-card-header>-->
-            <ion-item class="speaker-item">
-              <ion-avatar slot="start">
-                <ion-skeleton-text animated></ion-skeleton-text>
-              </ion-avatar>
-              <ion-label>
-                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-              </ion-label>
-            </ion-item>
-        </ion-card>
-      </ion-col>
-      <ion-col>
-      <ion-card class="speaker-card">
-        <!--<ion-card-header>-->
-          <ion-item class="speaker-item">
-            <ion-avatar slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-            </ion-label>
-          </ion-item>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-  </div>
+      <!-- Skeleton for when fetching data-->
+      <div *ngIf="!data">
+        <ion-row *ngFor="let dead of deadData">
+          <ion-col size="12" size-md="6">
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item class="speaker-item">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item class="speaker-item">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
 
-    <ion-grid fixed *ngIf="data">
+      <ion-grid fixed *ngIf="data">
         <ion-row>
           <ion-col size="12" size-md="6" *ngFor="let report of reportsList"
             [hidden]="((report.reportName.indexOf(queryText)==-1 )  && queryText)">
@@ -108,6 +108,13 @@
             </ion-card>
           </ion-col>
         </ion-row>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
       </ion-grid>
     </ion-content>
   </ion-content>
+</ion-content>

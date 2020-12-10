@@ -31,14 +31,14 @@
       <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
-
+<ion-content>
   <ion-item-divider sticky>
     <ion-item slot='start'>Total:${{expensesTotal}}</ion-item>
     <ion-button shape="round" fill="outline" slot="end" routerLink="/account/expenses/add">
       <ion-icon name="add-outline"></ion-icon>Create Expense
     </ion-button>
   </ion-item-divider>
-
+<ion-content>
   <!-- Skeleton for when fetching data-->
   <div *ngIf="!data">
     <ion-row *ngFor="let dead of deadData">
@@ -98,6 +98,14 @@
         </ion-card>
       </ion-col>
     </ion-row>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
   </ion-grid>
+  </ion-content>
+  </ion-content>
 </ion-content>
 

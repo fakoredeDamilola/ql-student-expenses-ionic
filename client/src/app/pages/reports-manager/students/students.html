@@ -1,6 +1,6 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <ion-buttons slot="start"  *ngIf="roleViewer=='A'">
+    <ion-buttons slot="start" *ngIf="roleViewer=='A'">
       <ion-back-button defaultHref="/account/profile">
       </ion-back-button>
     </ion-buttons>
@@ -30,74 +30,86 @@
       <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
-<!-- Skeleton for when fetching data-->
-<div *ngIf="!data">
-  <ion-row *ngFor="let dead of deadData">
-  <ion-col size="12" size-md="6">
-      <ion-card class="speaker-card">
-        <!--<ion-card-header>-->
-          <ion-item class="speaker-item">
-            <ion-avatar slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-            </ion-label>
-          </ion-item>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-    <ion-card class="speaker-card">
-      <!--<ion-card-header>-->
-        <ion-item class="speaker-item">
-          <ion-avatar slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-          </ion-avatar>
-          <ion-label>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-          </ion-label>
-        </ion-item>
-    </ion-card>
-  </ion-col>
-</ion-row>
-</div>
+  <ion-content>
+    <ion-item-divider sticky>
+    </ion-item-divider>
+    <ion-content>
+      <!-- Skeleton for when fetching data-->
+      <div *ngIf="!data">
+        <ion-row *ngFor="let dead of deadData">
+          <ion-col size="12" size-md="6">
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item class="speaker-item">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item class="speaker-item">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
 
-  <ion-grid fixed *ngIf="data">
-    <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let student of studentsList"
-        [hidden]="((student.firstName.indexOf(queryText)==-1 && student.lastName.indexOf(queryText)==-1 && student.email.indexOf(queryText)==-1)  && queryText)">
-        <ion-card class="speaker-card" routerLink="{{currentRoute}}/student-details/{{student.id}}">
-          <ion-card-header>
-            <ion-item detail="false" lines="none">
-              <ion-label>
-                <div>
-                  <ion-avatar style="text-align: center;">
-                    <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
-                  </ion-avatar>
+      <ion-grid fixed *ngIf="data">
+        <ion-row>
+          <ion-col size="12" size-md="6" *ngFor="let student of studentsList"
+            [hidden]="((student.firstName.indexOf(queryText)==-1 && student.lastName.indexOf(queryText)==-1 && student.email.indexOf(queryText)==-1)  && queryText)">
+            <ion-card class="speaker-card" routerLink="{{currentRoute}}/student-details/{{student.id}}">
+              <ion-card-header>
+                <ion-item detail="false" lines="none">
+                  <ion-label>
+                    <div>
+                      <ion-avatar style="text-align: center;">
+                        <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
+                      </ion-avatar>
 
-                </div>
-              </ion-label>
-              <ion-label>
-                <h1><b>{{student.firstName}} {{student.lastName}}</b></h1>
-                <h4>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green"
-                    name="checkmark-circle"></ion-icon>
-                  <ion-icon name="checkmark-circle" *ngIf="student.isVerified==false" style="color: firebrick;">
-                  </ion-icon>&nbsp;
-                </h4>
-                <p>
-                  Expenses: ( {{student.studentExpensesCount}} )
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+                    </div>
+                  </ion-label>
+                  <ion-label>
+                    <h1><b>{{student.firstName}} {{student.lastName}}</b></h1>
+                    <h4>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green"
+                        name="checkmark-circle"></ion-icon>
+                      <ion-icon name="checkmark-circle" *ngIf="student.isVerified==false" style="color: firebrick;">
+                      </ion-icon>&nbsp;
+                    </h4>
+                    <p>
+                      Expenses: ( {{student.studentExpensesCount}} )
+                    </p>
+                  </ion-label>
+                </ion-item>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      </ion-grid>
+    </ion-content>
+  </ion-content>
 </ion-content>

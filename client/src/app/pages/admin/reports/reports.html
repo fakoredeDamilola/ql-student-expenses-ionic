@@ -27,84 +27,90 @@
       <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
-  <ion-item-divider sticky>
-
-  </ion-item-divider>
-<!-- Skeleton for when fetching data-->
-<div *ngIf="!data">
-  <ion-row *ngFor="let dead of deadData">
-  <ion-col size="12" size-md="6">
-      <ion-card class="speaker-card">
-        <!--<ion-card-header>-->
-          <ion-item class="speaker-item">
-            <ion-avatar slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-            </ion-label>
-          </ion-item>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-    <ion-card class="speaker-card">
-      <!--<ion-card-header>-->
-        <ion-item class="speaker-item">
-          <ion-avatar slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-          </ion-avatar>
-          <ion-label>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-          </ion-label>
-        </ion-item>
-    </ion-card>
-  </ion-col>
-</ion-row>
-</div>
-
-  <ion-grid fixed *ngIf="data">
-    <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let report of allReports"
-        [hidden]="((report.reportName.indexOf(queryText)==-1 && report.reportsManager.firstName.indexOf(queryText)==-1 && report.reportsManager.lastName.indexOf(queryText)==-1)  && queryText)">
-        <ion-card class="speaker-card">
-          <ion-card-header>
-            <ion-item detail="false" lines="none" class="speaker-item"
-              routerLink="{{currentRoute}}/report-details/{{report.id}}">
-              <ion-avatar slot="start">
-                <img
-                  src="../../../../assets/img/credit-card-expense-report-icon-simple-style-credit-card-expense-report-icon-simple-illustration-credit-card-expense-report-160537997.jpg"
-                  [alt]="'Report picture'">
-              </ion-avatar>
-              <ion-label>
-
-                <h1><b>{{report.reportName}}</b></h1>
-                <h4>Reports Manager: {{report.reportsManager.firstName}} {{report.reportsManager.lastName}}</h4>
-              </ion-label>
-            </ion-item>
-          </ion-card-header>
-
-          <ion-card-content>
-            <ion-list lines="none">
-              <ion-item>
+  <ion-content>
+    <ion-item-divider sticky>
+    </ion-item-divider>
+    <ion-content>
+      <!-- Skeleton for when fetching data-->
+      <div *ngIf="!data">
+        <ion-row *ngFor="let dead of deadData">
+          <ion-col size="12" size-md="6">
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item class="speaker-item">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
                 <ion-label>
-                  <p>Expenses:&nbsp;( {{report.reportExpensesCount}} )</p>
-                  <p>Students:&nbsp;&nbsp;( {{report.reportStudentsCount}} )</p>
-                  <h3>Created:{{report.created}}</h3>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
                 </ion-label>
               </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item class="speaker-item">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
 
+      <ion-grid fixed *ngIf="data">
+        <ion-row>
+          <ion-col size="12" size-md="6" *ngFor="let report of allReports"
+            [hidden]="((report.reportName.indexOf(queryText)==-1 && report.reportsManager.firstName.indexOf(queryText)==-1 && report.reportsManager.lastName.indexOf(queryText)==-1)  && queryText)">
+            <ion-card class="speaker-card">
+              <ion-card-header>
+                <ion-item detail="false" lines="none" class="speaker-item"
+                  routerLink="{{currentRoute}}/report-details/{{report.id}}">
+                  <ion-avatar slot="start">
+                    <img
+                      src="../../../../assets/img/credit-card-expense-report-icon-simple-style-credit-card-expense-report-icon-simple-illustration-credit-card-expense-report-160537997.jpg"
+                      [alt]="'Report picture'">
+                  </ion-avatar>
+                  <ion-label>
 
+                    <h1><b>{{report.reportName}}</b></h1>
+                    <h4>Reports Manager: {{report.reportsManager.firstName}} {{report.reportsManager.lastName}}</h4>
+                  </ion-label>
+                </ion-item>
+              </ion-card-header>
 
+              <ion-card-content>
+                <ion-list lines="none">
+                  <ion-item>
+                    <ion-label>
+                      <p>Expenses:&nbsp;( {{report.reportExpensesCount}} )</p>
+                      <p>Students:&nbsp;&nbsp;( {{report.reportStudentsCount}} )</p>
+                      <h3>Created:{{report.created}}</h3>
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      </ion-grid>
+    </ion-content>
+  </ion-content>
 </ion-content>

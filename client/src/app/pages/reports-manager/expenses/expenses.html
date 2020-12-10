@@ -28,7 +28,7 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar color="secondary">
       <ion-title text-align-center size="large">Expenses</ion-title>
     </ion-toolbar>
@@ -36,70 +36,78 @@
       <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
+    <ion-item-divider sticky>
+    </ion-item-divider>
+    <ion-content>
+      <!-- Skeleton for when fetching data-->
+      <div *ngIf="!data">
+        <ion-row *ngFor="let dead of deadData">
+          <ion-col size="12" size-md="6">
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item class="speaker-item">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item class="speaker-item">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
 
-  <ion-item-divider sticky>
-  </ion-item-divider>
- <!-- Skeleton for when fetching data-->
- <div *ngIf="!data">
-  <ion-row *ngFor="let dead of deadData">
-  <ion-col size="12" size-md="6">
-      <ion-card class="speaker-card">
-        <!--<ion-card-header>-->
-          <ion-item class="speaker-item">
-            <ion-avatar slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-            </ion-label>
-          </ion-item>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-    <ion-card class="speaker-card">
-      <!--<ion-card-header>-->
-        <ion-item class="speaker-item">
-          <ion-avatar slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-          </ion-avatar>
-          <ion-label>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-          </ion-label>
-        </ion-item>
-    </ion-card>
-  </ion-col>
-</ion-row>
-</div>
-
-  <ion-grid fixed *ngIf="data">
-    <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let expense of reportsExpenses"
-        [hidden]="expense.expenseCategory == foodCondition || expense.expenseCategory == hotelCondition || expense.expenseCategory== entertainmentCondition || expense.expenseCategory == otherCondition || ((expense.expenseName.indexOf(queryText)==-1 && expense.expenseReport[0].reportName.indexOf(queryText)==-1 && expense.expenseStudent[0].firstName.indexOf(queryText)==-1 && expense.expenseStudent[0].lastName.indexOf(queryText)==-1)  && queryText)">
-        <ion-card class="speaker-card">
-          <!--<ion-card-header>-->
-          <ion-item detail="false" lines="none" class="speaker-item"
-            routerLink='/reports-manager/reports-expenses/expense-details/{{expense.id}}'>
-            <ion-avatar slot="start">
-              <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
-            </ion-avatar>
-            <ion-label>
-              <h2><b>{{expense.expenseName}}</b></h2>
-              <h4><b>${{expense.expenseCost}}</b></h4>
-              <p>Report: {{expense.expenseReport[0].reportName}}</p>
-              <p>Created By: {{expense.expenseStudent[0].firstName}} {{expense.expenseStudent[0].lastName}}</p>
-              <p>Created:{{expense.created}}</p>
-              <p>Category:{{expense.expenseCategory}}</p>
-            </ion-label>
-          </ion-item>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
+      <ion-grid fixed *ngIf="data">
+        <ion-row>
+          <ion-col size="12" size-md="6" *ngFor="let expense of reportsExpenses"
+            [hidden]="expense.expenseCategory == foodCondition || expense.expenseCategory == hotelCondition || expense.expenseCategory== entertainmentCondition || expense.expenseCategory == otherCondition || ((expense.expenseName.indexOf(queryText)==-1 && expense.expenseReport[0].reportName.indexOf(queryText)==-1 && expense.expenseStudent[0].firstName.indexOf(queryText)==-1 && expense.expenseStudent[0].lastName.indexOf(queryText)==-1)  && queryText)">
+            <ion-card class="speaker-card">
+              <!--<ion-card-header>-->
+              <ion-item detail="false" lines="none" class="speaker-item"
+                routerLink='/reports-manager/reports-expenses/expense-details/{{expense.id}}'>
+                <ion-avatar slot="start">
+                  <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
+                </ion-avatar>
+                <ion-label>
+                  <h2><b>{{expense.expenseName}}</b></h2>
+                  <h4><b>${{expense.expenseCost}}</b></h4>
+                  <p>Report: {{expense.expenseReport[0].reportName}}</p>
+                  <p>Created By: {{expense.expenseStudent[0].firstName}} {{expense.expenseStudent[0].lastName}}</p>
+                  <p>Created:{{expense.created}}</p>
+                  <p>Category:{{expense.expenseCategory}}</p>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      </ion-grid>
+    </ion-content>
+  </ion-content>
 </ion-content>
