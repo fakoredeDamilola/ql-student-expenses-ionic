@@ -22,7 +22,7 @@ export class ExpensesFilterPage {
     public navParams: NavParams
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.ios = this.config.get("mode") === `ios`;
 
     const filtersListComingIn = this.navParams.get("filtersList");
@@ -33,25 +33,25 @@ export class ExpensesFilterPage {
     this.otherIsChecked = filtersListComingIn.otherIsChecked;
   }
 
-  selectAll(check: boolean) {
+  async selectAll(check: boolean) {
     this.foodIsChecked = true;
     this.hotelIsChecked = true;
     this.entertainmentIsChecked = true;
     this.otherIsChecked = true;
   }
 
-  applyFilters() {
+  async applyFilters() {
     // Pass back a new array of track names to exclude
     this.filtersList = {
-      'foodIsChecked': this.foodIsChecked,
-      'hotelIsChecked': this.hotelIsChecked,
-      'entertainmentIsChecked': this.entertainmentIsChecked,
-      'otherIsChecked': this.otherIsChecked,
+      foodIsChecked: this.foodIsChecked,
+      hotelIsChecked: this.hotelIsChecked,
+      entertainmentIsChecked: this.entertainmentIsChecked,
+      otherIsChecked: this.otherIsChecked,
     };
     this.dismiss(this.filtersList);
   }
 
-  dismiss(data?: any) {
+  async dismiss(data?: any) {
     // using the injected ModalController this page
     // can "dismiss" itself and pass back data
     //console.log("filters list after done with modal",data)

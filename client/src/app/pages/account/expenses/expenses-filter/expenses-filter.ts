@@ -21,7 +21,7 @@ export class ExpensesFilterPage {
     public navParams: NavParams
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.ios = this.config.get("mode") === `ios`;
 
     const filtersListComingIn = this.navParams.get("filtersList");
@@ -32,14 +32,14 @@ export class ExpensesFilterPage {
     this.otherIsChecked = filtersListComingIn.otherIsChecked;
   }
 
-  selectAll(check: boolean) {
+  async selectAll(check: boolean) {
     this.foodIsChecked = true;
     this.hotelIsChecked = true;
     this.entertainmentIsChecked = true;
     this.otherIsChecked = true;
   }
 
-  applyFilters() {
+  async applyFilters() {
     // Pass back a new array of track names to exclude
     this.filtersList = {
       foodIsChecked: this.foodIsChecked,
@@ -50,7 +50,7 @@ export class ExpensesFilterPage {
     this.dismiss(this.filtersList);
   }
 
-  dismiss(data?: any) {
+  async dismiss(data?: any) {
     this.modalCtrl.dismiss(data);
   }
 }

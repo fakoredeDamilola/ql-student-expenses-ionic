@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Config, ModalController, NavParams } from "@ionic/angular";
 
 @Component({
-  selector: "page-schedule-filter",
+  selector: "page-accounts-filter",
   templateUrl: "accounts-filter.html",
   styleUrls: ["./accounts-filter.scss"],
 })
@@ -22,7 +22,7 @@ export class AccountsFilterPage {
     public navParams: NavParams
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.ios = this.config.get("mode") === `ios`;
 
     const filtersListComingIn = this.navParams.get("filtersList");
@@ -35,13 +35,13 @@ export class AccountsFilterPage {
     //console.log(filtersListComingIn,"yo Filters List Coming In");
   }
 
-  selectAll(check: boolean) {
+  async selectAll(check: boolean) {
     this.adminsIsChecked = true;
     this.studentsIsChecked = true;
     this.reportsManagersIsChecked = true;
   }
 
-  applyFilters() {
+  async applyFilters() {
     // Pass back a new array of track names to exclude
     this.filtersList = {
       adminsIsChecked: this.adminsIsChecked,
@@ -51,7 +51,7 @@ export class AccountsFilterPage {
     this.dismiss(this.filtersList);
   }
 
-  dismiss(data?: any) {
+  async dismiss(data?: any) {
     // using the injected ModalController this page
     // can "dismiss" itself and pass back data
     //console.log("filters list after done with modal",data)
