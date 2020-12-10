@@ -42,7 +42,7 @@ export class ResetPasswordPage implements OnInit {
           this.token = await token;
           this.tokenStatus = TokenStatus.Valid;
         },
-        error: () => {
+        error: async () => {
           this.tokenStatus = TokenStatus.Invalid;
         },
       });
