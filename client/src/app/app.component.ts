@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
   dark = false;
   loading: Promise<HTMLIonLoadingElement>;
   loggingOut: Promise<HTMLIonLoadingElement>;
+  data: boolean;
 
   constructor(
     private accountService: AccountService,
@@ -86,6 +87,7 @@ export class AppComponent implements OnInit {
   async ionViewWillEnter() {}
 
   async ngOnInit() {
+    //this.data=false;
     this.splashScreen.show();
     await this.checkLoginStatus();
     await this.listenForLoginEvents();
@@ -118,6 +120,7 @@ export class AppComponent implements OnInit {
         this.splashScreen.hide();
       })
       .then(async () => {
+       // this.data=true;
         (await this.loading).dismiss();
       });
   }

@@ -26,6 +26,7 @@ export class ProfilePage {
   loading: any;
   loggingOut: any;
   savingAccount: any;
+  data: boolean;
 
   constructor(
     public alertCtrl: AlertController,
@@ -37,6 +38,7 @@ export class ProfilePage {
   ) {}
 
   async ionViewWillEnter() {
+    this.data=false;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading)
       .present()
@@ -50,6 +52,7 @@ export class ProfilePage {
       })
       .finally(() => {
         setTimeout(async () => {
+          this.data=true;
           (await this.loading).dismiss();
         }, 300);
       });
