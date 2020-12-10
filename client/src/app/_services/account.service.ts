@@ -48,7 +48,7 @@ export class AccountService {
     this.stopRefreshTokenTimer();
     this.accountSubject.next(null);
     //This bellow is really cool
-    this.accountSubject.subscribe(x => console.log(x,"This should be undefined???"));
+    //this.accountSubject.subscribe(x => console.log(x,"This should be undefined???"));
     this.router.navigateByUrl("/login");
   }
 
