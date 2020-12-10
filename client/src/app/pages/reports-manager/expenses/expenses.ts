@@ -42,6 +42,7 @@ export class ExpensesListPage {
   otherCondition: string = "";
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
+  roleViewer: string;
 
   constructor(
     public alertCtrl: AlertController,
@@ -71,6 +72,7 @@ export class ExpensesListPage {
     this.ios = (await this.config.get("mode")) === "ios";
     // Incase Admins Are Viewing another reports manager expenses list As Them
     if (this.accountService.accountValue.role == "Admin") {
+      this.roleViewer="A";//<-----Admin... used to hide back button
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
       if (this.route.snapshot.paramMap.get("accountId") == null) {
         this.reportsManagerId = this.accountService.accountValue.id;

@@ -1,6 +1,6 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" *ngIf="roleViewer=='A'">
       <ion-back-button defaultHref="/account/profile"></ion-back-button>
     </ion-buttons>
     <ion-buttons *ngIf="!showSearchbar" slot="start">

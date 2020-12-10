@@ -12,7 +12,7 @@ const baseUrl = `${environment.apiUrl}/accounts`;
 @Injectable({ providedIn: "root" })
 export class AccountService {
 
-  private accountSubject: BehaviorSubject<Account>;
+  public accountSubject: BehaviorSubject<Account>;
   public account: Observable<Account>;
 
   constructor(private router: Router, private http: HttpClient) {
@@ -24,7 +24,8 @@ export class AccountService {
     return this.accountSubject.value;
   }
 
-  async login(email: string, password: string) {
+  login(email: string, password: string) {
+    this.accountSubject.next(null);
     return this.http
       .post<any>(
         `${baseUrl}/authenticate`,
@@ -40,15 +41,15 @@ export class AccountService {
       );
   }
 
-  async logout() {
+  logout() {
     this.http
       .post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true })
       .subscribe();
-    await this.stopRefreshTokenTimer();
+    this.stopRefreshTokenTimer();
     this.accountSubject.next(null);
     //This bellow is really cool
-    //this.accountSubject.subscribe(x => console.log(x,"This should be undefined???"));
-    await this.router.navigateByUrl("/login");
+    this.accountSubject.subscribe(x => console.log(x,"This should be undefined???"));
+    this.router.navigateByUrl("/login");
   }
 
   refreshToken() {

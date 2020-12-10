@@ -149,13 +149,8 @@ export class AppComponent implements OnInit {
 
   async logout() {
     this.loggingOut = this.alertService.presentLoading("Logging Out...");
-    (await this.loggingOut)
-      .present()
-      .then(async () => {
-        await this.userData.logout();
-      })
-      .finally(async () => {
-        (await this.loggingOut).dismiss();
-      });
+    (await this.loggingOut).present();
+    await this.userData.logout();
+    (await this.loggingOut).dismiss();
   }
 }
