@@ -56,15 +56,17 @@ export class ExpensesListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.loading = this.alertService.presentLoading("Student Expenses");
+    (await this.loading).present();
+    //Reset filters
     this.foodIsChecked = true;
     this.hotelIsChecked = true;
     this.entertainmentIsChecked = true;
     this.otherIsChecked = true;
+    // Not always though when admin
     this.reportsManagerId = this.accountService.accountValue.id;
     this.ios = (await this.config.get("mode")) === "ios";
-    this.loading = this.alertService.presentLoading("Student Expenses");
-    (await this.loading).present();
-
+    // Incase Admins Are Viewing another reports manager expenses list As Them
     if (this.accountService.accountValue.role == "Admin") {
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
       if (this.route.snapshot.paramMap.get("accountId") == null) {
@@ -78,11 +80,14 @@ export class ExpensesListPage {
         this.userId = this.accountService.accountValue.id;
       }
     }
+    // According to simple test this foreach on the observable is just as fast then below subscribe???
+    //const dateNOW = Date.now();
     (await this.accountService.getAllExpensesInReports(this.userId))
       .forEach(async (element) => {
         this.reportsExpenses = element;
       })
       .then(async () => {
+        //console.log(Date.now()- dateNOW)
         this.expensesCount = this.reportsExpenses.length;
       })
       .then(async () => {
@@ -97,6 +102,19 @@ export class ExpensesListPage {
           (await this.loading).dismiss();
         }, 100);
       });
+
+
+      //this operation is taking 300-350 ms average
+      /*const dateNOW = Date.now();
+      (await this.accountService.getAllExpensesInReports(this.userId))
+      .subscribe(async (emitedData)=>{
+        setTimeout(()=>{
+          console.log(Date.now()- dateNOW)
+          console.log('emitted data??',emitedData)
+          //console.log(Date.now()- dateNOW)
+        },0)
+      });*/
+
   }
 
   async ionViewDidlEnter() {}

@@ -28,6 +28,7 @@ export class StudentsListPage {
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
+    // TODO-Should probably make the bellow check a reusable componenet some how
     this.userId = this.account.accountValue.id;
     if (this.account.accountValue.role == "Admin") {
       this.userId = this.route.snapshot.paramMap.get("accountId");
@@ -35,6 +36,7 @@ export class StudentsListPage {
         this.userId = this.account.accountValue.id;
       }
     }
+    // Get all of this.userId's students <-----who is a reports managers so his/her userId
     (await this.account.getAllStudents(this.userId))
       .forEach(async (element) => {
         this.studentsList = element;

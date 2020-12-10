@@ -29,12 +29,12 @@ export class ReportsListPage {
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
-    //TODO USE reports get by reportsManagerId and load virtuals
     (await this.loading).present();
+
     this.reportsManagerId = this.accountService.accountValue.id;
     if (this.accountService.accountValue.role == "Admin") {
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
-
+      // If your an admin the account Id will be inside the url, removed for none admin views
       if (this.route.snapshot.paramMap.get("accountId") == null) {
         this.reportsManagerId = this.accountService.accountValue.id;
       }

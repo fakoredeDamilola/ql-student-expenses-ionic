@@ -245,7 +245,8 @@ async function getAllReportsManagerReports(reportsManagerId){
 }
 
 
-//right here
+//right here, so this is finding all students while have a specefic reports manager id, 
+// then return array of ONLY those students expenses... 
 async function getReportsExpenses(reportsManagerId) {
   const allReportsAccounts = await db.Account.find({
     reportsManagerId: reportsManagerId,
@@ -343,7 +344,7 @@ async function _delete(id) {
   await account.remove();
 }
 
-
+// This maybe should be moved???
 async function updateReportsOnAccount(accountId, params) {
   const report = await new db.Report(params);
   report.updated = Date.now();
@@ -375,7 +376,7 @@ async function getAccount(id) {
     .populate("reportsManagerExpensesCount")
     .populate("reportsManagerStudentsCount");
   if (!account) throw "Account not found";
-  return await account;
+  return account;
 }
 
 async function getRefreshToken(token) {
