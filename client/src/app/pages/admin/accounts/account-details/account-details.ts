@@ -129,7 +129,6 @@ export class AccountDetailsPage {
 
   async deleteAccount() {
     this.deleting = this.alertService.presentLoading("Deleting Account...");
-    //console.log(this.accountId, "accountId");
     (await this.deleting).present();
     (await this.accountService.delete(this.accountId)).pipe(first()).subscribe({
       next: async () => {

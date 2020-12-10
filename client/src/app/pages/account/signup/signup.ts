@@ -23,30 +23,33 @@ export class SignupPage {
   };
   submitted = false;
   loading = false;
+  signUpLoader: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public router: Router,
     public userData: UserData,
     private accountService: AccountService,
-    private toastAlert: AlertService
+    private alertService: AlertService
   ) {}
 
   async onSignup(form?: NgForm) {
+    this.signUpLoader = this.alertService.presentLoading("Creating Account...");
+    (await this.signUpLoader).present();
     this.submitted = true;
     // stop here if form is invalid
-    if(form.value.title==""){
-      form.value.title="N/A";
+    if (form.value.title == "") {
+      form.value.title = "N/A";
     }
     if (form.invalid) {
       return;
     }
     this.loading = true;
-    //console.log(form.value, "The Form Value");
+
     form.value.confirmPassword = await form.value.password;
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {
-        //TODO Replace with toast alert
-        await this.toastAlert.createToastAlert(
+        (await this.signUpLoader).dismiss();
+        await this.alertService.createToastAlert(
           "Registration successful, please check your email for verification instructions",
           "success",
           5000
@@ -56,7 +59,8 @@ export class SignupPage {
         });
       },
       error: async (error) => {
-        await this.toastAlert.createToastAlert(
+        (await this.signUpLoader).dismiss();
+        await this.alertService.createToastAlert(
           "Registration Failed!",
           "danger",
           5000

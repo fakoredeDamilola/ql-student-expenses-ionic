@@ -32,20 +32,22 @@ export class CreateAccountPage {
 
   loadReportsManagersListDone: boolean = false;
   loadReportsManagerReportsListDone: boolean = false;
+  signUpLoader: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public router: Router,
     public userData: UserData,
     private accountService: AccountService,
-    private toastAlert: AlertService,
+    private alertService: AlertService,
     private _location: Location
   ) {}
 
   ionViewWillEnter() {}
 
   async onSignup(form?: NgForm) {
+    this.signUpLoader = this.alertService.presentLoading("Creating Account...");
+    (await this.signUpLoader).present();
     this.submitted = true;
-
     // stop here if form is invalid
     if (form.invalid) {
       return;
@@ -60,8 +62,8 @@ export class CreateAccountPage {
     form.value.acceptTerms = true;
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {
-        await this.toastAlert.createToastAlert(
-          "Email Sent for verification instructions",
+        await this.alertService.createToastAlert(
+          `Email Sent To ${form.value.firstName} for verification instructions`,
           "success",
           5000
         );
@@ -69,7 +71,7 @@ export class CreateAccountPage {
         this._location.back();
       },
       error: async (error) => {
-        await this.toastAlert.createToastAlert(
+        await this.alertService.createToastAlert(
           "Email Invite Failed Failed!",
           "danger",
           5000
