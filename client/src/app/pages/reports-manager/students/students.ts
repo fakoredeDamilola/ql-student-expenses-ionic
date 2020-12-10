@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
-import { IonRouterOutlet, ModalController } from "@ionic/angular";
+import { Config, IonRouterOutlet, ModalController } from "@ionic/angular";
 
 @Component({
   selector: "page-students-list",
@@ -25,10 +25,12 @@ export class StudentsListPage {
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public config: Config
   ) {}
 
   async ionViewWillEnter() {
+    this.ios = (await this.config.get("mode")) === "ios";
     this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();

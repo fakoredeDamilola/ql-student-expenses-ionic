@@ -59,6 +59,7 @@ export class ExpensesListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.ios = (await this.config.get("mode")) === "ios";
     this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
@@ -69,7 +70,6 @@ export class ExpensesListPage {
     this.otherIsChecked = true;
     // Not always though when admin
     this.reportsManagerId = this.accountService.accountValue.id;
-    this.ios = (await this.config.get("mode")) === "ios";
     // Incase Admins Are Viewing another reports manager expenses list As Them
     if (this.accountService.accountValue.role == "Admin") {
       this.roleViewer="A";//<-----Admin... used to hide back button

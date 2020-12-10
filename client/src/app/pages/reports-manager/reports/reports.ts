@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
-import { LoadingController } from "@ionic/angular";
+import { Config, LoadingController } from "@ionic/angular";
 import { Location } from "@angular/common";
 import * as moment from "moment";
 
@@ -27,10 +27,12 @@ export class ReportsListPage {
     private accountService: AccountService,
     private alertService: AlertService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public config: Config
   ) {}
 
   async ionViewWillEnter() {
+    this.ios = (await this.config.get("mode")) === "ios";
     this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();

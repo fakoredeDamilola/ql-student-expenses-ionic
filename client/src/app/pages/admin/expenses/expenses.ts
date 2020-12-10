@@ -57,6 +57,7 @@ export class ExpensesPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.ios = (await this.config.get("mode")) === "ios";
     this.data=false;//used for skeleton
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
@@ -64,7 +65,7 @@ export class ExpensesPage {
     this.hotelIsChecked = true;
     this.entertainmentIsChecked = true;
     this.otherIsChecked = true;
-    this.ios = (await this.config.get("mode")) === "ios";
+
     (await this.expenseService.getAll())
       .forEach(async (Element) => {
         this.allExpenses = Element;
