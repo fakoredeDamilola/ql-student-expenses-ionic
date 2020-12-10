@@ -9,13 +9,6 @@ const routes: Routes = [
     component: Account,
     children: [
       {
-        path: "profile",
-        loadChildren: () =>
-          import("@app/pages/account/profile/profile.module").then(
-            (m) => m.ProfileModule
-          ),
-      },
-      {
         path: "expenses",
         loadChildren: () =>
           import("@app/pages/account/expenses/expenses-list.module").then(

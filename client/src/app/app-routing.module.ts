@@ -66,6 +66,14 @@ const routes: Routes = [
     loadChildren: () =>
       import("@app/pages/support/support.module").then((m) => m.SupportModule),
   },
+
+  {
+    path: "account/profile",
+    loadChildren: () =>
+      import("@app/pages/profile/profile.module").then(
+        (m) => m.ProfileModule
+      ),
+  },
 ];
 
 @NgModule({
