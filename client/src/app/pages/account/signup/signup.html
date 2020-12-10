@@ -17,19 +17,15 @@
     <ion-list lines="none">
 
       <ion-item>
-        <ion-label position="floating" color="primary">Title</ion-label>
-        <ion-select [(ngModel)]="signup.title" name="title" #title="ngModel" required>
+        <ion-label position="floating" color="primary">Title (Optional)</ion-label>
+        <ion-select [(ngModel)]="signup.title" name="title" #title="ngModel">
           <ion-select-option>Mr</ion-select-option>
           <ion-select-option>Mrs</ion-select-option>
           <ion-select-option>Miss</ion-select-option>
           <ion-select-option>Ms</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-text color="danger">
-        <p [hidden]="title.valid || submitted == false" class="ion-padding-start">
-          Title is required
-        </p>
-      </ion-text>
+
 
       <ion-item>
         <ion-label position="floating" color="primary">First Name</ion-label>
@@ -55,12 +51,17 @@
 
       <ion-item>
         <ion-label position="floating" color="primary">Email</ion-label>
-        <ion-input [(ngModel)]="signup.email" name="email" type="text" #email="ngModel" required>
+        <ion-input [(ngModel)]="signup.email" name="email" type="text" #email="ngModel" required [email]="true">
         </ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
-          Email is required
+          Email is invalid
+        </p>
+      </ion-text>
+      <ion-text color="danger">
+        <p [hidden]="email || submitted == false" class="ion-padding-start">
+          Email is Required
         </p>
       </ion-text>
 

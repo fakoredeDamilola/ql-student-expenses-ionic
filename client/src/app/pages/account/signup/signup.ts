@@ -33,13 +33,15 @@ export class SignupPage {
 
   async onSignup(form?: NgForm) {
     this.submitted = true;
-
     // stop here if form is invalid
+    if(form.value.title==""){
+      form.value.title="N/A";
+    }
     if (form.invalid) {
       return;
     }
     this.loading = true;
-    console.log(form.value, "The Form Value");
+    //console.log(form.value, "The Form Value");
     form.value.confirmPassword = await form.value.password;
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {
@@ -49,8 +51,9 @@ export class SignupPage {
           "success",
           5000
         );
-        await this.userData.signup(this.signup.email);
-        await this.router.navigateByUrl("/login");
+        await this.userData.signup(this.signup.email).finally(async () => {
+          await this.router.navigateByUrl("/login");
+        });
       },
       error: async (error) => {
         await this.toastAlert.createToastAlert(
