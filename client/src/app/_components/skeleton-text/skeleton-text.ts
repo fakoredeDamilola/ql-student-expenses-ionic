@@ -1,3 +1,5 @@
+// TODO ADD GENERIC SKELETON VIEW COMPONENT
+
 import { Component } from '@angular/core';
 
 
