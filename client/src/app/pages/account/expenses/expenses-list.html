@@ -50,10 +50,10 @@
                 <ion-skeleton-text animated></ion-skeleton-text>
               </ion-avatar>
               <ion-label>
-                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
                 <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
               </ion-label>
             </ion-item>
         </ion-card>
@@ -78,7 +78,7 @@
   </div>
 
   <!--When data arives-->
-  <ion-grid fixed *ngIf="data==true">
+  <ion-grid fixed *ngIf="data">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let expense of expensesList"
       [hidden]="expense.expenseCategory == foodCondition || expense.expenseCategory == hotelCondition || expense.expenseCategory== entertainmentCondition || expense.expenseCategory == otherCondition || ((expense.expenseName.indexOf(queryText)==-1)  && queryText)">

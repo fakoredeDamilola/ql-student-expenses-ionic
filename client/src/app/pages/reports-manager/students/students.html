@@ -67,7 +67,7 @@
 </ion-row>
 </div>
 
-  <ion-grid fixed *ngIf="data==true">
+  <ion-grid fixed *ngIf="data">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let student of studentsList"
         [hidden]="((student.firstName.indexOf(queryText)==-1 && student.lastName.indexOf(queryText)==-1 && student.email.indexOf(queryText)==-1)  && queryText)">

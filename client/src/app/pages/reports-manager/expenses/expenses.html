@@ -77,7 +77,7 @@
 </ion-row>
 </div>
 
-  <ion-grid fixed *ngIf="data==true">
+  <ion-grid fixed *ngIf="data">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let expense of reportsExpenses"
         [hidden]="expense.expenseCategory == foodCondition || expense.expenseCategory == hotelCondition || expense.expenseCategory== entertainmentCondition || expense.expenseCategory == otherCondition || ((expense.expenseName.indexOf(queryText)==-1 && expense.expenseReport[0].reportName.indexOf(queryText)==-1 && expense.expenseStudent[0].firstName.indexOf(queryText)==-1 && expense.expenseStudent[0].lastName.indexOf(queryText)==-1)  && queryText)">
