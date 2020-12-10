@@ -40,7 +40,7 @@ export class ForgotPasswordPage {
       .subscribe({
         next: () =>
           this.alertService.createToastAlert(
-            "Please check your email for password reset instructions",
+            "Please check your email for password reset instructions...",
             "success",
             5000
           ),
