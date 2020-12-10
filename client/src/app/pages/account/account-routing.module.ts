@@ -15,7 +15,6 @@ const routes: Routes = [
             (m) => m.ExpensesListModule
           ),
       },
-      { path: "verify-email", component: VerifyEmailComponent },
     ],
   },
 ];

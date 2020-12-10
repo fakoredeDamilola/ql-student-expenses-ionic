@@ -1,8 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "@app/_helpers";
-import { LoggedInGuard } from "@app/_helpers"
+//import { LoggedInGuard } from "@app/_helpers"
 import { Role } from "@app/_models";
+import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -66,6 +67,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("@app/pages/support/support.module").then((m) => m.SupportModule),
   },
+  { path: "verify-email", component: VerifyEmailComponent },
 
   {
     path: "account/profile",
