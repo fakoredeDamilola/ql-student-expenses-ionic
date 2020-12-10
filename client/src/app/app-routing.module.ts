@@ -67,7 +67,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("@app/pages/support/support.module").then((m) => m.SupportModule),
   },
-  { path: "verify-email", component: VerifyEmailComponent },
+  { path: "account/verify-email", component: VerifyEmailComponent },
 
   {
     path: "account/profile",
