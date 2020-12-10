@@ -41,6 +41,7 @@ export class SignupPage {
       form.value.title = "N/A";
     }
     if (form.invalid) {
+      (await this.signUpLoader).dismiss();
       return;
     }
     this.loading = true;
@@ -65,6 +66,7 @@ export class SignupPage {
           "danger",
           5000
         );
+        (await this.signUpLoader).dismiss();
         this.loading = false;
       },
     });

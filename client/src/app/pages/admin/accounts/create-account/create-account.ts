@@ -50,6 +50,7 @@ export class CreateAccountPage {
     this.submitted = true;
     // stop here if form is invalid
     if (form.invalid) {
+      (await this.signUpLoader).dismiss();
       return;
     }
     this.loading = true;
@@ -62,6 +63,7 @@ export class CreateAccountPage {
     form.value.acceptTerms = true;
     (await this.accountService.register(form.value)).pipe(first()).subscribe({
       next: async () => {
+        (await this.signUpLoader).dismiss();
         await this.alertService.createToastAlert(
           `Email Sent To ${form.value.firstName} for verification instructions`,
           "success",
@@ -71,6 +73,7 @@ export class CreateAccountPage {
         this._location.back();
       },
       error: async (error) => {
+        (await this.signUpLoader).dismiss();
         await this.alertService.createToastAlert(
           "Email Invite Failed Failed!",
           "danger",

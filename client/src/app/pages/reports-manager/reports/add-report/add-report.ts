@@ -45,6 +45,7 @@ export class AddReportPage {
     this.submitted = true;
     // stop here if form is invalid, not relevent here, only have optional name...
     if (form.invalid) {
+      (await this.creatingReport).dismiss();
       this.alertService.createToastAlert(
         "Create Report failed, fields are invalid.....!",
         "danger",
