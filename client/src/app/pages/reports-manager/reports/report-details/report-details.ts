@@ -37,6 +37,8 @@ export class ReportDetailsPage {
   totalOfReportExpensesString: string;
   calculatingDisbursementsLoader: Promise<HTMLIonLoadingElement>;
   reportCreated: any;
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
+  data: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -53,6 +55,7 @@ export class ReportDetailsPage {
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
+    this.data=false;
     // Reset because of weird behavior observed...
     this.totalOfReportExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -111,6 +114,7 @@ export class ReportDetailsPage {
           })
           .finally(async () => {
             setTimeout(async () => {
+              this.data=true;
               (await this.loading).dismiss();
             }, 100);
           });

@@ -23,7 +23,7 @@ export class AccountDetailsPage {
     updated: "",
     isVerified: true,
     created: "",
-    title: ""
+    title: "",
   };
 
   key: any;
@@ -47,6 +47,8 @@ export class AccountDetailsPage {
   reportsManagerReportsCount: any;
   reportsManager: any;
   studentReport: any;
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
+  data: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -58,9 +60,10 @@ export class AccountDetailsPage {
     private _location: Location
   ) {}
   async ionViewWillEnter() {
+    this.data = false;
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     //reseting expense total
-    this.totalOfExpenses =0;
+    this.totalOfExpenses = 0;
     (await this.loading).present();
     // The account your viewing....
     this.accountId = this.route.snapshot.paramMap.get("accountId");
@@ -96,10 +99,9 @@ export class AccountDetailsPage {
           "MM-DD-YYYY @HH:mm:ss"
         );
       })
-      .finally(() => {
-        setTimeout(async () => {
-          (await this.loading).dismiss();
-        }, 100);
+      .finally(async () => {
+        this.data = true;
+        (await this.loading).dismiss();
       });
   }
 
@@ -151,7 +153,7 @@ export class AccountDetailsPage {
     });
   }
 
-  async changeAccount(contextParamValue:string) {
+  async changeAccount(contextParamValue: string) {
     let popUpText: string;
     // getting and setting current values
     let currentValue: string | boolean;

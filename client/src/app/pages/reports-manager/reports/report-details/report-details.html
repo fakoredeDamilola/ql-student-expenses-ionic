@@ -12,6 +12,19 @@
 
   </div>
 
+  <!--Skeleton-->
+  <div *ngIf="!data">
+    <h3><b><u>Report Details:</u></b></h3>
+    <h1><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></h1><br>
+    <h3><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text><br></h3>
+    <ion-row *ngFor="let item of deadData">
+      <ion-col>
+        <ion-item><ion-skeleton-text animated style="width: 100%;size: 25px;" ><br><br></ion-skeleton-text></ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+
+<div *ngIf="data">
 
 
   <ion-row>
@@ -155,4 +168,6 @@
       <ion-button expand="full" shape="block" color="danger" (click)="deleteAreYouSure()">Delete Report</ion-button>
     </ion-col>
   </ion-row>
+
+  </div>
 </ion-content>

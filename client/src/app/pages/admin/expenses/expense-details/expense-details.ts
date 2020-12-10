@@ -31,6 +31,8 @@ export class ExpenseDetailsPage {
   expenseCreatedBy: string;
   expenseReport: any;
   expenseReportsManager: any;
+  deadData= [0,1,2,3,4,5,6,7,8];//skeleton
+  data: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -48,6 +50,7 @@ export class ExpenseDetailsPage {
   }
 
   async ionViewWillEnter() {
+    this.data=false;
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
@@ -67,9 +70,8 @@ export class ExpenseDetailsPage {
         );
       })
       .finally(async () => {
-        setTimeout(async () => {
+          this.data=true;
           (await this.loading).dismiss();
-        }, 100);
       });
   }
 

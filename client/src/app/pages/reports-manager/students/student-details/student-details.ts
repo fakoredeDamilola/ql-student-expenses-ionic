@@ -26,6 +26,8 @@ export class StudentDetailsPage {
   reportName: string;
   isVerified: boolean;
   totalOfExpenses: number = 0;
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
+  data: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -37,6 +39,7 @@ export class StudentDetailsPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.data=false;
     // reseting this because of a bug noticed..
     this.totalOfExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -73,6 +76,7 @@ export class StudentDetailsPage {
       })
       .finally(async () => {
         setTimeout(async () => {
+          this.data=true;
           (await this.loading).dismiss();
         }, 100);
       });
