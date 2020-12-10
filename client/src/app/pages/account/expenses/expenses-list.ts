@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { SkeletonText } from '@app/_components/skeleton-text/skeleton-text';
 import { Expense } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
 import { IonRouterOutlet, ModalController } from "@ionic/angular";
@@ -29,6 +30,8 @@ export class ExpensesListPage {
   hotelCondition: string = "";
   entertainmentCondition: string = "";
   otherCondition: string = "";
+  data: boolean;
+  deadData= [0,1,2,3,4,5,6,7,8];//skeleton
 
   constructor(
     private accountService: AccountService,
@@ -38,6 +41,7 @@ export class ExpensesListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.data = false;//<----Used for skeleton
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     // Reset because of weird behavior noticed
@@ -70,10 +74,9 @@ export class ExpensesListPage {
           ).format("MM-DD-YYYY @HH:mm:ss");
         }
       })
-      .finally(() => {
-        setTimeout(async () => {
+      .finally(async () => {
+          this.data=true;
           (await this.loading).dismiss();
-        }, 100);
       });
   }
 

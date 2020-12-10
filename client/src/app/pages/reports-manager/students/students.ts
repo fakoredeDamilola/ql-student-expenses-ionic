@@ -16,6 +16,8 @@ export class StudentsListPage {
   queryText = "";
   showSearchbar: boolean;
   ios: boolean;
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
+  data: boolean;
 
   constructor(
     private account: AccountService,
@@ -26,6 +28,7 @@ export class StudentsListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     // TODO-Should probably make the bellow check a reusable componenet some how
@@ -42,9 +45,8 @@ export class StudentsListPage {
         this.studentsList = element;
       })
       .finally(async () => {
-        setTimeout(async () => {
-          (await this.loading).dismiss();
-        }, 100);
+        this.data = true;
+        (await this.loading).dismiss();
       });
   }
 

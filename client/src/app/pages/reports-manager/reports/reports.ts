@@ -19,6 +19,8 @@ export class ReportsListPage {
   reportsManagerId: any;
   loading: any;
   currentRoute: string = this.router.url;
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
+  data: boolean;
 
   constructor(
     private accountService: AccountService,
@@ -28,6 +30,7 @@ export class ReportsListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
 
@@ -53,9 +56,8 @@ export class ReportsListPage {
         }
       })
       .finally(async () => {
-        setTimeout(async () => {
-          (await this.loading).dismiss();
-        }, 100);
+        this.data = true;
+        (await this.loading).dismiss();
       });
   }
 }

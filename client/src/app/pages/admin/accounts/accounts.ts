@@ -33,10 +33,12 @@ export class AccountsPage {
   studentsIsChecked: boolean;
   reportsManagersIsChecked: boolean;
   filtersList: any;
+  deadData= [0,1,2,3,4,5,6,7,8];//skeleton
 
   adminCondition: string = "";
   studentCondition: string = "";
   reportsManagerCondition: string = "";
+  data: boolean;
 
   constructor(
     public alertCtrl: AlertController,
@@ -58,7 +60,7 @@ export class AccountsPage {
       .pipe(first())
       .subscribe((accounts) => (this.allAccounts = accounts));
     */
-
+    this.data=false;
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading)
       .present()
@@ -84,9 +86,8 @@ export class AccountsPage {
           });
       })
       .finally(async () => {
-        setTimeout(async () => {
+          this.data=true;
           (await this.loading).dismiss();
-        }, 100);
       });
   }
 

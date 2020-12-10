@@ -40,6 +40,8 @@ export class ExpensesPage {
   hotelCondition: string = "";
   entertainmentCondition: string = "";
   otherCondition: string = "";
+  data: boolean;
+  deadData= [0,1,2,3,4,5,6,7,8];//skeleton
 
   constructor(
     public alertCtrl: AlertController,
@@ -55,6 +57,7 @@ export class ExpensesPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.data=false;//used for skeleton
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
     this.foodIsChecked = true;
@@ -76,9 +79,8 @@ export class ExpensesPage {
         }
       })
       .finally(async () => {
-        setTimeout(async () => {
+          this.data=true;
           (await this.loading).dismiss();
-        }, 100);
       });
   }
 

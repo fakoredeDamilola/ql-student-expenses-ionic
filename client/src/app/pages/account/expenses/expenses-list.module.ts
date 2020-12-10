@@ -5,15 +5,16 @@ import { FormsModule } from "@angular/forms";
 import { ExpensesListPage } from "./expenses-list";
 import { ExpensesListPageRoutingModule } from "./expenses-list-routing.module";
 import { ExpensesFilterPage } from "./expenses-filter/expenses-filter";
+import { SkeletonText } from '@app/_components/skeleton-text/skeleton-text';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
     ExpensesListPageRoutingModule,
-    FormsModule,
+    FormsModule
   ],
-  declarations: [ExpensesListPage, ExpensesFilterPage],
+  declarations: [ExpensesListPage, ExpensesFilterPage, SkeletonText],
   entryComponents: [ExpensesFilterPage],
 })
 export class ExpensesListModule {}
