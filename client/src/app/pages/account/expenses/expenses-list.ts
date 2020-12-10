@@ -82,7 +82,7 @@ export class ExpensesListPage {
       });
   }
 
-  ionViewWillLeave() {
+  async ionViewWillLeave() {
     this.expensesTotal = 0;
   }
 

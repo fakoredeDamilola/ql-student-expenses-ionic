@@ -35,10 +35,16 @@ export class AccountsFilterPage {
     //console.log(filtersListComingIn,"yo Filters List Coming In");
   }
 
-  async selectAll(check: boolean) {
+  async selectAll() {
     this.adminsIsChecked = true;
     this.studentsIsChecked = true;
     this.reportsManagersIsChecked = true;
+  }
+
+  async deSelectAll() {
+    this.adminsIsChecked = false;
+    this.studentsIsChecked = false;
+    this.reportsManagersIsChecked = false;
   }
 
   async applyFilters() {

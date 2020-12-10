@@ -33,11 +33,18 @@ export class ExpensesFilterPage {
     this.otherIsChecked = filtersListComingIn.otherIsChecked;
   }
 
-  async selectAll(check: boolean) {
+  async selectAll() {
     this.foodIsChecked = true;
     this.hotelIsChecked = true;
     this.entertainmentIsChecked = true;
     this.otherIsChecked = true;
+  }
+
+  async deSelectAll() {
+    this.foodIsChecked = false;
+    this.hotelIsChecked = false;
+    this.entertainmentIsChecked = false;
+    this.otherIsChecked = false;
   }
 
   async applyFilters() {
