@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import { SkeletonText } from '@app/_components/skeleton-text/skeleton-text';
 import { Expense } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
-import { IonRouterOutlet, ModalController } from "@ionic/angular";
+import { Config, IonRouterOutlet, ModalController } from "@ionic/angular";
 import * as moment from "moment";
 import { ExpensesFilterPage } from "./expenses-filter/expenses-filter";
 
@@ -37,10 +37,12 @@ export class ExpensesListPage {
     private accountService: AccountService,
     private alertService: AlertService,
     public routerOutlet: IonRouterOutlet,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public config: Config
   ) {}
 
   async ionViewWillEnter() {
+    this.ios = (await this.config.get("mode")) === "ios";
     this.data = false;//<----Used for skeleton
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
