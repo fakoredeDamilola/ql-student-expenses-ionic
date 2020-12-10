@@ -49,7 +49,7 @@ This app is built from Ionic Starter App for tabs and Basic Look and Feel (BLAF)
    -- Invite Students who already have an account, current behavior when a student is added to report, account created for them. 
 6. Test cases (unit tests and e2e), Documentation, Swagger Documentation update.
 7. Trim API calls JSON objects, returning only the data needed for the specific views, modify endpoints.   
-
+   -- Limit returned list size to whats selected, example: 10-25-50-100 , or infinite scroll?
 
 # Bugs
 
