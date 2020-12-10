@@ -99,7 +99,7 @@ export class AccountDetailsPage {
       .finally(() => {
         setTimeout(async () => {
           (await this.loading).dismiss();
-        }, 300);
+        }, 100);
       });
   }
 
@@ -151,7 +151,7 @@ export class AccountDetailsPage {
     });
   }
 
-  async changeAccount(contextParamValue) {
+  async changeAccount(contextParamValue:string) {
     let popUpText: string;
     // getting and setting current values
     let currentValue: string | boolean;

@@ -112,7 +112,7 @@ export class ReportDetailsPage {
           .finally(async () => {
             setTimeout(async () => {
               (await this.loading).dismiss();
-            }, 400);
+            }, 100);
           });
       });
   }

@@ -78,7 +78,7 @@ export class ExpensesPage {
       .finally(async () => {
         setTimeout(async () => {
           (await this.loading).dismiss();
-        }, 300);
+        }, 100);
       });
   }
 

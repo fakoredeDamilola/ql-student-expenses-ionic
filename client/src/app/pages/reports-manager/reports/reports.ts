@@ -55,7 +55,7 @@ export class ReportsListPage {
       .finally(async () => {
         setTimeout(async () => {
           (await this.loading).dismiss();
-        }, 300);
+        }, 100);
       });
   }
 }

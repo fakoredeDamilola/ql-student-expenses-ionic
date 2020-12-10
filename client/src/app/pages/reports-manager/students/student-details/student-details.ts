@@ -74,7 +74,7 @@ export class StudentDetailsPage {
       .finally(async () => {
         setTimeout(async () => {
           (await this.loading).dismiss();
-        }, 300);
+        }, 100);
       });
   }
 

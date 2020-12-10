@@ -69,11 +69,11 @@ export class ExpenseDetailsPage {
       .finally(async () => {
         setTimeout(async () => {
           (await this.loading).dismiss();
-        }, 300);
+        }, 100);
       });
   }
 
-  async editExpense(contextParamValue) {
+  async editExpense(contextParamValue:string) {
     let popUpText: string;
     let currentValue: string | boolean;
 
@@ -194,7 +194,7 @@ export class ExpenseDetailsPage {
                   );
                   setTimeout(async () => {
                     (await this.savingExpense).dismiss();
-                  }, 300);
+                  }, 100);
                   return;
                 }
               }
