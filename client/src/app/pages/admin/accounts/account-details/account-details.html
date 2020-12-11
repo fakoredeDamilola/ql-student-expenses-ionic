@@ -44,7 +44,9 @@
     <ion-row>
       <ion-col style="text-align: center;">
         <h2>Account Details</h2>
-        <h4>Last Logged In <span *ngIf="account.lastLogin">{{account.lastLogin}}</span><span *ngIf="!account.lastLogin">Has Not Logged In Yet</span></h4>
+        <h4>Last Login: <span *ngIf="account.lastLogin">{{account.lastLogin}}</span><span *ngIf="!account.lastLogin">N/A</span></h4>
+        <ion-badge *ngIf="account.isOnline" color="success"> ONLINE </ion-badge>
+        <ion-badge *ngIf="!account.isOnline" color="medium"> OFFLINE </ion-badge>
       </ion-col>
     </ion-row>
     <ion-list inset>
