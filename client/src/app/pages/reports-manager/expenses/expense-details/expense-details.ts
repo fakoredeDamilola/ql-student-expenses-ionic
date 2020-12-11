@@ -53,7 +53,7 @@ export class ExpenseDetailsPage {
     this.data = false;
     // back route after adding an expense
     this.backRoute = this.currentRoute.split(
-      "/student-expenses/expense-details/"
+      "/expense-details/"
     )[0];
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
