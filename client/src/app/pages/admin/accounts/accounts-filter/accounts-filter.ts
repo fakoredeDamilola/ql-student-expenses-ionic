@@ -15,6 +15,7 @@ export class AccountsFilterPage {
   reportsManagersIsChecked: boolean;
 
   filtersList: any;
+  isOnline: string;
 
   constructor(
     private config: Config,
@@ -24,27 +25,27 @@ export class AccountsFilterPage {
 
   async ionViewWillEnter() {
     this.ios = this.config.get("mode") === `ios`;
-
     const filtersListComingIn = this.navParams.get("filtersList");
-
     this.adminsIsChecked = filtersListComingIn.adminsIsChecked;
     this.studentsIsChecked = filtersListComingIn.studentsIsChecked;
     this.reportsManagersIsChecked =
       filtersListComingIn.reportsManagersIsChecked;
-
-    //console.log(filtersListComingIn,"yo Filters List Coming In");
+    this.isOnline = filtersListComingIn.isOnline;
   }
 
   async selectAll() {
     this.adminsIsChecked = true;
     this.studentsIsChecked = true;
     this.reportsManagersIsChecked = true;
+    this.isOnline = "undefined";
   }
 
   async deSelectAll() {
     this.adminsIsChecked = false;
     this.studentsIsChecked = false;
     this.reportsManagersIsChecked = false;
+    this.isOnline = "undefined";
+
   }
 
   async applyFilters() {
@@ -53,6 +54,7 @@ export class AccountsFilterPage {
       adminsIsChecked: this.adminsIsChecked,
       studentsIsChecked: this.studentsIsChecked,
       reportsManagersIsChecked: this.reportsManagersIsChecked,
+      isOnline: this.isOnline,
     };
     this.dismiss(this.filtersList);
   }

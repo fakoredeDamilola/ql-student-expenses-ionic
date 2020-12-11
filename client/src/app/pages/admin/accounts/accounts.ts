@@ -33,12 +33,14 @@ export class AccountsPage {
   studentsIsChecked: boolean;
   reportsManagersIsChecked: boolean;
   filtersList: any;
-  deadData= [0,1,2,3,4,5,6,7,8];//skeleton
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
 
   adminCondition: string = "";
   studentCondition: string = "";
   reportsManagerCondition: string = "";
   data: boolean;
+  isOnline: any;
+  onOffCondition: any;
 
   constructor(
     public alertCtrl: AlertController,
@@ -60,7 +62,7 @@ export class AccountsPage {
       .pipe(first())
       .subscribe((accounts) => (this.allAccounts = accounts));
     */
-    this.data=false;
+    this.data = false;
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading)
       .present()
@@ -68,6 +70,8 @@ export class AccountsPage {
         this.adminsIsChecked = true;
         this.studentsIsChecked = true;
         this.reportsManagersIsChecked = true;
+        this.isOnline = "undefined";
+        this.onOffCondition = undefined;
         this.ios = this.config.get("mode") === "ios";
       })
       .then(async () => {
@@ -86,8 +90,8 @@ export class AccountsPage {
           });
       })
       .finally(async () => {
-          this.data=true;
-          (await this.loading).dismiss();
+        this.data = true;
+        (await this.loading).dismiss();
       });
   }
 
@@ -102,6 +106,14 @@ export class AccountsPage {
     this.reportsManagersIsChecked
       ? (this.reportsManagerCondition = "")
       : (this.reportsManagerCondition = "ReportsManager");
+    // Online / Offline Check
+    this.isOnline == "true"
+      ? (this.onOffCondition = false)
+      : this.isOnline == "false"
+      ? (this.onOffCondition = true)
+      : (this.onOffCondition = undefined);
+
+    //this.onOffCondition = this.isOnline;
   }
 
   async presentFilter() {
@@ -109,6 +121,7 @@ export class AccountsPage {
       adminsIsChecked: this.adminsIsChecked,
       studentsIsChecked: this.studentsIsChecked,
       reportsManagersIsChecked: this.reportsManagersIsChecked,
+      isOnline: this.isOnline,
     };
 
     const modal = await this.modalCtrl.create({
@@ -124,6 +137,7 @@ export class AccountsPage {
       this.adminsIsChecked = await data.adminsIsChecked;
       this.studentsIsChecked = await data.studentsIsChecked;
       this.reportsManagersIsChecked = await data.reportsManagersIsChecked;
+      this.isOnline = await data.isOnline;
       this.updateView();
     }
   }
