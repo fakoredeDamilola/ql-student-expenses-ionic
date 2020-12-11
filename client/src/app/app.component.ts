@@ -150,6 +150,7 @@ export class AppComponent implements OnInit {
   }
 
   async updateLoggedInStatus(loggedIn: boolean) {
+    this.checkDarkMode();// I really like dark mode
     setTimeout(async () => {
       this.loggedIn = loggedIn;
     }, 300);
@@ -157,6 +158,7 @@ export class AppComponent implements OnInit {
 
   async listenForLoginEvents() {
     window.addEventListener("user:login", async () => {
+
       await this.updateLoggedInStatus(true);
     });
 

@@ -18,7 +18,9 @@ export class UserData {
 
   async login(email: string): Promise<any> {
     await this.storage.set(this.HAS_LOGGED_IN, true);
+    //console.log(email,"???huh")
     await this.setUsername(email);
+
     return window.dispatchEvent(new CustomEvent("user:login"));
   }
 
@@ -31,11 +33,13 @@ export class UserData {
 
   // For setting and retrieving dark mode setting... very cool
   async setDarkMode(onOff: boolean): Promise<any> {
-    await this.storage.set(this.IS_DARK_MODE, onOff);
+    const userName= await this.getUsername();
+      await this.storage.set(`${this.IS_DARK_MODE}-${userName}`, onOff);
   }
 
   async isDarkMode(): Promise<boolean> {
-    return await this.storage.get(this.IS_DARK_MODE).then(async (value) => {
+    const userName= await this.getUsername();
+    return await this.storage.get(`${this.IS_DARK_MODE}-${userName}`).then(async (value) => {
       return (await value) === true;
     });
   }
