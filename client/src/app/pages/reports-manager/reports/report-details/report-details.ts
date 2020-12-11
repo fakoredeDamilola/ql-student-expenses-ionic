@@ -60,9 +60,7 @@ export class ReportDetailsPage {
   async ionViewWillEnter() {
     this.data = false;
     this.calculatingDisbursements = false;
-    this.backRoute = this.currentRoute.split(
-      "/report-details"
-    )[0];
+    this.backRoute = this.currentRoute.split("/report-details")[0];
     // Reset because of weird behavior observed...
     this.totalOfReportExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
