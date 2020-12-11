@@ -87,12 +87,12 @@ export class AppComponent implements OnInit {
   }
 
   async ionViewWillEnter() {
-
+    this.checkDarkMode();
     this.ios = (await this.config.get("mode")) === "ios";
   }
 
   async ngOnInit() {
-
+    this.checkDarkMode();
     this.ios = (await this.config.get("mode")) === "ios";
     this.splashScreen.show();
     await this.checkLoginStatus();
@@ -128,6 +128,22 @@ export class AppComponent implements OnInit {
       .then(async () => {
         (await this.loading).dismiss();
       });
+  }
+
+  // Saving dark mode setting to storage
+  async saveDarkModeChange(dark:boolean){
+    const darkMode = await this.userData.setDarkMode(dark);
+  }
+
+  async checkDarkMode() {
+    const darkMode = await this.userData.isDarkMode();
+    return this.updateDarkModeStatus(darkMode);
+  }
+
+  async updateDarkModeStatus(darkMode: boolean) {
+    setTimeout(async () => {
+      this.dark = darkMode;
+    }, 100);
   }
 
   async checkLoginStatus() {

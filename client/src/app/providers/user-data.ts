@@ -8,11 +8,13 @@ import { Storage } from "@ionic/storage";
 export class UserData {
   favorites: string[] = [];
   HAS_LOGGED_IN = "hasLoggedIn";
+  IS_DARK_MODE = "darkModeActivated";
 
-  constructor(public storage: Storage,
-     public account: AccountService,
-     private toastAlert: AlertService
-     ) {}
+  constructor(
+    public storage: Storage,
+    public account: AccountService,
+    private toastAlert: AlertService
+  ) {}
 
   async login(email: string): Promise<any> {
     await this.storage.set(this.HAS_LOGGED_IN, true);
@@ -21,19 +23,34 @@ export class UserData {
   }
 
   async signup(email: string): Promise<any> {
-    (async () => {
+    async () => {
       await this.setUsername(email);
       return;
+    };
+  }
+
+  // For setting and retrieving dark mode setting... very cool
+  async setDarkMode(onOff: boolean): Promise<any> {
+    await this.storage.set(this.IS_DARK_MODE, onOff);
+  }
+
+  async isDarkMode(): Promise<boolean> {
+    return await this.storage.get(this.IS_DARK_MODE).then(async (value) => {
+      return (await value) === true;
     });
   }
 
   async logout(): Promise<any> {
     await this.storage.remove(this.HAS_LOGGED_IN);
-    await this.account.logout();
+    this.account.logout();
     await this.storage.remove("email");
     window.dispatchEvent(new CustomEvent("user:logout"));
     //location.reload();
-    return this.toastAlert.createToastAlert("Logout Successful","primary",4000);
+    return this.toastAlert.createToastAlert(
+      "Logout Successful",
+      "primary",
+      4000
+    );
   }
 
   async setUsername(email: string): Promise<any> {
@@ -51,5 +68,4 @@ export class UserData {
       return (await value) === true;
     });
   }
-
 }

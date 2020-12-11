@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { SkeletonText } from '@app/_components/skeleton-text/skeleton-text';
+import { SkeletonText } from "@app/_components/skeleton-text/skeleton-text";
 import { Expense } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
 import { Config, IonRouterOutlet, ModalController } from "@ionic/angular";
@@ -31,7 +31,7 @@ export class ExpensesListPage {
   entertainmentCondition: string = "";
   otherCondition: string = "";
   data: boolean;
-  deadData= [0,1,2,3,4,5,6,7,8];//skeleton
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
 
   constructor(
     private accountService: AccountService,
@@ -43,11 +43,11 @@ export class ExpensesListPage {
 
   async ionViewWillEnter() {
     this.ios = (await this.config.get("mode")) === "ios";
-    this.data = false;//<----Used for skeleton
-    this.loading = this.alertService.presentLoading("Student Expenses");
-    (await this.loading).present();
+    this.data = false; //<----Used for skeleton
     // Reset because of weird behavior noticed
     this.expensesTotal = 0;
+    this.loading = this.alertService.presentLoading("Student Expenses");
+    (await this.loading).present();
     this.foodIsChecked = true;
     this.hotelIsChecked = true;
     this.entertainmentIsChecked = true;
@@ -77,8 +77,8 @@ export class ExpensesListPage {
         }
       })
       .finally(async () => {
-          this.data=true;
-          (await this.loading).dismiss();
+        this.data = true;
+        (await this.loading).dismiss();
       });
   }
 

@@ -35,7 +35,7 @@
   </ion-header>
   <ion-content>
     <ion-item-divider sticky>
-      <ion-item slot='start'>Total:${{expensesTotal}}</ion-item>
+      <ion-item slot='start'>Total:$<ion-skeleton-text *ngIf="!data" animated style="width: 100%"></ion-skeleton-text><span *ngIf="data">{{expensesTotal}}</span></ion-item>
       <ion-button shape="round" fill="outline" slot="end" routerLink="/account/expenses/add">
         <ion-icon name="add-outline"></ion-icon>Create Expense
       </ion-button>
