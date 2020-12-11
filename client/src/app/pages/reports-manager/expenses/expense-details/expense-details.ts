@@ -32,6 +32,7 @@ export class ExpenseDetailsPage {
   expenseReport: any;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
+  backRoute: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -50,6 +51,10 @@ export class ExpenseDetailsPage {
 
   async ionViewWillEnter() {
     this.data = false;
+    // back route after adding an expense
+    this.backRoute = this.currentRoute.split(
+      "/student-expenses/expense-details/"
+    )[0];
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
@@ -284,7 +289,7 @@ export class ExpenseDetailsPage {
           "success",
           8000
         );
-        this._location.back();
+        this.router.navigateByUrl(this.backRoute);
       },
       error: async (error) => {
         (await this.deleting).dismiss();

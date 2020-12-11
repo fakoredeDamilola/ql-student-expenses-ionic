@@ -9,10 +9,19 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="speaker-background">
-
+  <div class="ion-padding-top ion-text-center">
+    <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar">
   </div>
+  <ion-row>
+    <ion-col style="text-align: center;">
+      <h2>Student Details</h2>
+      <h4>Last Login: <span *ngIf="student.lastLogin">{{student.lastLogin}}</span><span *ngIf="!student.lastLogin">N/A</span></h4>
+      <ion-badge *ngIf="student.isOnline" color="success"> ONLINE </ion-badge>
+      <ion-badge *ngIf="!student.isOnline" color="medium"> OFFLINE </ion-badge>
+    </ion-col>
+  </ion-row>
   <ion-list inset>
+
 
     <!--Skeleton-->
   <div *ngIf="!data">
@@ -35,20 +44,20 @@
 
   <ion-row>
     <ion-col>
-      <ion-item><b>Name:&nbsp;</b>{{firstName}} {{lastName}}</ion-item>
+      <ion-item><b>Name:&nbsp;</b>{{student.firstName}} {{student.lastName}}</ion-item>
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col>
-      <ion-item><b>Email:&nbsp;</b>{{email}}&nbsp;<ion-icon *ngIf="isVerified==true" style="color:green" name="checkmark-circle"></ion-icon>
-        <ion-icon name="checkmark-circle"  *ngIf="isVerified==false" style="color: firebrick;"></ion-icon>&nbsp;</ion-item>
+      <ion-item><b>Email:&nbsp;</b>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green" name="checkmark-circle"></ion-icon>
+        <ion-icon name="checkmark-circle"  *ngIf="student.isVerified==false" style="color: firebrick;"></ion-icon>&nbsp;</ion-item>
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col>
-      <ion-item><b>Account Created:&nbsp;</b> {{created}}</ion-item>
+      <ion-item><b>Student Created:&nbsp;</b> {{student.created}}</ion-item>
     </ion-col>
   </ion-row>
   <!--Property Details Section-->
@@ -58,6 +67,10 @@
      <h3><u><b>Student Expenses:</b></u></h3>
     </ion-col>
   </ion-row>
+
+  <ion-button routerLink="{{currentRoute}}/student-expenses/add" shape="round" fill="outline">
+    <ion-icon name="add-outline"></ion-icon>Add Expense For Student
+  </ion-button>
 
   <ion-grid fixed>
     <ion-row>

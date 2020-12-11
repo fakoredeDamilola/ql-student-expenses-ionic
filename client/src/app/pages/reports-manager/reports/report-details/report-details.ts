@@ -41,6 +41,7 @@ export class ReportDetailsPage {
   data: boolean;
   calculatingDisbursements: boolean;
   disbursementResults: boolean;
+  backRoute: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -59,6 +60,9 @@ export class ReportDetailsPage {
   async ionViewWillEnter() {
     this.data = false;
     this.calculatingDisbursements = false;
+    this.backRoute = this.currentRoute.split(
+      "/report-details"
+    )[0];
     // Reset because of weird behavior observed...
     this.totalOfReportExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -224,7 +228,7 @@ export class ReportDetailsPage {
             "success",
             8000
           );
-          this._location.back();
+          this.router.navigateByUrl(this.backRoute);
         },
         error: async (error) => {
           (await this.deleting).dismiss();

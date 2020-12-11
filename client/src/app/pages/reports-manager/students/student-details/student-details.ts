@@ -12,11 +12,9 @@ import * as moment from "moment";
   styleUrls: ["./student-details.scss"],
 })
 export class StudentDetailsPage {
-  studentId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  created: any;
+
+  student={id:"", firstName:"", lastName:"", email:"", created:"", updated:"", lastLogin:"", isOnline:false, isVerified:false };
+
 
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
@@ -44,7 +42,7 @@ export class StudentDetailsPage {
     this.totalOfExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
-    this.studentId = this.route.snapshot.paramMap.get("studentId");
+    this.student.id = this.route.snapshot.paramMap.get("studentId");
     // get id out of url for non admins
     if (this.accountService.accountValue.role != "Admin") {
       window.history.replaceState(
@@ -54,13 +52,9 @@ export class StudentDetailsPage {
       );
     }
 
-    (await this.accountService.getById(this.studentId))
+    (await this.accountService.getById(this.student.id))
       .forEach(async (Element) => {
-        this.firstName = Element.firstName;
-        this.lastName = Element.lastName;
-        this.email = Element.email;
-        this.created = Element.created;
-        this.isVerified = Element.isVerified;
+        this.student = Element;
         this.studentExpenses = Element.studentExpenses;
         this.expensesLength = Element.studentExpenses.length;
       })

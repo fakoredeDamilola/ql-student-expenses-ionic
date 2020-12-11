@@ -83,8 +83,9 @@
                     <div>
                       <ion-avatar style="text-align: center;">
                         <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
-                      </ion-avatar>
-
+                      </ion-avatar><br>
+                      <ion-badge *ngIf="student.isOnline" color="success"> ONLINE </ion-badge>
+                      <ion-badge *ngIf="!student.isOnline" color="medium"> OFFLINE </ion-badge>
                     </div>
                   </ion-label>
                   <ion-label>
