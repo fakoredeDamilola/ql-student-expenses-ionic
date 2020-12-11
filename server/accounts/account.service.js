@@ -27,7 +27,7 @@ module.exports = {
   getReportsExpenses,
   getAllStudentsByReportId,
   getAllReportsManagers,
-  getAllReportsManagerReports
+  getAllReportsManagerReports,
 };
 
 async function authenticate({ email, password, ipAddress }) {
@@ -43,14 +43,23 @@ async function authenticate({ email, password, ipAddress }) {
     //console.log("So whats wrong???")
     throw "Email or password is incorrect";
   }
+  //TODO
+  /*if(account.isOnline){
+    throw "Account already logged in elsewhere..."
+  }*/
 
   // authentication successful so generate jwt and refresh tokens
   const jwtToken = generateJwtToken(account);
   const refreshToken = await generateRefreshToken(account, ipAddress);
 
   // save refresh token
-  await refreshToken.save();
 
+  await refreshToken.save();
+  // track last log in
+  account.lastLogin = Date.now();
+  // track online status
+  account.isOnline = true;
+  await account.save();
   // return basic details and tokens
   return {
     ...basicDetails(account),
@@ -83,8 +92,17 @@ async function refreshToken({ token, ipAddress }) {
   };
 }
 
+// Being logged out either on own accord or JWT expired
 async function revokeToken({ token, ipAddress }) {
   const refreshToken = await getRefreshToken(token);
+
+  //updating isOnline to false
+  if (refreshToken.account) {
+    const account = await db.Account.findOne({ _id: refreshToken.account.id });
+    account.isOnline = false;
+    await account.save();
+  }
+
   // revoke token and save
   refreshToken.revoked = Date.now();
   refreshToken.revokedByIp = await ipAddress;
@@ -187,7 +205,7 @@ async function getAll() {
     .populate("reportsManagerStudents")
     .populate("reportsManagerExpensesCount")
     .populate("reportsManagerStudentsCount");
-    //console.log(accounts,'the accounts??')
+  //console.log(accounts,'the accounts??')
   return await accounts.map((x) => basicDetails(x));
 }
 
@@ -226,27 +244,34 @@ async function getAllStudentsByReportId(reportId) {
         allStudentsOnReport[i].studentExpenses[y].expenseCost
       );
     }
-    allStudentsOnReport[i].expensesTotal = Number(studentExpenseTotal).toFixed(2);
+    allStudentsOnReport[i].expensesTotal = Number(studentExpenseTotal).toFixed(
+      2
+    );
   }
 
   return allStudentsOnReport.map((x) => basicDetails(x));
 }
 
-// function to get all reports managers + admins list , I just want their Id + fName + lName 
-async function getAllReportsManagers(){
-  const reportsManagers= db.Account.find( { role: { $in: [ 'Admin', 'ReportsManager' ] } }, { firstName: 1, lastName: 1 } );
-        return reportsManagers;
+// function to get all reports managers + admins list , I just want their Id + fName + lName
+async function getAllReportsManagers() {
+  const reportsManagers = db.Account.find(
+    { role: { $in: ["Admin", "ReportsManager"] } },
+    { firstName: 1, lastName: 1 }
+  );
+  return reportsManagers;
 }
 
-// function to get all reports manager reports I just want their Id + reportName 
-async function getAllReportsManagerReports(reportsManagerId){
-  const reportsManagerReports = db.Report.find( { reportsManagerId: reportsManagerId }, { reportName:1} );
-        return reportsManagerReports;
+// function to get all reports manager reports I just want their Id + reportName
+async function getAllReportsManagerReports(reportsManagerId) {
+  const reportsManagerReports = db.Report.find(
+    { reportsManagerId: reportsManagerId },
+    { reportName: 1 }
+  );
+  return reportsManagerReports;
 }
 
-
-//right here, so this is finding all students while have a specefic reports manager id, 
-// then return array of ONLY those students expenses... 
+//right here, so this is finding all students while have a specefic reports manager id,
+// then return array of ONLY those students expenses...
 async function getReportsExpenses(reportsManagerId) {
   const allReportsAccounts = await db.Account.find({
     reportsManagerId: reportsManagerId,
@@ -384,7 +409,6 @@ async function getRefreshToken(token) {
     "account"
   );
 
-
   if (!refreshToken || !refreshToken.isActive) throw "Invalid token";
   return refreshToken;
 }
@@ -427,6 +451,8 @@ function basicDetails(account) {
     created,
     updated,
     isVerified,
+    lastLogin,
+    isOnline,
     studentExpenses,
     studentExpensesCount,
     studentReport,
@@ -437,7 +463,7 @@ function basicDetails(account) {
     reportsManagerStudents,
     reportsManagerExpensesCount,
     reportsManagerStudentsCount,
-    expensesTotal
+    expensesTotal,
   } = account;
   return {
     id,
@@ -451,6 +477,8 @@ function basicDetails(account) {
     created,
     updated,
     isVerified,
+    lastLogin,
+    isOnline,
     studentExpenses,
     studentExpensesCount,
     studentReport,
@@ -461,7 +489,7 @@ function basicDetails(account) {
     reportsManagerStudents,
     reportsManagerExpensesCount,
     reportsManagerStudentsCount,
-    expensesTotal
+    expensesTotal,
   };
 }
 

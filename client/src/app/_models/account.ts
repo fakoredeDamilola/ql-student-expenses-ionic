@@ -14,6 +14,8 @@ export class Account {
   created: string;
   isVerified: boolean;
   updated: string;
+  lastLogin:string;
+  isOnline:boolean;
   studentExpenses?: [Expense];
   studentExpensesCount?: number;
   reportsManager?:any;

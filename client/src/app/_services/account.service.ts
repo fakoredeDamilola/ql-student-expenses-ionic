@@ -7,6 +7,7 @@ import { map, finalize } from "rxjs/operators";
 import { environment } from "@environments/environment";
 import { Account, Expense, Report } from "@app/_models";
 
+
 const baseUrl = `${environment.apiUrl}/accounts`;
 
 @Injectable({ providedIn: "root" })
@@ -15,7 +16,9 @@ export class AccountService {
   public accountSubject: BehaviorSubject<Account>;
   public account: Observable<Account>;
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(
+    private router: Router,
+    private http: HttpClient) {
     this.accountSubject = new BehaviorSubject<Account>(null);
     this.account = this.accountSubject.asObservable();
   }
@@ -39,6 +42,7 @@ export class AccountService {
           return account;
         })
       );
+
   }
 
   logout() {

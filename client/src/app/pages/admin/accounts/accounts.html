@@ -91,6 +91,8 @@
                       <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
                     </ion-avatar>
                     <h2>{{account.firstName}} {{account.lastName}}</h2>
+                    <ion-badge *ngIf="account.isOnline" color="success"> ONLINE </ion-badge>
+                    <ion-badge *ngIf="!account.isOnline" color="medium"> OFFLINE </ion-badge>
                   </div>
                 </ion-label>
                 <ion-label>

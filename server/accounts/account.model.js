@@ -19,6 +19,8 @@ const schema = new Schema({
   },
   passwordReset: Date,
   created: { type: Date, default: Date.now },
+  lastLogin: Date,
+  isOnline:{ type: Boolean, default: false },
   updated: Date,
 },
 { toJSON :{ virtuals :true},

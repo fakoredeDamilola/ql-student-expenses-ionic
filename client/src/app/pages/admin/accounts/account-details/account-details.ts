@@ -24,6 +24,7 @@ export class AccountDetailsPage {
     isVerified: true,
     created: "",
     title: "",
+    lastLogin: "",
   };
 
   key: any;
@@ -60,6 +61,7 @@ export class AccountDetailsPage {
     private _location: Location
   ) {}
   async ionViewWillEnter() {
+    this.account = null;
     this.data = false;
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     //reseting expense total
@@ -70,9 +72,9 @@ export class AccountDetailsPage {
     (await this.accountService.getById(this.accountId))
       .forEach(async (Element) => {
         //console.log(Element)
+        this.account = Element;
         this.reportsManager = Element.reportsManager;
         this.studentReport = Element.studentReport;
-        this.account = Element;
         this.studentExpenses = Element.studentExpenses;
         this.studentExpensesCount = Element.studentExpensesCount;
         this.reportsManagerStudentsCount = Element.reportsManagerStudentsCount;
@@ -81,8 +83,13 @@ export class AccountDetailsPage {
         if (this.studentExpenses.length > 0) {
           this.hasExpenses = true;
         }
-        //console.log(Element);
-        //calculate expenses total
+        // Last login format
+        if (this.account.lastLogin != undefined) {
+          this.account.lastLogin = moment(this.account.lastLogin).format(
+            "MM-DD-YYYY @HH:mm:ss"
+          );
+        }
+        //calculate expenses total and format each date
         for (let i = 0; i < this.studentExpensesCount; i++) {
           this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);
           this.studentExpenses[i].created = moment(

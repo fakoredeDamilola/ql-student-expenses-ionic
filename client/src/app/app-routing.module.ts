@@ -40,7 +40,7 @@ const routes: Routes = [
       import("@app/pages/account/login/login.module").then(
         (m) => m.LoginModule
       ),
-      canActivate: [LoggedInGuard],
+      //canActivate: [LoggedInGuard],
   },
   {
     path: "signup",
