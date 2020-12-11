@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { UserOptions } from "@app/interfaces/student-options";
 import { AccountService, AlertService, ReportService } from "@app/_services";
@@ -37,6 +37,8 @@ export class AddStudentPage {
   addingStudent: Promise<HTMLIonLoadingElement>;
   reportsManagerId: string;
   reportsManager: any;
+  backRoute: any;
+  currentRoute: string = this.router.url;
 
   constructor(
     public route: ActivatedRoute,
@@ -44,12 +46,14 @@ export class AddStudentPage {
     public accountService: AccountService,
     private userData: UserData,
     private reportService: ReportService,
-    private _location: Location
+    private _location: Location,
+    private router: Router
   ) {}
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses App");
     (await this.loading).present();
+    this.backRoute = this.currentRoute.split("/students/add")[0];
     this.reportId = this.route.snapshot.paramMap.get("reportId");
     // get report, then the reportManagerId
     (await this.reportService.getById(this.reportId))
@@ -105,8 +109,9 @@ export class AddStudentPage {
             await this.userData.signup(this.signup.email);
           })
           .finally(async () => {
+            console.log(this.backRoute,"the back route??")
+            await this.router.navigateByUrl(this.backRoute);
             (await this.addingStudent).dismiss();
-            this._location.back();
           });
       },
       error: async (error) => {

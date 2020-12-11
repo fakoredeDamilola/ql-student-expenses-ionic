@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ReportDetailsPage,
   },
   {
-    path: "student/add",
+    path: "students/add",
     loadChildren: () =>
       import(
         "@app/pages/reports-manager/students/add-student/add-student.module"

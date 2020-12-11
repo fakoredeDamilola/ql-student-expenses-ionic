@@ -62,11 +62,7 @@ export class ExpenseDetailsPage {
 
     // get id out of the url
     if (this.accountService.accountValue.role != "Admin") {
-      window.history.replaceState(
-        {},
-        document.title,
-        "/" + "account/expenses/expense-details"
-      );
+      // need better logic for this
     }
 
     (await this.expenseService.getById(this.expenseId))
