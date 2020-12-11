@@ -39,6 +39,8 @@ export class ReportDetailsPage {
   reportCreated: any;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
+  calculatingDisbursements: boolean;
+  disbursementResults: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -56,6 +58,7 @@ export class ReportDetailsPage {
 
   async ionViewWillEnter() {
     this.data=false;
+    this.calculatingDisbursements=false;
     // Reset because of weird behavior observed...
     this.totalOfReportExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -237,6 +240,8 @@ export class ReportDetailsPage {
   // Calculate Disbursements Per Student The Test Function!!!!
 
   public async calculateDisbursements() {
+    this.calculatingDisbursements=true;
+    this.disbursementResults=false;
     this.calculatingDisbursementsLoader = this.alertService.presentLoading(
       "Calculating Disbursements..."
     );
@@ -268,6 +273,7 @@ export class ReportDetailsPage {
         }
       })
       .finally(async () => {
+        this.disbursementResults=true;
         (await this.calculatingDisbursementsLoader).dismiss();
       });
   }
