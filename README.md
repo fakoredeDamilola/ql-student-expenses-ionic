@@ -50,7 +50,7 @@ This app is built from Ionic Starter App, for the tabs, and Basic Look and Feel 
 
 # Issues
 
-<a hef="https://github.com/mikecrf121/ql-student-expenses-ionic/issues">All Issues</a>
+<a href="https://github.com/mikecrf121/ql-student-expenses-ionic/issues">All Issues</a>
 
 
 
