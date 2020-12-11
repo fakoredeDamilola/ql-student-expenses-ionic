@@ -48,7 +48,7 @@ const routes: Routes = [
       import("@app/pages/account/signup/signup.module").then(
         (m) => m.SignUpModule
       ),
-    canActivate: [LoggedInGuard],
+    //canActivate: [LoggedInGuard],
   },
   {
     path: "forgot-password",
@@ -56,7 +56,7 @@ const routes: Routes = [
       import("@app/pages/account/forgot-password/forgot-password.module").then(
         (m) => m.ForgotPasswordModule
       ),
-    canActivate: [LoggedInGuard],
+    //canActivate: [LoggedInGuard],
   },
   {
     path: "account/reset-password",
@@ -64,7 +64,7 @@ const routes: Routes = [
       import("@app/pages/account/reset-password/reset-password.module").then(
         (m) => m.ResetPasswordModule
       ),
-    canActivate: [LoggedInGuard],
+    //canActivate: [LoggedInGuard],
   },
   {
     path: "support",
