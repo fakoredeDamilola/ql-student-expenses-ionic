@@ -20,7 +20,7 @@ const routes: Routes = [
       import(
         "@app/pages/reports-manager/expenses/expense-details/expense-details.module"
       ).then((m) => m.ExpenseDetailsModule),
-  }
+  },
 ];
 
 @NgModule({

@@ -57,8 +57,8 @@ export class ReportDetailsPage {
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
-    this.data=false;
-    this.calculatingDisbursements=false;
+    this.data = false;
+    this.calculatingDisbursements = false;
     // Reset because of weird behavior observed...
     this.totalOfReportExpenses = 0;
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
@@ -78,7 +78,7 @@ export class ReportDetailsPage {
     (await this.reportService.getById(this.reportId))
       .forEach(async (Element) => {
         this.reportName = Element.reportName;
-        this.reportsManager = `${Element.reportsManager.firstName} ${Element.reportsManager.lastName}`
+        this.reportsManager = `${Element.reportsManager.firstName} ${Element.reportsManager.lastName}`;
         this.reportCreated = moment(Element.created).format(
           "MM-DD-YYYY @HH:mm:ss"
         );
@@ -117,8 +117,8 @@ export class ReportDetailsPage {
             });
           })
           .finally(async () => {
-              this.data=true;
-              (await this.loading).dismiss();
+            this.data = true;
+            (await this.loading).dismiss();
           });
       });
   }
@@ -239,7 +239,7 @@ export class ReportDetailsPage {
   // Calculate Disbursements Per Student
 
   public async calculateDisbursements() {
-    this.calculatingDisbursements=true;
+    this.calculatingDisbursements = true;
     this.disbursementResults = false;
     this.calculatingDisbursementsLoader = this.alertService.presentLoading(
       "Calculating Disbursements..."
@@ -272,7 +272,7 @@ export class ReportDetailsPage {
         }
       })
       .finally(async () => {
-        this.disbursementResults=true;
+        this.disbursementResults = true;
         (await this.calculatingDisbursementsLoader).dismiss();
       });
   }

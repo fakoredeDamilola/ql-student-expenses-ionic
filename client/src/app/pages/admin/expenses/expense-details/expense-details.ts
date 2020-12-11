@@ -31,7 +31,7 @@ export class ExpenseDetailsPage {
   expenseCreatedBy: string;
   expenseReport: any;
   expenseReportsManager: any;
-  deadData= [0,1,2,3,4,5,6,7,8];//skeleton
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
 
   constructor(
@@ -50,7 +50,7 @@ export class ExpenseDetailsPage {
   }
 
   async ionViewWillEnter() {
-    this.data=false;
+    this.data = false;
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
@@ -70,12 +70,12 @@ export class ExpenseDetailsPage {
         );
       })
       .finally(async () => {
-          this.data=true;
-          (await this.loading).dismiss();
+        this.data = true;
+        (await this.loading).dismiss();
       });
   }
 
-  async editExpense(contextParamValue:string) {
+  async editExpense(contextParamValue: string) {
     let popUpText: string;
     let currentValue: string | boolean;
 

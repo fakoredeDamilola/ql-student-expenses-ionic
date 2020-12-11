@@ -19,7 +19,6 @@ export class LoggedInGuard implements CanActivate {
   ) {}
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
     const account = this.accountService.accountValue;
     // if not logged in go ahead you can get to the page
     if (!account) {

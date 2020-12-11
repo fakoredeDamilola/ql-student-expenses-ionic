@@ -37,10 +37,10 @@ export class HomePage {
     await popover.present();
   }
 
-  async ionViewWillEnter(){
-    (await (this.loading)).present();
+  async ionViewWillEnter() {
+    (await this.loading).present();
   }
-  async ionViewDidEnter(){
-    (await (this.loading)).dismiss();
+  async ionViewDidEnter() {
+    (await this.loading).dismiss();
   }
 }

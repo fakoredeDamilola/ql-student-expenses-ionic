@@ -72,7 +72,7 @@ export class ExpensesListPage {
     this.reportsManagerId = this.accountService.accountValue.id;
     // Incase Admins Are Viewing another reports manager expenses list As Them
     if (this.accountService.accountValue.role == "Admin") {
-      this.roleViewer="A";//<-----Admin... used to hide back button
+      this.roleViewer = "A"; //<-----Admin... used to hide back button
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
       if (this.route.snapshot.paramMap.get("accountId") == null) {
         this.reportsManagerId = this.accountService.accountValue.id;

@@ -34,15 +34,17 @@ export class UserData {
   // For setting and retrieving dark mode setting... very cool
   // TODO save setting to cloud profile
   async setDarkMode(onOff: boolean): Promise<any> {
-    const userName= await this.getUsername();
-      await this.storage.set(`${this.IS_DARK_MODE}-${userName}`, onOff);
+    const userName = await this.getUsername();
+    await this.storage.set(`${this.IS_DARK_MODE}-${userName}`, onOff);
   }
 
   async isDarkMode(): Promise<boolean> {
-    const userName= await this.getUsername();
-    return await this.storage.get(`${this.IS_DARK_MODE}-${userName}`).then(async (value) => {
-      return (await value) === true;
-    });
+    const userName = await this.getUsername();
+    return await this.storage
+      .get(`${this.IS_DARK_MODE}-${userName}`)
+      .then(async (value) => {
+        return (await value) === true;
+      });
   }
 
   async logout(): Promise<any> {

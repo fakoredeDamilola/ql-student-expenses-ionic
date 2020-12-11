@@ -1,10 +1,10 @@
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ExpenseImagePage } from './expense-image';
-import { ExploreContainerComponentModule } from '@app/explore-container/explore-container.module';
+import { IonicModule } from "@ionic/angular";
+import { RouterModule } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { ExpenseImagePage } from "./expense-image";
+import { ExploreContainerComponentModule } from "@app/explore-container/explore-container.module";
 
 @NgModule({
   imports: [
@@ -12,8 +12,8 @@ import { ExploreContainerComponentModule } from '@app/explore-container/explore-
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    RouterModule.forChild([{ path: '', component: ExpenseImagePage }])
+    RouterModule.forChild([{ path: "", component: ExpenseImagePage }]),
   ],
-  declarations: [ExpenseImagePage]
+  declarations: [ExpenseImagePage],
 })
 export class ExpenseImagePageModule {}

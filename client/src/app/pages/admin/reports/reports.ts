@@ -34,7 +34,7 @@ export class ReportsPage {
   petOwnersIsChecked: boolean;
   ReportManagersIsChecked: boolean;
   filtersList: any;
-  deadData= [0,1,2,3,4,5,6,7,8];//skeleton
+  deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
 
   adminCondition: string = "";
   petOwnerCondition: string = "";
@@ -56,7 +56,7 @@ export class ReportsPage {
   ) {}
 
   async ionViewWillEnter() {
-    this.data=false;
+    this.data = false;
     this.loading = this.alertService.presentLoading("Admin Student Expenses");
     (await this.loading)
       .present()
@@ -82,8 +82,8 @@ export class ReportsPage {
           });
       })
       .finally(async () => {
-          this.data=true;
-          (await this.loading).dismiss();
+        this.data = true;
+        (await this.loading).dismiss();
       });
   }
 }

@@ -39,7 +39,7 @@ export class StudentDetailsPage {
   ) {}
 
   async ionViewWillEnter() {
-    this.data=false;
+    this.data = false;
     // reseting this because of a bug noticed..
     this.totalOfExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -76,7 +76,7 @@ export class StudentDetailsPage {
       })
       .finally(async () => {
         setTimeout(async () => {
-          this.data=true;
+          this.data = true;
           (await this.loading).dismiss();
         }, 100);
       });

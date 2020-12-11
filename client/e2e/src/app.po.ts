@@ -1,24 +1,30 @@
-import { browser, by, element, ElementFinder, ExpectedConditions } from 'protractor';
+import {
+  browser,
+  by,
+  element,
+  ElementFinder,
+  ExpectedConditions,
+} from "protractor";
 
 export class AppPage {
   navigateTo() {
-    return browser.get('/');
+    return browser.get("/");
   }
 
   async getMenu() {
-    const el = this.getElement('app-root ion-menu');
+    const el = this.getElement("app-root ion-menu");
     await this.waitForSelector(el);
     return el;
   }
 
   async getFirstSlide() {
-    const el = this.getElement('app-root ion-slides ion-slide:first-child');
+    const el = this.getElement("app-root ion-slides ion-slide:first-child");
     await this.waitForSelector(el);
     return el.getTagName();
   }
 
   async getRouter() {
-    const el = this.getElement('app-root ion-router-outlet');
+    const el = this.getElement("app-root ion-router-outlet");
     await this.waitForSelector(el);
     return el;
   }

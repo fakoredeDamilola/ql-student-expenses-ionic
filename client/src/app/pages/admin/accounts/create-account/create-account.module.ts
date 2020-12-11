@@ -1,20 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { IonicModule } from "@ionic/angular";
 
-import { CreateAccountPage } from './create-account';
-import { CreateAccountPageRoutingModule } from './create-account-routing.module';
+import { CreateAccountPage } from "./create-account";
+import { CreateAccountPageRoutingModule } from "./create-account-routing.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CreateAccountPageRoutingModule
+    CreateAccountPageRoutingModule,
   ],
-  declarations: [
-    CreateAccountPage,
-  ]
+  declarations: [CreateAccountPage],
 })
-export class CreateAccountModule { }
+export class CreateAccountModule {}

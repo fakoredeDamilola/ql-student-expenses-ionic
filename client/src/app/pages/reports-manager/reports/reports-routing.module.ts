@@ -27,7 +27,7 @@ const routes: Routes = [
       import(
         "@app/pages/reports-manager/students/student-details/student-details.module"
       ).then((m) => m.StudentDetailsModule),
-  }
+  },
 ];
 
 @NgModule({

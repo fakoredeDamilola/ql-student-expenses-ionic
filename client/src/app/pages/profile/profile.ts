@@ -38,7 +38,7 @@ export class ProfilePage {
   ) {}
 
   async ionViewWillEnter() {
-    this.data=false;
+    this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading)
       .present()
@@ -52,7 +52,7 @@ export class ProfilePage {
       })
       .finally(() => {
         setTimeout(async () => {
-          this.data=true;
+          this.data = true;
           (await this.loading).dismiss();
         }, 300);
       });
@@ -141,12 +141,11 @@ export class ProfilePage {
       });
   }
 
-async deleteAccount(){
-  this.alertService.createToastAlert(
-    "Currently ONLY Admins Can Delete Accounts",
-    "warning",
-    8000
-  );
-}
-
+  async deleteAccount() {
+    this.alertService.createToastAlert(
+      "Currently ONLY Admins Can Delete Accounts",
+      "warning",
+      8000
+    );
+  }
 }

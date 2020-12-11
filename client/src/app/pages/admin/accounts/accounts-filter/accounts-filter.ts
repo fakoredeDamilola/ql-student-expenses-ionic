@@ -45,7 +45,6 @@ export class AccountsFilterPage {
     this.studentsIsChecked = false;
     this.reportsManagersIsChecked = false;
     this.isOnline = "undefined";
-
   }
 
   async applyFilters() {

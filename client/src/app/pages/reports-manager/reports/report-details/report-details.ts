@@ -57,8 +57,8 @@ export class ReportDetailsPage {
   async ionViewDidEnter() {}
 
   async ionViewWillEnter() {
-    this.data=false;
-    this.calculatingDisbursements=false;
+    this.data = false;
+    this.calculatingDisbursements = false;
     // Reset because of weird behavior observed...
     this.totalOfReportExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -117,7 +117,7 @@ export class ReportDetailsPage {
           })
           .finally(async () => {
             setTimeout(async () => {
-              this.data=true;
+              this.data = true;
               (await this.loading).dismiss();
             }, 100);
           });
@@ -240,8 +240,8 @@ export class ReportDetailsPage {
   // Calculate Disbursements Per Student The Test Function!!!!
 
   public async calculateDisbursements() {
-    this.calculatingDisbursements=true;
-    this.disbursementResults=false;
+    this.calculatingDisbursements = true;
+    this.disbursementResults = false;
     this.calculatingDisbursementsLoader = this.alertService.presentLoading(
       "Calculating Disbursements..."
     );
@@ -273,7 +273,7 @@ export class ReportDetailsPage {
         }
       })
       .finally(async () => {
-        this.disbursementResults=true;
+        this.disbursementResults = true;
         (await this.calculatingDisbursementsLoader).dismiss();
       });
   }

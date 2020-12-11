@@ -55,7 +55,7 @@ export class ExpenseService {
 
   async delete(id: string) {
     return this.http.delete(`${baseUrl}/${id}`).pipe(
-      finalize(async() => {
+      finalize(async () => {
         // not sure if needed
       })
     );

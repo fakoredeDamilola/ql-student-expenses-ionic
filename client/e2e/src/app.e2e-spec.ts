@@ -1,23 +1,23 @@
-import { AppPage } from './app.po';
+import { AppPage } from "./app.po";
 
-describe('new App', () => {
+describe("new App", () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display the menu', () => {
+  it("should display the menu", () => {
     page.navigateTo();
     expect(page.getMenu()).toBeTruthy();
   });
 
-  it('should get the slides text', () => {
+  it("should get the slides text", () => {
     page.navigateTo();
-    expect(page.getFirstSlide()).toBe('ion-slide');
+    expect(page.getFirstSlide()).toBe("ion-slide");
   });
 
-  it('should create a router outlet', () => {
+  it("should create a router outlet", () => {
     page.navigateTo();
     expect(page.getRouter()).toBeTruthy();
   });

@@ -39,7 +39,7 @@ export class ReportsListPage {
 
     this.reportsManagerId = this.accountService.accountValue.id;
     if (this.accountService.accountValue.role == "Admin") {
-      this.roleViewer="A";
+      this.roleViewer = "A";
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
       // If your an admin the account Id will be inside the url, removed for none admin views
       if (this.route.snapshot.paramMap.get("accountId") == null) {

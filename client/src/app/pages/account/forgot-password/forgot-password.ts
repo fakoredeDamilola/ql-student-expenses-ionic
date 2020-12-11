@@ -15,7 +15,7 @@ import { finalize, first } from "rxjs/operators";
 })
 export class ForgotPasswordPage {
   forgotPassword: UserOptions = {
-    email: ""
+    email: "",
   };
   submitted = false;
   loading = false;

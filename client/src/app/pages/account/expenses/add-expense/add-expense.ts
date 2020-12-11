@@ -55,7 +55,7 @@ export class AddExpensePage {
     this.submitted = true;
     // stop here if form is invalid
     // also have a currency validator working!
-    const regex  = /^\d+(?:\.\d{0,2})$/;
+    const regex = /^\d+(?:\.\d{0,2})$/;
     const numStr = `${form.value.expenseCost}`;
 
     if (form.invalid || !regex.test(numStr)) {
@@ -70,7 +70,8 @@ export class AddExpensePage {
       return;
     }
 
-    if (this.accountId) { //<------------------- Admin Is Adding Expense for somebody
+    if (this.accountId) {
+      //<------------------- Admin Is Adding Expense for somebody
       form.value.studentId = this.accountId;
       await (await this.accountService.getById(this.accountId)).forEach(
         async (Element) => {
@@ -78,7 +79,8 @@ export class AddExpensePage {
           form.value.reportsManagerId = Element.reportsManagerId;
         }
       );
-    } else { //<--------------------------------Regular student adding their own expense
+    } else {
+      //<--------------------------------Regular student adding their own expense
       form.value.studentId = this.account.id;
       form.value.reportId = this.account.reportId;
       form.value.reportsManagerId = this.account.reportsManagerId;

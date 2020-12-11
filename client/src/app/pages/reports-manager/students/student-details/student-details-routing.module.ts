@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { StudentDetailsPage } from './student-details';
+import { StudentDetailsPage } from "./student-details";
 
 const routes: Routes = [
   {
-    path: '',
-    component: StudentDetailsPage
+    path: "",
+    component: StudentDetailsPage,
   },
   {
     path: "student-expenses/expense-details/:expenseId",
@@ -14,12 +14,11 @@ const routes: Routes = [
       import(
         "@app/pages/reports-manager/expenses/expense-details/expense-details.module"
       ).then((m) => m.ExpenseDetailsModule),
-  }
-
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class StudentDetailsPageRoutingModule { }
+export class StudentDetailsPageRoutingModule {}

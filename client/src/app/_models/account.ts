@@ -14,11 +14,11 @@ export class Account {
   created: string;
   isVerified: boolean;
   updated: string;
-  lastLogin:string;
-  isOnline:boolean;
+  lastLogin: string;
+  isOnline: boolean;
   studentExpenses?: [Expense];
   studentExpensesCount?: number;
-  reportsManager?:any;
+  reportsManager?: any;
   reportsManagerStudentsCount?: number;
   reportsManagerExpensesCount?: number;
   reportsManagerReports?: any;

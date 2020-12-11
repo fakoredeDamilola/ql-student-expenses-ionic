@@ -40,7 +40,9 @@ export class AddReportPage {
   }
 
   async onAddReport(form?: NgForm) {
-    this.creatingReport = this.alertService.presentLoading("Creating Report...");
+    this.creatingReport = this.alertService.presentLoading(
+      "Creating Report..."
+    );
     (await this.creatingReport).present();
     this.submitted = true;
     // stop here if form is invalid, not relevent here, only have optional name...

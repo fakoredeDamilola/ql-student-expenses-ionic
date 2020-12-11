@@ -11,7 +11,7 @@ export class AlertService {
   // Used to create toast alerts throughout app
   async createToastAlert(
     messageParam: string,
-    colorParam?: "primary" | "warning" | "danger" | "success",//<--- this is cool because linter tells you these
+    colorParam?: "primary" | "warning" | "danger" | "success", //<--- this is cool because linter tells you these
     durationParam?: number
   ) {
     const toast = await this.toastCtrl.create({

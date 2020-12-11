@@ -9,10 +9,10 @@ const routes: Routes = [
     children: [
       {
         path: "accounts",
-            loadChildren: () =>
-              import("@app/pages/admin/accounts/accounts.module").then(
-                (m) => m.AccountsModule
-              ),
+        loadChildren: () =>
+          import("@app/pages/admin/accounts/accounts.module").then(
+            (m) => m.AccountsModule
+          ),
       },
       {
         path: "reports",

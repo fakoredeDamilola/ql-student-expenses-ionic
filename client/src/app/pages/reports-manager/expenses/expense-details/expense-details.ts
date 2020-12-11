@@ -49,7 +49,7 @@ export class ExpenseDetailsPage {
   }
 
   async ionViewWillEnter() {
-    this.data=false;
+    this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
@@ -78,7 +78,7 @@ export class ExpenseDetailsPage {
       })
       .finally(async () => {
         setTimeout(async () => {
-          this.data=true;
+          this.data = true;
           (await this.loading).dismiss();
         }, 100);
       });

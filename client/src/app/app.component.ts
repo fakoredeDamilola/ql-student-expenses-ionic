@@ -131,7 +131,7 @@ export class AppComponent implements OnInit {
   }
 
   // Saving dark mode setting to storage
-  async saveDarkModeChange(dark:boolean){
+  async saveDarkModeChange(dark: boolean) {
     const darkMode = await this.userData.setDarkMode(dark);
   }
 
@@ -141,7 +141,7 @@ export class AppComponent implements OnInit {
   }
 
   async updateDarkModeStatus(darkMode: boolean) {
-      this.dark = darkMode;
+    this.dark = darkMode;
   }
 
   async checkLoginStatus() {
@@ -150,7 +150,7 @@ export class AppComponent implements OnInit {
   }
 
   async updateLoggedInStatus(loggedIn: boolean) {
-    this.checkDarkMode();// I really like dark mode
+    this.checkDarkMode(); // I really like dark mode
     setTimeout(async () => {
       this.loggedIn = loggedIn;
     }, 300);
@@ -158,7 +158,6 @@ export class AppComponent implements OnInit {
 
   async listenForLoginEvents() {
     window.addEventListener("user:login", async () => {
-
       await this.updateLoggedInStatus(true);
     });
 

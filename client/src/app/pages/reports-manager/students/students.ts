@@ -37,7 +37,7 @@ export class StudentsListPage {
     // TODO-Should probably make the bellow check a reusable componenet some how
     this.userId = this.account.accountValue.id;
     if (this.account.accountValue.role == "Admin") {
-      this.roleViewer="A";
+      this.roleViewer = "A";
       this.userId = this.route.snapshot.paramMap.get("accountId");
       if (this.route.snapshot.paramMap.get("accountId") == null) {
         this.userId = this.account.accountValue.id;

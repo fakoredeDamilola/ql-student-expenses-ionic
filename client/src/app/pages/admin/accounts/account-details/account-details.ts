@@ -25,7 +25,7 @@ export class AccountDetailsPage {
     created: "",
     title: "",
     lastLogin: "",
-    isOnline:false
+    isOnline: false,
   };
 
   key: any;
