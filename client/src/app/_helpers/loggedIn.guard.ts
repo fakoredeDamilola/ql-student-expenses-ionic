@@ -1,23 +1,33 @@
 // TODO implement this so you can navigate to say the login page if your already logged in
-import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Injectable } from "@angular/core";
+import {
+  Router,
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from "@angular/router";
+import { UserData } from "@app/providers/user-data";
 
-import { AccountService } from '@app/_services';
+import { AccountService } from "@app/_services";
 
-
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class LoggedInGuard implements CanActivate {
-    constructor(
-        private router: Router,
-        private accountService: AccountService
-    ) { }
+  constructor(
+    private userData: UserData,
+    private router: Router,
+    private accountService: AccountService
+  ) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const account = this.accountService.accountValue;
-        // This means your logged in, so redirect to home page
-        if (account) {
-          this.router.navigate(['/']);
-          return true;
-        }
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
+    const account = this.accountService.accountValue;
+    // if not logged in go ahead you can get to the page
+    if (!account) {
+      // authorized so return true
+      return true;
     }
+    // your already logged in and dont need to ever go there logged in, redirect home
+    this.router.navigate(["/home"]);
+    return false;
+  }
 }

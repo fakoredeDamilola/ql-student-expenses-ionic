@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "@app/_helpers";
-//import { LoggedInGuard } from "@app/_helpers"
+import { LoggedInGuard } from "@app/_helpers"
 import { Role } from "@app/_models";
-import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
+import { VerifyEmailComponent } from "./pages/account/verify-email/verify-email.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -40,6 +40,7 @@ const routes: Routes = [
       import("@app/pages/account/login/login.module").then(
         (m) => m.LoginModule
       ),
+      canActivate: [LoggedInGuard],
   },
   {
     path: "signup",
@@ -47,6 +48,7 @@ const routes: Routes = [
       import("@app/pages/account/signup/signup.module").then(
         (m) => m.SignUpModule
       ),
+      canActivate: [LoggedInGuard],
   },
   {
     path: "forgot-password",
@@ -54,6 +56,7 @@ const routes: Routes = [
       import("@app/pages/account/forgot-password/forgot-password.module").then(
         (m) => m.ForgotPasswordModule
       ),
+      canActivate: [LoggedInGuard],
   },
   {
     path: "account/reset-password",
@@ -61,6 +64,7 @@ const routes: Routes = [
       import("@app/pages/account/reset-password/reset-password.module").then(
         (m) => m.ResetPasswordModule
       ),
+      canActivate: [LoggedInGuard],
   },
   {
     path: "support",
@@ -72,9 +76,7 @@ const routes: Routes = [
   {
     path: "account/profile",
     loadChildren: () =>
-      import("@app/pages/profile/profile.module").then(
-        (m) => m.ProfileModule
-      ),
+      import("@app/pages/profile/profile.module").then((m) => m.ProfileModule),
   },
 ];
 
