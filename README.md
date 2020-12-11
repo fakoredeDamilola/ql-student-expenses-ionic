@@ -38,17 +38,17 @@ This app is built from Ionic Starter App, for the tabs, and Basic Look and Feel 
 
 1. Run `ionic cordova run ios --prod`
 
-## Bugs Tracker / Features TODO
+# Bugs Tracker / Features TODO
 
-# TODO
+## TODO
 
 <a href="https://github.com/mikecrf121/ql-student-expenses-ionic/labels/enhancement">All Of Student Expenses TODO's & Enhancements<a>
 
-# Bugs
+## Bugs
 
 <a href="https://github.com/mikecrf121/ql-student-expenses-ionic/labels/bug">All Of Student Expenses Bug's<a>
 
-# Issues
+## Issues
 
 <a href="https://github.com/mikecrf121/ql-student-expenses-ionic/issues">All Issues</a>
 
