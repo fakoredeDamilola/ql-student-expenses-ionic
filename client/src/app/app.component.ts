@@ -141,9 +141,7 @@ export class AppComponent implements OnInit {
   }
 
   async updateDarkModeStatus(darkMode: boolean) {
-    setTimeout(async () => {
       this.dark = darkMode;
-    }, 100);
   }
 
   async checkLoginStatus() {
