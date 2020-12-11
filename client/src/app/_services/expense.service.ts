@@ -14,7 +14,7 @@ export class ExpenseService {
   private ExpenseSubject: BehaviorSubject<Expense>;
   public Expense: Observable<Expense>;
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private http: HttpClient) {
     this.ExpenseSubject = new BehaviorSubject<Expense>(null);
     this.Expense = this.ExpenseSubject.asObservable();
   }

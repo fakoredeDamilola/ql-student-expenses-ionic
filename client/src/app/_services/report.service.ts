@@ -14,7 +14,7 @@ export class ReportService {
   private ReportSubject: BehaviorSubject<Report>;
   public Report: Observable<Report>;
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private http: HttpClient) {
     this.ReportSubject = new BehaviorSubject<Report>(null);
     this.Report = this.ReportSubject.asObservable();
   }

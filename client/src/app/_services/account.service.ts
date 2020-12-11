@@ -1,24 +1,20 @@
 ﻿import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
-import { map, finalize } from "rxjs/operators";
+import { BehaviorSubject, Observable, of, throwError } from "rxjs";
+import { map, finalize, catchError } from "rxjs/operators";
 
 import { environment } from "@environments/environment";
 import { Account, Expense, Report } from "@app/_models";
-
 
 const baseUrl = `${environment.apiUrl}/accounts`;
 
 @Injectable({ providedIn: "root" })
 export class AccountService {
-
   public accountSubject: BehaviorSubject<Account>;
   public account: Observable<Account>;
 
-  constructor(
-    private router: Router,
-    private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient) {
     this.accountSubject = new BehaviorSubject<Account>(null);
     this.account = this.accountSubject.asObservable();
   }
@@ -27,7 +23,7 @@ export class AccountService {
     return this.accountSubject.value;
   }
 
-  login(email: string, password: string) {
+  async login(email: string, password: string) {
     this.accountSubject.next(null);
     return this.http
       .post<any>(
@@ -42,10 +38,9 @@ export class AccountService {
           return account;
         })
       );
-
   }
 
-  logout() {
+  async logout() {
     this.http
       .post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true })
       .subscribe();
@@ -98,6 +93,31 @@ export class AccountService {
 
   async getAll() {
     return this.http.get<Account[]>(baseUrl);
+
+    //tests
+    /*const http$ = this.http.get<Account[]>(baseUrl);
+    const timeStart = Date.now();
+    http$
+        .pipe(
+          map((accounts) => {
+
+            return accounts;
+          }),
+            catchError(err => {
+                console.log('caught mapping error and rethrowing', err);
+                return throwError(err);
+            }),
+            catchError(err => {
+                console.log('caught rethrown error, providing fallback value');
+                return of([]);
+            })
+        )
+        .subscribe(
+            res => console.log(timeStart-Date.now(),'HTTP response', res),
+            err => console.log('HTTP Error', err),
+            () => console.log('HTTP request completed.')
+        );
+*/
   }
 
   async getById(accountId: string) {
@@ -117,9 +137,11 @@ export class AccountService {
   async getAllReportsManagers() {
     return this.http.get<Account[]>(`${baseUrl}/reports-managers-list`);
   }
-    //***** For create account page for admins, get all reportsmanager reports
-  async getAllReportsManagerReports(reportsManagerId:string) {
-    return this.http.get<Report[]>(`${baseUrl}/${reportsManagerId}/reports-manager-reports`);
+  //***** For create account page for admins, get all reportsmanager reports
+  async getAllReportsManagerReports(reportsManagerId: string) {
+    return this.http.get<Report[]>(
+      `${baseUrl}/${reportsManagerId}/reports-manager-reports`
+    );
   }
 
   // Reports Manager Routes
