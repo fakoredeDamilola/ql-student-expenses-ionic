@@ -1,13 +1,15 @@
 # Ionic Angular Student Expenses Application
 
-Code Once, Have Every Where!
-
+Code Once, Have Every Where(Web, Mobile, Refrigerator, etc.!
 Probably the best framework ever.
 
 This app is built from Ionic Starter App, for the tabs, and Basic Look and Feel (BLAF).
 
-
-
+Table Of Cntents:
+1. <a href="#for-ql-student-expenses-runners">Instructions for Runing</a>
+2. <a href="#deploying">Instructions for Deploying</a>
+3. <a href="#bugs-tracker--features-todo">TODO'S & Bugs</a>
+   
 ***The <a href="https://ionicframework.com/docs/cli">Ionic CLI</a> is needed to run the application.
 
 ## For QL Student Expenses Runners
