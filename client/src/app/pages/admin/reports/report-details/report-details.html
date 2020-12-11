@@ -144,7 +144,7 @@
                 </ion-label>
                 <ion-label>
                   <h2><b><u>DISBURSEMENT</u></b></h2>
-                  <ion-skeleton-text animated style="width: 30%" *ngIf="!disbursementResults && calculatingDisbursements"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%" *ngIf="!disbursementResults && calculatingDisbursements"></ion-skeleton-text>
                   <span *ngIf='student.disbursementAmmount<0 && disbursementResults' style="color: green;">Owed
                     {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><span
                     *ngIf='student.disbursementAmmount>0 && disbursementResults' style="color: red;">Owes
