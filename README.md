@@ -43,16 +43,16 @@ This app is built from Ionic Starter App, for the tabs, and Basic Look and Feel 
 # TODO
 
 1. Camera for expense images, saving to DB and retrieving (currently works with memory/cache)
-2. A Pipe To validate amount entered is actually a valid currency , example cant submit an expense cost of 23.55htjK (Solution in place)
-3. Create Standard components for list views for uniform styling, separate currently for displaying different information for different roles.
-   --Fix Styling 
-4. Date ranges for Reports filter, Expenses Filter, Accounts Filter.
+2. A Pipe to validate amount entered is actually a valid currency , example cant submit an expense cost of 23.55htjK (Solution in place)
+3. Create standard components for list views for uniform styling, separate currently for displaying different information for different roles.
+   * Fix Styling 
+4. Date ranges for Reports Filter, Expenses Filter, Accounts Filter.
 5. Allow Students to be apart of multiple Expense Reports at the same time.
 6. Invite Students to another Expense Report, currently can only be associated with one Expense Report.
-   -- Invite Students who already have an account, current behavior when a student is added to report, account created for them. 
-7. Test cases (unit tests and e2e), Documentation, Swagger Documentation update.
-8. Trim API calls JSON objects, returning only the data needed for the specific views, modify endpoints.   
-   -- Limit returned list size to whats selected, example: 10-25-50-100 , or infinite scroll?
+   * Invite Students who already have an account, current behavior when a Student is added to a Report, account created for them. 
+7. Test cases (unit tests and e2e), Documentation, Swagger Doc update.
+8. Trim API calls and JSON objects, returning only the data needed for the specific views, modify endpoints.   
+   * Limit returned list size to whats selected, example: 10-25-50-100 , or infinite scroll?
 
 # Bugs
 
