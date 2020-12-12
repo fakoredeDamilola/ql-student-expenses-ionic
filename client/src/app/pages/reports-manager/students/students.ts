@@ -32,10 +32,9 @@ export class StudentsListPage {
 
   async ionViewWillEnter() {
     this.currentRoute.split("/")[1] == "reports-manager"
-    ? (this.backButtonDisabled = true)
-    : (this.backButtonDisabled = false);
+      ? (this.backButtonDisabled = true)
+      : (this.backButtonDisabled = false);
 
-    console.log(this.backButtonDisabled)
     this.ios = (await this.config.get("mode")) === "ios";
     this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");

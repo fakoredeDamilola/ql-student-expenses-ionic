@@ -83,6 +83,10 @@ export class AccountsPage {
           .then(async () => {
             const accountsCount = this.allAccounts.length;
             for (let i = 0; i < accountsCount; i++) {
+              (this.allAccounts[i].lastLogin)?
+              this.allAccounts[i].lastLogin = moment(
+                this.allAccounts[i].lastLogin
+              ).format("MM-DD-YYYY @HH:mm:ss"):"";
               this.allAccounts[i].created = moment(
                 this.allAccounts[i].created
               ).format("MM-DD-YYYY @HH:mm:ss");
