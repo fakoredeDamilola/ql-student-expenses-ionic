@@ -42,6 +42,7 @@ export class ProfilePage {
     (await this.loading)
       .present()
       .then(() => {
+        //Should probably shorten this, or use a subscribe
         this.accountID = this.accountService.accountValue.id;
         this.title = this.accountService.accountValue.title;
         this.firstName = this.accountService.accountValue.firstName;
