@@ -83,6 +83,12 @@ export class ReportDetailsPage {
           .forEach(async (Elem) => {
             //console.log("All Report Students", Elem);
             this.reportStudents = Elem;
+            const reportStudentCount = this.reportStudents.length;
+            for (let i = 0; i < reportStudentCount; i++) {
+              (this.reportStudents[i].lastLogin)? (this.reportStudents[i].lastLogin)=moment(
+                this.reportStudents[i].lastLogin
+              ).format("MMM-DD @HH:mm"):""
+            }
           })
           .then(async () => {
             // Get Report Expenses

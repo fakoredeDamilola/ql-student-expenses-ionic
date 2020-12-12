@@ -67,12 +67,10 @@ export class ExpenseDetailsPage {
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
         this.expenseCategory = Element.expenseCategory;
-        this.expenseCreated = moment (Element.created).format("MM-DD-YYYY @HH:mm:ss");
+        this.expenseCreated = moment (Element.created).format("MMM-DD-YYYY @HH:mm");
       })
       .finally(async () => {
-        setTimeout(async () => {
           (await this.loading).dismiss();
-        }, 300);
       });
   }
 

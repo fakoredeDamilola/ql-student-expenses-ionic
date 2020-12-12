@@ -11,7 +11,7 @@
   <!--Skeleton-->
   <div *ngIf="!data">
     <h3>
-      <b><u>Expense Details:</u></b>
+      <b><u></u></b>
     </h3>
     <h1>
       <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
@@ -33,7 +33,7 @@
     <ion-row>
       <ion-col>
         <h3>
-          <b><u>Expense Details:</u></b>
+          <b><u>Expense Details:(Click To Edit)</u></b>
         </h3>
         <h5 routerLink="{{currentRoute}}/report-details/{{expenseReport.id}}">
           <b>On Report:</b>

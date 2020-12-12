@@ -91,6 +91,13 @@ export class ReportDetailsPage {
         (await this.accountService.getAllStudentsByReportId(this.reportId))
           .forEach(async (Elem) => {
             this.reportStudents = Elem;
+            const reportStudentCount = this.reportStudents.length;
+            for (let i = 0; i < reportStudentCount; i++) {
+
+              (this.reportStudents[i].lastLogin)? (this.reportStudents[i].lastLogin)=moment(
+                this.reportStudents[i].lastLogin
+              ).format("MMM-DD @HH:mm"):""
+            }
           })
           .then(async () => {
             // Get Report Expenses
@@ -134,7 +141,7 @@ export class ReportDetailsPage {
     let currentValue: string;
     switch (contextParameter) {
       case "reportName": {
-        popUpText = "Name (Optional)";
+        popUpText = "Name?";
         currentValue = this.reportName;
         break;
       }

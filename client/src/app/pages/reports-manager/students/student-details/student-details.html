@@ -13,7 +13,7 @@
   <div class="ion-padding-top ion-text-center">
     <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" />
   </div>
-  <ion-row>
+  <ion-row *ngIf="data">
     <ion-col style="text-align: center">
       <h2>Student Details</h2>
       <h4>
@@ -28,7 +28,7 @@
     <!--Skeleton-->
     <div *ngIf="!data">
       <h3>
-        <b><u>Student Details:</u></b>
+        <b><u></u></b>
       </h3>
       <h1>
         <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>

@@ -2,7 +2,8 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/reports-manager/reports" style="color: beige;background:black;border-radius: 30%;"></ion-back-button>
+        <ion-back-button defaultHref="/reports-manager/reports"
+          style="color: beige;background:black;border-radius: 30%;"></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -12,7 +13,7 @@
   <!--Skeleton -->
   <div *ngIf="!data">
     <h3>
-      <b><u>Report Details: (Click To Edit)</u></b>
+      <b><u></u></b>
     </h3>
     <h1>
       <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
@@ -62,9 +63,9 @@
           <u><b>Report Students:</b></u>
         </h3>
         <ion-button end size="medium" style="vertical-align: center; text-align: right" shape="round" fill="clear"
-        routerLink="{{currentRoute}}/student/add">
-        <ion-icon name="add-outline"></ion-icon>Add Student
-      </ion-button>
+          routerLink="{{currentRoute}}/student/add">
+          <ion-icon name="add-outline"></ion-icon>Add Student
+        </ion-button>
       </ion-col>
     </ion-row>
 
@@ -78,7 +79,19 @@
                   <div>
                     <ion-avatar style="text-align: center">
                       <img src="../../../../assets/img/avatar.svg" style="text-align: center" />
-                    </ion-avatar>
+                    </ion-avatar><br />
+                    <ion-badge *ngIf="student.isOnline" color="success">
+                      ONLINE
+                    </ion-badge>
+                    <ion-badge *ngIf="!student.isOnline" color="medium">
+                      OFFLINE
+                    </ion-badge>
+                    <p *ngIf="student.isOnline" style="visibility: hidden;;"> IM ONLINE<span></span></p>
+                    <p *ngIf="!student.isOnline">
+                      L|O:
+                      <span *ngIf="student.lastLogin">{{student.lastLogin}}</span><span
+                        *ngIf="!student.lastLogin">N/A</span>
+                    </p>
                   </div>
                 </ion-label>
                 <ion-label>
