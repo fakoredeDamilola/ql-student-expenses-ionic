@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
+import { Account, Report } from "@app/_models";
 import {
   AlertController,
   IonRouterOutlet,
@@ -18,9 +19,9 @@ const STORAGE_KEY = "my_images";
   styleUrls: ["./expense-details.scss"],
 })
 export class ExpenseDetailsPage {
-  accountId: any;
-  expenseId: any;
-  expenseName: any;
+  accountId: string;
+  expenseId: string;
+  expenseName: string;
   savingExpense: Promise<HTMLIonLoadingElement>;
   loading: Promise<HTMLIonLoadingElement>;
   deleting: Promise<HTMLIonLoadingElement>;
@@ -28,9 +29,9 @@ export class ExpenseDetailsPage {
   expenseCost: string;
   expenseCreated: string;
   expenseCategory: string;
-  expenseCreatedBy: string;
-  expenseReport: any;
-  expenseReportsManager: any;
+  expenseCreatedBy: Account;
+  expenseReport: Report;
+  expenseReportsManager: Account;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
 
@@ -61,10 +62,10 @@ export class ExpenseDetailsPage {
         //console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
-        this.expenseCreatedBy = `${Element.expenseStudent[0].firstName} ${Element.expenseStudent[0].lastName} `;
-        this.expenseReport = Element.expenseReport[0].reportName;
+        this.expenseCreatedBy = Element.expenseStudent[0]; ///TODO make this one back
+        this.expenseReport = Element.expenseReport[0]; // TODO make this singular
         this.expenseCategory = Element.expenseCategory;
-        this.expenseReportsManager = `${Element.expenseReportsManager[0].firstName} ${Element.expenseReportsManager[0].lastName}`;
+        this.expenseReportsManager = Element.expenseReportsManager[0];
         this.expenseCreated = moment(Element.created).format(
           "MM-DD-YYYY @HH:mm:ss"
         );

@@ -11,7 +11,7 @@ import {
 } from "@ionic/angular";
 
 import { UserData } from "@app/providers/user-data";
-import { AccountService, AlertService, ReportService } from "@app/_services";
+import { AlertService, ReportService } from "@app/_services";
 import { Report } from "@app/_models";
 import * as moment from "moment";
 
@@ -22,13 +22,13 @@ import * as moment from "moment";
 })
 export class ReportsPage {
   // Gets a reference to the list element
+  // may use later
   @ViewChild("allAccountsList", { static: true }) allAccountsList: IonList;
 
   ios: boolean;
-  queryText = "";
+  queryText: string = "";
   segment = "all";
   showSearchbar: boolean;
-  loading: any;
   allReports: any | [Report];
   adminsIsChecked: boolean;
   petOwnersIsChecked: boolean;
@@ -41,6 +41,7 @@ export class ReportsPage {
   ReportManagerCondition: string = "";
   currentRoute: string = this.router.url;
   data: boolean;
+  loading: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public alertCtrl: AlertController,

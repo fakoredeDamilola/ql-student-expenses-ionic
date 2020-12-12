@@ -1,7 +1,6 @@
-/*
- * expense Background
- */
-
+/**
+Ionic Default styling used for styling cards when needed
+*/
 ion-toolbar {
   position: absolute;
 
@@ -19,7 +18,7 @@ ion-toolbar ion-menu-button {
   --color: white;
 }
 
-.expense-background {
+.speaker-background {
   position: relative;
 
   display: flex;
@@ -33,16 +32,16 @@ ion-toolbar ion-menu-button {
 
   height: calc(250px + var(--ion-safe-area-top));
 
-  background: center / cover url(/assets/img/expenses.jpg) no-repeat;
+  background: center / cover url(/assets/img/speaker-background.png) no-repeat;
 }
 
-.expense-background img {
+.speaker-background img {
   width: 70px;
   border-radius: 50%;
   margin-top: calc(-1 * var(--ion-safe-area-top));
 }
 
-.expense-background h2 {
+.speaker-background h2 {
   position: absolute;
 
   bottom: 10px;
@@ -50,25 +49,25 @@ ion-toolbar ion-menu-button {
   color: white;
 }
 
-.md .expense-background {
+.md .speaker-background {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
     rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 }
 
-.ios .expense-background {
+.ios .speaker-background {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
 }
 
 /*
- * expense Details
+ * Speaker Details
  */
 
-.expense-detail p {
+.speaker-detail p {
   margin-left: 6px;
   margin-right: 6px;
 }
 
-.expense-detail hr {
+.speaker-detail hr {
   margin-top: 20px;
   margin-bottom: 20px;
 

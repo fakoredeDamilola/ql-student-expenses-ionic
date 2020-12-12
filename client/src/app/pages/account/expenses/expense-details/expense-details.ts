@@ -9,6 +9,7 @@ import {
 } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
+import * as moment from "moment";
 
 const STORAGE_KEY = "my_images";
 @Component({
@@ -17,9 +18,9 @@ const STORAGE_KEY = "my_images";
   styleUrls: ["./expense-details.scss"],
 })
 export class ExpenseDetailsPage {
-  accountId: any;
-  expenseId: any;
-  expenseName: any;
+  accountId: string;
+  expenseId: string;
+  expenseName: string;
   savingExpense: Promise<HTMLIonLoadingElement>;
   loading: Promise<HTMLIonLoadingElement>;
   deleting: Promise<HTMLIonLoadingElement>;
@@ -27,6 +28,7 @@ export class ExpenseDetailsPage {
   expenseCost: string;
   expenseCreated: string;
   expenseCategory: string;
+  backRoute: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -44,6 +46,7 @@ export class ExpenseDetailsPage {
   }
 
   async ionViewWillEnter() {
+    this.backRoute = this.currentRoute.split("/expense-details/")[0];
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
@@ -64,7 +67,7 @@ export class ExpenseDetailsPage {
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
         this.expenseCategory = Element.expenseCategory;
-        this.expenseCreated = Element.created;
+        this.expenseCreated = moment (Element.created).format("MM-DD-YYYY @HH:mm:ss");
       })
       .finally(async () => {
         setTimeout(async () => {
@@ -272,7 +275,7 @@ export class ExpenseDetailsPage {
           "success",
           8000
         );
-        this._location.back();
+        this.router.navigateByUrl(this.backRoute);
       },
       error: async (error) => {
         (await this.deleting).dismiss();

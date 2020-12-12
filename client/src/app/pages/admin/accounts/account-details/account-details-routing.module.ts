@@ -44,6 +44,20 @@ const routes: Routes = [
         (m) => m.ExpensesListModule
       ),
   },
+  {
+    path: "current-report-details/:reportId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/reports/report-details/report-details.module"
+      ).then((m) => m.ReportDetailsModule),
+  },
+  {
+    path: "reports-manager-details/:accountId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/accounts/account-details/account-details.module"
+      ).then((m) => m.AccountDetailsModule),
+  },
 ];
 
 @NgModule({

@@ -17,8 +17,8 @@ export class ForgotPasswordPage {
   forgotPassword: UserOptions = {
     email: "",
   };
-  submitted = false;
-  loading = false;
+  submitted: boolean = false;
+  loading: boolean = false;
 
   constructor(
     public router: Router,

@@ -15,6 +15,27 @@ const routes: Routes = [
         "@app/pages/account/expenses/expense-image/expense-image.module"
       ).then((m) => m.ExpenseImagePageModule),
   },
+  {
+    path: "reports-manager-details/:accountId", //<----TODO if i cahange this to reportsmanagerID its wrong???
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/accounts/account-details/account-details.module"
+      ).then((m) => m.AccountDetailsModule),
+  },
+  {
+    path: "report-details/:reportId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/reports/report-details/report-details.module"
+      ).then((m) => m.ReportDetailsModule),
+  },
+  {
+    path: "student-details/:accountId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/accounts/account-details/account-details.module"
+      ).then((m) => m.AccountDetailsModule),
+  },
 ];
 
 @NgModule({

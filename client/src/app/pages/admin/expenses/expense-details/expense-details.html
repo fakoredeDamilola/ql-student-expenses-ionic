@@ -10,17 +10,20 @@
   <div class="expense-background"></div>
   <!--Skeleton -->
   <div *ngIf="!data">
-    <h3><b><u>Expense Details:</u></b></h3>
+    <h3>
+      <b><u>Expense Details: (Click To Edit)</u></b>
+    </h3>
     <h1>
       <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-    </h1><br>
+    </h1>
+    <br />
     <h3>
-      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text><br>
+      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text><br />
     </h3>
     <ion-row *ngFor="let item of deadData">
       <ion-col>
         <ion-item>
-          <ion-skeleton-text animated style="width: 100%;size: 25px;"><br><br></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100%; size: 25px"><br /><br /></ion-skeleton-text>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -29,10 +32,23 @@
   <ion-row *ngIf="data">
     <ion-col>
       <h3>
-        <b><u>Expense Details:</u></b>
+        <b><u>Expense Details: (Click To Edit)</u></b>
       </h3>
-      <h5><b>Report: </b>{{expenseReport}}</h5>
-      <h5><b>Reports Manager: </b>{{expenseReportsManager}}</h5>
+      <h5>
+        <b>Report:</b>
+        <ion-button style="margin-bottom: 13px" fill="clear"
+          routerLink="{{currentRoute}}/report-details/{{expenseReport.id}}">
+          {{expenseReport.reportName}}&nbsp;<ion-icon name="eye"> </ion-icon>
+        </ion-button>
+      </h5>
+      <h5>
+        <b>Reports Manager:</b>
+        <ion-button style="margin-bottom: 12px" fill="clear"
+          routerLink="{{currentRoute}}/reports-manager-details/{{expenseReportsManager.id}}">
+          {{expenseReportsManager.firstName}}&nbsp;{{expenseReportsManager.lastName}}&nbsp;<ion-icon name="eye">
+          </ion-icon>
+        </ion-button>
+      </h5>
     </ion-col>
     <ion-col>
       <ion-button fill="clear" expand="full" color="secondary" routerLink="{{currentRoute}}/add-image">
@@ -68,7 +84,13 @@
 
     <ion-row *ngIf="data">
       <ion-col>
-        <ion-item><b>Created By:&nbsp;</b>{{expenseCreatedBy}}</ion-item>
+        <ion-item><b>Created By:&nbsp;</b>
+          <ion-button style="margin-bottom: 1px" fill="clear"
+            routerLink="{{currentRoute}}/student-details/{{expenseCreatedBy.id}}">
+            {{expenseCreatedBy.firstName}}&nbsp;{{expenseCreatedBy.lastName}}&nbsp;<ion-icon name="eye">
+            </ion-icon>
+          </ion-button>
+        </ion-item>
       </ion-col>
     </ion-row>
 

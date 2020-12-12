@@ -4,56 +4,63 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/admin/accounts"></ion-back-button>
       </ion-buttons>
-      <ion-buttons slot="end">
-      </ion-buttons>
+      <ion-buttons slot="end"> </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <div style="text-align: center;">
-    <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" style="text-align: center;">
+  <div style="text-align: center">
+    <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" style="text-align: center" />
   </div>
 
   <!--Skeleton-->
   <div *ngIf="!data">
     <ion-row>
-      <ion-col style="text-align: center;">
+      <ion-col style="text-align: center">
         <h2>Account Details</h2>
       </ion-col>
     </ion-row>
     <ion-list inset>
       <ion-row>
         <ion-col>
-          <h3><u>
-              <ion-skeleton-text animated style="width: 60%;size: 30px;"><br><br></ion-skeleton-text>
-            </u></h3>
+          <h3>
+            <u>
+              <ion-skeleton-text animated style="width: 60%; size: 30px"><br /><br /></ion-skeleton-text>
+            </u>
+          </h3>
         </ion-col>
       </ion-row>
 
       <ion-row *ngFor="let item of deadData">
         <ion-col>
           <ion-item>
-            <ion-skeleton-text animated style="width: 60%;size: 400px;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%; size: 400px"></ion-skeleton-text>
           </ion-item>
         </ion-col>
       </ion-row>
     </ion-list>
   </div>
 
-
   <div *ngIf="data">
     <ion-row>
-      <ion-col style="text-align: center;">
+      <ion-col style="text-align: center">
         <h2>Account Details</h2>
-        <h4>Last Login: <span *ngIf="account.lastLogin">{{account.lastLogin}}</span><span *ngIf="!account.lastLogin">N/A</span></h4>
         <ion-badge *ngIf="account.isOnline" color="success"> ONLINE </ion-badge>
-        <ion-badge *ngIf="!account.isOnline" color="medium"> OFFLINE </ion-badge>
+        <ion-badge *ngIf="!account.isOnline" color="medium">
+          OFFLINE
+        </ion-badge>
+        <h4 *ngIf="!account.isOnline">
+          L|O:
+          <span *ngIf="account.lastLogin">{{account.lastLogin}}</span><span *ngIf="!account.lastLogin">N/A</span>
+        </h4>
+
       </ion-col>
     </ion-row>
     <ion-list inset>
-
       <ion-row>
         <ion-col>
-          <h3><u><b>Basic Details: (Click To Edit)</b></u></h3>
+          <h3>
+            <u><b>Basic Details: (Click To Edit)</b></u>
+          </h3>
         </ion-col>
       </ion-row>
 
@@ -94,8 +101,8 @@
       <ion-row>
         <ion-col>
           <ion-item (click)="changeAccount('email')"><b>Email:&nbsp;</b>
-            <b *ngIf="account.isVerified==false" style="color: firebrick;">{{account.email}} (Not Verified)</b>
-            <b *ngIf="account.isVerified==true" style="color:green">{{account.email}} (Verified)</b>
+            <b *ngIf="account.isVerified==false" style="color: firebrick">{{account.email}} (Not Verified)</b>
+            <b *ngIf="account.isVerified==true" style="color: green">{{account.email}} (Verified)</b>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -114,22 +121,32 @@
 
       <ion-row>
         <ion-col>
-          <ion-item *ngIf="account.role=='Student'"><b>Reports Manager:&nbsp;</b><span *ngIf="reportsManager">{{reportsManager.firstName}}
-            {{reportsManager.lastName}}</span><span *ngIf="!reportsManager">No Reports Manager</span></ion-item>
+          <ion-item *ngIf="account.role=='Student'"><b>Reports Manager:&nbsp;</b><span *ngIf="reportsManager">
+              <ion-button fill="clear" routerLink="{{currentRoute}}/reports-manager-details/{{reportsManager.id}}">
+                {{reportsManager.firstName}}&nbsp;{{reportsManager.lastName}}&nbsp;<ion-icon name="eye">
+                </ion-icon>
+              </ion-button>
+            </span><span *ngIf="!reportsManager">No Reports Manager</span></ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <ion-item *ngIf="account.role=='Student' && studentReport"><b>Current Expense
-              Report:&nbsp;</b>{{studentReport.reportName}}</ion-item>
+          <ion-item *ngIf="account.role=='Student' && studentReport"><b>Current Expense Report:&nbsp;</b>
+            <ion-button fill="clear" routerLink="{{currentRoute}}/current-report-details/{{studentReport.id}}">
+              {{studentReport.reportName}}&nbsp;<ion-icon name="eye">
+              </ion-icon>
+            </ion-button>
+          </ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-row>
           <ion-col>
-            <h3 style="text-align: center;"><b><u>Personal Expenses:</u></b></h3>
+            <h3 style="text-align: center">
+              <b><u>Personal Expenses:</u></b>
+            </h3>
             <ion-button routerLink="{{currentRoute}}/expenses/add" shape="round" fill="outline">
               <ion-icon name="add-outline"></ion-icon>Add Expense
             </ion-button>
@@ -137,16 +154,18 @@
         </ion-row>
       </ion-row>
 
-      <div *ngIf="hasExpenses==false">This Account Has No Personal Expenses</div>
+      <div *ngIf="hasExpenses==false">
+        This Account Has No Personal Expenses
+      </div>
       <ion-grid fixed>
         <ion-row>
           <ion-col size="12" size-md="6" *ngFor="let expense of studentExpenses">
             <ion-card class="speaker-card">
               <!--<ion-card-header>-->
               <ion-item detail="false" lines="none" class="speaker-item"
-                routerLink='{{currentRoute}}/expenses/expense-details/{{expense.id}}'>
+                routerLink="{{currentRoute}}/expenses/expense-details/{{expense.id}}">
                 <ion-avatar slot="start">
-                  <img src="../../../../assets/img/money.png" [alt]="'Expense Image'">
+                  <img src="../../../../assets/img/money.png" [alt]="'Expense Image'" />
                 </ion-avatar>
                 <ion-label>
                   <h2>{{expense.expenseName}}</h2>
@@ -160,7 +179,9 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <h5><u><b>Expenses Total</b></u>: ${{totalOfExpenses}}</h5>
+            <h5>
+              <u><b>Expenses Total</b></u>: ${{totalOfExpenses}}
+            </h5>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -169,27 +190,24 @@
         <ion-row>
           <ion-row>
             <ion-col>
-              <h3 style="text-align: center;"><b><u>Reports Manager Details: (VIEW AS THEM)</u></b></h3>
+              <h3 style="text-align: center">
+                <b><u>Reports Manager Details: (VIEW AS THEM)</u></b>
+              </h3>
             </ion-col>
           </ion-row>
         </ion-row>
         <ion-row>
-          <ion-button expand="full" shape="block" color="primary"
-            routerLink='/admin/accounts/account-details/{{accountId}}/reports'>
+          <ion-button expand="full" shape="block" color="primary" routerLink="{{currentRoute}}/reports">
             Reports ({{reportsManagerReportsCount}})
           </ion-button>
-          <ion-button expand="full" shape="block" color="secondary"
-            routerLink='/admin/accounts/account-details/{{accountId}}/students'>
+          <ion-button expand="full" shape="block" color="secondary" routerLink="{{currentRoute}}/students">
             Students ({{reportsManagerStudentsCount}})
           </ion-button>
-          <ion-button expand="full" shape="block" color="medium"
-            routerLink='/admin/accounts/account-details/{{accountId}}/reports-expenses'>
+          <ion-button expand="full" shape="block" color="medium" routerLink="{{currentRoute}}/reports-expenses">
             Expenses ({{reportsManagerExpensesCount}})
           </ion-button>
         </ion-row>
-
       </div>
-
     </ion-list>
     <ion-row>
       <ion-col>

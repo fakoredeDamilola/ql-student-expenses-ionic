@@ -5,9 +5,7 @@
       <ion-button *ngIf="!ios" (click)="selectAll(false)">Reset</ion-button>
     </ion-buttons>
 
-    <ion-title>
-      Filter Expenses
-    </ion-title>
+    <ion-title> Filter Expenses </ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="applyFilters()" strong>Done</ion-button>
@@ -38,7 +36,6 @@
       <ion-label>Other&nbsp;</ion-label>
       <ion-checkbox [(ngModel)]="otherIsChecked"></ion-checkbox>
     </ion-item>
-
   </ion-list>
 </ion-content>
 

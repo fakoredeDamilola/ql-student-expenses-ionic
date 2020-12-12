@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
-import { Expense } from "@app/_models";
+import { Expense, Account, Report } from "@app/_models";
 import * as moment from "moment";
 
 @Component({
@@ -12,22 +12,29 @@ import * as moment from "moment";
   styleUrls: ["./student-details.scss"],
 })
 export class StudentDetailsPage {
-  studentId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  created: any;
+  student: Account | any = {
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    created: "",
+    updated: "",
+    lastLogin: "",
+    isOnline: false,
+    isVerified: false,
+  };
 
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
-  studentExpenses: [Expense];
+  studentExpenses: [Expense] | undefined;
   expensesLength: number;
   reportName: string;
   isVerified: boolean;
   totalOfExpenses: number = 0;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
+  currentReport: Report | undefined;
 
   constructor(
     public route: ActivatedRoute,
@@ -44,7 +51,7 @@ export class StudentDetailsPage {
     this.totalOfExpenses = 0;
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
-    this.studentId = this.route.snapshot.paramMap.get("studentId");
+    this.student.id = this.route.snapshot.paramMap.get("studentId");
     // get id out of url for non admins
     if (this.accountService.accountValue.role != "Admin") {
       window.history.replaceState(
@@ -54,15 +61,13 @@ export class StudentDetailsPage {
       );
     }
 
-    (await this.accountService.getById(this.studentId))
+    (await this.accountService.getById(this.student.id))
       .forEach(async (Element) => {
-        this.firstName = Element.firstName;
-        this.lastName = Element.lastName;
-        this.email = Element.email;
-        this.created = Element.created;
-        this.isVerified = Element.isVerified;
+        //console.log(Element)
+        this.student = Element;
         this.studentExpenses = Element.studentExpenses;
         this.expensesLength = Element.studentExpenses.length;
+        this.currentReport = Element.studentReport;
       })
       .then(async () => {
         //calculate expenses total

@@ -9,7 +9,7 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["expense-image.scss"],
 })
 export class ExpenseImagePage {
-  expenseId: any;
+  expenseId: string;
 
   constructor(
     public photoService: PhotoService,

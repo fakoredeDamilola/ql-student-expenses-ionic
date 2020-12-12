@@ -1,22 +1,22 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ActionSheetController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
+import { Account } from "@app/_models";
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { ExpenseOptions } from "@app/interfaces/expense-options";
-import { Location } from "@angular/common";
-import { Account } from "@app/_models";
 
 @Component({
-  selector: "page-add-expense",
-  templateUrl: "add-expense.html",
-  styleUrls: ["./add-expense.scss"],
+  selector: "page-add-student-expense",
+  templateUrl: "add-student-expense.html",
+  styleUrls: ["./add-student-expense.scss"],
 })
-export class AddExpensePage {
+export class AddStudentExpensePage {
   account: Account = this.accountService.accountValue;
   submitted: boolean = false;
+  currentRoute: string = this.router.url;
 
   addExpense: ExpenseOptions = {
     expenseName: "",
@@ -25,29 +25,49 @@ export class AddExpensePage {
   };
   loading: Promise<HTMLIonLoadingElement>;
   savingExpense: Promise<HTMLIonLoadingElement>;
-  accountId: string;
+  studentId: string;
+  reportId: string;
+  reportsManagerId: string;
+  student: Account;
+  backRoute: string;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private accountService: AccountService,
     private expenseService: ExpenseService,
     public actionSheetCtrl: ActionSheetController,
     public inAppBrowser: InAppBrowser,
-    public alertService: AlertService,
-    private _location: Location
+    public alertService: AlertService
   ) {}
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
-    (await this.loading).present();
-    this.accountId = this.route.snapshot.paramMap.get("accountId"); //<----------potentially null for regular students
+    // back route after adding an expense
+    this.backRoute = this.currentRoute.split("/student-expenses/add")[0];
+    (await this.loading)
+      .present()
+      .then(async () => {
+        // This should never be null
+        this.studentId = this.route.snapshot.paramMap.get("studentId");
+        //console.log("this student id", this.studentId);
+        // Possibly null if didnt get here through report details page
+        this.reportId = this.route.snapshot.paramMap.get("reportId");
+        //console.log("this report id", this.reportId);
+        // Getting student info to create expense
+        (await this.accountService.getById(this.studentId)).forEach(
+          async (student) => {
+            this.reportId = student.reportId;
+            this.reportsManagerId = student.reportsManagerId;
+          }
+        );
+      })
+      .finally(async () => {
+        (await this.loading).dismiss();
+      });
   }
 
-  async ionViewDidEnter() {
-    setTimeout(async () => {
-      (await this.loading).dismiss();
-    }, 300);
-  }
+  async ionViewDidEnter() {}
 
   async onAddExpense(form?: NgForm) {
     this.savingExpense = this.alertService.presentLoading("Saving Expense!...");
@@ -61,7 +81,7 @@ export class AddExpensePage {
 
     if (form.invalid || !regex.test(numStr)) {
       this.alertService.createToastAlert(
-        "Add To Expenses Failed, Fields Are Invalid.....!",
+        "Add To Student Expenses Failed, Fields Are Invalid.....!",
         "danger",
         4000
       );
@@ -71,21 +91,9 @@ export class AddExpensePage {
       return;
     }
 
-    if (this.accountId) {
-      //<------------------- Admin Is Adding Expense for somebody
-      form.value.studentId = this.accountId;
-      await (await this.accountService.getById(this.accountId)).forEach(
-        async (Element) => {
-          form.value.reportId = Element.reportId;
-          form.value.reportsManagerId = Element.reportsManagerId;
-        }
-      );
-    } else {
-      //<--------------------------------Regular student adding their own expense
-      form.value.studentId = this.account.id;
-      form.value.reportId = this.account.reportId;
-      form.value.reportsManagerId = this.account.reportsManagerId;
-    }
+    form.value.studentId = this.studentId;
+    form.value.reportId = this.reportId;
+    form.value.reportsManagerId = this.reportsManagerId;
 
     (await this.expenseService.create(form.value)).pipe(first()).subscribe({
       next: async () => {
@@ -93,18 +101,18 @@ export class AddExpensePage {
           (await this.savingExpense).dismiss();
         }, 300);
         this.alertService.createToastAlert(
-          "Added Expense Successfully!",
+          "Added Student Expense Successfully!",
           "success",
           5000
         );
-        this._location.back();
+        await this.router.navigateByUrl(this.backRoute);
       },
       error: async (error) => {
         setTimeout(async () => {
           (await this.savingExpense).dismiss();
         }, 300);
         this.alertService.createToastAlert(
-          "Add Expense Failed.....!",
+          "Add Student Expense Failed.....!",
           "danger",
           5000
         );

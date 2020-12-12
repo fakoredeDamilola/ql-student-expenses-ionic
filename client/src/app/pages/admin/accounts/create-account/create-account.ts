@@ -8,6 +8,7 @@ import { UserOptions } from "@app/interfaces/student-options";
 import { AccountService, AlertService } from "@app/_services";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
+import { Account, Report } from "@app/_models";
 
 @Component({
   selector: "page-create-account",
@@ -25,10 +26,10 @@ export class CreateAccountPage {
     acceptTerms: true,
     role: "",
   };
-  submitted = false;
-  loading = false;
-  allReportsManagers: any;
-  allReportsManagerReports: any;
+  submitted: boolean = false;
+  loading: boolean = false;
+  allReportsManagers: [Account] | undefined | Account | any;
+  allReportsManagerReports: [Report] | Report | any; // TODO fix this
 
   loadReportsManagersListDone: boolean = false;
   loadReportsManagerReportsListDone: boolean = false;

@@ -1,24 +1,32 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <ion-buttons slot="start" *ngIf="roleViewer=='A'">
-      <ion-back-button defaultHref="/account/profile">
-      </ion-back-button>
+    <ion-buttons slot="start" [hidden]="backButtonDisabled">
+      <ion-back-button defaultHref="/account/profile"> </ion-back-button>
     </ion-buttons>
     <ion-buttons *ngIf="!showSearchbar" slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Students
+    <ion-title
+      *ngIf="!ios && !showSearchbar"
+      text-align-center
+      size="large"
+      color="secondary"
+      >Students
     </ion-title>
-    <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
-      (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
+    <ion-searchbar
+      *ngIf="showSearchbar"
+      showCancelButton="always"
+      [(ngModel)]="queryText"
+      (ionCancel)="showSearchbar = false"
+      placeholder="Search"
+    ></ion-searchbar>
     <ion-buttons slot="end">
       <ion-button *ngIf="!ios && !showSearchbar" (click)="showSearchbar = true">
         <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar *ngIf="!ios">
-  </ion-toolbar>
+  <ion-toolbar *ngIf="!ios"> </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
@@ -27,12 +35,14 @@
       <ion-title text-align-center size="large">Students</ion-title>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-searchbar [(ngModel)]="queryText" placeholder="Search"></ion-searchbar>
+      <ion-searchbar
+        [(ngModel)]="queryText"
+        placeholder="Search"
+      ></ion-searchbar>
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-item-divider sticky>
-    </ion-item-divider>
+    <ion-item-divider sticky> </ion-item-divider>
     <ion-content>
       <!-- Skeleton for when fetching data-->
       <div *ngIf="!data">
@@ -45,10 +55,22 @@
                   <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-avatar>
                 <ion-label>
-                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 50%"
+                  ></ion-skeleton-text>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 30%"
+                  ></ion-skeleton-text>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 50%"
+                  ></ion-skeleton-text>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 20%"
+                  ></ion-skeleton-text>
                 </ion-label>
               </ion-item>
             </ion-card>
@@ -61,10 +83,22 @@
                   <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-avatar>
                 <ion-label>
-                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 50%"
+                  ></ion-skeleton-text>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 30%"
+                  ></ion-skeleton-text>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 50%"
+                  ></ion-skeleton-text>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 20%"
+                  ></ion-skeleton-text>
                 </ion-label>
               </ion-item>
             </ion-card>
@@ -74,41 +108,63 @@
 
       <ion-grid fixed *ngIf="data">
         <ion-row>
-          <ion-col size="12" size-md="6" *ngFor="let student of studentsList"
-            [hidden]="((student.firstName.indexOf(queryText)==-1 && student.lastName.indexOf(queryText)==-1 && student.email.indexOf(queryText)==-1)  && queryText)">
-            <ion-card class="speaker-card" routerLink="{{currentRoute}}/student-details/{{student.id}}">
+          <ion-col
+            size="12"
+            size-md="6"
+            *ngFor="let student of studentsList"
+            [hidden]="((student.firstName.indexOf(queryText)==-1 && student.lastName.indexOf(queryText)==-1 && student.email.indexOf(queryText)==-1)  && queryText)"
+          >
+            <ion-card
+              class="speaker-card"
+              routerLink="{{currentRoute}}/student-details/{{student.id}}"
+            >
               <ion-card-header>
                 <ion-item detail="false" lines="none">
                   <ion-label>
                     <div>
-                      <ion-avatar style="text-align: center;">
-                        <img src="../../../../assets/img/avatar.svg" style="text-align: center;">
-                      </ion-avatar>
-
+                      <ion-avatar style="text-align: center">
+                        <img
+                          src="../../../../assets/img/avatar.svg"
+                          style="text-align: center"
+                        /> </ion-avatar
+                      ><br />
+                      <ion-badge *ngIf="student.isOnline" color="success">
+                        ONLINE
+                      </ion-badge>
+                      <ion-badge *ngIf="!student.isOnline" color="medium">
+                        OFFLINE
+                      </ion-badge>
                     </div>
                   </ion-label>
                   <ion-label>
                     <h1><b>{{student.firstName}} {{student.lastName}}</b></h1>
-                    <h4>{{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color:green"
-                        name="checkmark-circle"></ion-icon>
-                      <ion-icon name="checkmark-circle" *ngIf="student.isVerified==false" style="color: firebrick;">
-                      </ion-icon>&nbsp;
+                    <h4>
+                      {{student.email}}&nbsp;<ion-icon
+                        *ngIf="student.isVerified==true"
+                        style="color: green"
+                        name="checkmark-circle"
+                      ></ion-icon>
+                      <ion-icon
+                        name="checkmark-circle"
+                        *ngIf="student.isVerified==false"
+                        style="color: firebrick"
+                      >
+                      </ion-icon
+                      >&nbsp;
                     </h4>
-                    <p>
-                      Expenses: ( {{student.studentExpensesCount}} )
-                    </p>
+                    <p>Expenses: ( {{student.studentExpensesCount}} )</p>
                   </ion-label>
                 </ion-item>
               </ion-card-header>
             </ion-card>
           </ion-col>
         </ion-row>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </ion-grid>
     </ion-content>
   </ion-content>

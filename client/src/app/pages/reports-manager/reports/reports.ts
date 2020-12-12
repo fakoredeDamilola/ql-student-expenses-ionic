@@ -4,6 +4,7 @@ import { AccountService, AlertService } from "@app/_services";
 import { Config, LoadingController } from "@ionic/angular";
 import { Location } from "@angular/common";
 import * as moment from "moment";
+import { Report } from "@app/_models";
 
 @Component({
   selector: "page-reports-list",
@@ -11,17 +12,17 @@ import * as moment from "moment";
   styleUrls: ["./reports.scss"],
 })
 export class ReportsListPage {
-  queryText = "";
+  queryText: string = "";
   showSearchbar: boolean;
   ios: boolean;
   filtersList: any;
-  reportsList: any;
-  reportsManagerId: any;
-  loading: any;
+  reportsList: [Report] | any; //TODO fix this
+  reportsManagerId: string;
+  loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
-  roleViewer: string;
+  backButtonDisabled: boolean;
 
   constructor(
     private accountService: AccountService,
@@ -32,6 +33,9 @@ export class ReportsListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.currentRoute.split("/")[1] == "reports-manager"
+    ? (this.backButtonDisabled = true)
+    : (this.backButtonDisabled = false);
     this.ios = (await this.config.get("mode")) === "ios";
     this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -39,7 +43,6 @@ export class ReportsListPage {
 
     this.reportsManagerId = this.accountService.accountValue.id;
     if (this.accountService.accountValue.role == "Admin") {
-      this.roleViewer = "A";
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
       // If your an admin the account Id will be inside the url, removed for none admin views
       if (this.route.snapshot.paramMap.get("accountId") == null) {

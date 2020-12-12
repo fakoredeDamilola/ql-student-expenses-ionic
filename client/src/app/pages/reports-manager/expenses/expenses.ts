@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserData } from "@app/providers/user-data";
+import { Expense } from "@app/_models";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
 import {
   AlertController,
@@ -19,19 +20,18 @@ import { ExpensesFilterPage } from "./expenses-filter/expenses-filter";
   styleUrls: ["./expenses.scss"],
 })
 export class ExpensesListPage {
-  queryText = "";
+  queryText: string = "";
   showSearchbar: boolean;
   ios: boolean;
   filtersList: any;
   reportsManagerId: string;
-  expensesList: any;
+  expensesList: [Expense];
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
-  userId: any;
-  petOwnersList: any;
+  userId: string;
   reportsExpenses: any;
   expensesTotal: number;
-  expensesCount: any;
+  expensesCount: number;
   foodIsChecked: boolean;
   hotelIsChecked: boolean;
   entertainmentIsChecked: boolean;
@@ -42,7 +42,8 @@ export class ExpensesListPage {
   otherCondition: string = "";
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
-  roleViewer: string;
+  backRoute: string;
+  backButtonDisabled: boolean;
 
   constructor(
     public alertCtrl: AlertController,
@@ -59,6 +60,9 @@ export class ExpensesListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.currentRoute.split("/")[1] == "reports-manager"
+      ? (this.backButtonDisabled = true)
+      : (this.backButtonDisabled = false);
     this.ios = (await this.config.get("mode")) === "ios";
     this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
@@ -72,7 +76,6 @@ export class ExpensesListPage {
     this.reportsManagerId = this.accountService.accountValue.id;
     // Incase Admins Are Viewing another reports manager expenses list As Them
     if (this.accountService.accountValue.role == "Admin") {
-      this.roleViewer = "A"; //<-----Admin... used to hide back button
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
       if (this.route.snapshot.paramMap.get("accountId") == null) {
         this.reportsManagerId = this.accountService.accountValue.id;

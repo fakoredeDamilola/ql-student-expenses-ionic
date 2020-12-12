@@ -8,16 +8,16 @@
 </ion-header>
 
 <ion-content>
-
   <div class="signup-logo">
     <h1>Student Expenses Signup</h1>
   </div>
 
   <form #signupForm="ngForm" novalidate>
     <ion-list lines="none">
-
       <ion-item>
-        <ion-label position="floating" color="primary">Title (Optional)</ion-label>
+        <ion-label position="floating" color="primary"
+          >Title (Optional)</ion-label
+        >
         <ion-select [(ngModel)]="signup.title" name="title" #title="ngModel">
           <ion-select-option>Mr</ion-select-option>
           <ion-select-option>Mrs</ion-select-option>
@@ -26,36 +26,63 @@
         </ion-select>
       </ion-item>
 
-
       <ion-item>
         <ion-label position="floating" color="primary">First Name</ion-label>
-        <ion-input [(ngModel)]="signup.firstName" name="firstName" type="text" #firstName="ngModel" required>
+        <ion-input
+          [(ngModel)]="signup.firstName"
+          name="firstName"
+          type="text"
+          #firstName="ngModel"
+          required
+        >
         </ion-input>
       </ion-item>
       <ion-text color="danger">
-        <p [hidden]="firstName.valid || submitted == false" class="ion-padding-start">
+        <p
+          [hidden]="firstName.valid || submitted == false"
+          class="ion-padding-start"
+        >
           First Name is required
         </p>
       </ion-text>
 
       <ion-item>
         <ion-label position="floating" color="primary">Last Name</ion-label>
-        <ion-input [(ngModel)]="signup.lastName" name="lastName" type="text" #lastName="ngModel" required>
+        <ion-input
+          [(ngModel)]="signup.lastName"
+          name="lastName"
+          type="text"
+          #lastName="ngModel"
+          required
+        >
         </ion-input>
       </ion-item>
       <ion-text color="danger">
-        <p [hidden]="lastName.valid || submitted == false" class="ion-padding-start">
+        <p
+          [hidden]="lastName.valid || submitted == false"
+          class="ion-padding-start"
+        >
           Last Name is required
         </p>
       </ion-text>
 
       <ion-item>
         <ion-label position="floating" color="primary">Email</ion-label>
-        <ion-input [(ngModel)]="signup.email" name="email" type="text" #email="ngModel" required [email]="true">
+        <ion-input
+          [(ngModel)]="signup.email"
+          name="email"
+          type="text"
+          #email="ngModel"
+          required
+          [email]="true"
+        >
         </ion-input>
       </ion-item>
       <ion-text color="danger">
-        <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
+        <p
+          [hidden]="email.valid || submitted == false"
+          class="ion-padding-start"
+        >
           Email is invalid
         </p>
       </ion-text>
@@ -67,30 +94,49 @@
 
       <ion-item>
         <ion-label position="floating" color="primary">Password</ion-label>
-        <ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
+        <ion-input
+          [(ngModel)]="signup.password"
+          name="password"
+          type="password"
+          #password="ngModel"
+          required
+        >
         </ion-input>
       </ion-item>
       <ion-text color="danger">
-        <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
+        <p
+          [hidden]="password.valid || submitted == false"
+          class="ion-padding-start"
+        >
           Password is required
         </p>
       </ion-text>
 
       <ion-item>
-        <ion-label position="floating" color="primary">Accept Terms & Conditions</ion-label>
-        <ion-checkbox [(ngModel)]="signup.acceptTerms" name="acceptTerms" #acceptTerms="ngModel" requiredTrue></ion-checkbox>
+        <ion-label position="floating" color="primary"
+          >Accept Terms & Conditions</ion-label
+        >
+        <ion-checkbox
+          [(ngModel)]="signup.acceptTerms"
+          name="acceptTerms"
+          #acceptTerms="ngModel"
+          requiredTrue
+        ></ion-checkbox>
       </ion-item>
       <ion-text color="danger">
-        <p [hidden]="acceptTerms.valid || submitted == false" class="ion-padding-start">
+        <p
+          [hidden]="acceptTerms.valid || submitted == false"
+          class="ion-padding-start"
+        >
           Accepting the T&C's is required
         </p>
       </ion-text>
-
     </ion-list>
 
     <div class="ion-padding">
-      <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">Create</ion-button>
+      <ion-button (click)="onSignup(signupForm)" type="submit" expand="block"
+        >Create</ion-button
+      >
     </div>
   </form>
-
 </ion-content>

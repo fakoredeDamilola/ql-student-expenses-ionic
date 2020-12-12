@@ -8,7 +8,7 @@ import {
   ModalController,
 } from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Location } from "@angular/common";
+import { Account, Report } from "@app/_models";
 import * as moment from "moment";
 
 const STORAGE_KEY = "my_images";
@@ -18,9 +18,9 @@ const STORAGE_KEY = "my_images";
   styleUrls: ["./expense-details.scss"],
 })
 export class ExpenseDetailsPage {
-  accountId: any;
-  expenseId: any;
-  expenseName: any;
+  accountId: string;
+  expenseId: string;
+  expenseName: string;
   savingExpense: Promise<HTMLIonLoadingElement>;
   loading: Promise<HTMLIonLoadingElement>;
   deleting: Promise<HTMLIonLoadingElement>;
@@ -28,10 +28,11 @@ export class ExpenseDetailsPage {
   expenseCost: string;
   expenseCreated: string;
   expenseCategory: string;
-  expenseCreatedBy: string;
-  expenseReport: any;
+  expenseCreatedBy: Account;
+  expenseReport: Report;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
+  backRoute: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -42,14 +43,15 @@ export class ExpenseDetailsPage {
     public alertService: AlertService,
     public accountService: AccountService,
     public routerOutlet: IonRouterOutlet,
-    public modalCtrl: ModalController,
-    private _location: Location
+    public modalCtrl: ModalController
   ) {
     this.deleting = this.alertService.presentLoading("Deleting Expense...");
   }
 
   async ionViewWillEnter() {
     this.data = false;
+    // back route after adding an expense
+    this.backRoute = this.currentRoute.split("/expense-details/")[0];
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
@@ -57,11 +59,7 @@ export class ExpenseDetailsPage {
 
     // get id out of the url
     if (this.accountService.accountValue.role != "Admin") {
-      window.history.replaceState(
-        {},
-        document.title,
-        "/" + "account/expenses/expense-details"
-      );
+      // need better logic for this
     }
 
     (await this.expenseService.getById(this.expenseId))
@@ -69,8 +67,8 @@ export class ExpenseDetailsPage {
         //console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
-        this.expenseCreatedBy = `${Element.expenseStudent[0].firstName} ${Element.expenseStudent[0].lastName} `;
-        this.expenseReport = Element.expenseReport[0].reportName;
+        this.expenseCreatedBy = Element.expenseStudent[0];
+        this.expenseReport = Element.expenseReport[0];
         this.expenseCategory = Element.expenseCategory;
         this.expenseCreated = moment(Element.created).format(
           "MM-DD-YYYY @HH:mm:ss"
@@ -284,7 +282,7 @@ export class ExpenseDetailsPage {
           "success",
           8000
         );
-        this._location.back();
+        this.router.navigateByUrl(this.backRoute);
       },
       error: async (error) => {
         (await this.deleting).dismiss();
