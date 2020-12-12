@@ -4,6 +4,7 @@ const path = require("path");
 const router = express.Router();
 const mongoose = require("mongoose");
 const multer = require("multer");
+const moment = require("moment");
 
 const db = require("_helpers/db");
 
@@ -55,7 +56,13 @@ router.post("/upload", upload.single("image"), (req, res, next) => {
 // Adder Function for Images
 async function addImageToObject(objId, objType, fileName) {
   const entity = await db[`${objType}`].findById(objId);
-  await entity.images.push({'fileName':fileName});
+
+  // Saving date formated....TODO!!! probably should do for every date....
+  const timeCreatedFormated = moment(
+    Date.now()
+  ).format("MM-DD-YYYY @HH:mm:ss");
+
+  await entity.images.push({'fileName':fileName, 'created': timeCreatedFormated});
   entity.updated = Date.now();
   await entity.save();
 }
