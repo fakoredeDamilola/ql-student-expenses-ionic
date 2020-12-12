@@ -43,7 +43,10 @@
       </ion-item>
       <ion-item (click)="editReportAttribute('reportName')"><b>Report Name:&nbsp; </b> {{reportName}}
       </ion-item>
-      <ion-item><b>Reports Manager:&nbsp; </b> {{reportsManager}}
+      <ion-item><b>Reports Manager:&nbsp; </b><ion-button fill="clear" routerLink="{{currentRoute}}/reports-manager-details/{{reportsManager.id}}">
+        {{reportsManager.firstName}}&nbsp;{{reportsManager.lastName}}&nbsp;<ion-icon name="eye">
+        </ion-icon>
+      </ion-button>
       </ion-item>
       <ion-item><b>Created:&nbsp; </b> {{reportCreated}}
       </ion-item>

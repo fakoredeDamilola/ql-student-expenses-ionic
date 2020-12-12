@@ -44,7 +44,8 @@
     <ion-row>
       <ion-col style="text-align: center;">
         <h2>Account Details</h2>
-        <h4>Last Login: <span *ngIf="account.lastLogin">{{account.lastLogin}}</span><span *ngIf="!account.lastLogin">N/A</span></h4>
+        <h4>Last Login: <span *ngIf="account.lastLogin">{{account.lastLogin}}</span><span
+            *ngIf="!account.lastLogin">N/A</span></h4>
         <ion-badge *ngIf="account.isOnline" color="success"> ONLINE </ion-badge>
         <ion-badge *ngIf="!account.isOnline" color="medium"> OFFLINE </ion-badge>
       </ion-col>
@@ -114,15 +115,24 @@
 
       <ion-row>
         <ion-col>
-          <ion-item *ngIf="account.role=='Student'"><b>Reports Manager:&nbsp;</b><span *ngIf="reportsManager">{{reportsManager.firstName}}
-            {{reportsManager.lastName}}</span><span *ngIf="!reportsManager">No Reports Manager</span></ion-item>
+          <ion-item *ngIf="account.role=='Student'"><b>Reports Manager:&nbsp;</b><span *ngIf="reportsManager">
+              <ion-button fill="clear" routerLink="{{currentRoute}}/reports-manager-details/{{reportsManager.id}}">
+                {{reportsManager.firstName}}&nbsp;{{reportsManager.lastName}}&nbsp;<ion-icon name="eye">
+                </ion-icon>
+              </ion-button>
+            </span><span *ngIf="!reportsManager">No Reports Manager</span></ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
           <ion-item *ngIf="account.role=='Student' && studentReport"><b>Current Expense
-              Report:&nbsp;</b>{{studentReport.reportName}}</ion-item>
+              Report:&nbsp;</b>
+            <ion-button fill="clear" routerLink="{{currentRoute}}/current-report-details/{{studentReport.id}}">
+              {{studentReport.reportName}}&nbsp;<ion-icon name="eye">
+              </ion-icon>
+            </ion-button>
+          </ion-item>
         </ion-col>
       </ion-row>
 
@@ -175,15 +185,15 @@
         </ion-row>
         <ion-row>
           <ion-button expand="full" shape="block" color="primary"
-            routerLink='/admin/accounts/account-details/{{accountId}}/reports'>
+            routerLink='{{currentRoute}}/reports'>
             Reports ({{reportsManagerReportsCount}})
           </ion-button>
           <ion-button expand="full" shape="block" color="secondary"
-            routerLink='/admin/accounts/account-details/{{accountId}}/students'>
+            routerLink='{{currentRoute}}/students'>
             Students ({{reportsManagerStudentsCount}})
           </ion-button>
           <ion-button expand="full" shape="block" color="medium"
-            routerLink='/admin/accounts/account-details/{{accountId}}/reports-expenses'>
+            routerLink='{{currentRoute}}/reports-expenses'>
             Expenses ({{reportsManagerExpensesCount}})
           </ion-button>
         </ion-row>

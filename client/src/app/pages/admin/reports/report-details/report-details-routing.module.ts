@@ -29,6 +29,13 @@ const routes: Routes = [
         "@app/pages/admin/expenses/expense-details/expense-details.module"
       ).then((m) => m.ExpenseDetailsModule),
   },
+  {
+    path: "reports-manager-details/:accountId",//<----TODO if i cahange this to reportsmanagerID its wrong???
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/accounts/account-details/account-details.module"
+      ).then((m) => m.AccountDetailsModule),
+  }
 ];
 
 @NgModule({
