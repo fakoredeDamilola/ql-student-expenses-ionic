@@ -22,7 +22,6 @@ export class ReportsListPage {
   currentRoute: string = this.router.url;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
-  roleViewer: string;
   backButtonDisabled: boolean;
 
   constructor(
@@ -44,7 +43,6 @@ export class ReportsListPage {
 
     this.reportsManagerId = this.accountService.accountValue.id;
     if (this.accountService.accountValue.role == "Admin") {
-      this.roleViewer = "A";
       this.reportsManagerId = this.route.snapshot.paramMap.get("accountId");
       // If your an admin the account Id will be inside the url, removed for none admin views
       if (this.route.snapshot.paramMap.get("accountId") == null) {
