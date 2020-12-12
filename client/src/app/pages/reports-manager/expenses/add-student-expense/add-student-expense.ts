@@ -3,11 +3,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ActionSheetController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
-import { Account } from "@app/_models"
+import { Account } from "@app/_models";
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { ExpenseOptions } from "@app/interfaces/expense-options";
-
 
 @Component({
   selector: "page-add-student-expense",
@@ -15,7 +14,7 @@ import { ExpenseOptions } from "@app/interfaces/expense-options";
   styleUrls: ["./add-student-expense.scss"],
 })
 export class AddStudentExpensePage {
-  account:Account = this.accountService.accountValue;
+  account: Account = this.accountService.accountValue;
   submitted: boolean = false;
   currentRoute: string = this.router.url;
 
@@ -39,13 +38,13 @@ export class AddStudentExpensePage {
     private expenseService: ExpenseService,
     public actionSheetCtrl: ActionSheetController,
     public inAppBrowser: InAppBrowser,
-    public alertService: AlertService,
+    public alertService: AlertService
   ) {}
 
   async ionViewWillEnter() {
     this.loading = this.alertService.presentLoading("Student Expenses");
     // back route after adding an expense
-    this.backRoute = this.currentRoute.split('/student-expenses/add')[0];
+    this.backRoute = this.currentRoute.split("/student-expenses/add")[0];
     (await this.loading)
       .present()
       .then(async () => {
@@ -56,10 +55,12 @@ export class AddStudentExpensePage {
         this.reportId = this.route.snapshot.paramMap.get("reportId");
         //console.log("this report id", this.reportId);
         // Getting student info to create expense
-          (await this.accountService.getById(this.studentId)).forEach(async (student)=>{
+        (await this.accountService.getById(this.studentId)).forEach(
+          async (student) => {
             this.reportId = student.reportId;
             this.reportsManagerId = student.reportsManagerId;
-          });
+          }
+        );
       })
       .finally(async () => {
         (await this.loading).dismiss();
@@ -104,7 +105,7 @@ export class AddStudentExpensePage {
           "success",
           5000
         );
-          await this.router.navigateByUrl(this.backRoute);
+        await this.router.navigateByUrl(this.backRoute);
       },
       error: async (error) => {
         setTimeout(async () => {

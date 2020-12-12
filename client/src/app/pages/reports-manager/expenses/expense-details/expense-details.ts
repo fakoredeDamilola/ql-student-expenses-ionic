@@ -8,7 +8,7 @@ import {
   ModalController,
 } from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Account, Report } from "@app/_models"
+import { Account, Report } from "@app/_models";
 import * as moment from "moment";
 
 const STORAGE_KEY = "my_images";
@@ -51,9 +51,7 @@ export class ExpenseDetailsPage {
   async ionViewWillEnter() {
     this.data = false;
     // back route after adding an expense
-    this.backRoute = this.currentRoute.split(
-      "/expense-details/"
-    )[0];
+    this.backRoute = this.currentRoute.split("/expense-details/")[0];
     this.loading = this.alertService.presentLoading("Student Expenses");
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;

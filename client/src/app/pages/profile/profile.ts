@@ -27,7 +27,6 @@ export class ProfilePage {
   savingAccount: Promise<HTMLIonLoadingElement>;
   loggingOut: Promise<HTMLIonLoadingElement>;
 
-
   constructor(
     public alertCtrl: AlertController,
     public router: Router,

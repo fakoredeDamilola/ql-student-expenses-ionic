@@ -12,18 +12,17 @@ import { Report } from "@app/_models";
   styleUrls: ["./reports.scss"],
 })
 export class ReportsListPage {
-  queryText:string = "";
+  queryText: string = "";
   showSearchbar: boolean;
   ios: boolean;
   filtersList: any;
-  reportsList: [Report]|any;//TODO fix this
+  reportsList: [Report] | any; //TODO fix this
   reportsManagerId: string;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
   roleViewer: string;
-
 
   constructor(
     private accountService: AccountService,

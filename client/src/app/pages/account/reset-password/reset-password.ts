@@ -18,8 +18,8 @@ export class ResetPasswordPage implements OnInit {
   TokenStatus = TokenStatus;
   tokenStatus = TokenStatus.Validating;
   token = null;
-  loading:boolean = false;
-  submitted:boolean = false;
+  loading: boolean = false;
+  submitted: boolean = false;
 
   constructor(
     private route: ActivatedRoute,

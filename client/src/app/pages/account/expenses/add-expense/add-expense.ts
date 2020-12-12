@@ -15,7 +15,7 @@ import { Account } from "@app/_models";
   styleUrls: ["./add-expense.scss"],
 })
 export class AddExpensePage {
-  account:Account = this.accountService.accountValue;
+  account: Account = this.accountService.accountValue;
   submitted: boolean = false;
 
   addExpense: ExpenseOptions = {

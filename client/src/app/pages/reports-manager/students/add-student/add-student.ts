@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { UserOptions } from "@app/interfaces/student-options";
 import { AccountService, AlertService, ReportService } from "@app/_services";
-import { Account } from "@app/_models"
+import { Account } from "@app/_models";
 import { first } from "rxjs/operators";
 import { UserData } from "@app/providers/user-data";
 import { Location } from "@angular/common";
@@ -26,7 +26,7 @@ export class AddStudentPage {
     password: "",
     confirmPassword: "",
   };
-  submitted:boolean = false;
+  submitted: boolean = false;
 
   accountId: string;
   reportId: string;
@@ -107,7 +107,7 @@ export class AddStudentPage {
             await this.userData.signup(this.signup.email);
           })
           .finally(async () => {
-            console.log(this.backRoute,"the back route??")
+            console.log(this.backRoute, "the back route??");
             await this.router.navigateByUrl(this.backRoute);
             (await this.addingStudent).dismiss();
           });

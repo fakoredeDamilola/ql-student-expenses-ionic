@@ -20,7 +20,7 @@ import { ExpensesFilterPage } from "./expenses-filter/expenses-filter";
   styleUrls: ["./expenses.scss"],
 })
 export class ExpensesListPage {
-  queryText:string = "";
+  queryText: string = "";
   showSearchbar: boolean;
   ios: boolean;
   filtersList: any;

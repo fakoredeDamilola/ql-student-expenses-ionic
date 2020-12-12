@@ -26,10 +26,10 @@ export class CreateAccountPage {
     acceptTerms: true,
     role: "",
   };
-  submitted:boolean = false;
-  loading:boolean = false;
-  allReportsManagers: [Account]|undefined|Account|any;
-  allReportsManagerReports: [Report]|Report|any;// TODO fix this
+  submitted: boolean = false;
+  loading: boolean = false;
+  allReportsManagers: [Account] | undefined | Account | any;
+  allReportsManagerReports: [Report] | Report | any; // TODO fix this
 
   loadReportsManagersListDone: boolean = false;
   loadReportsManagerReportsListDone: boolean = false;

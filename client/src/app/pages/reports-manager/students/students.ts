@@ -10,11 +10,11 @@ import { Config, IonRouterOutlet, ModalController } from "@ionic/angular";
   styleUrls: ["./students.scss"],
 })
 export class StudentsListPage {
-  studentsList: [Account]|undefined|Account;
+  studentsList: [Account] | undefined | Account;
   userId: string;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
-  queryText:string = "";
+  queryText: string = "";
   showSearchbar: boolean;
   ios: boolean;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton

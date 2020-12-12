@@ -13,7 +13,7 @@ import { first } from "rxjs/operators";
   styleUrls: ["./login.scss"],
 })
 export class LoginPage {
-  submitted:boolean = false;
+  submitted: boolean = false;
   login: UserOptions = { email: "", password: "" };
   loggingIn: Promise<HTMLIonLoadingElement>;
   loading: Promise<HTMLIonLoadingElement>;

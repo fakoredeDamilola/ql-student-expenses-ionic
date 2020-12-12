@@ -27,14 +27,14 @@ export class StudentDetailsPage {
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
-  studentExpenses: [Expense]|undefined;
+  studentExpenses: [Expense] | undefined;
   expensesLength: number;
   reportName: string;
   isVerified: boolean;
   totalOfExpenses: number = 0;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
-  currentReport: Report|undefined;
+  currentReport: Report | undefined;
 
   constructor(
     public route: ActivatedRoute,

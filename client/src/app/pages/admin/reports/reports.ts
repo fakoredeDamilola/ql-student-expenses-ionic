@@ -26,7 +26,7 @@ export class ReportsPage {
   @ViewChild("allAccountsList", { static: true }) allAccountsList: IonList;
 
   ios: boolean;
-  queryText:string = "";
+  queryText: string = "";
   segment = "all";
   showSearchbar: boolean;
   allReports: any | [Report];

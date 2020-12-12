@@ -31,11 +31,11 @@ export class AccountDetailsPage {
   loading: Promise<HTMLIonLoadingElement>;
   hasReport: boolean = false;
   hasExpenses: boolean = false;
-  studentExpenses: [Expense]|Expense|undefined;
+  studentExpenses: [Expense] | Expense | undefined;
   studentExpensesCount: number;
   hasReports: boolean = false;
   // If they are a R.M
-  reportsManagerReports: [Report]|Report|undefined;
+  reportsManagerReports: [Report] | Report | undefined;
   reportsManagerCount: number;
   reportsManagerStudentsCount: number;
   reportsManagerExpensesCount: number;
@@ -44,7 +44,7 @@ export class AccountDetailsPage {
   savingAccount: Promise<HTMLIonLoadingElement>;
   totalOfExpenses: number = 0;
   reportsManagerReportsCount: number;
-  reportsManager: Account|undefined;
+  reportsManager: Account | undefined;
   studentReport: Report;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;

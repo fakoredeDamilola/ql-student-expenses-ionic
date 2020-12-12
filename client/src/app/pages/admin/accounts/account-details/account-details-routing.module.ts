@@ -57,7 +57,7 @@ const routes: Routes = [
       import(
         "@app/pages/admin/accounts/account-details/account-details.module"
       ).then((m) => m.AccountDetailsModule),
-  }
+  },
 ];
 
 @NgModule({

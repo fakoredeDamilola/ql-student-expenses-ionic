@@ -31,13 +31,13 @@ export class ReportDetailsPage {
   reportName: string;
   reportExpensesCount: number = 0;
   reportStudentsCount: number;
-  reportStudents: [Account]|any;
+  reportStudents: [Account] | any;
   userExpenses: [Expense];
   totalOfReportExpenses: number;
   totalOfReportExpensesString: string;
   calculatingDisbursementsLoader: Promise<HTMLIonLoadingElement>;
   reportCreated: string;
-  reportsManager: Account|undefined;
+  reportsManager: Account | undefined;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
   disbursementResults: boolean;

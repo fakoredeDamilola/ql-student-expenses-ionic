@@ -7,7 +7,7 @@ import {
   ExpenseService,
   ReportService,
 } from "@app/_services";
-import { Account, Expense } from "@app/_models"
+import { Account, Expense } from "@app/_models";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
@@ -32,7 +32,7 @@ export class ReportDetailsPage {
   reportName: string;
   reportExpensesCount: number = 0;
   reportStudentsCount: number;
-  reportStudents: [Account]|any;//TODO fix this
+  reportStudents: [Account] | any; //TODO fix this
   userExpenses: [Expense];
   totalOfReportExpenses: number;
   totalOfReportExpensesString: string;
