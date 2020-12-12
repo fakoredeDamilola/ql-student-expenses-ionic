@@ -26,8 +26,16 @@ router.post(
 router.get("/", authorize(Role.Admin), getAll);
 
 // For specefic create account admin view
-router.get("/reports-managers-list", authorize(Role.Admin), getAllReportsManagers);
-router.get("/:reportsManagerId/reports-manager-reports", authorize(Role.Admin), getAllReportsManagerReports);
+router.get(
+  "/reports-managers-list",
+  authorize(Role.Admin),
+  getAllReportsManagers
+);
+router.get(
+  "/:reportsManagerId/reports-manager-reports",
+  authorize(Role.Admin),
+  getAllReportsManagerReports
+);
 //
 router.get("/:accountId", authorize(), getById);
 router.get("/:reportId/report-students", authorize(), getAllStudentsByReportId);
@@ -351,7 +359,7 @@ function update(req, res, next) {
 }
 
 function _delete(req, res, next) {
-  // Students can delete their own account and admins can delete any account, 
+  // Students can delete their own account and admins can delete any account,
   //console.log(req.user);
   if (req.params.accountId !== req.user.id && req.user.role !== Role.Admin) {
     return res.status(401).json({

@@ -8,35 +8,36 @@ module.exports = {
   delete: _delete,
   getAllExpensesInReports,
   getAllExpensesOnAccount,
-  getAllExpensesByReportId
+  getAllExpensesByReportId,
 };
 // Reports Manager All Expenses...
-async function getAllExpensesInReports(reportsManagerId){
+async function getAllExpensesInReports(reportsManagerId) {
   //console.log(reportsManagerId,'managerId')
-  const expenses = await db.Expense.find({reportsManagerId:reportsManagerId})
-  .populate('expenseStudent')
-  .populate('expenseReport');
+  const expenses = await db.Expense.find({ reportsManagerId: reportsManagerId })
+    .populate("expenseStudent")
+    .populate("expenseReport");
   //console.log(expenses,'the expenses???')
   //console.log(Expenses)
   return expenses.map((x) => basicDetails(x));
 }
 // Personal Account Expenses
-async function getAllExpensesOnAccount(accountId){
-  const expenses = await db.Expense.find({studentId:accountId});
+async function getAllExpensesOnAccount(accountId) {
+  const expenses = await db.Expense.find({ studentId: accountId });
   //console.log(expenses)
   return expenses.map((x) => basicDetails(x));
 }
-// Admin All Expenses 
+// Admin All Expenses
 async function getAll() {
   const expenses = await db.Expense.find()
-  .populate('expenseStudent')
-  .populate('expenseReport');
+    .populate("expenseStudent")
+    .populate("expenseReport");
   return expenses.map((x) => basicDetails(x));
 }
-// 
+//
 async function getAllExpensesByReportId(reportId) {
-  const expenses = await db.Expense.find({reportId:reportId})
-  .populate('expenseStudent')
+  const expenses = await db.Expense.find({ reportId: reportId }).populate(
+    "expenseStudent"
+  );
   return expenses.map((x) => basicDetails(x));
 }
 
@@ -70,9 +71,9 @@ async function _delete(id) {
 // helper functions
 async function getExpense(id) {
   const expense = await db.Expense.findById(id)
-  .populate('expenseStudent')
-  .populate('expenseReport')
-  .populate('expenseReportsManager')
+    .populate("expenseStudent")
+    .populate("expenseReport")
+    .populate("expenseReportsManager");
   //if (!expense) throw "Expense not found";
   return expense;
 }
@@ -91,7 +92,7 @@ function basicDetails(expense) {
     updated,
     expenseStudent,
     expenseReport,
-    expenseReportsManager
+    expenseReportsManager,
   } = expense;
   return {
     id,
@@ -105,6 +106,6 @@ function basicDetails(expense) {
     updated,
     expenseStudent,
     expenseReport,
-    expenseReportsManager
+    expenseReportsManager,
   };
 }

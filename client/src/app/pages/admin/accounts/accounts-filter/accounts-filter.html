@@ -5,9 +5,7 @@
       <ion-button *ngIf="!ios" (click)="selectAll(false)">Reset</ion-button>
     </ion-buttons>
 
-    <ion-title>
-      Filter Accounts
-    </ion-title>
+    <ion-title> Filter Accounts </ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="applyFilters()" strong>Done</ion-button>
@@ -31,32 +29,27 @@
       <ion-checkbox [(ngModel)]="studentsIsChecked"></ion-checkbox>
     </ion-item>
 
+    <ion-radio-group [(ngModel)]="isOnline" value="{{isOnline}}">
+      <ion-list-header>
+        <ion-label>Online / Offline</ion-label>
+      </ion-list-header>
 
-      <ion-radio-group [(ngModel)]="isOnline" value={{isOnline}}>
-        <ion-list-header>
-          <ion-label>Online / Offline</ion-label>
-        </ion-list-header>
+      <ion-item>
+        <ion-label>All</ion-label>
+        <ion-radio slot="start" value="undefined" selected></ion-radio>
+      </ion-item>
 
-        <ion-item>
-          <ion-label>All</ion-label>
-          <ion-radio slot="start" value="undefined" selected></ion-radio>
-        </ion-item>
+      <ion-item>
+        <ion-label>Online</ion-label>
+        <ion-radio slot="start" value="true"></ion-radio>
+      </ion-item>
 
-        <ion-item>
-          <ion-label>Online</ion-label>
-          <ion-radio slot="start" value="true"></ion-radio>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Offline</ion-label>
-          <ion-radio slot="start" value="false"></ion-radio>
-        </ion-item>
-      </ion-radio-group>
-
-
-
+      <ion-item>
+        <ion-label>Offline</ion-label>
+        <ion-radio slot="start" value="false"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
   </ion-list>
-
 </ion-content>
 
 <ion-footer translucent="true" *ngIf="ios">

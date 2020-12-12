@@ -1,33 +1,31 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const schema = new Schema({
-  email: { type: String, unique: true, required: true },
-  reportsManagerId: { type: String, required: false },
-  reportId: { type: String, required: false },
-  passwordHash: { type: String, required: true },
-  title: { type: String, required: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  acceptTerms: Boolean,
-  role: { type: String, required: true },
-  verificationToken: String,
-  verified: Date,
-  resetToken: {
-    token: String,
-    expires: Date,
+const schema = new Schema(
+  {
+    email: { type: String, unique: true, required: true },
+    reportsManagerId: { type: String, required: false },
+    reportId: { type: String, required: false },
+    passwordHash: { type: String, required: true },
+    title: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    acceptTerms: Boolean,
+    role: { type: String, required: true },
+    verificationToken: String,
+    verified: Date,
+    resetToken: {
+      token: String,
+      expires: Date,
+    },
+    passwordReset: Date,
+    created: { type: Date, default: Date.now },
+    lastLogin: Date,
+    isOnline: { type: Boolean, default: false },
+    updated: Date,
   },
-  passwordReset: Date,
-  created: { type: Date, default: Date.now },
-  lastLogin: Date,
-  isOnline:{ type: Boolean, default: false },
-  updated: Date,
-},
-{ toJSON :{ virtuals :true},
-  toObject :{ virtuals :true}
-}
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-
 
 schema.virtual("isVerified").get(function () {
   return !!(this.verified || this.passwordReset);
@@ -46,14 +44,14 @@ schema.virtual("studentExpensesCount", {
   localField: "_id", // Find people where `localField`
   foreignField: "studentId", // is equal to `foreignField`
   justOne: false,
-  count:true
+  count: true,
 });
 
 schema.virtual("studentReport", {
   ref: "Report", // The model to use
   localField: "reportId", // Find people where `localField`
   foreignField: "_id", // is equal to `foreignField`
-  justOne: true
+  justOne: true,
 });
 // My Reports if I am A Report Manager
 schema.virtual("reportsManagerReports", {
@@ -75,7 +73,7 @@ schema.virtual("reportsManagerReportsCount", {
   localField: "_id", // Find people where `localField`
   foreignField: "reportsManagerId", // is equal to `foreignField`
   justOne: false,
-  count:true
+  count: true,
 });
 // Expenses In My Properties if I am A Report Manager
 schema.virtual("reportsManagerExpenses", {

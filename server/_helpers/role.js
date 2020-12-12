@@ -1,5 +1,5 @@
 module.exports = {
-    Admin: 'Admin',
-    Student: 'Student', //<--General User
-    ReportsManager: 'ReportsManager'
-}
+  Admin: "Admin",
+  Student: "Student", //<--General User
+  ReportsManager: "ReportsManager",
+};

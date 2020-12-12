@@ -8,33 +8,45 @@
   </ion-header>
 
   <div class="speaker-background">
-
     <!--<h2>The Logged In Persons ID that im adding expense to:{{account.id}}</h2>-->
   </div>
 
   <div class="ion-padding speaker-detail">
     <p>Easily Add Your Expense Here!</p>
-
   </div>
 
   <form #addExpenseForm="ngForm" novalidate>
     <ion-list lines="none">
-
       <ion-item>
         <ion-label position="floating" color="primary">Expense Name</ion-label>
-        <ion-input [(ngModel)]="addExpense.expenseName" name="expenseName" type="text" #expenseName="ngModel" required
-          placeholder="Enter The Expense Name">
+        <ion-input
+          [(ngModel)]="addExpense.expenseName"
+          name="expenseName"
+          type="text"
+          #expenseName="ngModel"
+          required
+          placeholder="Enter The Expense Name"
+        >
         </ion-input>
       </ion-item>
       <ion-text color="danger">
-        <p [hidden]="expenseName.valid || submitted == false" class="ion-padding-start">
+        <p
+          [hidden]="expenseName.valid || submitted == false"
+          class="ion-padding-start"
+        >
           Expense Name is required
         </p>
       </ion-text>
 
       <ion-item>
-        <ion-label position="floating" color="primary">Expense Category</ion-label>
-        <ion-select [(ngModel)]="addExpense.expenseCategory" name="expenseCategory" #expenseCategory="ngModel">
+        <ion-label position="floating" color="primary"
+          >Expense Category</ion-label
+        >
+        <ion-select
+          [(ngModel)]="addExpense.expenseCategory"
+          name="expenseCategory"
+          #expenseCategory="ngModel"
+        >
           <ion-select-option>Food</ion-select-option>
           <ion-select-option>Hotel</ion-select-option>
           <ion-select-option>Entertainment</ion-select-option>
@@ -44,20 +56,33 @@
 
       <ion-item>
         <ion-label position="floating" color="primary">Expense Cost</ion-label>
-        <ion-input [(ngModel)]="addExpense.expenseCost" name="expenseCost" type="text" #expenseCost="ngModel" required
-          placeholder="Enter The Expense Cost">
+        <ion-input
+          [(ngModel)]="addExpense.expenseCost"
+          name="expenseCost"
+          type="text"
+          #expenseCost="ngModel"
+          required
+          placeholder="Enter The Expense Cost"
+        >
         </ion-input>
       </ion-item>
       <ion-text color="danger">
-        <p [hidden]="expenseCost.valid || submitted == false" class="ion-padding-start">
+        <p
+          [hidden]="expenseCost.valid || submitted == false"
+          class="ion-padding-start"
+        >
           Expense Cost is required
         </p>
       </ion-text>
-
     </ion-list>
 
     <div class="ion-padding">
-      <ion-button (click)="onAddExpense(addExpenseForm)" type="submit" expand="block">Add expense</ion-button>
+      <ion-button
+        (click)="onAddExpense(addExpenseForm)"
+        type="submit"
+        expand="block"
+        >Add expense</ion-button
+      >
     </div>
   </form>
 </ion-content>

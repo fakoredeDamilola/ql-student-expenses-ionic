@@ -8,20 +8,18 @@ const cors = require("cors");
 
 // Middlewares imported
 const errorHandler = require("_middleware/error-handler");
-const logger = require("./_middleware/logger")
+const logger = require("./_middleware/logger");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
-
 
 // init middleware
 
 // Used for logging each requst, remove for performance boost and Production
 app.use(logger);
 // Used for files uploads
-app.use(express.static('uploads'));
+app.use(express.static("uploads"));
 
 // allow cors requests from any origin and with credentials
 app.use(
