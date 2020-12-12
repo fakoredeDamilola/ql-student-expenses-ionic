@@ -26,6 +26,7 @@ export class StudentDetailsPage {
   totalOfExpenses: number = 0;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
+  currentReport: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -54,9 +55,11 @@ export class StudentDetailsPage {
 
     (await this.accountService.getById(this.student.id))
       .forEach(async (Element) => {
+        //console.log(Element)
         this.student = Element;
         this.studentExpenses = Element.studentExpenses;
         this.expensesLength = Element.studentExpenses.length;
+        this.currentReport = Element.studentReport;
       })
       .then(async () => {
         //calculate expenses total

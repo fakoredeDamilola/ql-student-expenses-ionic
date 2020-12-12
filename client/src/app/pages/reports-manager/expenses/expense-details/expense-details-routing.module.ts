@@ -15,6 +15,13 @@ const routes: Routes = [
         "@app/pages/account/expenses/expense-image/expense-image.module"
       ).then((m) => m.ExpenseImagePageModule),
   },
+  {
+    path: "report-details/:reportId",
+    loadChildren: () =>
+      import(
+        "@app/pages/reports-manager/reports/report-details/report-details.module"
+      ).then((m) => m.ReportDetailsModule),
+  },
 ];
 
 @NgModule({

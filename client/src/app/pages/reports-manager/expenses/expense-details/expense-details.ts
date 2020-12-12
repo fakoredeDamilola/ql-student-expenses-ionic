@@ -71,7 +71,7 @@ export class ExpenseDetailsPage {
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
         this.expenseCreatedBy = `${Element.expenseStudent[0].firstName} ${Element.expenseStudent[0].lastName} `;
-        this.expenseReport = Element.expenseReport[0].reportName;
+        this.expenseReport = Element.expenseReport[0];
         this.expenseCategory = Element.expenseCategory;
         this.expenseCreated = moment(Element.created).format(
           "MM-DD-YYYY @HH:mm:ss"
