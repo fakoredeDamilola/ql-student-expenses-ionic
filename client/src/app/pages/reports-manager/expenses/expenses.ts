@@ -43,6 +43,8 @@ export class ExpensesListPage {
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
   roleViewer: string;
+  backRoute: string;
+  backButtonDisabled: boolean;
 
   constructor(
     public alertCtrl: AlertController,
@@ -59,6 +61,9 @@ export class ExpensesListPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.currentRoute.split("/")[1] == "reports-manager"
+      ? (this.backButtonDisabled = true)
+      : (this.backButtonDisabled = false);
     this.ios = (await this.config.get("mode")) === "ios";
     this.data = false;
     this.loading = this.alertService.presentLoading("Student Expenses");
