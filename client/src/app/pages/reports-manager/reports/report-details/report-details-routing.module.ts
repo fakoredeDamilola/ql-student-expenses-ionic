@@ -23,7 +23,7 @@ const routes: Routes = [
       ).then((m) => m.StudentDetailsModule),
   },
   {
-    path: "reports-expenses/expense-details/:expenseId",
+    path: "report-expenses/expense-details/:expenseId",
     loadChildren: () =>
       import(
         "@app/pages/reports-manager/expenses/expense-details/expense-details.module"
