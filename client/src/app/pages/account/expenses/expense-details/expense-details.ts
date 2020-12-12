@@ -9,6 +9,7 @@ import {
 } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
+import * as moment from "moment";
 
 const STORAGE_KEY = "my_images";
 @Component({
@@ -66,7 +67,7 @@ export class ExpenseDetailsPage {
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
         this.expenseCategory = Element.expenseCategory;
-        this.expenseCreated = Element.created;
+        this.expenseCreated = moment (Element.created).format("MM-DD-YYYY @HH:mm:ss");
       })
       .finally(async () => {
         setTimeout(async () => {
