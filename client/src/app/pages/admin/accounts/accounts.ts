@@ -86,10 +86,10 @@ export class AccountsPage {
               (this.allAccounts[i].lastLogin)?
               this.allAccounts[i].lastLogin = moment(
                 this.allAccounts[i].lastLogin
-              ).format("MM-DD-YYYY @HH:mm:ss"):"";
+              ).format("MMM-DD @HH:mm"):"";
               this.allAccounts[i].created = moment(
                 this.allAccounts[i].created
-              ).format("MM-DD-YYYY @HH:mm:ss");
+              ).format("MMM-DD-YYYY");
             }
           });
       })

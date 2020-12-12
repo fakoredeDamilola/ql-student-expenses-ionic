@@ -84,7 +84,7 @@ export class AccountDetailsPage {
         // Last login format
         if (this.account.lastLogin != undefined) {
           this.account.lastLogin = moment(this.account.lastLogin).format(
-            "MM-DD-YYYY @HH:mm:ss"
+            "MMM-DD-YYYY @HH:mm"
           );
         }
         //calculate expenses total and format each date
@@ -92,16 +92,16 @@ export class AccountDetailsPage {
           this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);
           this.studentExpenses[i].created = moment(
             this.studentExpenses[i].created
-          ).format("MM-DD-YYYY @HH:mm:ss");
+          ).format("MMM-DD-YYYY @HH:mm");
         }
         this.totalOfExpenses = Number(this.totalOfExpenses.toFixed(2));
       })
       .then(async () => {
         this.account.created = moment(this.account.created).format(
-          "MM-DD-YYYY @HH:mm:ss"
+          "MMM-DD-YYYY @HH:mm"
         );
         this.account.updated = moment(this.account.updated).format(
-          "MM-DD-YYYY @HH:mm:ss"
+          "MMM-DD-YYYY @HH:mm"
         );
       })
       .finally(async () => {

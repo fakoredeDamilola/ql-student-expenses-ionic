@@ -4,20 +4,10 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title
-      *ngIf="!ios && !showSearchbar"
-      text-align-center
-      size="large"
-      color="secondary"
-      >Expenses (Admin)</ion-title
-    >
-    <ion-searchbar
-      *ngIf="showSearchbar"
-      showCancelButton="always"
-      [(ngModel)]="queryText"
-      (ionCancel)="showSearchbar = false"
-      placeholder="Search"
-    ></ion-searchbar>
+    <ion-title *ngIf="!ios && !showSearchbar" text-align-center size="large" color="secondary">Expenses (Admin)
+    </ion-title>
+    <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText"
+      (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
       <ion-button *ngIf="!ios && !showSearchbar" (click)="showSearchbar = true">
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -39,11 +29,7 @@
       <ion-title text-align-center size="large">Expenses (Admin)</ion-title>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-searchbar
-        [(ngModel)]="queryText"
-        placeholder="Search"
-        (ionChange)="updateView()"
-      ></ion-searchbar>
+      <ion-searchbar [(ngModel)]="queryText" placeholder="Search" (ionChange)="updateView()"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -60,22 +46,10 @@
                   <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-avatar>
                 <ion-label>
-                  <ion-skeleton-text
-                    animated
-                    style="width: 50%"
-                  ></ion-skeleton-text>
-                  <ion-skeleton-text
-                    animated
-                    style="width: 30%"
-                  ></ion-skeleton-text>
-                  <ion-skeleton-text
-                    animated
-                    style="width: 50%"
-                  ></ion-skeleton-text>
-                  <ion-skeleton-text
-                    animated
-                    style="width: 20%"
-                  ></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
                 </ion-label>
               </ion-item>
             </ion-card>
@@ -88,22 +62,10 @@
                   <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-avatar>
                 <ion-label>
-                  <ion-skeleton-text
-                    animated
-                    style="width: 50%"
-                  ></ion-skeleton-text>
-                  <ion-skeleton-text
-                    animated
-                    style="width: 30%"
-                  ></ion-skeleton-text>
-                  <ion-skeleton-text
-                    animated
-                    style="width: 50%"
-                  ></ion-skeleton-text>
-                  <ion-skeleton-text
-                    animated
-                    style="width: 20%"
-                  ></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
                 </ion-label>
               </ion-item>
             </ion-card>
@@ -113,25 +75,14 @@
 
       <ion-grid fixed *ngIf="data">
         <ion-row>
-          <ion-col
-            size="12"
-            size-md="6"
-            *ngFor="let expense of allExpenses"
-            [hidden]="expense.expenseCategory == foodCondition || expense.expenseCategory == hotelCondition || expense.expenseCategory== entertainmentCondition || expense.expenseCategory == otherCondition || ((expense.expenseName.indexOf(queryText)==-1 && expense.expenseReport[0].reportName.indexOf(queryText)==-1 && expense.expenseStudent[0].firstName.indexOf(queryText)==-1 && expense.expenseStudent[0].lastName.indexOf(queryText)==-1)  && queryText)"
-          >
+          <ion-col size="12" size-md="6" *ngFor="let expense of allExpenses"
+            [hidden]="expense.expenseCategory == foodCondition || expense.expenseCategory == hotelCondition || expense.expenseCategory== entertainmentCondition || expense.expenseCategory == otherCondition || ((expense.expenseName.indexOf(queryText)==-1 && expense.expenseReport[0].reportName.indexOf(queryText)==-1 && expense.expenseStudent[0].firstName.indexOf(queryText)==-1 && expense.expenseStudent[0].lastName.indexOf(queryText)==-1)  && queryText)">
             <ion-card class="speaker-card">
               <!--<ion-card-header>-->
-              <ion-item
-                detail="false"
-                lines="none"
-                class="speaker-item"
-                routerLink="{{currentRoute}}/expense-details/{{expense.id}}"
-              >
+              <ion-item detail="false" lines="none" class="speaker-item"
+                routerLink="{{currentRoute}}/expense-details/{{expense.id}}">
                 <ion-avatar slot="start">
-                  <img
-                    src="../../../../assets/img/money.png"
-                    [alt]="'Expense Image'"
-                  />
+                  <img src="../../../../assets/img/money.png" [alt]="'Expense Image'" />
                 </ion-avatar>
                 <ion-label>
                   <h2><b>{{expense.expenseName}}</b></h2>
@@ -141,7 +92,7 @@
                     Created By: {{expense.expenseStudent[0].firstName}}
                     {{expense.expenseStudent[0].lastName}}
                   </p>
-                  <p>Created:{{expense.created}}</p>
+                  <p>{{expense.created}}</p>
                   <p>{{expense.expenseCategory}}</p>
                 </ion-label>
               </ion-item>

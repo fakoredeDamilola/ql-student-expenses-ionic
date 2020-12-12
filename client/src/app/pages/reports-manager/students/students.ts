@@ -2,7 +2,8 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Account } from "@app/_models";
 import { AccountService, AlertService } from "@app/_services";
-import { Config, IonRouterOutlet, ModalController } from "@ionic/angular";
+import { Config, ModalController } from "@ionic/angular";
+import * as moment from "moment";
 
 @Component({
   selector: "page-students-list",
@@ -10,7 +11,7 @@ import { Config, IonRouterOutlet, ModalController } from "@ionic/angular";
   styleUrls: ["./students.scss"],
 })
 export class StudentsListPage {
-  studentsList: [Account] | undefined | Account;
+  studentsList: [Account] | undefined | Account|any;
   userId: string;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
@@ -51,6 +52,16 @@ export class StudentsListPage {
     (await this.account.getAllStudents(this.userId))
       .forEach(async (element) => {
         this.studentsList = element;
+      })
+      .then(async ()=>{
+        const studentsListLength = this.studentsList.length;
+        for(let i=0; i<studentsListLength;i++){
+          (this.studentsList[i].lastLogin)?
+          this.studentsList[i].lastLogin = moment(
+            this.studentsList[i].lastLogin
+          ).format("MMM-DD @HH:mm"):"";
+        }
+
       })
       .finally(async () => {
         this.data = true;

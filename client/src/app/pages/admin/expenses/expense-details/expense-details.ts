@@ -67,7 +67,7 @@ export class ExpenseDetailsPage {
         this.expenseCategory = Element.expenseCategory;
         this.expenseReportsManager = Element.expenseReportsManager[0];
         this.expenseCreated = moment(Element.created).format(
-          "MM-DD-YYYY @HH:mm:ss"
+          "MMM-DD-YYYY   @HH:mm"// Yea this will break down to the milli second.
         );
       })
       .finally(async () => {

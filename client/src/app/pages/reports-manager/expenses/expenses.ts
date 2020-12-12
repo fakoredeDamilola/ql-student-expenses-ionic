@@ -102,7 +102,7 @@ export class ExpensesListPage {
         for (let i = 0; i < this.expensesCount; i++) {
           this.reportsExpenses[i].created = moment(
             this.reportsExpenses[i].created
-          ).format("MM-DD-YYYY @HH:mm:ss");
+          ).format("MMM-DD-YYYY");
         }
       })
       .finally(async () => {

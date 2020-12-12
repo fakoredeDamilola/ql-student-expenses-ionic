@@ -65,6 +65,8 @@ export class StudentDetailsPage {
       .forEach(async (Element) => {
         //console.log(Element)
         this.student = Element;
+        this.student.created = moment (Element.created).format("MMM-DD-YYYY");
+        this.student.lastLogin = moment (Element.lastLogin).format("MMM-DD-YYYY @HH:mm");
         this.studentExpenses = Element.studentExpenses;
         this.expensesLength = Element.studentExpenses.length;
         this.currentReport = Element.studentReport;
@@ -75,7 +77,7 @@ export class StudentDetailsPage {
           this.totalOfExpenses += Number(this.studentExpenses[i].expenseCost);
           this.studentExpenses[i].created = moment(
             this.studentExpenses[i].created
-          ).format("MM-DD-YYYY @HH:mm:ss");
+          ).format("MMM-DD-YYYY");
         }
         this.totalOfExpenses = Number(this.totalOfExpenses.toFixed(2));
       })

@@ -59,7 +59,7 @@ export class ReportsListPage {
         for (let i = 0; i < reportsCount; i++) {
           this.reportsList[i].created = moment(
             this.reportsList[i].created
-          ).format("MM-DD-YYYY @HH:mm:ss");
+          ).format("MMM-DD-YYYY");
         }
       })
       .finally(async () => {

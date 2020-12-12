@@ -2,9 +2,8 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button
-          defaultHref="/reports-manager/reports"
-        ></ion-back-button>
+        <ion-back-button defaultHref="/reports-manager/reports"
+          style="color: beige;background:black;border-radius: 30%;"></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -16,17 +15,18 @@
     <h3>
       <b><u>Report Details:</u></b>
     </h3>
-    <h1><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></h1>
+    <h1>
+      <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+    </h1>
     <br />
     <h3>
       <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text><br />
     </h3>
     <ion-row *ngFor="let item of deadData">
       <ion-col>
-        <ion-item
-          ><ion-skeleton-text animated style="width: 100%; size: 25px"
-            ><br /><br /></ion-skeleton-text
-        ></ion-item>
+        <ion-item>
+          <ion-skeleton-text animated style="width: 100%; size: 25px"><br /><br /></ion-skeleton-text>
+        </ion-item>
       </ion-col>
     </ion-row>
   </div>
@@ -39,23 +39,13 @@
         </h3>
       </ion-col>
       <ion-col>
-        <ion-button
-          end
-          size="medium"
-          style="vertical-align: center; text-align: right"
-          shape="round"
-          fill="clear"
-          routerLink="{{currentRoute}}/students/add"
-        >
-          <ion-icon name="add-outline"></ion-icon>Add Student
-        </ion-button>
+
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-item (click)="editReportAttribute('reportName')"
-          ><b>Report Name:&nbsp; </b> {{reportName}}
+        <ion-item (click)="editReportAttribute('reportName')"><b>Report Name:&nbsp; </b> {{reportName}}
         </ion-item>
         <ion-item><b>Created:&nbsp; </b> {{reportCreated}} </ion-item>
       </ion-col>
@@ -66,43 +56,33 @@
         <h3>
           <u><b>Report Students:</b></u>
         </h3>
+        <ion-button end size="medium" style="vertical-align: center; text-align: right" shape="round" fill="clear"
+          routerLink="{{currentRoute}}/students/add">
+          <ion-icon name="add-outline"></ion-icon>Add Student
+        </ion-button>
       </ion-col>
     </ion-row>
 
     <ion-grid>
       <ion-row>
         <ion-col size="12" size-md="6" *ngFor="let student of reportStudents">
-          <ion-card
-            class="speaker-card"
-            routerLink="{{currentRoute}}/students/student-details/{{student.id}}"
-          >
+          <ion-card class="speaker-card" routerLink="{{currentRoute}}/students/student-details/{{student.id}}">
             <ion-card-header>
               <ion-item detail="false" lines="none">
                 <ion-label>
                   <div>
                     <ion-avatar style="text-align: center">
-                      <img
-                        src="../../../../assets/img/avatar.svg"
-                        style="text-align: center"
-                      />
+                      <img src="../../../../assets/img/avatar.svg" style="text-align: center" />
                     </ion-avatar>
                   </div>
                 </ion-label>
                 <ion-label>
                   <h1><b>{{student.firstName}} {{student.lastName}}</b></h1>
                   <h2>
-                    {{student.email}}&nbsp;<ion-icon
-                      *ngIf="student.isVerified==true"
-                      style="color: green"
-                      name="checkmark-circle"
-                    ></ion-icon>
-                    <ion-icon
-                      name="checkmark-circle"
-                      *ngIf="student.isVerified==false"
-                      style="color: firebrick"
-                    >
-                    </ion-icon
-                    >&nbsp;
+                    {{student.email}}&nbsp;<ion-icon *ngIf="student.isVerified==true" style="color: green"
+                      name="checkmark-circle"></ion-icon>
+                    <ion-icon name="checkmark-circle" *ngIf="student.isVerified==false" style="color: firebrick">
+                    </ion-icon>&nbsp;
                   </h2>
                   <h3>Expenses: ( {{student.studentExpensesCount}} )</h3>
                 </ion-label>
@@ -126,17 +106,10 @@
         <ion-col size="12" size-md="6" *ngFor="let expense of reportExpenses">
           <ion-card class="speaker-card">
             <!--<ion-card-header>-->
-            <ion-item
-              detail="false"
-              lines="none"
-              class="speaker-item"
-              routerLink="{{currentRoute}}/report-expenses/expense-details/{{expense.id}}"
-            >
+            <ion-item detail="false" lines="none" class="speaker-item"
+              routerLink="{{currentRoute}}/report-expenses/expense-details/{{expense.id}}">
               <ion-avatar slot="start">
-                <img
-                  src="../../../../assets/img/money.png"
-                  [alt]="'Expense Image'"
-                />
+                <img src="../../../../assets/img/money.png" [alt]="'Expense Image'" />
               </ion-avatar>
               <ion-label>
                 <h1>{{expense.expenseName}}</h1>
@@ -168,15 +141,8 @@
     <ion-row>
       <ion-grid>
         <ion-row>
-          <ion-col
-            size="12"
-            size-md="12"
-            *ngFor="let student of reportStudents"
-          >
-            <ion-card
-              class="speaker-card"
-              routerLink="{{currentRoute}}/students/student-details/{{student.id}}"
-            >
+          <ion-col size="12" size-md="12" *ngFor="let student of reportStudents">
+            <ion-card class="speaker-card" routerLink="{{currentRoute}}/students/student-details/{{student.id}}">
               <ion-card-header>
                 <ion-item detail="false" lines="none">
                   <ion-label>
@@ -188,22 +154,12 @@
                     <h2>
                       <b><u>DISBURSEMENT</u></b>
                     </h2>
-                    <ion-skeleton-text
-                      animated
-                      style="width: 20%"
-                      *ngIf="!disbursementResults && calculatingDisbursements"
-                    ></ion-skeleton-text>
-                    <span
-                      *ngIf="student.disbursementAmmount<0 && disbursementResults"
-                      style="color: green"
-                      >Owed
-                      {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span
-                    ><span
-                      *ngIf="student.disbursementAmmount>0 && disbursementResults"
-                      style="color: red"
-                      >Owes
-                      {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span
-                    ><b></b>
+                    <ion-skeleton-text animated style="width: 20%"
+                      *ngIf="!disbursementResults && calculatingDisbursements"></ion-skeleton-text>
+                    <span *ngIf="student.disbursementAmmount<0 && disbursementResults" style="color: green">Owed
+                      {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><span
+                      *ngIf="student.disbursementAmmount>0 && disbursementResults" style="color: red">Owes
+                      {{student.disbursementAmmountAbsoluteValueCurrencyString}}</span><b></b>
                   </ion-label>
                 </ion-item>
               </ion-card-header>
@@ -215,25 +171,15 @@
 
     <ion-row>
       <ion-col>
-        <ion-button
-          expand="full"
-          shape="block"
-          color="success"
-          (click)="calculateDisbursements()"
-          >Calculate Disbursements
+        <ion-button expand="full" shape="block" color="success" (click)="calculateDisbursements()">Calculate
+          Disbursements
         </ion-button>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-button
-          expand="full"
-          shape="block"
-          color="danger"
-          (click)="deleteAreYouSure()"
-          >Delete Report</ion-button
-        >
+        <ion-button expand="full" shape="block" color="danger" (click)="deleteAreYouSure()">Delete Report</ion-button>
       </ion-col>
     </ion-row>
   </div>

@@ -78,7 +78,7 @@ export class ReportsPage {
             for (let i = 0; i < reportsCount; i++) {
               this.allReports[i].created = moment(
                 this.allReports[i].created
-              ).format("MM-DD-YYYY @HH:mm:ss");
+              ).format("MMM-DD-YYYY");
             }
           });
       })

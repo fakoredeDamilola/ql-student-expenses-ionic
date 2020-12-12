@@ -71,7 +71,7 @@ export class ExpenseDetailsPage {
         this.expenseReport = Element.expenseReport[0];
         this.expenseCategory = Element.expenseCategory;
         this.expenseCreated = moment(Element.created).format(
-          "MM-DD-YYYY @HH:mm:ss"
+          "MMM-DD-YYYY @HH:mm"
         );
       })
       .finally(async () => {

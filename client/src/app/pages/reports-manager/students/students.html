@@ -134,6 +134,12 @@
                       <ion-badge *ngIf="!student.isOnline" color="medium">
                         OFFLINE
                       </ion-badge>
+                      <p *ngIf="student.isOnline" style="visibility: hidden;;"> IM ONLINE<span></span></p>
+                      <p *ngIf="!student.isOnline">
+                        L|O:
+                        <span *ngIf="student.lastLogin">{{student.lastLogin}}</span><span
+                          *ngIf="!student.lastLogin">N/A</span>
+                      </p>
                     </div>
                   </ion-label>
                   <ion-label>

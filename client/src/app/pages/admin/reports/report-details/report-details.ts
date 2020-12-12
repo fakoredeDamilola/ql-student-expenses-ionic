@@ -74,7 +74,7 @@ export class ReportDetailsPage {
         this.reportName = Element.reportName;
         this.reportsManager = Element.reportsManager;
         this.reportCreated = moment(Element.created).format(
-          "MM-DD-YYYY @HH:mm:ss"
+          "MMM-DD-YYYY @HH:mm"// could get to the milli second or further if needed..
         );
       })
       .then(async () => {
@@ -97,7 +97,7 @@ export class ReportDetailsPage {
                 );
                 this.reportExpenses[i].created = moment(
                   this.reportExpenses[i].created
-                ).format("MM-DD-YYYY @HH:mm:ss");
+                ).format("MMM-DD @HH:mm");
               }
 
               this.totalOfReportExpensesString = this.totalOfReportExpenses.toLocaleString(

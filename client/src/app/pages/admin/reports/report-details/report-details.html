@@ -2,7 +2,7 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/reports-manager/reports"></ion-back-button>
+        <ion-back-button defaultHref="/reports-manager/reports" style="color: beige;background:black;border-radius: 30%;"></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -38,10 +38,6 @@
         </h3>
       </ion-col>
       <ion-col>
-        <ion-button end size="medium" style="vertical-align: center; text-align: right" shape="round" fill="clear"
-          routerLink="{{currentRoute}}/student/add">
-          <ion-icon name="add-outline"></ion-icon>Add Student
-        </ion-button>
       </ion-col>
     </ion-row>
 
@@ -65,6 +61,10 @@
         <h3>
           <u><b>Report Students:</b></u>
         </h3>
+        <ion-button end size="medium" style="vertical-align: center; text-align: right" shape="round" fill="clear"
+        routerLink="{{currentRoute}}/student/add">
+        <ion-icon name="add-outline"></ion-icon>Add Student
+      </ion-button>
       </ion-col>
     </ion-row>
 

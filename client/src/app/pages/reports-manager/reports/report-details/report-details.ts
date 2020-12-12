@@ -83,7 +83,7 @@ export class ReportDetailsPage {
       .forEach(async (Element) => {
         this.reportName = Element.reportName;
         this.reportCreated = moment(Element.created).format(
-          "MM-DD-YYYY @HH:mm:ss"
+          "MMM-DD-YYYY @HH:mm"
         );
       })
       .then(async () => {
@@ -106,7 +106,7 @@ export class ReportDetailsPage {
                 );
                 this.reportExpenses[i].created = moment(
                   this.reportExpenses[i].created
-                ).format("MM-DD-YYYY @HH:mm:ss");
+                ).format("MMM-DD @HH:mm");
               }
 
               this.totalOfReportExpensesString = this.totalOfReportExpenses.toLocaleString(
