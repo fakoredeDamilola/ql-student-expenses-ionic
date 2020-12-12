@@ -7,6 +7,7 @@ import {
   ExpenseService,
   ReportService,
 } from "@app/_services";
+import { Account, Expense } from "@app/_models"
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
@@ -24,24 +25,25 @@ export class ReportDetailsPage {
   reportExpenses = [];
   // key value for the edit input
   saving: boolean = true;
-  loading: any;
+
   savingReport: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   deleting: Promise<HTMLIonLoadingElement>;
   reportName: string;
   reportExpensesCount: number = 0;
   reportStudentsCount: number;
-  reportStudents: any;
-  userExpenses: any;
+  reportStudents: [Account]|any;//TODO fix this
+  userExpenses: [Expense];
   totalOfReportExpenses: number;
   totalOfReportExpensesString: string;
   calculatingDisbursementsLoader: Promise<HTMLIonLoadingElement>;
-  reportCreated: any;
+  reportCreated: string;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
   calculatingDisbursements: boolean;
   disbursementResults: boolean;
   backRoute: string;
+  loading: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public route: ActivatedRoute,

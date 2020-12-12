@@ -17,9 +17,9 @@ const STORAGE_KEY = "my_images";
   styleUrls: ["./expense-details.scss"],
 })
 export class ExpenseDetailsPage {
-  accountId: any;
-  expenseId: any;
-  expenseName: any;
+  accountId: string;
+  expenseId: string;
+  expenseName: string;
   savingExpense: Promise<HTMLIonLoadingElement>;
   loading: Promise<HTMLIonLoadingElement>;
   deleting: Promise<HTMLIonLoadingElement>;

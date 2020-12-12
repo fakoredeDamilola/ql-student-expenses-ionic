@@ -21,8 +21,8 @@ export class SignupPage {
     confirmPassword: "",
     acceptTerms: false,
   };
-  submitted = false;
-  loading = false;
+  submitted:boolean = false;
+  loading:boolean = false;
   signUpLoader: Promise<HTMLIonLoadingElement>;
 
   constructor(

@@ -24,10 +24,9 @@ export class AccountsPage {
   @ViewChild("allAccountsList", { static: true }) allAccountsList: IonList;
 
   ios: boolean;
-  queryText = "";
-  segment = "all";
+  queryText:string = "";
+  segment = "all";// used for base app
   showSearchbar: boolean;
-  loading: any;
   allAccounts: any | [Account];
   adminsIsChecked: boolean;
   studentsIsChecked: boolean;
@@ -39,8 +38,9 @@ export class AccountsPage {
   studentCondition: string = "";
   reportsManagerCondition: string = "";
   data: boolean;
-  isOnline: any;
-  onOffCondition: any;
+  isOnline: boolean|string;
+  onOffCondition: string|boolean;
+  loading: Promise<HTMLIonLoadingElement>;
 
   constructor(
     public alertCtrl: AlertController,

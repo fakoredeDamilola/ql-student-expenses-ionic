@@ -8,7 +8,7 @@ import {
   ModalController,
 } from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Location } from "@angular/common";
+import { Account, Report } from "@app/_models"
 import * as moment from "moment";
 
 const STORAGE_KEY = "my_images";
@@ -18,9 +18,9 @@ const STORAGE_KEY = "my_images";
   styleUrls: ["./expense-details.scss"],
 })
 export class ExpenseDetailsPage {
-  accountId: any;
-  expenseId: any;
-  expenseName: any;
+  accountId: string;
+  expenseId: string;
+  expenseName: string;
   savingExpense: Promise<HTMLIonLoadingElement>;
   loading: Promise<HTMLIonLoadingElement>;
   deleting: Promise<HTMLIonLoadingElement>;
@@ -28,8 +28,8 @@ export class ExpenseDetailsPage {
   expenseCost: string;
   expenseCreated: string;
   expenseCategory: string;
-  expenseCreatedBy: string;
-  expenseReport: any;
+  expenseCreatedBy: Account;
+  expenseReport: Report;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
   backRoute: string;
@@ -43,8 +43,7 @@ export class ExpenseDetailsPage {
     public alertService: AlertService,
     public accountService: AccountService,
     public routerOutlet: IonRouterOutlet,
-    public modalCtrl: ModalController,
-    private _location: Location
+    public modalCtrl: ModalController
   ) {
     this.deleting = this.alertService.presentLoading("Deleting Expense...");
   }
@@ -70,7 +69,7 @@ export class ExpenseDetailsPage {
         //console.log(Element);
         this.expenseName = Element.expenseName;
         this.expenseCost = Element.expenseCost;
-        this.expenseCreatedBy = `${Element.expenseStudent[0].firstName} ${Element.expenseStudent[0].lastName} `;
+        this.expenseCreatedBy = Element.expenseStudent[0];
         this.expenseReport = Element.expenseReport[0];
         this.expenseCategory = Element.expenseCategory;
         this.expenseCreated = moment(Element.created).format(

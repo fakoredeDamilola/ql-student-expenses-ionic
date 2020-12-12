@@ -4,6 +4,7 @@ import { AccountService, AlertService } from "@app/_services";
 import { Config, LoadingController } from "@ionic/angular";
 import { Location } from "@angular/common";
 import * as moment from "moment";
+import { Report } from "@app/_models";
 
 @Component({
   selector: "page-reports-list",
@@ -11,17 +12,18 @@ import * as moment from "moment";
   styleUrls: ["./reports.scss"],
 })
 export class ReportsListPage {
-  queryText = "";
+  queryText:string = "";
   showSearchbar: boolean;
   ios: boolean;
   filtersList: any;
-  reportsList: any;
-  reportsManagerId: any;
-  loading: any;
+  reportsList: [Report]|any;//TODO fix this
+  reportsManagerId: string;
+  loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
   roleViewer: string;
+
 
   constructor(
     private accountService: AccountService,

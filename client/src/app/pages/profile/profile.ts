@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { AccountService, AlertService } from "@app/_services";
-
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 
@@ -22,11 +21,12 @@ export class ProfilePage {
   role: string;
   password: string;
   confirmPassword: string;
-  accountID: any;
-  loading: any;
-  loggingOut: any;
-  savingAccount: any;
+  accountID: string;
   data: boolean;
+  loading: Promise<HTMLIonLoadingElement>;
+  savingAccount: Promise<HTMLIonLoadingElement>;
+  loggingOut: Promise<HTMLIonLoadingElement>;
+
 
   constructor(
     public alertCtrl: AlertController,

@@ -54,6 +54,7 @@
     "fsevents": "^2.2.1",
     "mobiscroll": "^3.0.0-beta6",
     "moment": "^2.29.1",
+    "prettier": "^2.2.1",
     "rxjs": "^6.6.3",
     "sw-toolbox": "3.6.0",
     "tslib": "^2.0.3",

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
-import { Expense } from "@app/_models";
+import { Expense, Account, Report } from "@app/_models";
 import * as moment from "moment";
 
 @Component({
@@ -12,21 +12,29 @@ import * as moment from "moment";
   styleUrls: ["./student-details.scss"],
 })
 export class StudentDetailsPage {
-
-  student={id:"", firstName:"", lastName:"", email:"", created:"", updated:"", lastLogin:"", isOnline:false, isVerified:false };
-
+  student: Account | any = {
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    created: "",
+    updated: "",
+    lastLogin: "",
+    isOnline: false,
+    isVerified: false,
+  };
 
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
-  studentExpenses: [Expense];
+  studentExpenses: [Expense]|undefined;
   expensesLength: number;
   reportName: string;
   isVerified: boolean;
   totalOfExpenses: number = 0;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
-  currentReport: any;
+  currentReport: Report|undefined;
 
   constructor(
     public route: ActivatedRoute,

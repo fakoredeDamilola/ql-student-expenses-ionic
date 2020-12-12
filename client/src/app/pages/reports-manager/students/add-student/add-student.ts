@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { UserOptions } from "@app/interfaces/student-options";
 import { AccountService, AlertService, ReportService } from "@app/_services";
+import { Account } from "@app/_models"
 import { first } from "rxjs/operators";
 import { UserData } from "@app/providers/user-data";
 import { Location } from "@angular/common";
@@ -25,19 +26,16 @@ export class AddStudentPage {
     password: "",
     confirmPassword: "",
   };
-  submitted = false;
+  submitted:boolean = false;
 
   accountId: string;
-  reportId: any;
-  // key value for the edit input
-  key: any;
-  value: any;
+  reportId: string;
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   addingStudent: Promise<HTMLIonLoadingElement>;
   reportsManagerId: string;
-  reportsManager: any;
-  backRoute: any;
+  reportsManager: Account;
+  backRoute: string;
   currentRoute: string = this.router.url;
 
   constructor(

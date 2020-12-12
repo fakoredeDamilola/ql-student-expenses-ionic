@@ -4,7 +4,7 @@ import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService } from "@app/_services";
 import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
-import { Expense, Report } from "@app/_models";
+import { Expense, Report, Account } from "@app/_models";
 import { Location } from "@angular/common";
 import * as moment from "moment";
 
@@ -14,7 +14,7 @@ import * as moment from "moment";
   styleUrls: ["./account-details.scss"],
 })
 export class AccountDetailsPage {
-  accountId: any;
+  accountId: string;
   account = {
     firstName: "",
     lastName: "",
@@ -27,18 +27,15 @@ export class AccountDetailsPage {
     lastLogin: "",
     isOnline: false,
   };
-
-  key: any;
-  value: any;
   saving: boolean = true;
   loading: Promise<HTMLIonLoadingElement>;
   hasReport: boolean = false;
   hasExpenses: boolean = false;
-  studentExpenses: [Expense];
+  studentExpenses: [Expense]|Expense|undefined;
   studentExpensesCount: number;
   hasReports: boolean = false;
   // If they are a R.M
-  reportsManagerReports: [Report];
+  reportsManagerReports: [Report]|Report|undefined;
   reportsManagerCount: number;
   reportsManagerStudentsCount: number;
   reportsManagerExpensesCount: number;
@@ -46,9 +43,9 @@ export class AccountDetailsPage {
   currentRoute: string = this.router.url;
   savingAccount: Promise<HTMLIonLoadingElement>;
   totalOfExpenses: number = 0;
-  reportsManagerReportsCount: any;
-  reportsManager: any;
-  studentReport: any;
+  reportsManagerReportsCount: number;
+  reportsManager: Account|undefined;
+  studentReport: Report;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
 

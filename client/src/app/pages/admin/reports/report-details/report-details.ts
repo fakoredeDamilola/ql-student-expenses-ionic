@@ -11,6 +11,7 @@ import { AlertController } from "@ionic/angular";
 import { first } from "rxjs/operators";
 import { Location } from "@angular/common";
 import * as moment from "moment";
+import { Account, Expense } from "@app/_models";
 
 @Component({
   selector: "page-report-details",
@@ -23,20 +24,20 @@ export class ReportDetailsPage {
   report = { reportName: "" };
   reportExpenses = [];
   saving: boolean = true;
-  loading: any;
+  loading: Promise<HTMLIonLoadingElement>;
   savingReport: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
   deleting: Promise<HTMLIonLoadingElement>;
   reportName: string;
   reportExpensesCount: number = 0;
   reportStudentsCount: number;
-  reportStudents: any;
-  userExpenses: any;
+  reportStudents: [Account]|any;
+  userExpenses: [Expense];
   totalOfReportExpenses: number;
   totalOfReportExpensesString: string;
   calculatingDisbursementsLoader: Promise<HTMLIonLoadingElement>;
-  reportCreated: any;
-  reportsManager: any;
+  reportCreated: string;
+  reportsManager: Account|undefined;
   deadData = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //skeleton
   data: boolean;
   disbursementResults: boolean;
@@ -65,14 +66,7 @@ export class ReportDetailsPage {
     (await this.loading).present();
     this.accountId = this.accountService.accountValue.id;
     this.reportId = this.route.snapshot.paramMap.get("reportId");
-    // get id out of url
-    if (this.accountService.accountValue.role != "Admin") {
-      window.history.replaceState(
-        {},
-        document.title,
-        "/" + "reports-manager/reports/report-details"
-      );
-    }
+
     // This Chain can be split up later for lazy loading each section
     // Get Report Info
     (await this.reportService.getById(this.reportId))

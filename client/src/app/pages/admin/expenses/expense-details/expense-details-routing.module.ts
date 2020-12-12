@@ -29,6 +29,13 @@ const routes: Routes = [
         "@app/pages/admin/reports/report-details/report-details.module"
       ).then((m) => m.ReportDetailsModule),
   },
+  {
+    path: "student-details/:accountId",
+    loadChildren: () =>
+      import(
+        "@app/pages/admin/accounts/account-details/account-details.module"
+      ).then((m) => m.AccountDetailsModule),
+  },
 ];
 
 @NgModule({

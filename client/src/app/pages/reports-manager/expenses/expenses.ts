@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserData } from "@app/providers/user-data";
+import { Expense } from "@app/_models";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
 import {
   AlertController,
@@ -19,19 +20,18 @@ import { ExpensesFilterPage } from "./expenses-filter/expenses-filter";
   styleUrls: ["./expenses.scss"],
 })
 export class ExpensesListPage {
-  queryText = "";
+  queryText:string = "";
   showSearchbar: boolean;
   ios: boolean;
   filtersList: any;
   reportsManagerId: string;
-  expensesList: any;
+  expensesList: [Expense];
   loading: Promise<HTMLIonLoadingElement>;
   currentRoute: string = this.router.url;
-  userId: any;
-  petOwnersList: any;
+  userId: string;
   reportsExpenses: any;
   expensesTotal: number;
-  expensesCount: any;
+  expensesCount: number;
   foodIsChecked: boolean;
   hotelIsChecked: boolean;
   entertainmentIsChecked: boolean;

@@ -7,6 +7,7 @@ import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { ExpenseOptions } from "@app/interfaces/expense-options";
 import { Location } from "@angular/common";
+import { Account } from "@app/_models";
 
 @Component({
   selector: "page-add-expense",
@@ -14,7 +15,7 @@ import { Location } from "@angular/common";
   styleUrls: ["./add-expense.scss"],
 })
 export class AddExpensePage {
-  account = this.accountService.accountValue;
+  account:Account = this.accountService.accountValue;
   submitted: boolean = false;
 
   addExpense: ExpenseOptions = {

@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ActionSheetController } from "@ionic/angular";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { AccountService, AlertService, ExpenseService } from "@app/_services";
+import { Account } from "@app/_models"
 import { NgForm } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { ExpenseOptions } from "@app/interfaces/expense-options";
-import { Location } from "@angular/common";
+
 
 @Component({
   selector: "page-add-student-expense",
@@ -14,7 +15,7 @@ import { Location } from "@angular/common";
   styleUrls: ["./add-student-expense.scss"],
 })
 export class AddStudentExpensePage {
-  account = this.accountService.accountValue;
+  account:Account = this.accountService.accountValue;
   submitted: boolean = false;
   currentRoute: string = this.router.url;
 
@@ -28,7 +29,7 @@ export class AddStudentExpensePage {
   studentId: string;
   reportId: string;
   reportsManagerId: string;
-  student: any;
+  student: Account;
   backRoute: string;
 
   constructor(
@@ -39,7 +40,6 @@ export class AddStudentExpensePage {
     public actionSheetCtrl: ActionSheetController,
     public inAppBrowser: InAppBrowser,
     public alertService: AlertService,
-    private _location: Location
   ) {}
 
   async ionViewWillEnter() {
